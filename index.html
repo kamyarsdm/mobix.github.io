@@ -1,51 +1,361 @@
-<!DOCTYPE html>
-<html lang="fa">
+<!doctype html>
+<html lang="fa" dir="rtl">
 <head>
-  <meta charset="UTF-8" />
-  <title>Mobix</title>
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>موبیکس | تعمیرات موبایل درب منزل تهران</title>
+  <meta name="description" content="موبیکس مجموعه تعمیرات تلفن همراه در تهران است. دریافت گوشی با پیک موبیکس، تعمیر توسط تعمیرکاران موبیکس و تحویل به شما. واسطه نیستیم. لانچ به‌زودی." />
+  <meta name="theme-color" content="#0b1220" />
   <style>
-    body {
-      margin: 0;
-      font-family: system-ui, -apple-system, BlinkMacSystemFont, sans-serif;
-      background: #0f172a;
-      color: #e5e7eb;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      height: 100vh;
-      text-align: center;
+    :root{
+      --bg:#0b1220;
+      --card:#0f1a33;
+      --text:#e7eefc;
+      --muted:#b7c3dd;
+      --line:rgba(231,238,252,.12);
+      --accent:#4f8cff;
+      --accent2:#22c55e;
+      --shadow: 0 20px 60px rgba(0,0,0,.35);
+      --radius:18px;
     }
-    .box {
-      max-width: 420px;
-      padding: 24px;
+    *{box-sizing:border-box}
+    body{
+      margin:0;
+      font-family: ui-sans-serif, system-ui, -apple-system, "Segoe UI", Roboto, Arial, "Noto Sans", "Apple Color Emoji","Segoe UI Emoji";
+      background:
+        radial-gradient(1200px 600px at 80% -10%, rgba(79,140,255,.35), transparent 55%),
+        radial-gradient(900px 520px at 10% 10%, rgba(34,197,94,.25), transparent 55%),
+        radial-gradient(900px 700px at 50% 120%, rgba(79,140,255,.18), transparent 55%),
+        var(--bg);
+      color: var(--text);
+      line-height:1.75;
     }
-    h1 {
-      font-size: 32px;
-      margin-bottom: 12px;
+    a{color:inherit}
+    .container{max-width:1100px;margin:0 auto;padding:28px 18px 70px}
+    .topbar{
+      display:flex;align-items:center;justify-content:space-between;gap:10px;
+      padding:10px 12px;border:1px solid var(--line);border-radius:999px;background:rgba(15,26,51,.55);
+      backdrop-filter: blur(10px);
     }
-    p {
-      opacity: 0.85;
-      line-height: 1.8;
+    .brand{display:flex;align-items:center;gap:10px}
+    .logo{
+      width:36px;height:36px;border-radius:12px;
+      background: linear-gradient(135deg, rgba(79,140,255,1), rgba(34,197,94,1));
+      box-shadow: 0 10px 30px rgba(79,140,255,.22);
     }
-    .tag {
-      margin-top: 24px;
-      font-size: 14px;
-      opacity: 0.6;
+    .brand b{letter-spacing:.2px}
+    .lang{display:flex;gap:8px;align-items:center;}
+    .pill{
+      border:1px solid var(--line);
+      background:rgba(15,26,51,.55);
+      padding:8px 10px;border-radius:999px;
+      font-size:13px;color:var(--muted);
     }
+    .pill button{
+      border:0;background:transparent;color:inherit;font:inherit;cursor:pointer;padding:0 6px;
+      opacity:.75
+    }
+    .pill button.active{opacity:1;color:var(--text)}
+    .hero{
+      margin-top:22px;
+      display:grid;grid-template-columns: 1.2fr .8fr;gap:18px;
+      align-items:stretch;
+    }
+    @media (max-width: 920px){ .hero{grid-template-columns:1fr} }
+    .card{
+      border:1px solid var(--line);
+      background: rgba(15,26,51,.62);
+      border-radius: var(--radius);
+      box-shadow: var(--shadow);
+      padding:22px;
+      backdrop-filter: blur(10px);
+    }
+    .badge{
+      display:inline-flex;gap:8px;align-items:center;
+      padding:8px 10px;border-radius:999px;
+      border:1px solid var(--line);
+      background: rgba(11,18,32,.55);
+      color: var(--muted);
+      font-size:13px;
+    }
+    .dot{
+      width:8px;height:8px;border-radius:999px;background:var(--accent2);
+      box-shadow: 0 0 0 4px rgba(34,197,94,.18);
+    }
+    h1{ margin:14px 0 10px; font-size:38px; line-height:1.2; }
+    @media (max-width:480px){ h1{font-size:30px} }
+    .sub{ color: var(--muted); font-size:16px; margin:0 0 18px; }
+    .cta{ display:flex;flex-wrap:wrap;gap:10px;margin-top:12px }
+    .btn{
+      display:inline-flex;align-items:center;justify-content:center;gap:10px;
+      padding:12px 14px;border-radius:12px;border:1px solid var(--line);
+      background: rgba(11,18,32,.6);
+      cursor:pointer;text-decoration:none;
+      font-weight:600;
+    }
+    .btn.primary{
+      background: linear-gradient(135deg, rgba(79,140,255,1), rgba(79,140,255,.75));
+      border-color: rgba(79,140,255,.35);
+    }
+    .btn:active{transform: translateY(1px)}
+    .mini{ display:grid;grid-template-columns: 1fr 1fr;gap:12px;margin-top:16px }
+    @media (max-width:520px){ .mini{grid-template-columns:1fr} }
+    .mini .box{
+      border:1px solid var(--line);border-radius:14px;padding:14px;background:rgba(11,18,32,.4)
+    }
+    .k{color:var(--muted);font-size:13px;margin-bottom:6px}
+    .v{font-weight:700}
+    .steps{
+      margin-top:18px;
+      display:grid;grid-template-columns: repeat(4,1fr);gap:10px;
+    }
+    @media (max-width:900px){ .steps{grid-template-columns:1fr 1fr} }
+    @media (max-width:520px){ .steps{grid-template-columns:1fr} }
+    .step{
+      border:1px solid var(--line);
+      border-radius:16px;
+      padding:14px;
+      background: rgba(11,18,32,.35);
+    }
+    .step .num{
+      width:28px;height:28px;border-radius:10px;
+      display:flex;align-items:center;justify-content:center;
+      background: rgba(79,140,255,.18);
+      border:1px solid rgba(79,140,255,.25);
+      font-weight:800;
+      margin-bottom:10px;
+    }
+    .step b{display:block;margin-bottom:6px}
+    .step p{margin:0;color:var(--muted);font-size:14px}
+    .grid{
+      margin-top:14px;
+      display:grid;grid-template-columns: 1fr 1fr;gap:12px;
+    }
+    @media (max-width:920px){ .grid{grid-template-columns:1fr} }
+    .feature{
+      border:1px solid var(--line);border-radius:16px;padding:16px;background:rgba(11,18,32,.35)
+    }
+    .feature b{display:block;margin-bottom:6px}
+    .feature p{margin:0;color:var(--muted);font-size:14px}
+    form{ display:grid;gap:10px;margin-top:10px }
+    .input{
+      width:100%;
+      padding:12px 12px;
+      border-radius:12px;
+      border:1px solid var(--line);
+      background: rgba(11,18,32,.55);
+      color: var(--text);
+      outline:none;
+      font-size:15px;
+    }
+    .hint{color:var(--muted);font-size:13px;margin:8px 0 0}
+    .foot{
+      margin-top:16px;
+      display:flex;flex-wrap:wrap;gap:10px;justify-content:space-between;align-items:center;
+      color: rgba(183,195,221,.85);
+      font-size:13px;
+    }
+    .link{ text-decoration:none;border-bottom:1px dashed rgba(231,238,252,.25); }
+
+    [data-lang="en"]{direction:ltr}
+    .hide{display:none !important}
   </style>
 </head>
+
 <body>
-  <div class="box">
-    <h1>Mobix</h1>
-    <p>
-      پلتفرم سفارش و ارتباط هوشمند بین مشتری و کسب‌وکار  
-      <br />
-      به‌زودی 🚀
-    </p>
-    <div class="tag">
-      mobix.github.io
+  <div class="container">
+    <div class="topbar">
+      <div class="brand">
+        <div class="logo" aria-hidden="true"></div>
+        <div>
+          <b>Mobix | موبیکس</b>
+          <div style="font-size:12px;color:var(--muted);margin-top:2px">Tehran • تعمیرات موبایل درب منزل</div>
+        </div>
+      </div>
+
+      <div class="lang">
+        <div class="pill" role="tablist" aria-label="Language switch">
+          <button id="btn-fa" class="active" type="button">FA</button>
+          <span style="opacity:.35">|</span>
+          <button id="btn-en" type="button">EN</button>
+        </div>
+      </div>
     </div>
+
+    <!-- FA -->
+    <section id="fa" data-lang="fa" class="hero">
+      <div class="card">
+        <div class="badge"><span class="dot"></span> لانچ تا چند روز آینده</div>
+        <h1>تعمیر موبایل، درب منزل در تهران</h1>
+        <p class="sub">
+          موبیکس یک مجموعه تعمیرات تلفن همراه است که <b>صفر تا صد کار را داخل خود مجموعه انجام می‌دهد</b>:
+          دریافت گوشی با پیک موبیکس، تعمیر توسط تعمیرکاران موبیکس و تحویل به شما.
+          <b>واسطه نیستیم.</b>
+        </p>
+
+        <div class="cta">
+          <a class="btn primary" href="#waitlist">عضویت در لیست انتظار</a>
+          <a class="btn" href="#how">نحوه انجام کار</a>
+        </div>
+
+        <div class="mini">
+          <div class="box">
+            <div class="k">محدوده سرویس‌دهی</div>
+            <div class="v">تهران</div>
+          </div>
+          <div class="box">
+            <div class="k">پشتیبانی داخل اپ</div>
+            <div class="v">چت آنلاین</div>
+          </div>
+        </div>
+
+        <div id="how" class="steps" aria-label="How it works">
+          <div class="step"><div class="num">1</div><b>ثبت درخواست</b><p>در اپ درخواست تعمیر ثبت می‌کنی.</p></div>
+          <div class="step"><div class="num">2</div><b>دریافت با پیک موبیکس</b><p>پیک، گوشی رو از شما تحویل می‌گیره.</p></div>
+          <div class="step"><div class="num">3</div><b>تعمیر توسط موبیکس</b><p>تعمیرکاران موبیکس بررسی و تعمیر می‌کنند.</p></div>
+          <div class="step"><div class="num">4</div><b>تحویل به شما</b><p>بعد از تعمیر، گوشی با پیک به شما برمی‌گرده.</p></div>
+        </div>
+      </div>
+
+      <div class="card" id="waitlist">
+        <div class="badge">اولین نفراتِ باخبر از لانچ</div>
+        <h2 style="margin:12px 0 8px;font-size:22px">عضویت در لیست انتظار</h2>
+        <p class="sub" style="margin-bottom:10px">شماره‌ات رو بذار تا به محض لانچ اپ، خبرت کنیم.</p>
+
+        <form onsubmit="return handleSubmit(event, 'fa')">
+          <input class="input" name="name" placeholder="نام (اختیاری)" autocomplete="name" />
+          <input class="input" name="phone" placeholder="شماره موبایل (مثلاً 09xxxxxxxxx)" inputmode="tel" autocomplete="tel" required />
+          <button class="btn primary" type="submit">ثبت</button>
+          <div class="hint">فعلاً فقط ثبت اولیه است؛ بعد از لانچ اطلاع‌رسانی می‌کنیم.</div>
+        </form>
+
+        <div class="grid">
+          <div class="feature"><b>واسطه نیستیم</b><p>کل فرآیند از دریافت تا تعمیر و تحویل، توسط تیم موبیکس انجام می‌شود.</p></div>
+          <div class="feature"><b>شفاف و قابل پیگیری</b><p>پس از لانچ، از طریق اپ و چت آنلاین مراحل را پیگیری می‌کنید.</p></div>
+        </div>
+
+        <div class="foot">
+          <span>© Mobix | موبیکس</span>
+          <span><a class="link" href="#fa" onclick="window.scrollTo({top:0,behavior:'smooth'})">بالا</a></span>
+        </div>
+      </div>
+    </section>
+
+    <!-- EN -->
+    <section id="en" data-lang="en" class="hero hide">
+      <div class="card">
+        <div class="badge"><span class="dot"></span> Launching in a few days</div>
+        <h1>Doorstep phone repair in Tehran</h1>
+        <p class="sub">
+          Mobix is an in-house mobile repair service: we pick up your phone with Mobix couriers,
+          repair it by Mobix technicians, and deliver it back to you.
+          <b>We are not an intermediary.</b>
+        </p>
+
+        <div class="cta">
+          <a class="btn primary" href="#waitlist-en">Join the waitlist</a>
+          <a class="btn" href="#how-en">How it works</a>
+        </div>
+
+        <div class="mini">
+          <div class="box"><div class="k">Service area</div><div class="v">Tehran</div></div>
+          <div class="box"><div class="k">Support inside the app</div><div class="v">Online chat</div></div>
+        </div>
+
+        <div id="how-en" class="steps" aria-label="How it works">
+          <div class="step"><div class="num">1</div><b>Request in the app</b><p>Create a repair request in the app.</p></div>
+          <div class="step"><div class="num">2</div><b>Mobix pickup</b><p>Our courier picks up the device from you.</p></div>
+          <div class="step"><div class="num">3</div><b>Repair by Mobix</b><p>Mobix technicians diagnose and repair.</p></div>
+          <div class="step"><div class="num">4</div><b>Delivered back</b><p>We deliver your phone back to you.</p></div>
+        </div>
+      </div>
+
+      <div class="card" id="waitlist-en">
+        <div class="badge">Be the first to know</div>
+        <h2 style="margin:12px 0 8px;font-size:22px">Join the waitlist</h2>
+        <p class="sub" style="margin-bottom:10px">Leave your phone number and we’ll notify you when the app launches.</p>
+
+        <form onsubmit="return handleSubmit(event, 'en')">
+          <input class="input" name="name" placeholder="Name (optional)" autocomplete="name" />
+          <input class="input" name="phone" placeholder="Mobile number" inputmode="tel" autocomplete="tel" required />
+          <button class="btn primary" type="submit">Submit</button>
+          <div class="hint">This is a simple pre-launch signup (no backend connected yet).</div>
+        </form>
+
+        <div class="grid">
+          <div class="feature"><b>Not a marketplace</b><p>Pickup, repair, and delivery are all handled by Mobix.</p></div>
+          <div class="feature"><b>Trackable & transparent</b><p>After launch, you can follow updates and chat in the app.</p></div>
+        </div>
+
+        <div class="foot">
+          <span>© Mobix</span>
+          <span><a class="link" href="#en" onclick="window.scrollTo({top:0,behavior:'smooth'})">Top</a></span>
+        </div>
+      </div>
+    </section>
   </div>
+
+  <script>
+    const fa = document.getElementById('fa');
+    const en = document.getElementById('en');
+    const btnFa = document.getElementById('btn-fa');
+    const btnEn = document.getElementById('btn-en');
+
+    function setLang(lang){
+      if(lang === 'en'){
+        fa.classList.add('hide');
+        en.classList.remove('hide');
+        btnEn.classList.add('active');
+        btnFa.classList.remove('active');
+        document.documentElement.lang = 'en';
+        document.documentElement.dir = 'ltr';
+        localStorage.setItem('mobix_lang', 'en');
+      } else {
+        en.classList.add('hide');
+        fa.classList.remove('hide');
+        btnFa.classList.add('active');
+        btnEn.classList.remove('active');
+        document.documentElement.lang = 'fa';
+        document.documentElement.dir = 'rtl';
+        localStorage.setItem('mobix_lang', 'fa');
+      }
+      window.scrollTo({top:0, behavior:'smooth'});
+    }
+
+    btnFa.addEventListener('click', () => setLang('fa'));
+    btnEn.addEventListener('click', () => setLang('en'));
+
+    const saved = localStorage.getItem('mobix_lang');
+    if(saved === 'en') setLang('en');
+
+    function normalizePhone(p){ return (p || '').replace(/\s+/g,'').replace(/-/g,''); }
+
+    window.handleSubmit = function(event, lang){
+      event.preventDefault();
+      const form = event.target;
+      const name = (form.elements.name.value || '').trim();
+      const phone = normalizePhone(form.elements.phone.value);
+
+      const looksIran = /^(\+98|0)?9\d{9}$/.test(phone);
+      if(lang === 'fa' && !looksIran){
+        alert('شماره موبایل معتبر وارد کن (مثل 09xxxxxxxxx).');
+        return false;
+      }
+
+      if(lang === 'fa'){
+        alert('ثبت شد ✅\nبه محض لانچ اپ، خبرت می‌کنیم.');
+      } else {
+        alert('Saved ✅\nWe’ll notify you when the app launches.');
+      }
+
+      try{
+        localStorage.setItem('mobix_waitlist_phone', phone);
+        if(name) localStorage.setItem('mobix_waitlist_name', name);
+      }catch(e){}
+
+      form.reset();
+      return false;
+    }
+  </script>
 </body>
 </html>
