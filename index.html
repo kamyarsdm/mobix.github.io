@@ -3,12 +3,12 @@
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <title>Mobix | موبیکس — تعمیر موبایل درب منزل تهران</title>
-  <meta name="description" content="موبیکس؛ تعمیر موبایل درب منزل در تهران. دریافت با پیک موبیکس، تعمیر توسط تعمیرکاران موبیکس، تحویل به شما. واسطه نیستیم." />
+  <title>Mobix | موبیکس — تعمیر موبایل درب منزل</title>
+  <meta name="description" content="موبیکس؛ تعمیر موبایل درب منزل. دریافت گوشی با پیک موبیکس، تعمیر توسط تعمیرکاران موبیکس و تحویل به شما. پیگیری مرحله‌ای و پشتیبانی داخل اپ." />
 
   <!-- Open Graph (برای واتساپ/تلگرام) -->
-  <meta property="og:title" content="Mobix | موبیکس — تعمیر موبایل درب منزل تهران" />
-  <meta property="og:description" content="دریافت با پیک موبیکس، تعمیر توسط تعمیرکاران موبیکس، تحویل به شما. واسطه نیستیم." />
+  <meta property="og:title" content="Mobix | موبیکس — تعمیر موبایل درب منزل" />
+  <meta property="og:description" content="دریافت با پیک موبیکس، تعمیر توسط تعمیرکاران موبیکس، تحویل به شما. پیگیری مرحله‌ای و پشتیبانی داخل اپ." />
   <meta property="og:type" content="website" />
   <meta property="og:image" content="assets/hero.png" />
 
@@ -27,9 +27,11 @@
       --text:#0B1220;
       --muted:#5B6B84;
       --line:rgba(15,23,42,.08);
+
       --shadow: 0 14px 40px rgba(15,23,42,.10);
       --shadow2: 0 10px 22px rgba(15,23,42,.08);
-      --radius:20px;
+
+      --radius:22px;
 
       --primary:#1F6AFF;
       --primary2:#3B82F6;
@@ -49,15 +51,17 @@
       font-family:"Vazirmatn", ui-sans-serif, system-ui, -apple-system, "Segoe UI", Roboto, Arial, sans-serif;
       color:var(--text);
       background:
-        radial-gradient(1100px 520px at 80% -10%, rgba(31,106,255,.14), transparent 55%),
-        radial-gradient(900px 520px at 10% 10%, rgba(168,85,247,.10), transparent 55%),
+        radial-gradient(1100px 520px at 82% -12%, rgba(31,106,255,.16), transparent 55%),
+        radial-gradient(900px 520px at 8% 10%, rgba(168,85,247,.10), transparent 55%),
         radial-gradient(900px 700px at 50% 120%, rgba(16,185,129,.10), transparent 55%),
         var(--bg);
+      -webkit-font-smoothing: antialiased;
+      -moz-osx-font-smoothing: grayscale;
     }
 
     a{color:inherit;text-decoration:none}
     img{max-width:100%;display:block}
-    .container{max-width:var(--max);margin:0 auto;padding:18px 16px 80px}
+    .container{max-width:var(--max);margin:0 auto;padding:18px 16px 90px}
 
     /* Topbar */
     .topbar{
@@ -68,7 +72,7 @@
     .topbar-inner{
       display:flex;align-items:center;justify-content:space-between;gap:12px;
       border:1px solid var(--line);
-      background: rgba(246,248,252,.82);
+      background: rgba(246,248,252,.84);
       border-radius:999px;
       padding:10px 12px;
       box-shadow: var(--shadow2);
@@ -81,8 +85,19 @@
       filter: drop-shadow(0 10px 18px rgba(31,106,255,.10));
     }
     .brand-txt{min-width:0}
-    .brand-title{font-weight:900;letter-spacing:-.2px;line-height:1.15}
-    .brand-sub{font-size:12px;color:var(--muted);margin-top:2px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+    .brand-title{
+      font-weight:900;
+      letter-spacing:-.35px;
+      line-height:1.15
+    }
+    .brand-sub{
+      font-size:12px;
+      color:var(--muted);
+      margin-top:2px;
+      white-space:nowrap;
+      overflow:hidden;
+      text-overflow:ellipsis
+    }
 
     .nav{
       display:flex;align-items:center;gap:10px;flex-wrap:wrap;justify-content:flex-end;
@@ -93,12 +108,14 @@
       padding:8px 10px;
       border-radius:999px;
       border:1px solid transparent;
+      transition: all .12s ease;
     }
     .nav a:hover{
       background:#fff;
       border-color:var(--line);
       color:var(--text);
       box-shadow: var(--shadow2);
+      transform: translateY(-1px);
     }
 
     /* Buttons */
@@ -108,10 +125,10 @@
       border-radius:16px;
       border:1px solid var(--line);
       background:#fff;
-      font-weight:800;
+      font-weight:900;
       cursor:pointer;
       box-shadow: var(--shadow2);
-      transition: transform .12s ease, box-shadow .12s ease;
+      transition: transform .12s ease, box-shadow .12s ease, filter .12s ease;
       user-select:none;
     }
     .btn:active{transform: translateY(1px)}
@@ -121,14 +138,19 @@
       background: linear-gradient(135deg, var(--primary), var(--primary2));
       box-shadow: 0 18px 36px rgba(31,106,255,.22);
     }
+    .btn.primary:hover{filter: brightness(1.02)}
     .btn.soft{
       background: rgba(31,106,255,.08);
       border-color: rgba(31,106,255,.18);
       color: var(--text);
     }
+    .btn.ghost{
+      background: #fff;
+      border-color: rgba(15,23,42,.10);
+      color: var(--text);
+    }
     .btn.disabled{
-      opacity:.55; cursor:not-allowed;
-      box-shadow:none;
+      opacity:.55; cursor:not-allowed; box-shadow:none;
     }
 
     /* Hero */
@@ -155,9 +177,9 @@
       border-radius:999px;
       border:1px solid rgba(16,185,129,.18);
       background: rgba(16,185,129,.08);
-      color: rgba(11,18,32,.85);
+      color: rgba(11,18,32,.88);
       font-size:13px;
-      font-weight:700;
+      font-weight:800;
     }
     .dot{
       width:8px;height:8px;border-radius:50%;
@@ -167,20 +189,21 @@
 
     h1{
       margin:12px 0 8px;
-      font-size:40px;
-      line-height:1.25;
-      letter-spacing:-.3px;
+      font-size:42px;
+      line-height:1.22;
+      letter-spacing:-.6px;
       font-weight:900;
     }
-    @media (max-width: 520px){ h1{font-size:32px} }
+    @media (max-width: 520px){ h1{font-size:34px} }
 
     .sub{
       margin:0;
       color:var(--muted);
-      font-size:15.5px;
-      line-height:2.0;
+      font-size:15.6px;
+      line-height:1.78;
+      font-weight:500;
     }
-    .sub b{color:var(--text)}
+    .sub b{color:var(--text);font-weight:800}
 
     .cta{
       display:flex;flex-wrap:wrap;gap:10px;
@@ -197,11 +220,11 @@
       border-radius:16px;
       border:1px solid var(--chipLine);
       background: var(--chip);
-      color: rgba(11,18,32,.82);
+      color: rgba(11,18,32,.84);
       font-size:13px;
-      font-weight:700;
+      font-weight:800;
     }
-    .chip small{font-weight:600;color:var(--muted)}
+    .chip small{font-weight:700;color:var(--muted)}
     .ico{
       width:18px;height:18px;flex:0 0 18px;
       color: var(--primary);
@@ -209,15 +232,27 @@
 
     .hero-art{
       margin-top:14px;
-      border-radius: 24px;
+      border-radius: 26px;
       overflow:hidden;
       border:1px solid var(--line);
-      box-shadow: 0 20px 55px rgba(15,23,42,.16);
+      background:#fff;
+      box-shadow: 0 22px 60px rgba(15,23,42,.16);
       transform: translateZ(0);
+      position:relative;
+    }
+    .hero-art:before{
+      content:"";
+      position:absolute; inset:-40%;
+      background: radial-gradient(circle at 25% 30%, rgba(255,255,255,.65), transparent 55%);
+      transform: rotate(16deg);
+      opacity:.35;
+      pointer-events:none;
     }
     .hero-art img{
       width:100%;
       height:auto;
+      position:relative;
+      z-index:1;
     }
 
     /* Section headers */
@@ -230,12 +265,14 @@
       margin:0;
       font-size:18px;
       font-weight:900;
+      letter-spacing:-.25px;
     }
     .section-head p{
       margin:0;
       color:var(--muted);
       font-size:13px;
       line-height:1.7;
+      font-weight:500;
     }
 
     /* Services (مثل اپ) */
@@ -251,18 +288,23 @@
       display:flex;align-items:center;justify-content:space-between;gap:10px;
       padding:14px 14px;
       border-radius:18px;
-      border:1px solid var(--line);
+      border:1px solid rgba(15,23,42,.10);
       background:#fff;
       box-shadow: var(--shadow2);
-      min-height:64px;
+      min-height:66px;
+      transition: transform .12s ease, box-shadow .12s ease;
+    }
+    .service:hover{
+      transform: translateY(-2px);
+      box-shadow: 0 18px 36px rgba(15,23,42,.10);
     }
     .service b{font-size:14px;font-weight:900}
     .sicon{
-      width:38px;height:38px;border-radius:16px;
+      width:40px;height:40px;border-radius:16px;
       display:flex;align-items:center;justify-content:center;
       background: rgba(31,106,255,.10);
       border:1px solid rgba(31,106,255,.16);
-      flex:0 0 38px;
+      flex:0 0 40px;
     }
 
     /* Right card: App-like preview */
@@ -272,8 +314,8 @@
       gap:12px;
     }
     .mini-card{
-      border-radius: 18px;
-      border:1px solid var(--line);
+      border-radius: 20px;
+      border:1px solid rgba(15,23,42,.10);
       background:#fff;
       box-shadow: var(--shadow2);
       padding:14px;
@@ -283,7 +325,7 @@
       padding-bottom:10px;margin-bottom:10px;border-bottom:1px solid var(--line);
     }
     .mini-top b{font-size:14px;font-weight:900}
-    .mini-top span{font-size:12px;color:var(--muted)}
+    .mini-top span{font-size:12px;color:var(--muted);font-weight:600}
     .status-box{
       border:1px solid rgba(31,106,255,.18);
       background: rgba(31,106,255,.07);
@@ -293,7 +335,7 @@
     }
     .status-box .left{display:flex;flex-direction:column;gap:2px}
     .status-box .left b{font-size:13.5px;font-weight:900}
-    .status-box .left small{color:var(--muted)}
+    .status-box .left small{color:var(--muted);font-weight:600}
     .pill{
       border:1px solid rgba(31,106,255,.22);
       background: rgba(31,106,255,.12);
@@ -312,28 +354,28 @@
 
     .why{
       display:flex;gap:12px;align-items:flex-start;
-      border-radius:18px;
-      border:1px solid var(--line);
+      border-radius:20px;
+      border:1px solid rgba(15,23,42,.10);
       background:#fff;
       box-shadow: var(--shadow2);
       padding:14px;
     }
     .wicon{
-      width:42px;height:42px;border-radius:18px;
+      width:44px;height:44px;border-radius:18px;
       display:flex;align-items:center;justify-content:center;
       background: rgba(16,185,129,.10);
       border:1px solid rgba(16,185,129,.18);
-      flex:0 0 42px;
+      flex:0 0 44px;
       color: var(--success);
     }
     .why b{display:block;margin-bottom:4px;font-weight:900}
-    .why p{margin:0;color:var(--muted);font-size:13.5px;line-height:1.9}
+    .why p{margin:0;color:var(--muted);font-size:13.5px;line-height:1.85;font-weight:500}
 
     /* Banners / Images */
     .media{
-      border-radius: 24px;
+      border-radius: 26px;
       overflow:hidden;
-      border:1px solid var(--line);
+      border:1px solid rgba(15,23,42,.10);
       background:#fff;
       box-shadow: var(--shadow);
     }
@@ -343,7 +385,9 @@
       color:var(--muted);
       font-size:13px;
       line-height:1.8;
+      font-weight:500;
     }
+    .media-caption b{color:var(--text);font-weight:900}
 
     /* Steps */
     .steps{
@@ -355,14 +399,14 @@
     @media (max-width: 520px){ .steps{grid-template-columns:1fr} }
 
     .step{
-      border-radius:18px;
-      border:1px solid var(--line);
+      border-radius:20px;
+      border:1px solid rgba(15,23,42,.10);
       background:#fff;
       box-shadow: var(--shadow2);
       padding:14px;
     }
     .num{
-      width:32px;height:32px;border-radius:14px;
+      width:34px;height:34px;border-radius:14px;
       display:flex;align-items:center;justify-content:center;
       background: rgba(31,106,255,.10);
       border:1px solid rgba(31,106,255,.18);
@@ -370,26 +414,21 @@
       margin-bottom:10px;
     }
     .step b{display:block;margin-bottom:6px;font-weight:900}
-    .step p{margin:0;color:var(--muted);font-size:13.5px;line-height:1.9}
+    .step p{margin:0;color:var(--muted);font-size:13.5px;line-height:1.8;font-weight:500}
 
     /* Waitlist */
-    .wait{
-      display:grid;
-      grid-template-columns: 1fr;
-      gap:10px;
-    }
     form{display:grid;gap:10px;margin-top:10px}
     .input{
       width:100%;
       padding:12px 12px;
       border-radius:16px;
-      border:1px solid var(--line);
+      border:1px solid rgba(15,23,42,.10);
       background:#fff;
       outline:none;
       font-size:15px;
       font-family: inherit;
     }
-    .hint{color:var(--muted);font-size:12.5px;line-height:1.75;margin-top:4px}
+    .hint{color:var(--muted);font-size:12.5px;line-height:1.75;margin-top:4px;font-weight:500}
 
     .footer{
       margin-top:18px;
@@ -398,6 +437,7 @@
       display:flex;flex-wrap:wrap;gap:10px;justify-content:space-between;align-items:center;
       color:var(--muted);
       font-size:12.5px;
+      font-weight:500;
     }
     .footer a{border-bottom:1px dashed rgba(15,23,42,.25)}
   </style>
@@ -412,7 +452,7 @@
           <img src="assets/logo.png" alt="Mobix | موبیکس">
           <div class="brand-txt">
             <div class="brand-title">Mobix | موبیکس</div>
-            <div class="brand-sub">تهران • تعمیر موبایل با دریافت و تحویل توسط پیک موبیکس</div>
+            <div class="brand-sub">تعمیر موبایل با دریافت و تحویل توسط پیک موبیکس</div>
           </div>
         </div>
 
@@ -431,9 +471,9 @@
         <div class="badge"><span class="dot"></span> لانچ تا چند روز آینده</div>
         <h1>با خیال راحت بسپارید</h1>
         <p class="sub">
-          تعمیر موبایل درب منزل در تهران — دریافت گوشی با <b>پیک موبیکس</b>،
+          تعمیر موبایل درب منزل — دریافت گوشی با <b>پیک موبیکس</b>،
           تعمیر توسط <b>تعمیرکاران موبیکس</b> و تحویل به شما.
-          <b>واسطه نیستیم.</b>
+          پیگیری مرحله‌ای و پشتیبانی داخل اپ.
         </p>
 
         <div class="cta">
@@ -443,16 +483,6 @@
         </div>
 
         <div class="chips">
-          <span class="chip">
-            <span class="ico" aria-hidden="true">
-              <svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2">
-                <path d="M12 21s-7-4.35-7-11a7 7 0 0 1 14 0c0 6.65-7 11-7 11z"/>
-                <circle cx="12" cy="10" r="2"/>
-              </svg>
-            </span>
-            تهران <small>محدوده سرویس</small>
-          </span>
-
           <span class="chip">
             <span class="ico" aria-hidden="true">
               <svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2">
@@ -469,6 +499,17 @@
               </svg>
             </span>
             پیگیری مرحله‌ای <small>شفاف</small>
+          </span>
+
+          <span class="chip">
+            <span class="ico" aria-hidden="true">
+              <svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2">
+                <path d="M3 12h18"/>
+                <path d="M7 8l-4 4 4 4"/>
+                <path d="M17 8l4 4-4 4"/>
+              </svg>
+            </span>
+            دریافت و تحویل <small>با پیک موبیکس</small>
           </span>
         </div>
 
@@ -553,14 +594,14 @@
     <section class="section" id="why">
       <div class="section-head">
         <h2>چرا موبیکس؟</h2>
-        <p>همه‌چیز داخل موبیکس انجام می‌شود — واسطه نیستیم</p>
+        <p>تجربه‌ی تعمیر موبایل با سرویس کامل و پیگیری شفاف</p>
       </div>
 
       <div class="why-grid">
         <div class="media">
           <img src="assets/courier.png" alt="پیک اختصاصی موبیکس">
           <div class="media-caption">
-            دریافت و تحویل توسط <b>پیک موبیکس</b> — تجربه شهری سریع و بدون دردسر.
+            دریافت و تحویل توسط <b>پیک موبیکس</b> — تجربه‌ای سریع و بدون دردسر.
           </div>
         </div>
 
@@ -580,8 +621,8 @@
             </svg>
           </div>
           <div>
-            <b>صفر تا صد داخل موبیکس</b>
-            <p>از دریافت تا تعمیر و تحویل، همه توسط تیم موبیکس انجام می‌شود.</p>
+            <b>سرویس کامل</b>
+            <p>از دریافت تا تعمیر و تحویل، همه‌چیز یکپارچه و منظم انجام می‌شود.</p>
           </div>
         </div>
 
@@ -592,7 +633,7 @@
             </svg>
           </div>
           <div>
-            <b>امن و قابل پیگیری</b>
+            <b>شفاف و قابل پیگیری</b>
             <p>وضعیت سفارش مرحله‌به‌مرحله مشخص است و پشتیبانی داخل اپ با چت آنلاین انجام می‌شود.</p>
           </div>
         </div>
@@ -653,7 +694,7 @@
         </form>
 
         <div class="footer">
-          <span>© Mobix | موبیکس — تهران</span>
+          <span>© Mobix | موبیکس</span>
           <span><a href="#top">بازگشت به بالا</a></span>
         </div>
       </div>
