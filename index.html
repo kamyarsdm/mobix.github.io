@@ -6,11 +6,11 @@
   <title>Mobix | موبیکس — تعمیر موبایل</title>
   <meta name="description" content="موبیکس؛ تعمیر موبایل با سرویس کامل. دریافت گوشی با پیک موبیکس، تعمیر توسط تعمیرکاران موبیکس و تحویل به شما. پیگیری مرحله‌ای و پشتیبانی داخل اپ." />
 
-  <!-- Open Graph (برای واتساپ/تلگرام) -->
+  <!-- Open Graph -->
   <meta property="og:title" content="Mobix | موبیکس — تعمیر موبایل" />
   <meta property="og:description" content="دریافت با پیک موبیکس، تعمیر توسط تعمیرکاران موبیکس و تحویل به شما. پیگیری مرحله‌ای و پشتیبانی داخل اپ." />
   <meta property="og:type" content="website" />
-  <!-- بهتره absolute باشه تا کارت اشتراک درست بیاد -->
+  <!-- اگر ریپو/دامنه‌ات فرق داره، این آدرس رو مطابقش تغییر بده -->
   <meta property="og:image" content="https://kamyarsdm.github.io/mobix.github.io/assets/hero.png" />
 
   <meta name="theme-color" content="#1F6AFF" />
@@ -29,10 +29,11 @@
       --muted:#5B6B84;
       --line:rgba(15,23,42,.08);
 
-      --shadow: 0 14px 40px rgba(15,23,42,.10);
-      --shadow2: 0 10px 22px rgba(15,23,42,.08);
+      --shadow: 0 12px 30px rgba(15,23,42,.08);
+      --shadow2: 0 8px 18px rgba(15,23,42,.07);
 
-      --radius:22px;
+      --radius:18px;
+      --radius2:22px;
 
       --primary:#1F6AFF;
       --primary2:#3B82F6;
@@ -42,6 +43,8 @@
       --chipLine:rgba(31,106,255,.18);
 
       --max:1160px;
+
+      --stickyH: 76px; /* برای اسکرول به سکشن‌ها */
     }
 
     *{box-sizing:border-box}
@@ -53,8 +56,8 @@
       color:var(--text);
       background:
         radial-gradient(1100px 520px at 82% -12%, rgba(31,106,255,.16), transparent 55%),
-        radial-gradient(900px 520px at 8% 10%, rgba(59,130,246,.08), transparent 55%),
-        radial-gradient(900px 700px at 50% 120%, rgba(16,185,129,.10), transparent 55%),
+        radial-gradient(900px 520px at 8% 10%, rgba(59,130,246,.07), transparent 55%),
+        radial-gradient(900px 700px at 50% 120%, rgba(16,185,129,.09), transparent 55%),
         var(--bg);
       -webkit-font-smoothing: antialiased;
       -moz-osx-font-smoothing: grayscale;
@@ -62,9 +65,10 @@
 
     a{color:inherit;text-decoration:none}
     img{max-width:100%;display:block}
-    .container{max-width:var(--max);margin:0 auto;padding:16px 16px 90px}
 
-    /* --------- MINIMAL HEADER --------- */
+    .container{max-width:var(--max);margin:0 auto;padding:14px 16px 90px}
+
+    /* ---------- MINIMAL HEADER (فقط یک CTA) ---------- */
     .topbar{
       position:sticky; top:0; z-index:50;
       padding:10px 0;
@@ -78,47 +82,43 @@
       padding:10px 12px;
       box-shadow: var(--shadow2);
     }
+
     .brand{
       display:flex;align-items:center;gap:10px;min-width:0;
     }
-    /* لوگو بزرگ‌تر */
     .brand img{
-      width:56px;
-      height:auto;
-      filter: drop-shadow(0 10px 18px rgba(31,106,255,.12));
+      width:58px;height:auto;
+      filter: drop-shadow(0 10px 18px rgba(31,106,255,.14));
     }
     .brand-txt{min-width:0}
     .brand-title{
       font-weight:900;
       letter-spacing:-.35px;
-      line-height:1.15;
+      line-height:1.1;
       font-size:15px;
+      white-space:nowrap;
     }
     .brand-sub{
       font-size:11.5px;
       color:var(--muted);
       margin-top:2px;
+      font-weight:500;
       white-space:nowrap;
       overflow:hidden;
       text-overflow:ellipsis;
       max-width: 56vw;
-      font-weight:500;
-    }
-    .topbar-actions{
-      display:flex;align-items:center;gap:8px;flex:0 0 auto;
     }
 
-    /* Buttons */
     .btn{
       display:inline-flex;align-items:center;justify-content:center;gap:10px;
-      padding:10px 12px;
+      padding:10px 14px;
       border-radius:14px;
       border:1px solid var(--line);
       background:#fff;
       font-weight:900;
       cursor:pointer;
       box-shadow: var(--shadow2);
-      transition: transform .12s ease, box-shadow .12s ease, filter .12s ease;
+      transition: transform .12s ease, filter .12s ease;
       user-select:none;
       font-size:13px;
       white-space:nowrap;
@@ -128,7 +128,7 @@
       color:#fff;
       border-color: rgba(31,106,255,.22);
       background: linear-gradient(135deg, var(--primary), var(--primary2));
-      box-shadow: 0 18px 36px rgba(31,106,255,.22);
+      box-shadow: 0 18px 36px rgba(31,106,255,.20);
     }
     .btn.primary:hover{filter: brightness(1.02)}
     .btn.soft{
@@ -136,32 +136,30 @@
       border-color: rgba(31,106,255,.18);
       color: var(--text);
     }
-    .btn.disabled{
-      opacity:.55; cursor:not-allowed; box-shadow:none;
-    }
-    @media (max-width:520px){
-      .topbar-actions .btn.soft{display:none;}
-      .brand-sub{max-width: 62vw;}
-      .brand img{width:52px;}
+
+    @media (max-width:560px){
+      .brand-sub{display:none;}          /* موبایل: زیرمتن حذف = هدر خلوت‌تر */
+      .brand img{width:54px;}
+      :root{--stickyH: 72px;}
     }
 
-    /* Hero */
+    /* ---------- LAYOUT ---------- */
+    .card{
+      background:var(--card);
+      border:1px solid var(--line);
+      border-radius: var(--radius2);
+      box-shadow: var(--shadow);
+      padding:16px;
+    }
+
     .hero{
       margin-top:14px;
       display:grid;
-      grid-template-columns: 1.05fr .95fr;
+      grid-template-columns: 1.1fr .9fr;
       gap:14px;
       align-items:stretch;
     }
     @media (max-width: 980px){ .hero{grid-template-columns:1fr} }
-
-    .card{
-      background:var(--card);
-      border:1px solid var(--line);
-      border-radius: var(--radius);
-      box-shadow: var(--shadow);
-      padding:18px;
-    }
 
     .badge{
       display:inline-flex;align-items:center;gap:8px;
@@ -172,6 +170,8 @@
       color: rgba(11,18,32,.88);
       font-size:13px;
       font-weight:800;
+      width:fit-content;
+      margin-right:auto; /* راست‌چین طبیعی، ولی کپسول سمت چپ کارت ننشیند */
     }
     .dot{
       width:8px;height:8px;border-radius:50%;
@@ -191,17 +191,30 @@
     .sub{
       margin:0;
       color:var(--muted);
-      font-size:15.6px;
-      line-height:1.78;
+      font-size:15.4px;
+      line-height:1.72;
       font-weight:500;
     }
-    .sub b{color:var(--text);font-weight:800}
+    .sub b{color:var(--text);font-weight:900}
 
     .cta{
       display:flex;flex-wrap:wrap;gap:10px;
       margin-top:14px;
+      align-items:center;
+    }
+    .hintline{
+      margin-top:8px;
+      color:var(--muted);
+      font-size:12.5px;
+      font-weight:600;
+      line-height:1.7;
+    }
+    .hintline a{
+      border-bottom:1px dashed rgba(15,23,42,.22);
+      padding-bottom:1px;
     }
 
+    /* چیپ‌ها: فقط ۲تا */
     .chips{
       display:flex;flex-wrap:wrap;gap:8px;
       margin-top:12px;
@@ -214,7 +227,7 @@
       background: var(--chip);
       color: rgba(11,18,32,.84);
       font-size:13px;
-      font-weight:800;
+      font-weight:900;
     }
     .chip small{font-weight:700;color:var(--muted)}
     .ico{
@@ -222,33 +235,70 @@
       color: var(--primary);
     }
 
+    /* بنر: کمتر جا بگیرد */
     .hero-art{
-      margin-top:14px;
-      border-radius: 26px;
+      margin-top:12px;
+      border-radius: 20px;
       overflow:hidden;
       border:1px solid var(--line);
       background:#fff;
-      box-shadow: 0 22px 60px rgba(15,23,42,.16);
-      transform: translateZ(0);
+      box-shadow: 0 22px 60px rgba(15,23,42,.12);
       position:relative;
-    }
-    .hero-art:before{
-      content:"";
-      position:absolute; inset:-40%;
-      background: radial-gradient(circle at 25% 30%, rgba(255,255,255,.65), transparent 55%);
-      transform: rotate(16deg);
-      opacity:.35;
-      pointer-events:none;
     }
     .hero-art img{
       width:100%;
-      height:auto;
-      position:relative;
-      z-index:1;
+      height:280px;            /* کنترل ارتفاع */
+      object-fit:cover;        /* کراپ شیک */
+      object-position:center;
+    }
+    @media (max-width: 520px){
+      .hero-art img{height:240px;}
     }
 
-    /* Section headers */
-    .section{margin-top:18px}
+    /* ---------- Right: App-like preview ---------- */
+    .preview{display:grid;grid-template-columns:1fr;gap:12px}
+    .mini-card{
+      border-radius: 20px;
+      border:1px solid rgba(15,23,42,.10);
+      background:#fff;
+      box-shadow: var(--shadow2);
+      padding:14px;
+    }
+    .mini-top{
+      display:flex;align-items:center;justify-content:space-between;gap:10px;
+      padding-bottom:10px;margin-bottom:10px;border-bottom:1px solid var(--line);
+    }
+    .mini-top b{font-size:14px;font-weight:900}
+    .mini-top span{font-size:12px;color:var(--muted);font-weight:700}
+    .status-box{
+      border:1px solid rgba(31,106,255,.18);
+      background: rgba(31,106,255,.07);
+      border-radius:18px;
+      padding:12px;
+      display:flex;align-items:center;justify-content:space-between;gap:10px;
+    }
+    .status-box .left{display:flex;flex-direction:column;gap:2px}
+    .status-box .left b{font-size:13.5px;font-weight:900}
+    .status-box .left small{color:var(--muted);font-weight:700}
+    .pill{
+      border:1px solid rgba(31,106,255,.22);
+      background: rgba(31,106,255,.12);
+      color:#1e3a8a;
+      padding:7px 10px;border-radius:999px;
+      font-size:12px;font-weight:900;
+      white-space:nowrap;
+    }
+    /* واضح کنیم که نمونه است */
+    .sample-note{
+      margin-top:10px;
+      color:var(--muted);
+      font-size:12.3px;
+      font-weight:600;
+      line-height:1.7;
+    }
+
+    /* ---------- Sections ---------- */
+    .section{margin-top:16px}
     .section-head{
       display:flex;align-items:flex-end;justify-content:space-between;gap:10px;
       margin:0 0 10px;
@@ -267,7 +317,9 @@
       font-weight:500;
     }
 
-    /* Services (مثل اپ) */
+    /* اسکرول: عنوان زیر هدر نرود */
+    #services, #why, #how, #waitlist { scroll-margin-top: calc(var(--stickyH) + 14px); }
+
     .grid4{
       display:grid;
       grid-template-columns: repeat(4, 1fr);
@@ -278,12 +330,12 @@
 
     .service{
       display:flex;align-items:center;justify-content:space-between;gap:10px;
-      padding:14px 14px;
+      padding:13px 13px;
       border-radius:18px;
       border:1px solid rgba(15,23,42,.10);
       background:#fff;
       box-shadow: var(--shadow2);
-      min-height:66px;
+      min-height:62px;
       transition: transform .12s ease, box-shadow .12s ease;
     }
     .service:hover{
@@ -299,50 +351,30 @@
       flex:0 0 40px;
     }
 
-    /* Right card: App-like preview */
-    .preview{
-      display:grid;
-      grid-template-columns:1fr;
-      gap:12px;
-    }
-    .mini-card{
-      border-radius: 20px;
-      border:1px solid rgba(15,23,42,.10);
-      background:#fff;
-      box-shadow: var(--shadow2);
-      padding:14px;
-    }
-    .mini-top{
-      display:flex;align-items:center;justify-content:space-between;gap:10px;
-      padding-bottom:10px;margin-bottom:10px;border-bottom:1px solid var(--line);
-    }
-    .mini-top b{font-size:14px;font-weight:900}
-    .mini-top span{font-size:12px;color:var(--muted);font-weight:600}
-    .status-box{
-      border:1px solid rgba(31,106,255,.18);
-      background: rgba(31,106,255,.07);
-      border-radius:18px;
-      padding:12px;
-      display:flex;align-items:center;justify-content:space-between;gap:10px;
-    }
-    .status-box .left{display:flex;flex-direction:column;gap:2px}
-    .status-box .left b{font-size:13.5px;font-weight:900}
-    .status-box .left small{color:var(--muted);font-weight:600}
-    .pill{
-      border:1px solid rgba(31,106,255,.22);
-      background: rgba(31,106,255,.12);
-      color:#1e3a8a;
-      padding:7px 10px;border-radius:999px;
-      font-size:12px;font-weight:900;
-      white-space:nowrap;
-    }
-
     .why-grid{
       display:grid;
       grid-template-columns:1fr 1fr;
       gap:10px;
     }
     @media (max-width: 980px){ .why-grid{grid-template-columns:1fr} }
+
+    .media{
+      border-radius: 22px;
+      overflow:hidden;
+      border:1px solid rgba(15,23,42,.10);
+      background:#fff;
+      box-shadow: var(--shadow);
+    }
+    .media img{width:100%;height:240px;object-fit:cover}
+    @media (max-width:520px){ .media img{height:220px} }
+    .media-caption{
+      padding:12px 14px;
+      color:var(--muted);
+      font-size:13px;
+      line-height:1.8;
+      font-weight:500;
+    }
+    .media-caption b{color:var(--text);font-weight:900}
 
     .why{
       display:flex;gap:12px;align-items:flex-start;
@@ -363,25 +395,6 @@
     .why b{display:block;margin-bottom:4px;font-weight:900}
     .why p{margin:0;color:var(--muted);font-size:13.5px;line-height:1.85;font-weight:500}
 
-    /* Banners / Images */
-    .media{
-      border-radius: 26px;
-      overflow:hidden;
-      border:1px solid rgba(15,23,42,.10);
-      background:#fff;
-      box-shadow: var(--shadow);
-    }
-    .media img{width:100%;height:auto}
-    .media-caption{
-      padding:12px 14px;
-      color:var(--muted);
-      font-size:13px;
-      line-height:1.8;
-      font-weight:500;
-    }
-    .media-caption b{color:var(--text);font-weight:900}
-
-    /* Steps */
     .steps{
       display:grid;
       grid-template-columns: repeat(4,1fr);
@@ -420,7 +433,13 @@
       font-size:15px;
       font-family: inherit;
     }
-    .hint{color:var(--muted);font-size:12.5px;line-height:1.75;margin-top:4px;font-weight:500}
+    .hint{
+      color:var(--muted);
+      font-size:12.5px;
+      line-height:1.75;
+      margin-top:4px;
+      font-weight:500
+    }
 
     .footer{
       margin-top:18px;
@@ -438,7 +457,7 @@
 <body>
   <div class="container">
 
-    <!-- MINIMAL HEADER -->
+    <!-- HEADER: فقط یک CTA -->
     <div class="topbar">
       <div class="topbar-inner">
         <a class="brand" href="#top" aria-label="Mobix">
@@ -449,10 +468,7 @@
           </div>
         </a>
 
-        <div class="topbar-actions">
-          <a class="btn soft" href="#how">مراحل کار</a>
-          <a class="btn primary" href="#waitlist">لیست انتظار</a>
-        </div>
+        <a class="btn primary" href="#waitlist">لیست انتظار</a>
       </div>
     </div>
 
@@ -460,17 +476,21 @@
     <section class="hero" id="top">
       <div class="card">
         <div class="badge"><span class="dot"></span> لانچ تا چند روز آینده</div>
+
         <h1>با خیال راحت بسپارید</h1>
         <p class="sub">
-          تعمیر موبایل — دریافت گوشی با <b>پیک موبیکس</b>،
-          تعمیر توسط <b>تعمیرکاران موبیکس</b> و تحویل به شما.
-          پیگیری مرحله‌ای و پشتیبانی داخل اپ.
+          دریافت گوشی با <b>پیک موبیکس</b>، تعمیر توسط <b>تعمیرکاران موبیکس</b> و تحویل به شما —
+          با <b>پیگیری مرحله‌ای</b> و <b>پشتیبانی داخل اپ</b>.
         </p>
 
         <div class="cta">
           <a class="btn primary" href="#waitlist">عضویت در لیست انتظار</a>
+          <a class="btn soft" href="#how">مراحل کار</a>
           <a class="btn soft" href="#services">خدمات سریع</a>
-          <span class="btn disabled" title="بعد از لانچ فعال می‌شود">دانلود اپ (به‌زودی)</span>
+        </div>
+
+        <div class="hintline">
+          دانلود اپ: <b>به‌زودی</b> (بعد از لانچ فعال می‌شود)
         </div>
 
         <div class="chips">
@@ -491,31 +511,21 @@
             </span>
             پیگیری مرحله‌ای <small>شفاف</small>
           </span>
-
-          <span class="chip">
-            <span class="ico" aria-hidden="true">
-              <svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2">
-                <path d="M3 12h18"/>
-                <path d="M7 8l-4 4 4 4"/>
-                <path d="M17 8l4 4-4 4"/>
-              </svg>
-            </span>
-            دریافت و تحویل <small>با پیک موبیکس</small>
-          </span>
         </div>
 
         <div class="hero-art">
-          <img src="assets/hero.png" alt="سفارش تعمیر موبایل با موبیکس" loading="eager">
+          <img src="assets/hero.png" alt="موبیکس" loading="eager">
         </div>
       </div>
 
-      <!-- RIGHT: app-like preview -->
+      <!-- RIGHT: نمونه اپ -->
       <div class="card">
         <div class="preview">
+
           <div class="mini-card">
             <div class="mini-top">
               <b>نمونه پیگیری سفارش</b>
-              <span>MXC-251224-0005</span>
+              <span>نمونه</span>
             </div>
             <div class="status-box">
               <div class="left">
@@ -524,6 +534,7 @@
               </div>
               <div class="pill">در حال بررسی</div>
             </div>
+            <div class="sample-note">این بخش صرفاً نمایشی است تا تجربه‌ی پیگیری سفارش را نشان دهد.</div>
           </div>
 
           <div class="mini-card" id="services">
@@ -585,14 +596,14 @@
     <section class="section" id="why">
       <div class="section-head">
         <h2>چرا موبیکس؟</h2>
-        <p>تجربه‌ی تعمیر موبایل با سرویس کامل و پیگیری شفاف</p>
+        <p>سرویس کامل + تجربه‌ی شفاف و قابل پیگیری</p>
       </div>
 
       <div class="why-grid">
         <div class="media">
           <img src="assets/courier.png" alt="پیک موبیکس" loading="lazy">
           <div class="media-caption">
-            دریافت و تحویل توسط <b>پیک موبیکس</b> — تجربه‌ای سریع و بدون دردسر.
+            دریافت و تحویل توسط <b>پیک موبیکس</b> — سریع و بدون دردسر.
           </div>
         </div>
 
@@ -612,8 +623,8 @@
             </svg>
           </div>
           <div>
-            <b>سرویس کامل</b>
-            <p>از دریافت تا تعمیر و تحویل، همه‌چیز یکپارچه و منظم انجام می‌شود.</p>
+            <b>سرویس یکپارچه</b>
+            <p>از دریافت تا تعمیر و تحویل، همه‌چیز منظم و یکپارچه انجام می‌شود.</p>
           </div>
         </div>
 
@@ -704,7 +715,7 @@
       const name = (form.elements.name.value || '').trim();
       const phone = normalizePhone(form.elements.phone.value);
 
-      const ok = /^(\+98|0)?9\\d{9}$/.test(phone);
+      const ok = /^(\+98|0)?9\d{9}$/.test(phone);
       if(!ok){
         alert('شماره موبایل معتبر وارد کن (مثل 09xxxxxxxxx).');
         return false;
@@ -715,7 +726,7 @@
         if(name) localStorage.setItem('mobix_waitlist_name', name);
       }catch(_){}
 
-      alert('ثبت شد ✅\\nبه محض لانچ اپ، خبرت می‌کنیم.');
+      alert('ثبت شد ✅\nبه محض لانچ اپ، خبرت می‌کنیم.');
       form.reset();
       return false;
     }
