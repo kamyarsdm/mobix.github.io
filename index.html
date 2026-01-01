@@ -794,13 +794,6 @@
             </div>
 
             <div id="authMsg" class="hint" aria-live="polite"></div>
-
-            <div class="divider"></div>
-
-            <div class="muted">
-              نکته: چون Phone Auth پیش‌فرض Supabase خاموش است، ورود از طریق Edge Function انجام می‌شود و باید
-              در پاسخ verify، توکن‌های session برگردانده شوند (access_token و refresh_token) تا سایت بتواند سشن را ست کند.
-            </div>
           </div>
 
           <!-- ORDER CARD -->
@@ -890,41 +883,38 @@
 
   <script>
     (function(){
-      // =========================
-      // ✅ Supabase Config (yours)
-      // =========================
       const SUPABASE_URL = "https://vrxfhfknmxmeatnfzpcg.supabase.co";
       const SUPABASE_ANON_KEY = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InZyeGZoZmtubXhtZWF0bmZ6cGNnIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NjYyNTg2MjksImV4cCI6MjA4MTgzNDYyOX0.iANOG9-g9GnVl58KDYI0A-oYNwfbL3oh2NBddZ2sLLs";
 
-      // ✅ Edge Functions (sms.ir)
       const OTP_REQUEST_URL = "https://vrxfhfknmxmeatnfzpcg.supabase.co/functions/v1/request-otp";
       const OTP_VERIFY_URL  = "https://vrxfhfknmxmeatnfzpcg.supabase.co/functions/v1/verify-otp";
 
       const supabase = window.supabase.createClient(SUPABASE_URL, SUPABASE_ANON_KEY);
 
-      // =========================
-      // Helpers
-      // =========================
       function normalizeDigits(s){
         return (s || "")
           .replace(/[۰-۹]/g, d => "۰۱۲۳۴۵۶۷۸۹".indexOf(d))
           .replace(/[^\d]/g, "");
       }
-
       function isValidIranMobile(d){
         if(!d) return false;
         if(d.length === 11 && d.startsWith("09")) return true;
         if(d.length === 10 && d.startsWith("9")) return true;
         return false;
       }
-
-      function toE164Iran(d){
+      function to09(d){
+        // 912... -> 0912...
         if(!d) return null;
-        if(d.length === 11 && d.startsWith("09")) return "+98" + d.slice(1);
-        if(d.length === 10 && d.startsWith("9")) return "+98" + d;
+        if(d.length === 11 && d.startsWith("09")) return d;
+        if(d.length === 10 && d.startsWith("9")) return "0" + d;
         return null;
       }
-
+      function toE164IranFrom09(d09){
+        // 0912... -> +98912...
+        if(!d09) return null;
+        if(d09.length === 11 && d09.startsWith("09")) return "+98" + d09.slice(1);
+        return null;
+      }
       function fmtDate(iso){
         try{
           const dt = new Date(iso);
@@ -932,7 +922,6 @@
           return dt.toLocaleString("fa-IR", { year:"numeric", month:"2-digit", day:"2-digit", hour:"2-digit", minute:"2-digit" });
         }catch(e){ return iso || ""; }
       }
-
       function esc(s){
         return (s ?? "").toString()
           .replaceAll("&","&amp;")
@@ -941,23 +930,17 @@
           .replaceAll('"',"&quot;")
           .replaceAll("'","&#039;");
       }
-
       async function safeJson(res){
         try{ return await res.json(); }catch(e){ return null; }
       }
-
       function extractErrorMessage(obj){
         if(!obj) return null;
         if(typeof obj === "string") return obj;
         return obj.message || obj.error || (obj.errors && obj.errors[0] && (obj.errors[0].message || obj.errors[0])) || null;
       }
 
-      // =========================
-      // UI Elements
-      // =========================
       const navAuthBtn = document.getElementById("navAuthBtn");
       const floatingAuthBtn = document.getElementById("floatingAuthBtn");
-
       const sessionBadge = document.getElementById("sessionBadge");
 
       const authPhone = document.getElementById("authPhone");
@@ -981,20 +964,14 @@
       const ordersWrap = document.getElementById("ordersWrap");
       const ordersCount = document.getElementById("ordersCount");
 
-      // =========================
-      // State
-      // =========================
-      let lastE164Phone = null;
+      let lastPhone09 = null;     // ✅ برای Edge Function (احتمالاً انتظار 09...)
+      let lastPhoneE164 = null;   // ✅ برای سازگاری احتمالی (+98...)
 
-      // =========================
-      // UI functions
-      // =========================
       function setStatus(el, type, text){
         el.classList.remove("ok","err","warn");
         if(type) el.classList.add(type);
         el.textContent = text;
       }
-
       function setMsg(el, type, text){
         if(!text){
           el.textContent = "";
@@ -1007,14 +984,11 @@
         else el.style.color = "var(--muted)";
         el.textContent = text;
       }
-
       function showAuthBox(show){
         otpBox.style.display = show ? "" : "none";
       }
-
       function setLoggedInUI(user){
         const loggedIn = !!user;
-
         if(loggedIn){
           setStatus(sessionBadge, "ok", "وارد شده‌اید ✅");
           navAuthBtn.textContent = "حساب من";
@@ -1033,24 +1007,13 @@
           ordersCount.textContent = "0";
         }
       }
-
       function scrollToOrder(){
         const el = document.getElementById("order");
         if(el) el.scrollIntoView({ behavior:"smooth", block:"start" });
       }
+      navAuthBtn.addEventListener("click", function(){ scrollToOrder(); authPhone.focus(); });
+      floatingAuthBtn.addEventListener("click", function(){ scrollToOrder(); authPhone.focus(); });
 
-      navAuthBtn.addEventListener("click", function(){
-        scrollToOrder();
-        authPhone.focus();
-      });
-      floatingAuthBtn.addEventListener("click", function(){
-        scrollToOrder();
-        authPhone.focus();
-      });
-
-      // =========================
-      // Tracking UI mapping
-      // =========================
       const TRACK_STEPS = [
         { key:"requested", title:"ثبت درخواست", desc:"درخواست شما ثبت شد و در حال بررسی است." },
         { key:"picked_up", title:"دریافت با پیک", desc:"پیک موبیکس دستگاه را دریافت کرد." },
@@ -1059,7 +1022,6 @@
         { key:"delivering", title:"ارسال برای تحویل", desc:"دستگاه آماده شده و در مسیر تحویل است." },
         { key:"delivered", title:"تحویل به شما", desc:"دستگاه تحویل داده شد ✅" }
       ];
-
       function normalizeStatus(raw){
         const s = (raw || "").toString().trim().toLowerCase();
         if(["new","created","request","requested","pending"].includes(s)) return "requested";
@@ -1070,16 +1032,13 @@
         if(["done","delivered","completed","complete"].includes(s)) return "delivered";
         return s || "requested";
       }
-
       function stepIndex(key){
         const idx = TRACK_STEPS.findIndex(x => x.key === key);
         return idx < 0 ? 0 : idx;
       }
-
       function renderTrack(statusKey){
         const norm = normalizeStatus(statusKey);
         const activeIdx = stepIndex(norm);
-
         return `
           <div class="track">
             ${TRACK_STEPS.map((s, i) => {
@@ -1099,9 +1058,6 @@
         `;
       }
 
-      // =========================
-      // Supabase actions
-      // =========================
       async function refreshSession(){
         const { data, error } = await supabase.auth.getSession();
         if(error){
@@ -1115,10 +1071,8 @@
         return user;
       }
 
-      // =========================
-      // ✅ Edge Function OTP (sms.ir)
-      // =========================
-      async function requestOtpEdge(e164Phone){
+      // ✅ request-otp (Edge Function)
+      async function requestOtpEdge(phone09, phoneE164){
         const res = await fetch(OTP_REQUEST_URL, {
           method: "POST",
           headers: {
@@ -1126,7 +1080,11 @@
             "apikey": SUPABASE_ANON_KEY,
             "Authorization": "Bearer " + SUPABASE_ANON_KEY
           },
-          body: JSON.stringify({ phone: e164Phone })
+          body: JSON.stringify({
+            phone: phone09,      // ✅ رایج‌ترین: 09...
+            phone_e164: phoneE164, // ✅ برای سازگاری
+            e164: phoneE164        // ✅ برای سازگاری
+          })
         });
         const json = await safeJson(res);
         if(!res.ok){
@@ -1136,7 +1094,8 @@
         return json || { ok: true };
       }
 
-      async function verifyOtpEdgeAndSetSession(e164Phone, token){
+      // ✅ verify-otp (Edge Function) + setSession
+      async function verifyOtpEdgeAndSetSession(phone09, phoneE164, code){
         const res = await fetch(OTP_VERIFY_URL, {
           method: "POST",
           headers: {
@@ -1144,15 +1103,21 @@
             "apikey": SUPABASE_ANON_KEY,
             "Authorization": "Bearer " + SUPABASE_ANON_KEY
           },
-          body: JSON.stringify({ phone: e164Phone, token })
+          body: JSON.stringify({
+            phone: phone09,        // ✅ طبق خطا: phone required
+            code: code,            // ✅ طبق خطا: code required
+            token: code,           // ✅ برای سازگاری (اگر قبلاً token بوده)
+            phone_e164: phoneE164, // ✅ برای سازگاری
+            e164: phoneE164        // ✅ برای سازگاری
+          })
         });
+
         const json = await safeJson(res);
         if(!res.ok){
           const msg = extractErrorMessage(json) || ("HTTP " + res.status);
           throw new Error(msg);
         }
 
-        // تلاش برای پیدا کردن توکن‌ها در هر ساختاری
         const access_token =
           json?.access_token ||
           json?.session?.access_token ||
@@ -1170,12 +1135,11 @@
           null;
 
         if(!access_token || !refresh_token){
-          throw new Error("پاسخ verify شامل access_token/refresh_token نبود. (ساختار خروجی Edge Function را باید با سایت هماهنگ کنیم)");
+          throw new Error("پاسخ verify شامل access_token/refresh_token نبود. (باید خروجی verify-otp را با سایت هماهنگ کنیم)");
         }
 
         const { error } = await supabase.auth.setSession({ access_token, refresh_token });
         if(error) throw new Error(error.message || "خطا در setSession");
-
         return json;
       }
 
@@ -1186,8 +1150,11 @@
           setMsg(authMsg, "err", "شماره موبایل درست نیست. مثل 0912xxxxxxx وارد کنید.");
           return;
         }
-        const e164 = toE164Iran(d);
-        if(!e164){
+
+        const phone09 = to09(d);
+        const phoneE164 = toE164IranFrom09(phone09);
+
+        if(!phone09){
           setMsg(authMsg, "err", "شماره قابل تبدیل نیست. لطفاً دوباره تلاش کنید.");
           return;
         }
@@ -1196,8 +1163,9 @@
         setMsg(authMsg, "warn", "در حال ارسال کد…");
 
         try{
-          await requestOtpEdge(e164);
-          lastE164Phone = e164;
+          await requestOtpEdge(phone09, phoneE164);
+          lastPhone09 = phone09;
+          lastPhoneE164 = phoneE164;
           showAuthBox(true);
           setMsg(authMsg, "ok", "کد ارسال شد ✅ حالا کد را وارد کنید.");
           authCode.focus();
@@ -1213,7 +1181,7 @@
         setMsg(authMsg, "", "");
         const code = normalizeDigits(authCode.value);
 
-        if(!lastE164Phone){
+        if(!lastPhone09){
           setMsg(authMsg, "err", "اول شماره را وارد کنید و کد را ارسال کنید.");
           return;
         }
@@ -1226,7 +1194,7 @@
         setMsg(authMsg, "warn", "در حال تایید کد…");
 
         try{
-          await verifyOtpEdgeAndSetSession(lastE164Phone, code);
+          await verifyOtpEdgeAndSetSession(lastPhone09, lastPhoneE164, code);
           authCode.value = "";
           setMsg(authMsg, "ok", "ورود انجام شد ✅");
           await refreshSession();
@@ -1244,7 +1212,8 @@
           setMsg(authMsg, "err", "خروج ناموفق: " + (error.message || "خطای نامشخص"));
           return;
         }
-        lastE164Phone = null;
+        lastPhone09 = null;
+        lastPhoneE164 = null;
         showAuthBox(false);
         setMsg(authMsg, "ok", "خارج شدید.");
         await refreshSession();
@@ -1273,7 +1242,7 @@
 
         const payload = {
           user_id: user.id,
-          customer_phone: user.phone || lastE164Phone,
+          customer_phone: user.phone || lastPhoneE164 || lastPhone09,
           device_model: dm,
           problem: pr,
           address: ad,
@@ -1319,7 +1288,7 @@
           .order("created_at", { ascending:false });
 
         if(res.error){
-          const phone = user.phone || lastE164Phone;
+          const phone = user.phone || lastPhoneE164 || lastPhone09;
           if(phone){
             res = await supabase
               .from("orders")
@@ -1371,14 +1340,6 @@
           `;
         }).join("");
       }
-
-      // =========================
-      // Events
-      // =========================
-      const navAuthBtnEl = document.getElementById("navAuthBtn");
-      const floatingAuthBtnEl = document.getElementById("floatingAuthBtn");
-      navAuthBtnEl.addEventListener("click", function(){ scrollToOrder(); authPhone.focus(); });
-      floatingAuthBtnEl.addEventListener("click", function(){ scrollToOrder(); authPhone.focus(); });
 
       sendOtpBtn.addEventListener("click", sendOtp);
       verifyOtpBtn.addEventListener("click", verifyOtp);
