@@ -37,6 +37,7 @@
       --primary2:#3B82F6;
       --success:#10B981;
       --danger:#EF4444;
+      --warn:#F59E0B;
 
       --max:1160px;
     }
@@ -78,7 +79,8 @@
     .brand-title{font-weight:900;font-size:15px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
 
     .nav{
-      display:flex;align-items:center;gap:8px;
+      display:flex;align-items:center;gap:8px;flex-wrap:wrap;
+      justify-content:flex-end;
     }
     .chip{
       padding:9px 12px;
@@ -99,6 +101,7 @@
       box-shadow:var(--shadow2);
       cursor:pointer;
       font-family:inherit;
+      white-space:nowrap;
     }
     .btn.primary{
       background:linear-gradient(135deg,var(--primary),var(--primary2));
@@ -108,6 +111,12 @@
     .btn.ghost{
       background:rgba(255,255,255,.72);
     }
+    .btn.danger{
+      background:rgba(239,68,68,.10);
+      border:1px solid rgba(239,68,68,.25);
+      color:#7F1D1D;
+    }
+    .btn:disabled{opacity:.55;cursor:not-allowed}
 
     /* HERO */
     .hero{
@@ -213,6 +222,7 @@
       padding:12px 14px;
       background:rgba(255,255,255,.86);
       border-bottom:1px solid var(--line);
+      gap:10px;
     }
     .mock-top b{font-weight:900}
     .pill{
@@ -224,6 +234,7 @@
       color:#0B2A6A;
       font-weight:900;
       font-size:12.5px;
+      white-space:nowrap;
     }
     .mock-body{padding:14px}
     .step{
@@ -283,7 +294,6 @@
       box-shadow:var(--shadow);
     }
 
-    /* ✅ FIX: ارتفاع ثابت + بدون خراب شدن */
     .media .imgwrap{
       width:100%;
       aspect-ratio: 16 / 9;
@@ -299,8 +309,7 @@
     .media img{
       width:100%;
       height:100%;
-      object-fit:contain; /* اگر دوست داشتی کراپ نشه */
-      /* object-fit:cover;  اگر دوست داشتی کل کادر پر بشه */
+      object-fit:contain;
       display:block;
     }
 
@@ -347,7 +356,15 @@
     .tcard b{display:block;margin-top:10px;font-weight:900;position:relative}
     .tcard p{margin:6px 0 0;color:var(--muted);font-size:13.5px;line-height:1.8;position:relative}
 
-    /* WAITLIST */
+    /* AUTH + ORDER (new) */
+    .grid-2{
+      display:grid;
+      grid-template-columns:1fr 1fr;
+      gap:12px;
+      align-items:start;
+    }
+    @media(max-width:900px){.grid-2{grid-template-columns:1fr}}
+
     .form{
       margin-top:10px;
       display:grid;
@@ -367,12 +384,122 @@
       font-weight:700;
       outline:none;
     }
+
+    .field{
+      display:flex;
+      flex-direction:column;
+      gap:6px;
+      margin-top:10px;
+    }
+    .label{
+      font-size:13px;
+      font-weight:900;
+      color:var(--muted);
+    }
+    .textarea{
+      width:100%;
+      min-height:110px;
+      padding:12px 14px;
+      border-radius:16px;
+      border:1px solid var(--line);
+      background:#fff;
+      box-shadow:var(--shadow2);
+      font-family:inherit;
+      font-weight:700;
+      outline:none;
+      resize:vertical;
+      line-height:1.9;
+    }
+
     .hint{
       margin-top:10px;
       color:var(--muted);
       font-size:13px;
       line-height:1.7;
+      white-space:pre-line;
     }
+
+    .status{
+      display:inline-flex;
+      align-items:center;
+      gap:8px;
+      padding:8px 10px;
+      border-radius:999px;
+      border:1px solid var(--line);
+      background:rgba(255,255,255,.86);
+      font-weight:900;
+      font-size:12.8px;
+    }
+    .status.ok{border-color:rgba(16,185,129,.25);background:rgba(16,185,129,.08);color:#0B3A2C}
+    .status.err{border-color:rgba(239,68,68,.25);background:rgba(239,68,68,.08);color:#7F1D1D}
+    .status.warn{border-color:rgba(245,158,11,.30);background:rgba(245,158,11,.10);color:#78350F}
+
+    .divider{
+      height:1px;background:var(--line);
+      margin:12px 0;
+    }
+
+    .orders{
+      display:flex;
+      flex-direction:column;
+      gap:10px;
+      margin-top:10px;
+    }
+    .order-item{
+      background:#fff;
+      border:1px solid var(--line);
+      border-radius:18px;
+      padding:12px;
+      box-shadow:var(--shadow2);
+      display:flex;
+      flex-direction:column;
+      gap:8px;
+    }
+    .order-top{
+      display:flex;
+      align-items:center;
+      justify-content:space-between;
+      gap:10px;
+      flex-wrap:wrap;
+    }
+    .order-top b{font-weight:900}
+    .muted{color:var(--muted);font-size:13.2px;line-height:1.8}
+
+    .track{
+      display:grid;
+      grid-template-columns:1fr;
+      gap:8px;
+      margin-top:4px;
+    }
+    .track-step{
+      display:flex;
+      align-items:flex-start;
+      gap:10px;
+      border:1px solid var(--line);
+      background:rgba(246,248,252,.55);
+      border-radius:16px;
+      padding:10px;
+    }
+    .track-bullet{
+      width:28px;height:28px;border-radius:12px;
+      display:flex;align-items:center;justify-content:center;
+      font-weight:900;
+      border:1px solid var(--line);
+      background:#fff;
+      flex:0 0 auto;
+    }
+    .track-step.done .track-bullet{
+      background:rgba(16,185,129,.10);
+      border-color:rgba(16,185,129,.25);
+      color:#0B3A2C;
+    }
+    .track-step.active .track-bullet{
+      background:rgba(31,106,255,.10);
+      border-color:rgba(31,106,255,.25);
+      color:#0B2A6A;
+    }
+    .track-step .tt b{display:block;font-weight:900}
+    .track-step .tt span{display:block;color:var(--muted);font-size:13px;line-height:1.8;margin-top:3px}
 
     /* FLOATING CTA */
     .floating{
@@ -405,7 +532,7 @@
     }
     .floating-inner .txt b{font-weight:900;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
     .floating-inner .txt span{color:var(--muted);font-size:12.8px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
-    .floating-inner .actions{display:flex;gap:8px;flex:0 0 auto}
+    .floating-inner .actions{display:flex;gap:8px;flex:0 0 auto;flex-wrap:wrap;justify-content:flex-end}
 
     /* FOOTER */
     .footer{
@@ -421,7 +548,7 @@
       align-items:center;
     }
 
-    /* ✅ ENAMAD (added) */
+    /* ENAMAD */
     .enamad{
       display:flex;
       align-items:center;
@@ -448,7 +575,8 @@
         <div class="nav">
           <a class="chip" href="#why">چرا موبیکس؟</a>
           <a class="chip" href="#how">مراحل کار</a>
-          <a class="btn primary" href="#waitlist">لیست انتظار</a>
+          <a class="chip" href="#order">ثبت/پیگیری سفارش</a>
+          <button class="btn ghost" id="navAuthBtn" type="button">ورود</button>
         </div>
       </div>
     </div>
@@ -465,7 +593,7 @@
         </p>
 
         <div class="cta">
-          <a class="btn primary" href="#waitlist">عضویت در لیست انتظار</a>
+          <a class="btn primary" href="#order">ثبت سفارش آنلاین</a>
           <a class="btn ghost" href="#how">مراحل کار</a>
         </div>
 
@@ -485,7 +613,7 @@
         </div>
       </div>
 
-      <!-- APP PREVIEW (بازگشت تجربه پیگیری + چیزهایی که پاک شده بود) -->
+      <!-- APP PREVIEW -->
       <div class="card">
         <h2 style="margin:0 0 8px;font-weight:900">نمونه تجربه داخل اپ</h2>
         <p class="sub">همین شکلی مرحله‌ای می‌بینی چی داره انجام می‌شه.</p>
@@ -573,6 +701,9 @@
             </div>
           </div>
         </div>
+
+        <div class="divider"></div>
+        <div id="sessionBadge" class="status warn">در حال بررسی وضعیت ورود…</div>
       </div>
     </section>
 
@@ -629,22 +760,105 @@
       </div>
     </section>
 
-    <!-- WAITLIST -->
-    <section class="section" id="waitlist">
+    <!-- ORDER + TRACK (NEW) -->
+    <section class="section" id="order">
       <div class="card">
-        <h2 style="margin:0 0 8px;font-weight:900">عضویت در لیست انتظار لانچ</h2>
-        <p class="sub">شماره‌ات رو بذار تا موقع لانچ خبرت کنیم.</p>
+        <h2 style="margin:0 0 8px;font-weight:900">ثبت و پیگیری سفارش (مثل اپ)</h2>
+        <p class="sub">با شماره موبایل وارد شوید، سفارش ثبت کنید و مرحله‌ای پیگیری کنید.</p>
 
-        <form class="form" id="wlForm" onsubmit="return false">
-          <input id="phone" class="input" inputmode="numeric" placeholder="شماره موبایل (مثلا 0912xxxxxxx)" />
-          <button id="submitBtn" class="btn primary" type="button">ثبت</button>
-        </form>
+        <div class="grid-2">
 
-        <div id="msg" class="hint" aria-live="polite"></div>
+          <!-- AUTH CARD -->
+          <div class="card" style="padding:16px;box-shadow:var(--shadow2)">
+            <h2 style="margin:0 0 8px;font-weight:900;font-size:18px">ورود با کد پیامکی</h2>
+            <p class="sub" style="font-size:14.5px">کد یکبار مصرف ارسال می‌شود. بعد از ورود، سفارش‌های شما نمایش داده می‌شود.</p>
+
+            <div class="field">
+              <div class="label">شماره موبایل</div>
+              <input id="authPhone" class="input" inputmode="numeric" placeholder="مثلا 0912xxxxxxx" />
+            </div>
+
+            <div class="form">
+              <button id="sendOtpBtn" class="btn primary" type="button">ارسال کد</button>
+              <div></div>
+            </div>
+
+            <div id="otpBox" style="display:none">
+              <div class="field">
+                <div class="label">کد پیامکی</div>
+                <input id="authCode" class="input" inputmode="numeric" placeholder="کد ۶ رقمی" />
+              </div>
+              <div class="form">
+                <button id="verifyOtpBtn" class="btn primary" type="button">تایید و ورود</button>
+                <button id="logoutBtn" class="btn danger" type="button" style="display:none">خروج</button>
+              </div>
+            </div>
+
+            <div id="authMsg" class="hint" aria-live="polite"></div>
+
+            <div class="divider"></div>
+
+            <div class="muted">
+              نکته: اگر ورود انجام نشد، معمولاً یکی از این‌هاست:
+              <br>• Phone Auth در Supabase فعال نیست
+              <br>• پیامک‌پرووایدر تنظیم نشده
+              <br>• RLS/Policy جدول orders اجازه Insert/Select نمی‌دهد
+            </div>
+          </div>
+
+          <!-- ORDER CARD -->
+          <div class="card" style="padding:16px;box-shadow:var(--shadow2)">
+            <div class="order-top">
+              <h2 style="margin:0;font-weight:900;font-size:18px">ثبت سفارش</h2>
+              <span id="orderGate" class="status warn">برای ثبت سفارش باید وارد شوید</span>
+            </div>
+
+            <div id="orderFormWrap" style="display:none">
+              <div class="field">
+                <div class="label">مدل گوشی</div>
+                <input id="deviceModel" class="input" placeholder="مثلا iPhone 13 / Galaxy A52" />
+              </div>
+
+              <div class="field">
+                <div class="label">مشکل دستگاه</div>
+                <textarea id="problemDesc" class="textarea" placeholder="مثلا خاموش شده / شکستگی ال‌سی‌دی / مشکل شارژ ..."></textarea>
+              </div>
+
+              <div class="field">
+                <div class="label">آدرس برای دریافت با پیک</div>
+                <textarea id="address" class="textarea" placeholder="آدرس دقیق + پلاک + واحد"></textarea>
+              </div>
+
+              <div class="field">
+                <div class="label">زمان پیشنهادی برای دریافت</div>
+                <input id="pickupTime" class="input" placeholder="مثلا امروز ۱۸ تا ۲۰ / فردا صبح" />
+              </div>
+
+              <div class="form">
+                <button id="createOrderBtn" class="btn primary" type="button">ثبت سفارش</button>
+                <button id="refreshOrdersBtn" class="btn ghost" type="button">به‌روزرسانی</button>
+              </div>
+
+              <div id="orderMsg" class="hint" aria-live="polite"></div>
+            </div>
+
+            <div class="divider"></div>
+
+            <div class="order-top">
+              <h2 style="margin:0;font-weight:900;font-size:18px">پیگیری سفارش‌های من</h2>
+              <span id="ordersCount" class="status">0</span>
+            </div>
+
+            <div id="ordersWrap" class="orders">
+              <div class="muted">بعد از ورود، سفارش‌های شما اینجا نمایش داده می‌شود.</div>
+            </div>
+          </div>
+
+        </div>
       </div>
     </section>
 
-    <!-- FOOTER (added enamad without removing anything else) -->
+    <!-- FOOTER -->
     <div class="footer">
       <span>© Mobix</span>
 
@@ -668,17 +882,28 @@
       </div>
       <div class="actions">
         <a class="btn ghost" href="#how">مراحل</a>
-        <a class="btn primary" href="#waitlist">لیست انتظار</a>
+        <a class="btn ghost" href="#order">ثبت/پیگیری</a>
+        <button class="btn primary" id="floatingAuthBtn" type="button">ورود</button>
       </div>
     </div>
   </div>
 
+  <!-- Supabase JS (CDN) -->
+  <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+
   <script>
     (function(){
-      const phone = document.getElementById('phone');
-      const btn = document.getElementById('submitBtn');
-      const msg = document.getElementById('msg');
+      // =========================
+      // ✅ Supabase Config (yours)
+      // =========================
+      const SUPABASE_URL = "https://vrxfhfknmxmeatnfzpcg.supabase.co";
+      const SUPABASE_ANON_KEY = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InZyeGZoZmtubXhtZWF0bmZ6cGNnIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NjYyNTg2MjksImV4cCI6MjA4MTgzNDYyOX0.iANOG9-g9GnVl58KDYI0A-oYNwfbL3oh2NBddZ2sLLs";
 
+      const supabase = window.supabase.createClient(SUPABASE_URL, SUPABASE_ANON_KEY);
+
+      // =========================
+      // Helpers
+      // =========================
       function normalizeDigits(s){
         return (s || "")
           .replace(/[۰-۹]/g, d => "۰۱۲۳۴۵۶۷۸۹".indexOf(d))
@@ -686,27 +911,3109 @@
       }
 
       function isValidIranMobile(d){
-        // 09xxxxxxxxx (11 digits) یا 9xxxxxxxxx (10 digits)
         if(!d) return false;
         if(d.length === 11 && d.startsWith("09")) return true;
         if(d.length === 10 && d.startsWith("9")) return true;
         return false;
       }
 
-      btn.addEventListener('click', function(){
-        const raw = phone.value;
-        const d = normalizeDigits(raw);
+      function toE164Iran(d){
+        // Input: 0912... or 912...
+        // Output: +98912...
+        if(!d) return null;
+        if(d.length === 11 && d.startsWith("09")) return "+98" + d.slice(1);
+        if(d.length === 10 && d.startsWith("9")) return "+98" + d;
+        return null;
+      }
 
+      function fmtDate(iso){
+        try{
+          const dt = new Date(iso);
+          if(isNaN(dt.getTime())) return iso || "";
+          return dt.toLocaleString("fa-IR", { year:"numeric", month:"2-digit", day:"2-digit", hour:"2-digit", minute:"2-digit" });
+        }catch(e){ return iso || ""; }
+      }
+
+      function esc(s){
+        return (s ?? "").toString()
+          .replaceAll("&","&amp;")
+          .replaceAll("<","&lt;")
+          .replaceAll(">","&gt;")
+          .replaceAll('"',"&quot;")
+          .replaceAll("'","&#039;");
+      }
+
+      // =========================
+      // UI Elements
+      // =========================
+      const navAuthBtn = document.getElementById("navAuthBtn");
+      const floatingAuthBtn = document.getElementById("floatingAuthBtn");
+
+      const sessionBadge = document.getElementById("sessionBadge");
+
+      const authPhone = document.getElementById("authPhone");
+      const authCode = document.getElementById("authCode");
+      const sendOtpBtn = document.getElementById("sendOtpBtn");
+      const verifyOtpBtn = document.getElementById("verifyOtpBtn");
+      const logoutBtn = document.getElementById("logoutBtn");
+      const otpBox = document.getElementById("otpBox");
+      const authMsg = document.getElementById("authMsg");
+
+      const orderGate = document.getElementById("orderGate");
+      const orderFormWrap = document.getElementById("orderFormWrap");
+      const deviceModel = document.getElementById("deviceModel");
+      const problemDesc = document.getElementById("problemDesc");
+      const address = document.getElementById("address");
+      const pickupTime = document.getElementById("pickupTime");
+      const createOrderBtn = document.getElementById("createOrderBtn");
+      const refreshOrdersBtn = document.getElementById("refreshOrdersBtn");
+      const orderMsg = document.getElementById("orderMsg");
+
+      const ordersWrap = document.getElementById("ordersWrap");
+      const ordersCount = document.getElementById("ordersCount");
+
+      // =========================
+      // State
+      // =========================
+      let lastE164Phone = null;
+
+      // =========================
+      // UI functions
+      // =========================
+      function setStatus(el, type, text){
+        el.classList.remove("ok","err","warn");
+        if(type) el.classList.add(type);
+        el.textContent = text;
+      }
+
+      function setMsg(el, type, text){
+        if(!text){
+          el.textContent = "";
+          el.style.color = "var(--muted)";
+          return;
+        }
+        if(type === "ok") el.style.color = "var(--success)";
+        else if(type === "err") el.style.color = "var(--danger)";
+        else if(type === "warn") el.style.color = "var(--warn)";
+        else el.style.color = "var(--muted)";
+        el.textContent = text;
+      }
+
+      function showAuthBox(show){
+        otpBox.style.display = show ? "" : "none";
+      }
+
+      function setLoggedInUI(user){
+        const loggedIn = !!user;
+
+        if(loggedIn){
+          setStatus(sessionBadge, "ok", "وارد شده‌اید ✅");
+          navAuthBtn.textContent = "حساب من";
+          floatingAuthBtn.textContent = "حساب من";
+          logoutBtn.style.display = "";
+          orderFormWrap.style.display = "";
+          setStatus(orderGate, "ok", "می‌توانید سفارش ثبت کنید");
+        }else{
+          setStatus(sessionBadge, "warn", "وارد نشده‌اید");
+          navAuthBtn.textContent = "ورود";
+          floatingAuthBtn.textContent = "ورود";
+          logoutBtn.style.display = "none";
+          orderFormWrap.style.display = "none";
+          setStatus(orderGate, "warn", "برای ثبت سفارش باید وارد شوید");
+          ordersWrap.innerHTML = '<div class="muted">بعد از ورود، سفارش‌های شما اینجا نمایش داده می‌شود.</div>';
+          ordersCount.textContent = "0";
+        }
+      }
+
+      function scrollToOrder(){
+        const el = document.getElementById("order");
+        if(el) el.scrollIntoView({ behavior:"smooth", block:"start" });
+      }
+
+      navAuthBtn.addEventListener("click", function(){
+        scrollToOrder();
+        authPhone.focus();
+      });
+      floatingAuthBtn.addEventListener("click", function(){
+        scrollToOrder();
+        authPhone.focus();
+      });
+
+      // =========================
+      // Tracking UI mapping
+      // =========================
+      const TRACK_STEPS = [
+        { key:"requested", title:"ثبت درخواست", desc:"درخواست شما ثبت شد و در حال بررسی است." },
+        { key:"picked_up", title:"دریافت با پیک", desc:"پیک موبیکس دستگاه را دریافت کرد." },
+        { key:"quoted", title:"اعلام/تأیید هزینه", desc:"هزینه اعلام شد و منتظر تایید شماست." },
+        { key:"repairing", title:"در حال تعمیر", desc:"تکنسین موبیکس در حال انجام تعمیر است." },
+        { key:"delivering", title:"ارسال برای تحویل", desc:"دستگاه آماده شده و در مسیر تحویل است." },
+        { key:"delivered", title:"تحویل به شما", desc:"دستگاه تحویل داده شد ✅" }
+      ];
+
+      function normalizeStatus(raw){
+        const s = (raw || "").toString().trim().toLowerCase();
+        // نگاشت‌های رایج (اگر در دیتابیس شما متفاوت بود، اینجا اضافه کنید)
+        if(["new","created","request","requested","pending"].includes(s)) return "requested";
+        if(["pickup","pickedup","picked_up","courier_pickup"].includes(s)) return "picked_up";
+        if(["quote","quoted","price","awaiting_approval","approved_pending"].includes(s)) return "quoted";
+        if(["repair","repairing","in_repair","fixing"].includes(s)) return "repairing";
+        if(["deliver","delivering","shipping","on_the_way"].includes(s)) return "delivering";
+        if(["done","delivered","completed","complete"].includes(s)) return "delivered";
+        return s || "requested";
+      }
+
+      function stepIndex(key){
+        const idx = TRACK_STEPS.findIndex(x => x.key === key);
+        return idx < 0 ? 0 : idx;
+      }
+
+      function renderTrack(statusKey){
+        const norm = normalizeStatus(statusKey);
+        const activeIdx = stepIndex(norm);
+
+        return `
+          <div class="track">
+            ${TRACK_STEPS.map((s, i) => {
+              const cls = i < activeIdx ? "done" : (i === activeIdx ? "active" : "");
+              const bullet = i < activeIdx ? "✓" : (i === activeIdx ? "•" : (i+1));
+              return `
+                <div class="track-step ${cls}">
+                  <div class="track-bullet">${bullet}</div>
+                  <div class="tt">
+                    <b>${esc(s.title)}</b>
+                    <span>${esc(s.desc)}</span>
+                  </div>
+                </div>
+              `;
+            }).join("")}
+          </div>
+        `;
+      }
+
+      // =========================
+      // Supabase actions
+      // =========================
+      async function refreshSession(){
+        const { data, error } = await supabase.auth.getSession();
+        if(error){
+          setStatus(sessionBadge, "err", "خطا در گرفتن سشن");
+          setLoggedInUI(null);
+          return null;
+        }
+        const user = data?.session?.user || null;
+        setLoggedInUI(user);
+        if(user) await loadOrders();
+        return user;
+      }
+
+      async function sendOtp(){
+        setMsg(authMsg, "", "");
+        const d = normalizeDigits(authPhone.value);
         if(!isValidIranMobile(d)){
-          msg.style.color = "var(--danger)";
-          msg.textContent = "شماره موبایل درست نیست. لطفاً مثل 0912xxxxxxx وارد کن.";
+          setMsg(authMsg, "err", "شماره موبایل درست نیست. مثل 0912xxxxxxx وارد کنید.");
+          return;
+        }
+        const e164 = toE164Iran(d);
+        if(!e164){
+          setMsg(authMsg, "err", "شماره قابل تبدیل نیست. لطفاً دوباره تلاش کنید.");
           return;
         }
 
-        msg.style.color = "var(--success)";
-        msg.textContent = "ثبت شد ✅ (فعلاً این فقط دموی ظاهریه)";
-        phone.value = "";
+        sendOtpBtn.disabled = true;
+        setMsg(authMsg, "warn", "در حال ارسال کد…");
+
+        const { error } = await supabase.auth.signInWithOtp({
+          phone: e164
+        });
+
+        sendOtpBtn.disabled = false;
+
+        if(error){
+          setMsg(authMsg, "err", "ارسال کد ناموفق بود: " + (error.message || "خطای نامشخص"));
+          showAuthBox(false);
+          return;
+        }
+
+        lastE164Phone = e164;
+        showAuthBox(true);
+        setMsg(authMsg, "ok", "کد ارسال شد ✅ حالا کد را وارد کنید.");
+        authCode.focus();
+      }
+
+      async function verifyOtp(){
+        setMsg(authMsg, "", "");
+        const code = normalizeDigits(authCode.value);
+
+        if(!lastE164Phone){
+          setMsg(authMsg, "err", "اول شماره را وارد کنید و کد را ارسال کنید.");
+          return;
+        }
+        if(!code || code.length < 4){
+          setMsg(authMsg, "err", "کد پیامکی را درست وارد کنید.");
+          return;
+        }
+
+        verifyOtpBtn.disabled = true;
+        setMsg(authMsg, "warn", "در حال تایید کد…");
+
+        const { data, error } = await supabase.auth.verifyOtp({
+          phone: lastE164Phone,
+          token: code,
+          type: "sms"
+        });
+
+        verifyOtpBtn.disabled = false;
+
+        if(error){
+          setMsg(authMsg, "err", "ورود ناموفق بود: " + (error.message || "خطای نامشخص"));
+          return;
+        }
+
+        authCode.value = "";
+        setMsg(authMsg, "ok", "ورود انجام شد ✅");
+        await refreshSession();
+      }
+
+      async function logout(){
+        setMsg(authMsg, "", "");
+        const { error } = await supabase.auth.signOut();
+        if(error){
+          setMsg(authMsg, "err", "خروج ناموفق: " + (error.message || "خطای نامشخص"));
+          return;
+        }
+        lastE164Phone = null;
+        showAuthBox(false);
+        setMsg(authMsg, "ok", "خارج شدید.");
+        await refreshSession();
+      }
+
+      async function createOrder(){
+        setMsg(orderMsg, "", "");
+        const user = (await supabase.auth.getUser()).data?.user;
+        if(!user){
+          setMsg(orderMsg, "err", "اول وارد شوید.");
+          return;
+        }
+
+        const dm = (deviceModel.value || "").trim();
+        const pr = (problemDesc.value || "").trim();
+        const ad = (address.value || "").trim();
+        const pt = (pickupTime.value || "").trim();
+
+        if(!dm || !pr || !ad){
+          setMsg(orderMsg, "err", "مدل گوشی، مشکل و آدرس را کامل وارد کنید.");
+          return;
+        }
+
+        createOrderBtn.disabled = true;
+        setMsg(orderMsg, "warn", "در حال ثبت سفارش…");
+
+        // ✅ NOTE:
+        // این Insert بر اساس ستون‌های عمومی/رایج نوشته شده.
+        // اگر جدول public.orders شما ستون‌های متفاوتی دارد،
+        // بعداً دقیقاً با اسکیما خودتان هماهنگش می‌کنیم.
+        const payload = {
+          user_id: user.id,
+          customer_phone: user.phone || lastE164Phone,
+          device_model: dm,
+          problem: pr,
+          address: ad,
+          pickup_time: pt || null,
+          status: "requested"
+        };
+
+        const { data, error } = await supabase
+          .from("orders")
+          .insert(payload)
+          .select("*")
+          .single();
+
+        createOrderBtn.disabled = false;
+
+        if(error){
+          setMsg(orderMsg, "err", "ثبت سفارش ناموفق بود: " + (error.message || "خطای نامشخص"));
+          return;
+        }
+
+        setMsg(orderMsg, "ok", "سفارش ثبت شد ✅");
+        deviceModel.value = "";
+        problemDesc.value = "";
+        address.value = "";
+        pickupTime.value = "";
+
+        await loadOrders();
+      }
+
+      async function loadOrders(){
+        const user = (await supabase.auth.getUser()).data?.user;
+        if(!user){
+          ordersCount.textContent = "0";
+          return;
+        }
+
+        ordersWrap.innerHTML = '<div class="muted">در حال دریافت سفارش‌ها…</div>';
+
+        // ✅ تلاش برای گرفتن سفارش‌های کاربر
+        // اول: بر اساس user_id
+        let res = await supabase
+          .from("orders")
+          .select("*")
+          .eq("user_id", user.id)
+          .order("created_at", { ascending:false });
+
+        // اگر به هر دلیل user_id وجود نداشت/Policy اجازه نداد، تلاش دوم با شماره
+        if(res.error){
+          const phone = user.phone || lastE164Phone;
+          if(phone){
+            res = await supabase
+              .from("orders")
+              .select("*")
+              .eq("customer_phone", phone)
+              .order("created_at", { ascending:false });
+          }
+        }
+
+        if(res.error){
+          ordersWrap.innerHTML = `
+            <div class="status err">خواندن سفارش‌ها ناموفق بود</div>
+            <div class="hint" style="color:var(--danger)">${esc(res.error.message || "خطای نامشخص")}</div>
+          `;
+          ordersCount.textContent = "0";
+          return;
+        }
+
+        const list = res.data || [];
+        ordersCount.textContent = String(list.length);
+
+        if(list.length === 0){
+          ordersWrap.innerHTML = '<div class="muted">هنوز سفارشی ثبت نکرده‌اید.</div>';
+          return;
+        }
+
+        ordersWrap.innerHTML = list.map(o => {
+          const id = o.id ?? o.order_id ?? "";
+          const created = o.created_at ? fmtDate(o.created_at) : "";
+          const st = o.status ?? o.state ?? "requested";
+          const dm = o.device_model ?? o.model ?? "";
+          const pr = o.problem ?? o.issue ?? "";
+          const ad = o.address ?? "";
+          const pt = o.pickup_time ?? o.pickup_at ?? "";
+
+          return `
+            <div class="order-item">
+              <div class="order-top">
+                <b>سفارش #${esc(id)}</b>
+                <span class="pill">وضعیت: ${esc(normalizeStatus(st))}</span>
+              </div>
+              <div class="muted">
+                <b>مدل:</b> ${esc(dm)}<br>
+                <b>مشکل:</b> ${esc(pr)}<br>
+                <b>آدرس:</b> ${esc(ad)}${pt ? `<br><b>زمان دریافت:</b> ${esc(pt)}` : ""}${created ? `<br><b>ثبت:</b> ${esc(created)}` : ""}
+              </div>
+              ${renderTrack(st)}
+            </div>
+          `;
+        }).join("");
+      }
+
+      // =========================
+      // Events
+      // =========================
+      sendOtpBtn.addEventListener("click", sendOtp);
+      verifyOtpBtn.addEventListener("click", verifyOtp);
+      logoutBtn.addEventListener("click", logout);
+
+      createOrderBtn.addEventListener("click", createOrder);
+      refreshOrdersBtn.addEventListener("click", loadOrders);
+
+      // Auth state listener
+      supabase.auth.onAuthStateChange((_event, _session) => {
+        refreshSession();
       });
+
+      // Init
+      refreshSession();
+    })();
+  </script>
+</body>
+</html>
+<!doctype html>
+<html lang="fa" dir="rtl">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Mobix | موبیکس — تعمیر موبایل</title>
+
+  <meta name="description" content="موبیکس؛ تعمیر موبایل با سرویس کامل. دریافت گوشی با پیک موبیکس، تعمیر توسط تعمیرکاران موبیکس و تحویل به شما. پیگیری مرحله‌ای و پشتیبانی داخل اپ." />
+
+  <meta property="og:title" content="Mobix | موبیکس — تعمیر موبایل" />
+  <meta property="og:description" content="تعمیر موبایل با پیک موبیکس، پیگیری مرحله‌ای و پشتیبانی داخل اپ." />
+  <meta property="og:type" content="website" />
+  <meta property="og:image" content="https://kamyarsdm.github.io/mobix.github.io/assets/hero.png" />
+
+  <meta name="theme-color" content="#1F6AFF" />
+  <link rel="icon" href="assets/logo.png" />
+
+  <!-- Vazirmatn -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Vazirmatn:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet">
+
+  <style>
+    :root{
+      --bg:#F6F8FC;
+      --card:#FFFFFF;
+      --text:#0B1220;
+      --muted:#5B6B84;
+      --line:rgba(15,23,42,.08);
+
+      --shadow: 0 14px 36px rgba(15,23,42,.10);
+      --shadow2: 0 8px 18px rgba(15,23,42,.08);
+
+      --radius:20px;
+
+      --primary:#1F6AFF;
+      --primary2:#3B82F6;
+      --success:#10B981;
+      --danger:#EF4444;
+      --warn:#F59E0B;
+
+      --max:1160px;
+    }
+
+    *{box-sizing:border-box}
+    html{scroll-behavior:smooth}
+    body{
+      margin:0;
+      font-family:"Vazirmatn", system-ui, sans-serif;
+      background:
+        radial-gradient(1000px 500px at 80% -10%, rgba(31,106,255,.16), transparent 55%),
+        radial-gradient(900px 600px at 20% 10%, rgba(59,130,246,.08), transparent 55%),
+        var(--bg);
+      color:var(--text);
+    }
+
+    a{text-decoration:none;color:inherit}
+    img{max-width:100%;display:block}
+
+    .container{max-width:var(--max);margin:auto;padding:14px 16px 96px}
+
+    /* TOP BAR (minimal) */
+    .topbar{
+      position:sticky;top:0;z-index:50;
+      padding:10px 0;
+      backdrop-filter: blur(12px);
+    }
+    .topbar-inner{
+      display:flex;align-items:center;justify-content:space-between;
+      background:rgba(246,248,252,.86);
+      border:1px solid var(--line);
+      border-radius:999px;
+      padding:10px 12px;
+      box-shadow:var(--shadow2);
+      gap:10px;
+    }
+    .brand{display:flex;align-items:center;gap:10px;min-width:0}
+    .brand img{width:64px;height:auto}
+    .brand-title{font-weight:900;font-size:15px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+
+    .nav{
+      display:flex;align-items:center;gap:8px;flex-wrap:wrap;
+      justify-content:flex-end;
+    }
+    .chip{
+      padding:9px 12px;
+      border-radius:999px;
+      border:1px solid var(--line);
+      background:rgba(255,255,255,.86);
+      font-weight:800;
+      font-size:13px;
+      box-shadow:var(--shadow2);
+    }
+
+    .btn{
+      padding:10px 16px;
+      border-radius:14px;
+      font-weight:900;
+      border:1px solid var(--line);
+      background:#fff;
+      box-shadow:var(--shadow2);
+      cursor:pointer;
+      font-family:inherit;
+      white-space:nowrap;
+    }
+    .btn.primary{
+      background:linear-gradient(135deg,var(--primary),var(--primary2));
+      color:#fff;
+      border:none;
+    }
+    .btn.ghost{
+      background:rgba(255,255,255,.72);
+    }
+    .btn.danger{
+      background:rgba(239,68,68,.10);
+      border:1px solid rgba(239,68,68,.25);
+      color:#7F1D1D;
+    }
+    .btn:disabled{opacity:.55;cursor:not-allowed}
+
+    /* HERO */
+    .hero{
+      margin-top:16px;
+      display:grid;
+      grid-template-columns:1.1fr .9fr;
+      gap:14px;
+      align-items:start;
+    }
+    @media(max-width:980px){.hero{grid-template-columns:1fr}}
+
+    .card{
+      background:var(--card);
+      border:1px solid var(--line);
+      border-radius:var(--radius);
+      padding:18px;
+      box-shadow:var(--shadow);
+    }
+
+    .badge{
+      display:inline-flex;align-items:center;gap:8px;
+      padding:9px 12px;
+      border-radius:999px;
+      border:1px solid rgba(16,185,129,.22);
+      background:rgba(16,185,129,.08);
+      color:#0B3A2C;
+      font-weight:900;
+      font-size:13px;
+    }
+    .dot{
+      width:10px;height:10px;border-radius:50%;
+      background:var(--success);
+      box-shadow:0 0 0 6px rgba(16,185,129,.18);
+    }
+
+    h1{
+      font-size:44px;
+      font-weight:900;
+      margin:12px 0 8px;
+      letter-spacing:-.3px;
+    }
+    @media(max-width:520px){h1{font-size:34px}}
+
+    .sub{
+      color:var(--muted);
+      font-size:15.5px;
+      line-height:1.85;
+      margin:0;
+    }
+
+    .cta{display:flex;gap:10px;margin-top:14px;flex-wrap:wrap}
+
+    .hero-art{
+      margin-top:14px;
+      border-radius:20px;
+      overflow:hidden;
+      border:1px solid var(--line);
+      box-shadow:var(--shadow);
+      background:
+        radial-gradient(600px 260px at 70% 0%, rgba(31,106,255,.22), transparent 60%),
+        radial-gradient(520px 260px at 10% 40%, rgba(59,130,246,.16), transparent 58%),
+        #0B0F1A;
+    }
+    .hero-art img{width:100%;height:auto}
+
+    .mini-grid{
+      display:grid;
+      grid-template-columns:1fr 1fr;
+      gap:10px;
+      margin-top:14px;
+    }
+    @media(max-width:520px){.mini-grid{grid-template-columns:1fr}}
+    .mini{
+      background:linear-gradient(180deg, rgba(31,106,255,.06), rgba(255,255,255,1));
+      border:1px solid var(--line);
+      border-radius:18px;
+      padding:12px 12px;
+    }
+    .mini .t{font-weight:900}
+    .mini .d{color:var(--muted);font-size:13.5px;line-height:1.75;margin-top:6px}
+
+    /* APP PREVIEW */
+    .app-wrap{
+      display:grid;
+      grid-template-columns: 1fr 1fr;
+      gap:12px;
+      margin-top:10px;
+      align-items:stretch;
+    }
+    @media(max-width:900px){.app-wrap{grid-template-columns:1fr}}
+
+    .mock{
+      border:1px solid var(--line);
+      border-radius:22px;
+      overflow:hidden;
+      box-shadow:var(--shadow);
+      background:linear-gradient(180deg, rgba(31,106,255,.08), rgba(255,255,255,1));
+      position:relative;
+      min-height:260px;
+    }
+    .mock-top{
+      display:flex;align-items:center;justify-content:space-between;
+      padding:12px 14px;
+      background:rgba(255,255,255,.86);
+      border-bottom:1px solid var(--line);
+      gap:10px;
+    }
+    .mock-top b{font-weight:900}
+    .pill{
+      display:inline-flex;align-items:center;gap:8px;
+      padding:7px 10px;
+      border-radius:999px;
+      background:rgba(31,106,255,.10);
+      border:1px solid rgba(31,106,255,.18);
+      color:#0B2A6A;
+      font-weight:900;
+      font-size:12.5px;
+      white-space:nowrap;
+    }
+    .mock-body{padding:14px}
+    .step{
+      display:flex;gap:10px;align-items:flex-start;
+      padding:10px 10px;
+      border-radius:16px;
+      border:1px solid var(--line);
+      background:#fff;
+      margin-bottom:10px;
+    }
+    .step:last-child{margin-bottom:0}
+    .sicon{
+      width:34px;height:34px;border-radius:12px;
+      background:linear-gradient(135deg, rgba(31,106,255,.22), rgba(59,130,246,.12));
+      border:1px solid rgba(31,106,255,.18);
+      display:flex;align-items:center;justify-content:center;
+      font-weight:900;color:#0B2A6A;
+      flex:0 0 auto;
+    }
+    .stxt b{display:block;font-weight:900}
+    .stxt span{display:block;color:var(--muted);font-size:13.5px;line-height:1.7;margin-top:4px}
+
+    .kpi{
+      display:grid;
+      grid-template-columns:1fr 1fr 1fr;
+      gap:10px;
+      margin-top:12px;
+    }
+    @media(max-width:520px){.kpi{grid-template-columns:1fr}}
+    .kpi .box{
+      border:1px solid var(--line);
+      background:#fff;
+      border-radius:18px;
+      padding:12px;
+      box-shadow:var(--shadow2);
+    }
+    .kpi .box b{font-weight:900}
+    .kpi .box div{color:var(--muted);font-size:13.5px;line-height:1.7;margin-top:6px}
+
+    /* SECTIONS */
+    .section{margin-top:20px}
+    .section h2{font-size:20px;font-weight:900;margin:0 0 10px}
+
+    /* WHY (BANNERS FIXED) */
+    .why-grid{
+      display:grid;
+      grid-template-columns:1fr 1fr;
+      gap:12px;
+    }
+    @media(max-width:900px){.why-grid{grid-template-columns:1fr}}
+
+    .media{
+      background:#fff;
+      border-radius:20px;
+      border:1px solid var(--line);
+      overflow:hidden;
+      box-shadow:var(--shadow);
+    }
+
+    .media .imgwrap{
+      width:100%;
+      aspect-ratio: 16 / 9;
+      background:
+        radial-gradient(560px 240px at 70% 10%, rgba(31,106,255,.18), transparent 60%),
+        radial-gradient(520px 240px at 10% 60%, rgba(59,130,246,.12), transparent 58%),
+        #0B0F1A;
+      display:flex;
+      align-items:center;
+      justify-content:center;
+      overflow:hidden;
+    }
+    .media img{
+      width:100%;
+      height:100%;
+      object-fit:contain;
+      display:block;
+    }
+
+    .media-caption{
+      padding:12px 14px;
+      font-size:14px;
+      color:var(--muted);
+      line-height:1.8;
+    }
+    .media-caption b{color:var(--text)}
+
+    /* HOW IT WORKS */
+    .timeline{
+      display:grid;
+      grid-template-columns:repeat(4,1fr);
+      gap:10px;
+    }
+    @media(max-width:980px){.timeline{grid-template-columns:1fr 1fr}}
+    @media(max-width:520px){.timeline{grid-template-columns:1fr}}
+    .tcard{
+      border:1px solid var(--line);
+      border-radius:20px;
+      background:#fff;
+      box-shadow:var(--shadow2);
+      padding:14px;
+      position:relative;
+      overflow:hidden;
+    }
+    .tcard:before{
+      content:"";
+      position:absolute;inset:-60px -60px auto auto;
+      width:180px;height:180px;border-radius:999px;
+      background:rgba(31,106,255,.08);
+      transform:rotate(12deg);
+    }
+    .tnum{
+      width:38px;height:38px;border-radius:14px;
+      display:flex;align-items:center;justify-content:center;
+      background:linear-gradient(135deg,var(--primary),var(--primary2));
+      color:#fff;font-weight:900;
+      box-shadow:0 12px 22px rgba(31,106,255,.22);
+      position:relative;
+    }
+    .tcard b{display:block;margin-top:10px;font-weight:900;position:relative}
+    .tcard p{margin:6px 0 0;color:var(--muted);font-size:13.5px;line-height:1.8;position:relative}
+
+    /* AUTH + ORDER (new) */
+    .grid-2{
+      display:grid;
+      grid-template-columns:1fr 1fr;
+      gap:12px;
+      align-items:start;
+    }
+    @media(max-width:900px){.grid-2{grid-template-columns:1fr}}
+
+    .form{
+      margin-top:10px;
+      display:grid;
+      grid-template-columns:1fr auto;
+      gap:10px;
+      align-items:center;
+    }
+    @media(max-width:520px){.form{grid-template-columns:1fr}}
+    .input{
+      width:100%;
+      padding:12px 14px;
+      border-radius:16px;
+      border:1px solid var(--line);
+      background:#fff;
+      box-shadow:var(--shadow2);
+      font-family:inherit;
+      font-weight:700;
+      outline:none;
+    }
+
+    .field{
+      display:flex;
+      flex-direction:column;
+      gap:6px;
+      margin-top:10px;
+    }
+    .label{
+      font-size:13px;
+      font-weight:900;
+      color:var(--muted);
+    }
+    .textarea{
+      width:100%;
+      min-height:110px;
+      padding:12px 14px;
+      border-radius:16px;
+      border:1px solid var(--line);
+      background:#fff;
+      box-shadow:var(--shadow2);
+      font-family:inherit;
+      font-weight:700;
+      outline:none;
+      resize:vertical;
+      line-height:1.9;
+    }
+
+    .hint{
+      margin-top:10px;
+      color:var(--muted);
+      font-size:13px;
+      line-height:1.7;
+      white-space:pre-line;
+    }
+
+    .status{
+      display:inline-flex;
+      align-items:center;
+      gap:8px;
+      padding:8px 10px;
+      border-radius:999px;
+      border:1px solid var(--line);
+      background:rgba(255,255,255,.86);
+      font-weight:900;
+      font-size:12.8px;
+    }
+    .status.ok{border-color:rgba(16,185,129,.25);background:rgba(16,185,129,.08);color:#0B3A2C}
+    .status.err{border-color:rgba(239,68,68,.25);background:rgba(239,68,68,.08);color:#7F1D1D}
+    .status.warn{border-color:rgba(245,158,11,.30);background:rgba(245,158,11,.10);color:#78350F}
+
+    .divider{
+      height:1px;background:var(--line);
+      margin:12px 0;
+    }
+
+    .orders{
+      display:flex;
+      flex-direction:column;
+      gap:10px;
+      margin-top:10px;
+    }
+    .order-item{
+      background:#fff;
+      border:1px solid var(--line);
+      border-radius:18px;
+      padding:12px;
+      box-shadow:var(--shadow2);
+      display:flex;
+      flex-direction:column;
+      gap:8px;
+    }
+    .order-top{
+      display:flex;
+      align-items:center;
+      justify-content:space-between;
+      gap:10px;
+      flex-wrap:wrap;
+    }
+    .order-top b{font-weight:900}
+    .muted{color:var(--muted);font-size:13.2px;line-height:1.8}
+
+    .track{
+      display:grid;
+      grid-template-columns:1fr;
+      gap:8px;
+      margin-top:4px;
+    }
+    .track-step{
+      display:flex;
+      align-items:flex-start;
+      gap:10px;
+      border:1px solid var(--line);
+      background:rgba(246,248,252,.55);
+      border-radius:16px;
+      padding:10px;
+    }
+    .track-bullet{
+      width:28px;height:28px;border-radius:12px;
+      display:flex;align-items:center;justify-content:center;
+      font-weight:900;
+      border:1px solid var(--line);
+      background:#fff;
+      flex:0 0 auto;
+    }
+    .track-step.done .track-bullet{
+      background:rgba(16,185,129,.10);
+      border-color:rgba(16,185,129,.25);
+      color:#0B3A2C;
+    }
+    .track-step.active .track-bullet{
+      background:rgba(31,106,255,.10);
+      border-color:rgba(31,106,255,.25);
+      color:#0B2A6A;
+    }
+    .track-step .tt b{display:block;font-weight:900}
+    .track-step .tt span{display:block;color:var(--muted);font-size:13px;line-height:1.8;margin-top:3px}
+
+    /* FLOATING CTA */
+    .floating{
+      position:fixed;
+      left:16px;
+      right:16px;
+      bottom:14px;
+      z-index:60;
+      display:flex;
+      justify-content:center;
+      pointer-events:none;
+    }
+    .floating-inner{
+      width:min(var(--max), 980px);
+      pointer-events:auto;
+      background:rgba(255,255,255,.86);
+      border:1px solid var(--line);
+      border-radius:999px;
+      box-shadow:var(--shadow);
+      padding:10px;
+      display:flex;
+      align-items:center;
+      justify-content:space-between;
+      gap:10px;
+      backdrop-filter: blur(12px);
+    }
+    .floating-inner .txt{
+      display:flex;flex-direction:column;gap:2px;
+      min-width:0;
+    }
+    .floating-inner .txt b{font-weight:900;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+    .floating-inner .txt span{color:var(--muted);font-size:12.8px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+    .floating-inner .actions{display:flex;gap:8px;flex:0 0 auto;flex-wrap:wrap;justify-content:flex-end}
+
+    /* FOOTER */
+    .footer{
+      margin-top:26px;
+      padding-top:14px;
+      border-top:1px solid var(--line);
+      font-size:13px;
+      color:var(--muted);
+      display:flex;
+      justify-content:space-between;
+      gap:10px;
+      flex-wrap:wrap;
+      align-items:center;
+    }
+
+    /* ENAMAD */
+    .enamad{
+      display:flex;
+      align-items:center;
+      justify-content:center;
+    }
+    .enamad img{
+      width:110px;
+      height:auto;
+    }
+  </style>
+</head>
+
+<body>
+  <div class="container">
+
+    <!-- HEADER -->
+    <div class="topbar">
+      <div class="topbar-inner">
+        <div class="brand">
+          <img src="assets/logo.png" alt="Mobix">
+          <div class="brand-title">Mobix | موبیکس</div>
+        </div>
+
+        <div class="nav">
+          <a class="chip" href="#why">چرا موبیکس؟</a>
+          <a class="chip" href="#how">مراحل کار</a>
+          <a class="chip" href="#order">ثبت/پیگیری سفارش</a>
+          <button class="btn ghost" id="navAuthBtn" type="button">ورود</button>
+        </div>
+      </div>
+    </div>
+
+    <!-- HERO -->
+    <section class="hero" id="top">
+      <div class="card">
+        <span class="badge"><span class="dot"></span> لانچ تا چند روز آینده</span>
+
+        <h1>با خیال راحت بسپارید</h1>
+        <p class="sub">
+          دریافت گوشی با <b>پیک موبیکس</b>، تعمیر توسط <b>تعمیرکاران موبیکس</b>
+          و تحویل به شما با <b>پیگیری مرحله‌ای</b> و <b>پشتیبانی داخل اپ</b>.
+        </p>
+
+        <div class="cta">
+          <a class="btn primary" href="#order">ثبت سفارش آنلاین</a>
+          <a class="btn ghost" href="#how">مراحل کار</a>
+        </div>
+
+        <div class="mini-grid">
+          <div class="mini">
+            <div class="t">شفاف و قابل پیگیری</div>
+            <div class="d">هر مرحله مشخصه؛ از دریافت تا تحویل.</div>
+          </div>
+          <div class="mini">
+            <div class="t">قیمت قبل از اقدام</div>
+            <div class="d">قبل از هر کاری هزینه با شما هماهنگ می‌شه.</div>
+          </div>
+        </div>
+
+        <div class="hero-art">
+          <img src="assets/hero.png" alt="Mobix Hero">
+        </div>
+      </div>
+
+      <!-- APP PREVIEW -->
+      <div class="card">
+        <h2 style="margin:0 0 8px;font-weight:900">نمونه تجربه داخل اپ</h2>
+        <p class="sub">همین شکلی مرحله‌ای می‌بینی چی داره انجام می‌شه.</p>
+
+        <div class="app-wrap">
+          <div class="mock">
+            <div class="mock-top">
+              <b>پیگیری سفارش</b>
+              <span class="pill">وضعیت: در حال تعمیر</span>
+            </div>
+            <div class="mock-body">
+              <div class="step">
+                <div class="sicon">1</div>
+                <div class="stxt">
+                  <b>ثبت درخواست</b>
+                  <span>مشخصات دستگاه و مشکل رو ثبت می‌کنی.</span>
+                </div>
+              </div>
+              <div class="step">
+                <div class="sicon">2</div>
+                <div class="stxt">
+                  <b>دریافت با پیک</b>
+                  <span>پیک موبیکس دستگاه رو تحویل می‌گیره.</span>
+                </div>
+              </div>
+              <div class="step">
+                <div class="sicon">3</div>
+                <div class="stxt">
+                  <b>تأیید هزینه</b>
+                  <span>هزینه دقیق قبل از اقدام بهت اعلام می‌شه.</span>
+                </div>
+              </div>
+              <div class="step">
+                <div class="sicon">4</div>
+                <div class="stxt">
+                  <b>تحویل به شما</b>
+                  <span>پس از تعمیر، دستگاه با پیک تحویل داده می‌شه.</span>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <div class="mock">
+            <div class="mock-top">
+              <b>چت و پشتیبانی</b>
+              <span class="pill">پاسخ سریع</span>
+            </div>
+            <div class="mock-body">
+              <div class="step">
+                <div class="sicon">💬</div>
+                <div class="stxt">
+                  <b>چت داخل اپ</b>
+                  <span>هر سؤال/ابهام داشتی همینجا می‌پرسی.</span>
+                </div>
+              </div>
+              <div class="step">
+                <div class="sicon">🛡️</div>
+                <div class="stxt">
+                  <b>گزارش شفاف</b>
+                  <span>کارهایی که انجام شده و قطعه‌ها مشخصه.</span>
+                </div>
+              </div>
+              <div class="step">
+                <div class="sicon">⚡</div>
+                <div class="stxt">
+                  <b>هماهنگی سریع</b>
+                  <span>برای زمان‌بندی پیک و تحویل، سریع هماهنگ می‌شه.</span>
+                </div>
+              </div>
+
+              <div class="kpi">
+                <div class="box">
+                  <b>پیگیری مرحله‌ای</b>
+                  <div>مثل داشبورد سفارش، لحظه‌ای.</div>
+                </div>
+                <div class="box">
+                  <b>قیمت قبل از کار</b>
+                  <div>بدون تایید شما کاری انجام نمی‌شه.</div>
+                </div>
+                <div class="box">
+                  <b>سرویس یکپارچه</b>
+                  <div>از دریافت تا تحویل با تیم موبیکس.</div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="divider"></div>
+        <div id="sessionBadge" class="status warn">در حال بررسی وضعیت ورود…</div>
+      </div>
+    </section>
+
+    <!-- WHY -->
+    <section class="section" id="why">
+      <h2>چرا موبیکس؟</h2>
+      <div class="why-grid">
+        <div class="media">
+          <div class="imgwrap">
+            <img src="assets/pricing.png" alt="هماهنگی قیمت">
+          </div>
+          <div class="media-caption">
+            <b>هماهنگی قیمت قبل از تعمیر</b><br>
+            قبل از هر اقدامی، هزینه با شما هماهنگ می‌شود.
+          </div>
+        </div>
+
+        <div class="media">
+          <div class="imgwrap">
+            <img src="assets/courier.png" alt="پیک موبیکس">
+          </div>
+          <div class="media-caption">
+            <b>پیک اختصاصی موبیکس</b><br>
+            دریافت و تحویل دستگاه بدون دردسر.
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- HOW IT WORKS -->
+    <section class="section" id="how">
+      <h2>نحوه انجام کار</h2>
+      <div class="timeline">
+        <div class="tcard">
+          <div class="tnum">1</div>
+          <b>ثبت درخواست</b>
+          <p>مدل گوشی و مشکل رو ثبت می‌کنی تا سریع بررسی بشه.</p>
+        </div>
+        <div class="tcard">
+          <div class="tnum">2</div>
+          <b>هماهنگی پیک</b>
+          <p>زمان دریافت دستگاه رو هماهنگ می‌کنیم و پیک میاد.</p>
+        </div>
+        <div class="tcard">
+          <div class="tnum">3</div>
+          <b>اعلام هزینه</b>
+          <p>بعد از عیب‌یابی، هزینه دقیق اعلام می‌شه (با تایید شما).</p>
+        </div>
+        <div class="tcard">
+          <div class="tnum">4</div>
+          <b>تعمیر و تحویل</b>
+          <p>تعمیر انجام می‌شه و دستگاه با پیک به شما تحویل داده می‌شه.</p>
+        </div>
+      </div>
+    </section>
+
+    <!-- ORDER + TRACK (NEW) -->
+    <section class="section" id="order">
+      <div class="card">
+        <h2 style="margin:0 0 8px;font-weight:900">ثبت و پیگیری سفارش (مثل اپ)</h2>
+        <p class="sub">با شماره موبایل وارد شوید، سفارش ثبت کنید و مرحله‌ای پیگیری کنید.</p>
+
+        <div class="grid-2">
+
+          <!-- AUTH CARD -->
+          <div class="card" style="padding:16px;box-shadow:var(--shadow2)">
+            <h2 style="margin:0 0 8px;font-weight:900;font-size:18px">ورود با کد پیامکی</h2>
+            <p class="sub" style="font-size:14.5px">کد یکبار مصرف ارسال می‌شود. بعد از ورود، سفارش‌های شما نمایش داده می‌شود.</p>
+
+            <div class="field">
+              <div class="label">شماره موبایل</div>
+              <input id="authPhone" class="input" inputmode="numeric" placeholder="مثلا 0912xxxxxxx" />
+            </div>
+
+            <div class="form">
+              <button id="sendOtpBtn" class="btn primary" type="button">ارسال کد</button>
+              <div></div>
+            </div>
+
+            <div id="otpBox" style="display:none">
+              <div class="field">
+                <div class="label">کد پیامکی</div>
+                <input id="authCode" class="input" inputmode="numeric" placeholder="کد ۶ رقمی" />
+              </div>
+              <div class="form">
+                <button id="verifyOtpBtn" class="btn primary" type="button">تایید و ورود</button>
+                <button id="logoutBtn" class="btn danger" type="button" style="display:none">خروج</button>
+              </div>
+            </div>
+
+            <div id="authMsg" class="hint" aria-live="polite"></div>
+
+            <div class="divider"></div>
+
+            <div class="muted">
+              نکته: اگر ورود انجام نشد، معمولاً یکی از این‌هاست:
+              <br>• Phone Auth در Supabase فعال نیست
+              <br>• پیامک‌پرووایدر تنظیم نشده
+              <br>• RLS/Policy جدول orders اجازه Insert/Select نمی‌دهد
+            </div>
+          </div>
+
+          <!-- ORDER CARD -->
+          <div class="card" style="padding:16px;box-shadow:var(--shadow2)">
+            <div class="order-top">
+              <h2 style="margin:0;font-weight:900;font-size:18px">ثبت سفارش</h2>
+              <span id="orderGate" class="status warn">برای ثبت سفارش باید وارد شوید</span>
+            </div>
+
+            <div id="orderFormWrap" style="display:none">
+              <div class="field">
+                <div class="label">مدل گوشی</div>
+                <input id="deviceModel" class="input" placeholder="مثلا iPhone 13 / Galaxy A52" />
+              </div>
+
+              <div class="field">
+                <div class="label">مشکل دستگاه</div>
+                <textarea id="problemDesc" class="textarea" placeholder="مثلا خاموش شده / شکستگی ال‌سی‌دی / مشکل شارژ ..."></textarea>
+              </div>
+
+              <div class="field">
+                <div class="label">آدرس برای دریافت با پیک</div>
+                <textarea id="address" class="textarea" placeholder="آدرس دقیق + پلاک + واحد"></textarea>
+              </div>
+
+              <div class="field">
+                <div class="label">زمان پیشنهادی برای دریافت</div>
+                <input id="pickupTime" class="input" placeholder="مثلا امروز ۱۸ تا ۲۰ / فردا صبح" />
+              </div>
+
+              <div class="form">
+                <button id="createOrderBtn" class="btn primary" type="button">ثبت سفارش</button>
+                <button id="refreshOrdersBtn" class="btn ghost" type="button">به‌روزرسانی</button>
+              </div>
+
+              <div id="orderMsg" class="hint" aria-live="polite"></div>
+            </div>
+
+            <div class="divider"></div>
+
+            <div class="order-top">
+              <h2 style="margin:0;font-weight:900;font-size:18px">پیگیری سفارش‌های من</h2>
+              <span id="ordersCount" class="status">0</span>
+            </div>
+
+            <div id="ordersWrap" class="orders">
+              <div class="muted">بعد از ورود، سفارش‌های شما اینجا نمایش داده می‌شود.</div>
+            </div>
+          </div>
+
+        </div>
+      </div>
+    </section>
+
+    <!-- FOOTER -->
+    <div class="footer">
+      <span>© Mobix</span>
+
+      <div class="enamad">
+        <a referrerpolicy="origin" target="_blank" href="https://trustseal.enamad.ir/?id=695372&Code=DiznrIm0BJGpnPrtdWijxsgtOlPs8Aqf">
+          <img referrerpolicy="origin" src="https://trustseal.enamad.ir/logo.aspx?id=695372&Code=DiznrIm0BJGpnPrtdWijxsgtOlPs8Aqf" alt="اینماد" style="cursor:pointer" code="DiznrIm0BJGpnPrtdWijxsgtOlPs8Aqf">
+        </a>
+      </div>
+
+      <span>mobix.github.io</span>
+    </div>
+
+  </div>
+
+  <!-- Floating CTA -->
+  <div class="floating" role="navigation" aria-label="CTA">
+    <div class="floating-inner">
+      <div class="txt">
+        <b>موبیکس — تعمیر موبایل با سرویس کامل</b>
+        <span>پیک، تعمیر، تحویل + پیگیری مرحله‌ای داخل اپ</span>
+      </div>
+      <div class="actions">
+        <a class="btn ghost" href="#how">مراحل</a>
+        <a class="btn ghost" href="#order">ثبت/پیگیری</a>
+        <button class="btn primary" id="floatingAuthBtn" type="button">ورود</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- Supabase JS (CDN) -->
+  <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+
+  <script>
+    (function(){
+      // =========================
+      // ✅ Supabase Config (yours)
+      // =========================
+      const SUPABASE_URL = "https://vrxfhfknmxmeatnfzpcg.supabase.co";
+      const SUPABASE_ANON_KEY = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InZyeGZoZmtubXhtZWF0bmZ6cGNnIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NjYyNTg2MjksImV4cCI6MjA4MTgzNDYyOX0.iANOG9-g9GnVl58KDYI0A-oYNwfbL3oh2NBddZ2sLLs";
+
+      const supabase = window.supabase.createClient(SUPABASE_URL, SUPABASE_ANON_KEY);
+
+      // =========================
+      // Helpers
+      // =========================
+      function normalizeDigits(s){
+        return (s || "")
+          .replace(/[۰-۹]/g, d => "۰۱۲۳۴۵۶۷۸۹".indexOf(d))
+          .replace(/[^\d]/g, "");
+      }
+
+      function isValidIranMobile(d){
+        if(!d) return false;
+        if(d.length === 11 && d.startsWith("09")) return true;
+        if(d.length === 10 && d.startsWith("9")) return true;
+        return false;
+      }
+
+      function toE164Iran(d){
+        // Input: 0912... or 912...
+        // Output: +98912...
+        if(!d) return null;
+        if(d.length === 11 && d.startsWith("09")) return "+98" + d.slice(1);
+        if(d.length === 10 && d.startsWith("9")) return "+98" + d;
+        return null;
+      }
+
+      function fmtDate(iso){
+        try{
+          const dt = new Date(iso);
+          if(isNaN(dt.getTime())) return iso || "";
+          return dt.toLocaleString("fa-IR", { year:"numeric", month:"2-digit", day:"2-digit", hour:"2-digit", minute:"2-digit" });
+        }catch(e){ return iso || ""; }
+      }
+
+      function esc(s){
+        return (s ?? "").toString()
+          .replaceAll("&","&amp;")
+          .replaceAll("<","&lt;")
+          .replaceAll(">","&gt;")
+          .replaceAll('"',"&quot;")
+          .replaceAll("'","&#039;");
+      }
+
+      // =========================
+      // UI Elements
+      // =========================
+      const navAuthBtn = document.getElementById("navAuthBtn");
+      const floatingAuthBtn = document.getElementById("floatingAuthBtn");
+
+      const sessionBadge = document.getElementById("sessionBadge");
+
+      const authPhone = document.getElementById("authPhone");
+      const authCode = document.getElementById("authCode");
+      const sendOtpBtn = document.getElementById("sendOtpBtn");
+      const verifyOtpBtn = document.getElementById("verifyOtpBtn");
+      const logoutBtn = document.getElementById("logoutBtn");
+      const otpBox = document.getElementById("otpBox");
+      const authMsg = document.getElementById("authMsg");
+
+      const orderGate = document.getElementById("orderGate");
+      const orderFormWrap = document.getElementById("orderFormWrap");
+      const deviceModel = document.getElementById("deviceModel");
+      const problemDesc = document.getElementById("problemDesc");
+      const address = document.getElementById("address");
+      const pickupTime = document.getElementById("pickupTime");
+      const createOrderBtn = document.getElementById("createOrderBtn");
+      const refreshOrdersBtn = document.getElementById("refreshOrdersBtn");
+      const orderMsg = document.getElementById("orderMsg");
+
+      const ordersWrap = document.getElementById("ordersWrap");
+      const ordersCount = document.getElementById("ordersCount");
+
+      // =========================
+      // State
+      // =========================
+      let lastE164Phone = null;
+
+      // =========================
+      // UI functions
+      // =========================
+      function setStatus(el, type, text){
+        el.classList.remove("ok","err","warn");
+        if(type) el.classList.add(type);
+        el.textContent = text;
+      }
+
+      function setMsg(el, type, text){
+        if(!text){
+          el.textContent = "";
+          el.style.color = "var(--muted)";
+          return;
+        }
+        if(type === "ok") el.style.color = "var(--success)";
+        else if(type === "err") el.style.color = "var(--danger)";
+        else if(type === "warn") el.style.color = "var(--warn)";
+        else el.style.color = "var(--muted)";
+        el.textContent = text;
+      }
+
+      function showAuthBox(show){
+        otpBox.style.display = show ? "" : "none";
+      }
+
+      function setLoggedInUI(user){
+        const loggedIn = !!user;
+
+        if(loggedIn){
+          setStatus(sessionBadge, "ok", "وارد شده‌اید ✅");
+          navAuthBtn.textContent = "حساب من";
+          floatingAuthBtn.textContent = "حساب من";
+          logoutBtn.style.display = "";
+          orderFormWrap.style.display = "";
+          setStatus(orderGate, "ok", "می‌توانید سفارش ثبت کنید");
+        }else{
+          setStatus(sessionBadge, "warn", "وارد نشده‌اید");
+          navAuthBtn.textContent = "ورود";
+          floatingAuthBtn.textContent = "ورود";
+          logoutBtn.style.display = "none";
+          orderFormWrap.style.display = "none";
+          setStatus(orderGate, "warn", "برای ثبت سفارش باید وارد شوید");
+          ordersWrap.innerHTML = '<div class="muted">بعد از ورود، سفارش‌های شما اینجا نمایش داده می‌شود.</div>';
+          ordersCount.textContent = "0";
+        }
+      }
+
+      function scrollToOrder(){
+        const el = document.getElementById("order");
+        if(el) el.scrollIntoView({ behavior:"smooth", block:"start" });
+      }
+
+      navAuthBtn.addEventListener("click", function(){
+        scrollToOrder();
+        authPhone.focus();
+      });
+      floatingAuthBtn.addEventListener("click", function(){
+        scrollToOrder();
+        authPhone.focus();
+      });
+
+      // =========================
+      // Tracking UI mapping
+      // =========================
+      const TRACK_STEPS = [
+        { key:"requested", title:"ثبت درخواست", desc:"درخواست شما ثبت شد و در حال بررسی است." },
+        { key:"picked_up", title:"دریافت با پیک", desc:"پیک موبیکس دستگاه را دریافت کرد." },
+        { key:"quoted", title:"اعلام/تأیید هزینه", desc:"هزینه اعلام شد و منتظر تایید شماست." },
+        { key:"repairing", title:"در حال تعمیر", desc:"تکنسین موبیکس در حال انجام تعمیر است." },
+        { key:"delivering", title:"ارسال برای تحویل", desc:"دستگاه آماده شده و در مسیر تحویل است." },
+        { key:"delivered", title:"تحویل به شما", desc:"دستگاه تحویل داده شد ✅" }
+      ];
+
+      function normalizeStatus(raw){
+        const s = (raw || "").toString().trim().toLowerCase();
+        // نگاشت‌های رایج (اگر در دیتابیس شما متفاوت بود، اینجا اضافه کنید)
+        if(["new","created","request","requested","pending"].includes(s)) return "requested";
+        if(["pickup","pickedup","picked_up","courier_pickup"].includes(s)) return "picked_up";
+        if(["quote","quoted","price","awaiting_approval","approved_pending"].includes(s)) return "quoted";
+        if(["repair","repairing","in_repair","fixing"].includes(s)) return "repairing";
+        if(["deliver","delivering","shipping","on_the_way"].includes(s)) return "delivering";
+        if(["done","delivered","completed","complete"].includes(s)) return "delivered";
+        return s || "requested";
+      }
+
+      function stepIndex(key){
+        const idx = TRACK_STEPS.findIndex(x => x.key === key);
+        return idx < 0 ? 0 : idx;
+      }
+
+      function renderTrack(statusKey){
+        const norm = normalizeStatus(statusKey);
+        const activeIdx = stepIndex(norm);
+
+        return `
+          <div class="track">
+            ${TRACK_STEPS.map((s, i) => {
+              const cls = i < activeIdx ? "done" : (i === activeIdx ? "active" : "");
+              const bullet = i < activeIdx ? "✓" : (i === activeIdx ? "•" : (i+1));
+              return `
+                <div class="track-step ${cls}">
+                  <div class="track-bullet">${bullet}</div>
+                  <div class="tt">
+                    <b>${esc(s.title)}</b>
+                    <span>${esc(s.desc)}</span>
+                  </div>
+                </div>
+              `;
+            }).join("")}
+          </div>
+        `;
+      }
+
+      // =========================
+      // Supabase actions
+      // =========================
+      async function refreshSession(){
+        const { data, error } = await supabase.auth.getSession();
+        if(error){
+          setStatus(sessionBadge, "err", "خطا در گرفتن سشن");
+          setLoggedInUI(null);
+          return null;
+        }
+        const user = data?.session?.user || null;
+        setLoggedInUI(user);
+        if(user) await loadOrders();
+        return user;
+      }
+
+      async function sendOtp(){
+        setMsg(authMsg, "", "");
+        const d = normalizeDigits(authPhone.value);
+        if(!isValidIranMobile(d)){
+          setMsg(authMsg, "err", "شماره موبایل درست نیست. مثل 0912xxxxxxx وارد کنید.");
+          return;
+        }
+        const e164 = toE164Iran(d);
+        if(!e164){
+          setMsg(authMsg, "err", "شماره قابل تبدیل نیست. لطفاً دوباره تلاش کنید.");
+          return;
+        }
+
+        sendOtpBtn.disabled = true;
+        setMsg(authMsg, "warn", "در حال ارسال کد…");
+
+        const { error } = await supabase.auth.signInWithOtp({
+          phone: e164
+        });
+
+        sendOtpBtn.disabled = false;
+
+        if(error){
+          setMsg(authMsg, "err", "ارسال کد ناموفق بود: " + (error.message || "خطای نامشخص"));
+          showAuthBox(false);
+          return;
+        }
+
+        lastE164Phone = e164;
+        showAuthBox(true);
+        setMsg(authMsg, "ok", "کد ارسال شد ✅ حالا کد را وارد کنید.");
+        authCode.focus();
+      }
+
+      async function verifyOtp(){
+        setMsg(authMsg, "", "");
+        const code = normalizeDigits(authCode.value);
+
+        if(!lastE164Phone){
+          setMsg(authMsg, "err", "اول شماره را وارد کنید و کد را ارسال کنید.");
+          return;
+        }
+        if(!code || code.length < 4){
+          setMsg(authMsg, "err", "کد پیامکی را درست وارد کنید.");
+          return;
+        }
+
+        verifyOtpBtn.disabled = true;
+        setMsg(authMsg, "warn", "در حال تایید کد…");
+
+        const { data, error } = await supabase.auth.verifyOtp({
+          phone: lastE164Phone,
+          token: code,
+          type: "sms"
+        });
+
+        verifyOtpBtn.disabled = false;
+
+        if(error){
+          setMsg(authMsg, "err", "ورود ناموفق بود: " + (error.message || "خطای نامشخص"));
+          return;
+        }
+
+        authCode.value = "";
+        setMsg(authMsg, "ok", "ورود انجام شد ✅");
+        await refreshSession();
+      }
+
+      async function logout(){
+        setMsg(authMsg, "", "");
+        const { error } = await supabase.auth.signOut();
+        if(error){
+          setMsg(authMsg, "err", "خروج ناموفق: " + (error.message || "خطای نامشخص"));
+          return;
+        }
+        lastE164Phone = null;
+        showAuthBox(false);
+        setMsg(authMsg, "ok", "خارج شدید.");
+        await refreshSession();
+      }
+
+      async function createOrder(){
+        setMsg(orderMsg, "", "");
+        const user = (await supabase.auth.getUser()).data?.user;
+        if(!user){
+          setMsg(orderMsg, "err", "اول وارد شوید.");
+          return;
+        }
+
+        const dm = (deviceModel.value || "").trim();
+        const pr = (problemDesc.value || "").trim();
+        const ad = (address.value || "").trim();
+        const pt = (pickupTime.value || "").trim();
+
+        if(!dm || !pr || !ad){
+          setMsg(orderMsg, "err", "مدل گوشی، مشکل و آدرس را کامل وارد کنید.");
+          return;
+        }
+
+        createOrderBtn.disabled = true;
+        setMsg(orderMsg, "warn", "در حال ثبت سفارش…");
+
+        // ✅ NOTE:
+        // این Insert بر اساس ستون‌های عمومی/رایج نوشته شده.
+        // اگر جدول public.orders شما ستون‌های متفاوتی دارد،
+        // بعداً دقیقاً با اسکیما خودتان هماهنگش می‌کنیم.
+        const payload = {
+          user_id: user.id,
+          customer_phone: user.phone || lastE164Phone,
+          device_model: dm,
+          problem: pr,
+          address: ad,
+          pickup_time: pt || null,
+          status: "requested"
+        };
+
+        const { data, error } = await supabase
+          .from("orders")
+          .insert(payload)
+          .select("*")
+          .single();
+
+        createOrderBtn.disabled = false;
+
+        if(error){
+          setMsg(orderMsg, "err", "ثبت سفارش ناموفق بود: " + (error.message || "خطای نامشخص"));
+          return;
+        }
+
+        setMsg(orderMsg, "ok", "سفارش ثبت شد ✅");
+        deviceModel.value = "";
+        problemDesc.value = "";
+        address.value = "";
+        pickupTime.value = "";
+
+        await loadOrders();
+      }
+
+      async function loadOrders(){
+        const user = (await supabase.auth.getUser()).data?.user;
+        if(!user){
+          ordersCount.textContent = "0";
+          return;
+        }
+
+        ordersWrap.innerHTML = '<div class="muted">در حال دریافت سفارش‌ها…</div>';
+
+        // ✅ تلاش برای گرفتن سفارش‌های کاربر
+        // اول: بر اساس user_id
+        let res = await supabase
+          .from("orders")
+          .select("*")
+          .eq("user_id", user.id)
+          .order("created_at", { ascending:false });
+
+        // اگر به هر دلیل user_id وجود نداشت/Policy اجازه نداد، تلاش دوم با شماره
+        if(res.error){
+          const phone = user.phone || lastE164Phone;
+          if(phone){
+            res = await supabase
+              .from("orders")
+              .select("*")
+              .eq("customer_phone", phone)
+              .order("created_at", { ascending:false });
+          }
+        }
+
+        if(res.error){
+          ordersWrap.innerHTML = `
+            <div class="status err">خواندن سفارش‌ها ناموفق بود</div>
+            <div class="hint" style="color:var(--danger)">${esc(res.error.message || "خطای نامشخص")}</div>
+          `;
+          ordersCount.textContent = "0";
+          return;
+        }
+
+        const list = res.data || [];
+        ordersCount.textContent = String(list.length);
+
+        if(list.length === 0){
+          ordersWrap.innerHTML = '<div class="muted">هنوز سفارشی ثبت نکرده‌اید.</div>';
+          return;
+        }
+
+        ordersWrap.innerHTML = list.map(o => {
+          const id = o.id ?? o.order_id ?? "";
+          const created = o.created_at ? fmtDate(o.created_at) : "";
+          const st = o.status ?? o.state ?? "requested";
+          const dm = o.device_model ?? o.model ?? "";
+          const pr = o.problem ?? o.issue ?? "";
+          const ad = o.address ?? "";
+          const pt = o.pickup_time ?? o.pickup_at ?? "";
+
+          return `
+            <div class="order-item">
+              <div class="order-top">
+                <b>سفارش #${esc(id)}</b>
+                <span class="pill">وضعیت: ${esc(normalizeStatus(st))}</span>
+              </div>
+              <div class="muted">
+                <b>مدل:</b> ${esc(dm)}<br>
+                <b>مشکل:</b> ${esc(pr)}<br>
+                <b>آدرس:</b> ${esc(ad)}${pt ? `<br><b>زمان دریافت:</b> ${esc(pt)}` : ""}${created ? `<br><b>ثبت:</b> ${esc(created)}` : ""}
+              </div>
+              ${renderTrack(st)}
+            </div>
+          `;
+        }).join("");
+      }
+
+      // =========================
+      // Events
+      // =========================
+      sendOtpBtn.addEventListener("click", sendOtp);
+      verifyOtpBtn.addEventListener("click", verifyOtp);
+      logoutBtn.addEventListener("click", logout);
+
+      createOrderBtn.addEventListener("click", createOrder);
+      refreshOrdersBtn.addEventListener("click", loadOrders);
+
+      // Auth state listener
+      supabase.auth.onAuthStateChange((_event, _session) => {
+        refreshSession();
+      });
+
+      // Init
+      refreshSession();
+    })();
+  </script>
+</body>
+</html>
+<!doctype html>
+<html lang="fa" dir="rtl">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Mobix | موبیکس — تعمیر موبایل</title>
+
+  <meta name="description" content="موبیکس؛ تعمیر موبایل با سرویس کامل. دریافت گوشی با پیک موبیکس، تعمیر توسط تعمیرکاران موبیکس و تحویل به شما. پیگیری مرحله‌ای و پشتیبانی داخل اپ." />
+
+  <meta property="og:title" content="Mobix | موبیکس — تعمیر موبایل" />
+  <meta property="og:description" content="تعمیر موبایل با پیک موبیکس، پیگیری مرحله‌ای و پشتیبانی داخل اپ." />
+  <meta property="og:type" content="website" />
+  <meta property="og:image" content="https://kamyarsdm.github.io/mobix.github.io/assets/hero.png" />
+
+  <meta name="theme-color" content="#1F6AFF" />
+  <link rel="icon" href="assets/logo.png" />
+
+  <!-- Vazirmatn -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Vazirmatn:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet">
+
+  <style>
+    :root{
+      --bg:#F6F8FC;
+      --card:#FFFFFF;
+      --text:#0B1220;
+      --muted:#5B6B84;
+      --line:rgba(15,23,42,.08);
+
+      --shadow: 0 14px 36px rgba(15,23,42,.10);
+      --shadow2: 0 8px 18px rgba(15,23,42,.08);
+
+      --radius:20px;
+
+      --primary:#1F6AFF;
+      --primary2:#3B82F6;
+      --success:#10B981;
+      --danger:#EF4444;
+      --warn:#F59E0B;
+
+      --max:1160px;
+    }
+
+    *{box-sizing:border-box}
+    html{scroll-behavior:smooth}
+    body{
+      margin:0;
+      font-family:"Vazirmatn", system-ui, sans-serif;
+      background:
+        radial-gradient(1000px 500px at 80% -10%, rgba(31,106,255,.16), transparent 55%),
+        radial-gradient(900px 600px at 20% 10%, rgba(59,130,246,.08), transparent 55%),
+        var(--bg);
+      color:var(--text);
+    }
+
+    a{text-decoration:none;color:inherit}
+    img{max-width:100%;display:block}
+
+    .container{max-width:var(--max);margin:auto;padding:14px 16px 96px}
+
+    /* TOP BAR (minimal) */
+    .topbar{
+      position:sticky;top:0;z-index:50;
+      padding:10px 0;
+      backdrop-filter: blur(12px);
+    }
+    .topbar-inner{
+      display:flex;align-items:center;justify-content:space-between;
+      background:rgba(246,248,252,.86);
+      border:1px solid var(--line);
+      border-radius:999px;
+      padding:10px 12px;
+      box-shadow:var(--shadow2);
+      gap:10px;
+    }
+    .brand{display:flex;align-items:center;gap:10px;min-width:0}
+    .brand img{width:64px;height:auto}
+    .brand-title{font-weight:900;font-size:15px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+
+    .nav{
+      display:flex;align-items:center;gap:8px;flex-wrap:wrap;
+      justify-content:flex-end;
+    }
+    .chip{
+      padding:9px 12px;
+      border-radius:999px;
+      border:1px solid var(--line);
+      background:rgba(255,255,255,.86);
+      font-weight:800;
+      font-size:13px;
+      box-shadow:var(--shadow2);
+    }
+
+    .btn{
+      padding:10px 16px;
+      border-radius:14px;
+      font-weight:900;
+      border:1px solid var(--line);
+      background:#fff;
+      box-shadow:var(--shadow2);
+      cursor:pointer;
+      font-family:inherit;
+      white-space:nowrap;
+    }
+    .btn.primary{
+      background:linear-gradient(135deg,var(--primary),var(--primary2));
+      color:#fff;
+      border:none;
+    }
+    .btn.ghost{
+      background:rgba(255,255,255,.72);
+    }
+    .btn.danger{
+      background:rgba(239,68,68,.10);
+      border:1px solid rgba(239,68,68,.25);
+      color:#7F1D1D;
+    }
+    .btn:disabled{opacity:.55;cursor:not-allowed}
+
+    /* HERO */
+    .hero{
+      margin-top:16px;
+      display:grid;
+      grid-template-columns:1.1fr .9fr;
+      gap:14px;
+      align-items:start;
+    }
+    @media(max-width:980px){.hero{grid-template-columns:1fr}}
+
+    .card{
+      background:var(--card);
+      border:1px solid var(--line);
+      border-radius:var(--radius);
+      padding:18px;
+      box-shadow:var(--shadow);
+    }
+
+    .badge{
+      display:inline-flex;align-items:center;gap:8px;
+      padding:9px 12px;
+      border-radius:999px;
+      border:1px solid rgba(16,185,129,.22);
+      background:rgba(16,185,129,.08);
+      color:#0B3A2C;
+      font-weight:900;
+      font-size:13px;
+    }
+    .dot{
+      width:10px;height:10px;border-radius:50%;
+      background:var(--success);
+      box-shadow:0 0 0 6px rgba(16,185,129,.18);
+    }
+
+    h1{
+      font-size:44px;
+      font-weight:900;
+      margin:12px 0 8px;
+      letter-spacing:-.3px;
+    }
+    @media(max-width:520px){h1{font-size:34px}}
+
+    .sub{
+      color:var(--muted);
+      font-size:15.5px;
+      line-height:1.85;
+      margin:0;
+    }
+
+    .cta{display:flex;gap:10px;margin-top:14px;flex-wrap:wrap}
+
+    .hero-art{
+      margin-top:14px;
+      border-radius:20px;
+      overflow:hidden;
+      border:1px solid var(--line);
+      box-shadow:var(--shadow);
+      background:
+        radial-gradient(600px 260px at 70% 0%, rgba(31,106,255,.22), transparent 60%),
+        radial-gradient(520px 260px at 10% 40%, rgba(59,130,246,.16), transparent 58%),
+        #0B0F1A;
+    }
+    .hero-art img{width:100%;height:auto}
+
+    .mini-grid{
+      display:grid;
+      grid-template-columns:1fr 1fr;
+      gap:10px;
+      margin-top:14px;
+    }
+    @media(max-width:520px){.mini-grid{grid-template-columns:1fr}}
+    .mini{
+      background:linear-gradient(180deg, rgba(31,106,255,.06), rgba(255,255,255,1));
+      border:1px solid var(--line);
+      border-radius:18px;
+      padding:12px 12px;
+    }
+    .mini .t{font-weight:900}
+    .mini .d{color:var(--muted);font-size:13.5px;line-height:1.75;margin-top:6px}
+
+    /* APP PREVIEW */
+    .app-wrap{
+      display:grid;
+      grid-template-columns: 1fr 1fr;
+      gap:12px;
+      margin-top:10px;
+      align-items:stretch;
+    }
+    @media(max-width:900px){.app-wrap{grid-template-columns:1fr}}
+
+    .mock{
+      border:1px solid var(--line);
+      border-radius:22px;
+      overflow:hidden;
+      box-shadow:var(--shadow);
+      background:linear-gradient(180deg, rgba(31,106,255,.08), rgba(255,255,255,1));
+      position:relative;
+      min-height:260px;
+    }
+    .mock-top{
+      display:flex;align-items:center;justify-content:space-between;
+      padding:12px 14px;
+      background:rgba(255,255,255,.86);
+      border-bottom:1px solid var(--line);
+      gap:10px;
+    }
+    .mock-top b{font-weight:900}
+    .pill{
+      display:inline-flex;align-items:center;gap:8px;
+      padding:7px 10px;
+      border-radius:999px;
+      background:rgba(31,106,255,.10);
+      border:1px solid rgba(31,106,255,.18);
+      color:#0B2A6A;
+      font-weight:900;
+      font-size:12.5px;
+      white-space:nowrap;
+    }
+    .mock-body{padding:14px}
+    .step{
+      display:flex;gap:10px;align-items:flex-start;
+      padding:10px 10px;
+      border-radius:16px;
+      border:1px solid var(--line);
+      background:#fff;
+      margin-bottom:10px;
+    }
+    .step:last-child{margin-bottom:0}
+    .sicon{
+      width:34px;height:34px;border-radius:12px;
+      background:linear-gradient(135deg, rgba(31,106,255,.22), rgba(59,130,246,.12));
+      border:1px solid rgba(31,106,255,.18);
+      display:flex;align-items:center;justify-content:center;
+      font-weight:900;color:#0B2A6A;
+      flex:0 0 auto;
+    }
+    .stxt b{display:block;font-weight:900}
+    .stxt span{display:block;color:var(--muted);font-size:13.5px;line-height:1.7;margin-top:4px}
+
+    .kpi{
+      display:grid;
+      grid-template-columns:1fr 1fr 1fr;
+      gap:10px;
+      margin-top:12px;
+    }
+    @media(max-width:520px){.kpi{grid-template-columns:1fr}}
+    .kpi .box{
+      border:1px solid var(--line);
+      background:#fff;
+      border-radius:18px;
+      padding:12px;
+      box-shadow:var(--shadow2);
+    }
+    .kpi .box b{font-weight:900}
+    .kpi .box div{color:var(--muted);font-size:13.5px;line-height:1.7;margin-top:6px}
+
+    /* SECTIONS */
+    .section{margin-top:20px}
+    .section h2{font-size:20px;font-weight:900;margin:0 0 10px}
+
+    /* WHY (BANNERS FIXED) */
+    .why-grid{
+      display:grid;
+      grid-template-columns:1fr 1fr;
+      gap:12px;
+    }
+    @media(max-width:900px){.why-grid{grid-template-columns:1fr}}
+
+    .media{
+      background:#fff;
+      border-radius:20px;
+      border:1px solid var(--line);
+      overflow:hidden;
+      box-shadow:var(--shadow);
+    }
+
+    .media .imgwrap{
+      width:100%;
+      aspect-ratio: 16 / 9;
+      background:
+        radial-gradient(560px 240px at 70% 10%, rgba(31,106,255,.18), transparent 60%),
+        radial-gradient(520px 240px at 10% 60%, rgba(59,130,246,.12), transparent 58%),
+        #0B0F1A;
+      display:flex;
+      align-items:center;
+      justify-content:center;
+      overflow:hidden;
+    }
+    .media img{
+      width:100%;
+      height:100%;
+      object-fit:contain;
+      display:block;
+    }
+
+    .media-caption{
+      padding:12px 14px;
+      font-size:14px;
+      color:var(--muted);
+      line-height:1.8;
+    }
+    .media-caption b{color:var(--text)}
+
+    /* HOW IT WORKS */
+    .timeline{
+      display:grid;
+      grid-template-columns:repeat(4,1fr);
+      gap:10px;
+    }
+    @media(max-width:980px){.timeline{grid-template-columns:1fr 1fr}}
+    @media(max-width:520px){.timeline{grid-template-columns:1fr}}
+    .tcard{
+      border:1px solid var(--line);
+      border-radius:20px;
+      background:#fff;
+      box-shadow:var(--shadow2);
+      padding:14px;
+      position:relative;
+      overflow:hidden;
+    }
+    .tcard:before{
+      content:"";
+      position:absolute;inset:-60px -60px auto auto;
+      width:180px;height:180px;border-radius:999px;
+      background:rgba(31,106,255,.08);
+      transform:rotate(12deg);
+    }
+    .tnum{
+      width:38px;height:38px;border-radius:14px;
+      display:flex;align-items:center;justify-content:center;
+      background:linear-gradient(135deg,var(--primary),var(--primary2));
+      color:#fff;font-weight:900;
+      box-shadow:0 12px 22px rgba(31,106,255,.22);
+      position:relative;
+    }
+    .tcard b{display:block;margin-top:10px;font-weight:900;position:relative}
+    .tcard p{margin:6px 0 0;color:var(--muted);font-size:13.5px;line-height:1.8;position:relative}
+
+    /* AUTH + ORDER (new) */
+    .grid-2{
+      display:grid;
+      grid-template-columns:1fr 1fr;
+      gap:12px;
+      align-items:start;
+    }
+    @media(max-width:900px){.grid-2{grid-template-columns:1fr}}
+
+    .form{
+      margin-top:10px;
+      display:grid;
+      grid-template-columns:1fr auto;
+      gap:10px;
+      align-items:center;
+    }
+    @media(max-width:520px){.form{grid-template-columns:1fr}}
+    .input{
+      width:100%;
+      padding:12px 14px;
+      border-radius:16px;
+      border:1px solid var(--line);
+      background:#fff;
+      box-shadow:var(--shadow2);
+      font-family:inherit;
+      font-weight:700;
+      outline:none;
+    }
+
+    .field{
+      display:flex;
+      flex-direction:column;
+      gap:6px;
+      margin-top:10px;
+    }
+    .label{
+      font-size:13px;
+      font-weight:900;
+      color:var(--muted);
+    }
+    .textarea{
+      width:100%;
+      min-height:110px;
+      padding:12px 14px;
+      border-radius:16px;
+      border:1px solid var(--line);
+      background:#fff;
+      box-shadow:var(--shadow2);
+      font-family:inherit;
+      font-weight:700;
+      outline:none;
+      resize:vertical;
+      line-height:1.9;
+    }
+
+    .hint{
+      margin-top:10px;
+      color:var(--muted);
+      font-size:13px;
+      line-height:1.7;
+      white-space:pre-line;
+    }
+
+    .status{
+      display:inline-flex;
+      align-items:center;
+      gap:8px;
+      padding:8px 10px;
+      border-radius:999px;
+      border:1px solid var(--line);
+      background:rgba(255,255,255,.86);
+      font-weight:900;
+      font-size:12.8px;
+    }
+    .status.ok{border-color:rgba(16,185,129,.25);background:rgba(16,185,129,.08);color:#0B3A2C}
+    .status.err{border-color:rgba(239,68,68,.25);background:rgba(239,68,68,.08);color:#7F1D1D}
+    .status.warn{border-color:rgba(245,158,11,.30);background:rgba(245,158,11,.10);color:#78350F}
+
+    .divider{
+      height:1px;background:var(--line);
+      margin:12px 0;
+    }
+
+    .orders{
+      display:flex;
+      flex-direction:column;
+      gap:10px;
+      margin-top:10px;
+    }
+    .order-item{
+      background:#fff;
+      border:1px solid var(--line);
+      border-radius:18px;
+      padding:12px;
+      box-shadow:var(--shadow2);
+      display:flex;
+      flex-direction:column;
+      gap:8px;
+    }
+    .order-top{
+      display:flex;
+      align-items:center;
+      justify-content:space-between;
+      gap:10px;
+      flex-wrap:wrap;
+    }
+    .order-top b{font-weight:900}
+    .muted{color:var(--muted);font-size:13.2px;line-height:1.8}
+
+    .track{
+      display:grid;
+      grid-template-columns:1fr;
+      gap:8px;
+      margin-top:4px;
+    }
+    .track-step{
+      display:flex;
+      align-items:flex-start;
+      gap:10px;
+      border:1px solid var(--line);
+      background:rgba(246,248,252,.55);
+      border-radius:16px;
+      padding:10px;
+    }
+    .track-bullet{
+      width:28px;height:28px;border-radius:12px;
+      display:flex;align-items:center;justify-content:center;
+      font-weight:900;
+      border:1px solid var(--line);
+      background:#fff;
+      flex:0 0 auto;
+    }
+    .track-step.done .track-bullet{
+      background:rgba(16,185,129,.10);
+      border-color:rgba(16,185,129,.25);
+      color:#0B3A2C;
+    }
+    .track-step.active .track-bullet{
+      background:rgba(31,106,255,.10);
+      border-color:rgba(31,106,255,.25);
+      color:#0B2A6A;
+    }
+    .track-step .tt b{display:block;font-weight:900}
+    .track-step .tt span{display:block;color:var(--muted);font-size:13px;line-height:1.8;margin-top:3px}
+
+    /* FLOATING CTA */
+    .floating{
+      position:fixed;
+      left:16px;
+      right:16px;
+      bottom:14px;
+      z-index:60;
+      display:flex;
+      justify-content:center;
+      pointer-events:none;
+    }
+    .floating-inner{
+      width:min(var(--max), 980px);
+      pointer-events:auto;
+      background:rgba(255,255,255,.86);
+      border:1px solid var(--line);
+      border-radius:999px;
+      box-shadow:var(--shadow);
+      padding:10px;
+      display:flex;
+      align-items:center;
+      justify-content:space-between;
+      gap:10px;
+      backdrop-filter: blur(12px);
+    }
+    .floating-inner .txt{
+      display:flex;flex-direction:column;gap:2px;
+      min-width:0;
+    }
+    .floating-inner .txt b{font-weight:900;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+    .floating-inner .txt span{color:var(--muted);font-size:12.8px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+    .floating-inner .actions{display:flex;gap:8px;flex:0 0 auto;flex-wrap:wrap;justify-content:flex-end}
+
+    /* FOOTER */
+    .footer{
+      margin-top:26px;
+      padding-top:14px;
+      border-top:1px solid var(--line);
+      font-size:13px;
+      color:var(--muted);
+      display:flex;
+      justify-content:space-between;
+      gap:10px;
+      flex-wrap:wrap;
+      align-items:center;
+    }
+
+    /* ENAMAD */
+    .enamad{
+      display:flex;
+      align-items:center;
+      justify-content:center;
+    }
+    .enamad img{
+      width:110px;
+      height:auto;
+    }
+  </style>
+</head>
+
+<body>
+  <div class="container">
+
+    <!-- HEADER -->
+    <div class="topbar">
+      <div class="topbar-inner">
+        <div class="brand">
+          <img src="assets/logo.png" alt="Mobix">
+          <div class="brand-title">Mobix | موبیکس</div>
+        </div>
+
+        <div class="nav">
+          <a class="chip" href="#why">چرا موبیکس؟</a>
+          <a class="chip" href="#how">مراحل کار</a>
+          <a class="chip" href="#order">ثبت/پیگیری سفارش</a>
+          <button class="btn ghost" id="navAuthBtn" type="button">ورود</button>
+        </div>
+      </div>
+    </div>
+
+    <!-- HERO -->
+    <section class="hero" id="top">
+      <div class="card">
+        <span class="badge"><span class="dot"></span> لانچ تا چند روز آینده</span>
+
+        <h1>با خیال راحت بسپارید</h1>
+        <p class="sub">
+          دریافت گوشی با <b>پیک موبیکس</b>، تعمیر توسط <b>تعمیرکاران موبیکس</b>
+          و تحویل به شما با <b>پیگیری مرحله‌ای</b> و <b>پشتیبانی داخل اپ</b>.
+        </p>
+
+        <div class="cta">
+          <a class="btn primary" href="#order">ثبت سفارش آنلاین</a>
+          <a class="btn ghost" href="#how">مراحل کار</a>
+        </div>
+
+        <div class="mini-grid">
+          <div class="mini">
+            <div class="t">شفاف و قابل پیگیری</div>
+            <div class="d">هر مرحله مشخصه؛ از دریافت تا تحویل.</div>
+          </div>
+          <div class="mini">
+            <div class="t">قیمت قبل از اقدام</div>
+            <div class="d">قبل از هر کاری هزینه با شما هماهنگ می‌شه.</div>
+          </div>
+        </div>
+
+        <div class="hero-art">
+          <img src="assets/hero.png" alt="Mobix Hero">
+        </div>
+      </div>
+
+      <!-- APP PREVIEW -->
+      <div class="card">
+        <h2 style="margin:0 0 8px;font-weight:900">نمونه تجربه داخل اپ</h2>
+        <p class="sub">همین شکلی مرحله‌ای می‌بینی چی داره انجام می‌شه.</p>
+
+        <div class="app-wrap">
+          <div class="mock">
+            <div class="mock-top">
+              <b>پیگیری سفارش</b>
+              <span class="pill">وضعیت: در حال تعمیر</span>
+            </div>
+            <div class="mock-body">
+              <div class="step">
+                <div class="sicon">1</div>
+                <div class="stxt">
+                  <b>ثبت درخواست</b>
+                  <span>مشخصات دستگاه و مشکل رو ثبت می‌کنی.</span>
+                </div>
+              </div>
+              <div class="step">
+                <div class="sicon">2</div>
+                <div class="stxt">
+                  <b>دریافت با پیک</b>
+                  <span>پیک موبیکس دستگاه رو تحویل می‌گیره.</span>
+                </div>
+              </div>
+              <div class="step">
+                <div class="sicon">3</div>
+                <div class="stxt">
+                  <b>تأیید هزینه</b>
+                  <span>هزینه دقیق قبل از اقدام بهت اعلام می‌شه.</span>
+                </div>
+              </div>
+              <div class="step">
+                <div class="sicon">4</div>
+                <div class="stxt">
+                  <b>تحویل به شما</b>
+                  <span>پس از تعمیر، دستگاه با پیک تحویل داده می‌شه.</span>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <div class="mock">
+            <div class="mock-top">
+              <b>چت و پشتیبانی</b>
+              <span class="pill">پاسخ سریع</span>
+            </div>
+            <div class="mock-body">
+              <div class="step">
+                <div class="sicon">💬</div>
+                <div class="stxt">
+                  <b>چت داخل اپ</b>
+                  <span>هر سؤال/ابهام داشتی همینجا می‌پرسی.</span>
+                </div>
+              </div>
+              <div class="step">
+                <div class="sicon">🛡️</div>
+                <div class="stxt">
+                  <b>گزارش شفاف</b>
+                  <span>کارهایی که انجام شده و قطعه‌ها مشخصه.</span>
+                </div>
+              </div>
+              <div class="step">
+                <div class="sicon">⚡</div>
+                <div class="stxt">
+                  <b>هماهنگی سریع</b>
+                  <span>برای زمان‌بندی پیک و تحویل، سریع هماهنگ می‌شه.</span>
+                </div>
+              </div>
+
+              <div class="kpi">
+                <div class="box">
+                  <b>پیگیری مرحله‌ای</b>
+                  <div>مثل داشبورد سفارش، لحظه‌ای.</div>
+                </div>
+                <div class="box">
+                  <b>قیمت قبل از کار</b>
+                  <div>بدون تایید شما کاری انجام نمی‌شه.</div>
+                </div>
+                <div class="box">
+                  <b>سرویس یکپارچه</b>
+                  <div>از دریافت تا تحویل با تیم موبیکس.</div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="divider"></div>
+        <div id="sessionBadge" class="status warn">در حال بررسی وضعیت ورود…</div>
+      </div>
+    </section>
+
+    <!-- WHY -->
+    <section class="section" id="why">
+      <h2>چرا موبیکس؟</h2>
+      <div class="why-grid">
+        <div class="media">
+          <div class="imgwrap">
+            <img src="assets/pricing.png" alt="هماهنگی قیمت">
+          </div>
+          <div class="media-caption">
+            <b>هماهنگی قیمت قبل از تعمیر</b><br>
+            قبل از هر اقدامی، هزینه با شما هماهنگ می‌شود.
+          </div>
+        </div>
+
+        <div class="media">
+          <div class="imgwrap">
+            <img src="assets/courier.png" alt="پیک موبیکس">
+          </div>
+          <div class="media-caption">
+            <b>پیک اختصاصی موبیکس</b><br>
+            دریافت و تحویل دستگاه بدون دردسر.
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- HOW IT WORKS -->
+    <section class="section" id="how">
+      <h2>نحوه انجام کار</h2>
+      <div class="timeline">
+        <div class="tcard">
+          <div class="tnum">1</div>
+          <b>ثبت درخواست</b>
+          <p>مدل گوشی و مشکل رو ثبت می‌کنی تا سریع بررسی بشه.</p>
+        </div>
+        <div class="tcard">
+          <div class="tnum">2</div>
+          <b>هماهنگی پیک</b>
+          <p>زمان دریافت دستگاه رو هماهنگ می‌کنیم و پیک میاد.</p>
+        </div>
+        <div class="tcard">
+          <div class="tnum">3</div>
+          <b>اعلام هزینه</b>
+          <p>بعد از عیب‌یابی، هزینه دقیق اعلام می‌شه (با تایید شما).</p>
+        </div>
+        <div class="tcard">
+          <div class="tnum">4</div>
+          <b>تعمیر و تحویل</b>
+          <p>تعمیر انجام می‌شه و دستگاه با پیک به شما تحویل داده می‌شه.</p>
+        </div>
+      </div>
+    </section>
+
+    <!-- ORDER + TRACK (NEW) -->
+    <section class="section" id="order">
+      <div class="card">
+        <h2 style="margin:0 0 8px;font-weight:900">ثبت و پیگیری سفارش (مثل اپ)</h2>
+        <p class="sub">با شماره موبایل وارد شوید، سفارش ثبت کنید و مرحله‌ای پیگیری کنید.</p>
+
+        <div class="grid-2">
+
+          <!-- AUTH CARD -->
+          <div class="card" style="padding:16px;box-shadow:var(--shadow2)">
+            <h2 style="margin:0 0 8px;font-weight:900;font-size:18px">ورود با کد پیامکی</h2>
+            <p class="sub" style="font-size:14.5px">کد یکبار مصرف ارسال می‌شود. بعد از ورود، سفارش‌های شما نمایش داده می‌شود.</p>
+
+            <div class="field">
+              <div class="label">شماره موبایل</div>
+              <input id="authPhone" class="input" inputmode="numeric" placeholder="مثلا 0912xxxxxxx" />
+            </div>
+
+            <div class="form">
+              <button id="sendOtpBtn" class="btn primary" type="button">ارسال کد</button>
+              <div></div>
+            </div>
+
+            <div id="otpBox" style="display:none">
+              <div class="field">
+                <div class="label">کد پیامکی</div>
+                <input id="authCode" class="input" inputmode="numeric" placeholder="کد ۶ رقمی" />
+              </div>
+              <div class="form">
+                <button id="verifyOtpBtn" class="btn primary" type="button">تایید و ورود</button>
+                <button id="logoutBtn" class="btn danger" type="button" style="display:none">خروج</button>
+              </div>
+            </div>
+
+            <div id="authMsg" class="hint" aria-live="polite"></div>
+
+            <div class="divider"></div>
+
+            <div class="muted">
+              نکته: اگر ورود انجام نشد، معمولاً یکی از این‌هاست:
+              <br>• Phone Auth در Supabase فعال نیست
+              <br>• پیامک‌پرووایدر تنظیم نشده
+              <br>• RLS/Policy جدول orders اجازه Insert/Select نمی‌دهد
+            </div>
+          </div>
+
+          <!-- ORDER CARD -->
+          <div class="card" style="padding:16px;box-shadow:var(--shadow2)">
+            <div class="order-top">
+              <h2 style="margin:0;font-weight:900;font-size:18px">ثبت سفارش</h2>
+              <span id="orderGate" class="status warn">برای ثبت سفارش باید وارد شوید</span>
+            </div>
+
+            <div id="orderFormWrap" style="display:none">
+              <div class="field">
+                <div class="label">مدل گوشی</div>
+                <input id="deviceModel" class="input" placeholder="مثلا iPhone 13 / Galaxy A52" />
+              </div>
+
+              <div class="field">
+                <div class="label">مشکل دستگاه</div>
+                <textarea id="problemDesc" class="textarea" placeholder="مثلا خاموش شده / شکستگی ال‌سی‌دی / مشکل شارژ ..."></textarea>
+              </div>
+
+              <div class="field">
+                <div class="label">آدرس برای دریافت با پیک</div>
+                <textarea id="address" class="textarea" placeholder="آدرس دقیق + پلاک + واحد"></textarea>
+              </div>
+
+              <div class="field">
+                <div class="label">زمان پیشنهادی برای دریافت</div>
+                <input id="pickupTime" class="input" placeholder="مثلا امروز ۱۸ تا ۲۰ / فردا صبح" />
+              </div>
+
+              <div class="form">
+                <button id="createOrderBtn" class="btn primary" type="button">ثبت سفارش</button>
+                <button id="refreshOrdersBtn" class="btn ghost" type="button">به‌روزرسانی</button>
+              </div>
+
+              <div id="orderMsg" class="hint" aria-live="polite"></div>
+            </div>
+
+            <div class="divider"></div>
+
+            <div class="order-top">
+              <h2 style="margin:0;font-weight:900;font-size:18px">پیگیری سفارش‌های من</h2>
+              <span id="ordersCount" class="status">0</span>
+            </div>
+
+            <div id="ordersWrap" class="orders">
+              <div class="muted">بعد از ورود، سفارش‌های شما اینجا نمایش داده می‌شود.</div>
+            </div>
+          </div>
+
+        </div>
+      </div>
+    </section>
+
+    <!-- FOOTER -->
+    <div class="footer">
+      <span>© Mobix</span>
+
+      <div class="enamad">
+        <a referrerpolicy="origin" target="_blank" href="https://trustseal.enamad.ir/?id=695372&Code=DiznrIm0BJGpnPrtdWijxsgtOlPs8Aqf">
+          <img referrerpolicy="origin" src="https://trustseal.enamad.ir/logo.aspx?id=695372&Code=DiznrIm0BJGpnPrtdWijxsgtOlPs8Aqf" alt="اینماد" style="cursor:pointer" code="DiznrIm0BJGpnPrtdWijxsgtOlPs8Aqf">
+        </a>
+      </div>
+
+      <span>mobix.github.io</span>
+    </div>
+
+  </div>
+
+  <!-- Floating CTA -->
+  <div class="floating" role="navigation" aria-label="CTA">
+    <div class="floating-inner">
+      <div class="txt">
+        <b>موبیکس — تعمیر موبایل با سرویس کامل</b>
+        <span>پیک، تعمیر، تحویل + پیگیری مرحله‌ای داخل اپ</span>
+      </div>
+      <div class="actions">
+        <a class="btn ghost" href="#how">مراحل</a>
+        <a class="btn ghost" href="#order">ثبت/پیگیری</a>
+        <button class="btn primary" id="floatingAuthBtn" type="button">ورود</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- Supabase JS (CDN) -->
+  <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+
+  <script>
+    (function(){
+      // =========================
+      // ✅ Supabase Config (yours)
+      // =========================
+      const SUPABASE_URL = "https://vrxfhfknmxmeatnfzpcg.supabase.co";
+      const SUPABASE_ANON_KEY = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InZyeGZoZmtubXhtZWF0bmZ6cGNnIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NjYyNTg2MjksImV4cCI6MjA4MTgzNDYyOX0.iANOG9-g9GnVl58KDYI0A-oYNwfbL3oh2NBddZ2sLLs";
+
+      const supabase = window.supabase.createClient(SUPABASE_URL, SUPABASE_ANON_KEY);
+
+      // =========================
+      // Helpers
+      // =========================
+      function normalizeDigits(s){
+        return (s || "")
+          .replace(/[۰-۹]/g, d => "۰۱۲۳۴۵۶۷۸۹".indexOf(d))
+          .replace(/[^\d]/g, "");
+      }
+
+      function isValidIranMobile(d){
+        if(!d) return false;
+        if(d.length === 11 && d.startsWith("09")) return true;
+        if(d.length === 10 && d.startsWith("9")) return true;
+        return false;
+      }
+
+      function toE164Iran(d){
+        // Input: 0912... or 912...
+        // Output: +98912...
+        if(!d) return null;
+        if(d.length === 11 && d.startsWith("09")) return "+98" + d.slice(1);
+        if(d.length === 10 && d.startsWith("9")) return "+98" + d;
+        return null;
+      }
+
+      function fmtDate(iso){
+        try{
+          const dt = new Date(iso);
+          if(isNaN(dt.getTime())) return iso || "";
+          return dt.toLocaleString("fa-IR", { year:"numeric", month:"2-digit", day:"2-digit", hour:"2-digit", minute:"2-digit" });
+        }catch(e){ return iso || ""; }
+      }
+
+      function esc(s){
+        return (s ?? "").toString()
+          .replaceAll("&","&amp;")
+          .replaceAll("<","&lt;")
+          .replaceAll(">","&gt;")
+          .replaceAll('"',"&quot;")
+          .replaceAll("'","&#039;");
+      }
+
+      // =========================
+      // UI Elements
+      // =========================
+      const navAuthBtn = document.getElementById("navAuthBtn");
+      const floatingAuthBtn = document.getElementById("floatingAuthBtn");
+
+      const sessionBadge = document.getElementById("sessionBadge");
+
+      const authPhone = document.getElementById("authPhone");
+      const authCode = document.getElementById("authCode");
+      const sendOtpBtn = document.getElementById("sendOtpBtn");
+      const verifyOtpBtn = document.getElementById("verifyOtpBtn");
+      const logoutBtn = document.getElementById("logoutBtn");
+      const otpBox = document.getElementById("otpBox");
+      const authMsg = document.getElementById("authMsg");
+
+      const orderGate = document.getElementById("orderGate");
+      const orderFormWrap = document.getElementById("orderFormWrap");
+      const deviceModel = document.getElementById("deviceModel");
+      const problemDesc = document.getElementById("problemDesc");
+      const address = document.getElementById("address");
+      const pickupTime = document.getElementById("pickupTime");
+      const createOrderBtn = document.getElementById("createOrderBtn");
+      const refreshOrdersBtn = document.getElementById("refreshOrdersBtn");
+      const orderMsg = document.getElementById("orderMsg");
+
+      const ordersWrap = document.getElementById("ordersWrap");
+      const ordersCount = document.getElementById("ordersCount");
+
+      // =========================
+      // State
+      // =========================
+      let lastE164Phone = null;
+
+      // =========================
+      // UI functions
+      // =========================
+      function setStatus(el, type, text){
+        el.classList.remove("ok","err","warn");
+        if(type) el.classList.add(type);
+        el.textContent = text;
+      }
+
+      function setMsg(el, type, text){
+        if(!text){
+          el.textContent = "";
+          el.style.color = "var(--muted)";
+          return;
+        }
+        if(type === "ok") el.style.color = "var(--success)";
+        else if(type === "err") el.style.color = "var(--danger)";
+        else if(type === "warn") el.style.color = "var(--warn)";
+        else el.style.color = "var(--muted)";
+        el.textContent = text;
+      }
+
+      function showAuthBox(show){
+        otpBox.style.display = show ? "" : "none";
+      }
+
+      function setLoggedInUI(user){
+        const loggedIn = !!user;
+
+        if(loggedIn){
+          setStatus(sessionBadge, "ok", "وارد شده‌اید ✅");
+          navAuthBtn.textContent = "حساب من";
+          floatingAuthBtn.textContent = "حساب من";
+          logoutBtn.style.display = "";
+          orderFormWrap.style.display = "";
+          setStatus(orderGate, "ok", "می‌توانید سفارش ثبت کنید");
+        }else{
+          setStatus(sessionBadge, "warn", "وارد نشده‌اید");
+          navAuthBtn.textContent = "ورود";
+          floatingAuthBtn.textContent = "ورود";
+          logoutBtn.style.display = "none";
+          orderFormWrap.style.display = "none";
+          setStatus(orderGate, "warn", "برای ثبت سفارش باید وارد شوید");
+          ordersWrap.innerHTML = '<div class="muted">بعد از ورود، سفارش‌های شما اینجا نمایش داده می‌شود.</div>';
+          ordersCount.textContent = "0";
+        }
+      }
+
+      function scrollToOrder(){
+        const el = document.getElementById("order");
+        if(el) el.scrollIntoView({ behavior:"smooth", block:"start" });
+      }
+
+      navAuthBtn.addEventListener("click", function(){
+        scrollToOrder();
+        authPhone.focus();
+      });
+      floatingAuthBtn.addEventListener("click", function(){
+        scrollToOrder();
+        authPhone.focus();
+      });
+
+      // =========================
+      // Tracking UI mapping
+      // =========================
+      const TRACK_STEPS = [
+        { key:"requested", title:"ثبت درخواست", desc:"درخواست شما ثبت شد و در حال بررسی است." },
+        { key:"picked_up", title:"دریافت با پیک", desc:"پیک موبیکس دستگاه را دریافت کرد." },
+        { key:"quoted", title:"اعلام/تأیید هزینه", desc:"هزینه اعلام شد و منتظر تایید شماست." },
+        { key:"repairing", title:"در حال تعمیر", desc:"تکنسین موبیکس در حال انجام تعمیر است." },
+        { key:"delivering", title:"ارسال برای تحویل", desc:"دستگاه آماده شده و در مسیر تحویل است." },
+        { key:"delivered", title:"تحویل به شما", desc:"دستگاه تحویل داده شد ✅" }
+      ];
+
+      function normalizeStatus(raw){
+        const s = (raw || "").toString().trim().toLowerCase();
+        // نگاشت‌های رایج (اگر در دیتابیس شما متفاوت بود، اینجا اضافه کنید)
+        if(["new","created","request","requested","pending"].includes(s)) return "requested";
+        if(["pickup","pickedup","picked_up","courier_pickup"].includes(s)) return "picked_up";
+        if(["quote","quoted","price","awaiting_approval","approved_pending"].includes(s)) return "quoted";
+        if(["repair","repairing","in_repair","fixing"].includes(s)) return "repairing";
+        if(["deliver","delivering","shipping","on_the_way"].includes(s)) return "delivering";
+        if(["done","delivered","completed","complete"].includes(s)) return "delivered";
+        return s || "requested";
+      }
+
+      function stepIndex(key){
+        const idx = TRACK_STEPS.findIndex(x => x.key === key);
+        return idx < 0 ? 0 : idx;
+      }
+
+      function renderTrack(statusKey){
+        const norm = normalizeStatus(statusKey);
+        const activeIdx = stepIndex(norm);
+
+        return `
+          <div class="track">
+            ${TRACK_STEPS.map((s, i) => {
+              const cls = i < activeIdx ? "done" : (i === activeIdx ? "active" : "");
+              const bullet = i < activeIdx ? "✓" : (i === activeIdx ? "•" : (i+1));
+              return `
+                <div class="track-step ${cls}">
+                  <div class="track-bullet">${bullet}</div>
+                  <div class="tt">
+                    <b>${esc(s.title)}</b>
+                    <span>${esc(s.desc)}</span>
+                  </div>
+                </div>
+              `;
+            }).join("")}
+          </div>
+        `;
+      }
+
+      // =========================
+      // Supabase actions
+      // =========================
+      async function refreshSession(){
+        const { data, error } = await supabase.auth.getSession();
+        if(error){
+          setStatus(sessionBadge, "err", "خطا در گرفتن سشن");
+          setLoggedInUI(null);
+          return null;
+        }
+        const user = data?.session?.user || null;
+        setLoggedInUI(user);
+        if(user) await loadOrders();
+        return user;
+      }
+
+      async function sendOtp(){
+        setMsg(authMsg, "", "");
+        const d = normalizeDigits(authPhone.value);
+        if(!isValidIranMobile(d)){
+          setMsg(authMsg, "err", "شماره موبایل درست نیست. مثل 0912xxxxxxx وارد کنید.");
+          return;
+        }
+        const e164 = toE164Iran(d);
+        if(!e164){
+          setMsg(authMsg, "err", "شماره قابل تبدیل نیست. لطفاً دوباره تلاش کنید.");
+          return;
+        }
+
+        sendOtpBtn.disabled = true;
+        setMsg(authMsg, "warn", "در حال ارسال کد…");
+
+        const { error } = await supabase.auth.signInWithOtp({
+          phone: e164
+        });
+
+        sendOtpBtn.disabled = false;
+
+        if(error){
+          setMsg(authMsg, "err", "ارسال کد ناموفق بود: " + (error.message || "خطای نامشخص"));
+          showAuthBox(false);
+          return;
+        }
+
+        lastE164Phone = e164;
+        showAuthBox(true);
+        setMsg(authMsg, "ok", "کد ارسال شد ✅ حالا کد را وارد کنید.");
+        authCode.focus();
+      }
+
+      async function verifyOtp(){
+        setMsg(authMsg, "", "");
+        const code = normalizeDigits(authCode.value);
+
+        if(!lastE164Phone){
+          setMsg(authMsg, "err", "اول شماره را وارد کنید و کد را ارسال کنید.");
+          return;
+        }
+        if(!code || code.length < 4){
+          setMsg(authMsg, "err", "کد پیامکی را درست وارد کنید.");
+          return;
+        }
+
+        verifyOtpBtn.disabled = true;
+        setMsg(authMsg, "warn", "در حال تایید کد…");
+
+        const { data, error } = await supabase.auth.verifyOtp({
+          phone: lastE164Phone,
+          token: code,
+          type: "sms"
+        });
+
+        verifyOtpBtn.disabled = false;
+
+        if(error){
+          setMsg(authMsg, "err", "ورود ناموفق بود: " + (error.message || "خطای نامشخص"));
+          return;
+        }
+
+        authCode.value = "";
+        setMsg(authMsg, "ok", "ورود انجام شد ✅");
+        await refreshSession();
+      }
+
+      async function logout(){
+        setMsg(authMsg, "", "");
+        const { error } = await supabase.auth.signOut();
+        if(error){
+          setMsg(authMsg, "err", "خروج ناموفق: " + (error.message || "خطای نامشخص"));
+          return;
+        }
+        lastE164Phone = null;
+        showAuthBox(false);
+        setMsg(authMsg, "ok", "خارج شدید.");
+        await refreshSession();
+      }
+
+      async function createOrder(){
+        setMsg(orderMsg, "", "");
+        const user = (await supabase.auth.getUser()).data?.user;
+        if(!user){
+          setMsg(orderMsg, "err", "اول وارد شوید.");
+          return;
+        }
+
+        const dm = (deviceModel.value || "").trim();
+        const pr = (problemDesc.value || "").trim();
+        const ad = (address.value || "").trim();
+        const pt = (pickupTime.value || "").trim();
+
+        if(!dm || !pr || !ad){
+          setMsg(orderMsg, "err", "مدل گوشی، مشکل و آدرس را کامل وارد کنید.");
+          return;
+        }
+
+        createOrderBtn.disabled = true;
+        setMsg(orderMsg, "warn", "در حال ثبت سفارش…");
+
+        // ✅ NOTE:
+        // این Insert بر اساس ستون‌های عمومی/رایج نوشته شده.
+        // اگر جدول public.orders شما ستون‌های متفاوتی دارد،
+        // بعداً دقیقاً با اسکیما خودتان هماهنگش می‌کنیم.
+        const payload = {
+          user_id: user.id,
+          customer_phone: user.phone || lastE164Phone,
+          device_model: dm,
+          problem: pr,
+          address: ad,
+          pickup_time: pt || null,
+          status: "requested"
+        };
+
+        const { data, error } = await supabase
+          .from("orders")
+          .insert(payload)
+          .select("*")
+          .single();
+
+        createOrderBtn.disabled = false;
+
+        if(error){
+          setMsg(orderMsg, "err", "ثبت سفارش ناموفق بود: " + (error.message || "خطای نامشخص"));
+          return;
+        }
+
+        setMsg(orderMsg, "ok", "سفارش ثبت شد ✅");
+        deviceModel.value = "";
+        problemDesc.value = "";
+        address.value = "";
+        pickupTime.value = "";
+
+        await loadOrders();
+      }
+
+      async function loadOrders(){
+        const user = (await supabase.auth.getUser()).data?.user;
+        if(!user){
+          ordersCount.textContent = "0";
+          return;
+        }
+
+        ordersWrap.innerHTML = '<div class="muted">در حال دریافت سفارش‌ها…</div>';
+
+        // ✅ تلاش برای گرفتن سفارش‌های کاربر
+        // اول: بر اساس user_id
+        let res = await supabase
+          .from("orders")
+          .select("*")
+          .eq("user_id", user.id)
+          .order("created_at", { ascending:false });
+
+        // اگر به هر دلیل user_id وجود نداشت/Policy اجازه نداد، تلاش دوم با شماره
+        if(res.error){
+          const phone = user.phone || lastE164Phone;
+          if(phone){
+            res = await supabase
+              .from("orders")
+              .select("*")
+              .eq("customer_phone", phone)
+              .order("created_at", { ascending:false });
+          }
+        }
+
+        if(res.error){
+          ordersWrap.innerHTML = `
+            <div class="status err">خواندن سفارش‌ها ناموفق بود</div>
+            <div class="hint" style="color:var(--danger)">${esc(res.error.message || "خطای نامشخص")}</div>
+          `;
+          ordersCount.textContent = "0";
+          return;
+        }
+
+        const list = res.data || [];
+        ordersCount.textContent = String(list.length);
+
+        if(list.length === 0){
+          ordersWrap.innerHTML = '<div class="muted">هنوز سفارشی ثبت نکرده‌اید.</div>';
+          return;
+        }
+
+        ordersWrap.innerHTML = list.map(o => {
+          const id = o.id ?? o.order_id ?? "";
+          const created = o.created_at ? fmtDate(o.created_at) : "";
+          const st = o.status ?? o.state ?? "requested";
+          const dm = o.device_model ?? o.model ?? "";
+          const pr = o.problem ?? o.issue ?? "";
+          const ad = o.address ?? "";
+          const pt = o.pickup_time ?? o.pickup_at ?? "";
+
+          return `
+            <div class="order-item">
+              <div class="order-top">
+                <b>سفارش #${esc(id)}</b>
+                <span class="pill">وضعیت: ${esc(normalizeStatus(st))}</span>
+              </div>
+              <div class="muted">
+                <b>مدل:</b> ${esc(dm)}<br>
+                <b>مشکل:</b> ${esc(pr)}<br>
+                <b>آدرس:</b> ${esc(ad)}${pt ? `<br><b>زمان دریافت:</b> ${esc(pt)}` : ""}${created ? `<br><b>ثبت:</b> ${esc(created)}` : ""}
+              </div>
+              ${renderTrack(st)}
+            </div>
+          `;
+        }).join("");
+      }
+
+      // =========================
+      // Events
+      // =========================
+      sendOtpBtn.addEventListener("click", sendOtp);
+      verifyOtpBtn.addEventListener("click", verifyOtp);
+      logoutBtn.addEventListener("click", logout);
+
+      createOrderBtn.addEventListener("click", createOrder);
+      refreshOrdersBtn.addEventListener("click", loadOrders);
+
+      // Auth state listener
+      supabase.auth.onAuthStateChange((_event, _session) => {
+        refreshSession();
+      });
+
+      // Init
+      refreshSession();
     })();
   </script>
 </body>
