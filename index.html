@@ -61,9 +61,9 @@
 
     a{color:inherit;text-decoration:none}
     img{max-width:100%;display:block}
-    .container{max-width:var(--max);margin:0 auto;padding:18px 16px 90px}
+    .container{max-width:var(--max);margin:0 auto;padding:16px 16px 90px}
 
-    /* Topbar */
+    /* --------- MINIMAL HEADER --------- */
     .topbar{
       position:sticky; top:0; z-index:50;
       padding:10px 0;
@@ -72,57 +72,43 @@
     .topbar-inner{
       display:flex;align-items:center;justify-content:space-between;gap:12px;
       border:1px solid var(--line);
-      background: rgba(246,248,252,.84);
+      background: rgba(246,248,252,.86);
       border-radius:999px;
       padding:10px 12px;
       box-shadow: var(--shadow2);
     }
     .brand{
-      display:flex;align-items:center;gap:12px;min-width:0;
+      display:flex;align-items:center;gap:10px;min-width:0;
     }
     .brand img{
-      width:46px;height:auto;
+      width:42px;height:auto;
       filter: drop-shadow(0 10px 18px rgba(31,106,255,.10));
     }
     .brand-txt{min-width:0}
     .brand-title{
       font-weight:900;
       letter-spacing:-.35px;
-      line-height:1.15
+      line-height:1.15;
+      font-size:14.5px;
     }
     .brand-sub{
-      font-size:12px;
+      font-size:11.5px;
       color:var(--muted);
       margin-top:2px;
       white-space:nowrap;
       overflow:hidden;
-      text-overflow:ellipsis
+      text-overflow:ellipsis;
+      max-width: 52vw;
     }
-
-    .nav{
-      display:flex;align-items:center;gap:10px;flex-wrap:wrap;justify-content:flex-end;
-    }
-    .nav a{
-      font-size:13px;
-      color:var(--muted);
-      padding:8px 10px;
-      border-radius:999px;
-      border:1px solid transparent;
-      transition: all .12s ease;
-    }
-    .nav a:hover{
-      background:#fff;
-      border-color:var(--line);
-      color:var(--text);
-      box-shadow: var(--shadow2);
-      transform: translateY(-1px);
+    .topbar-actions{
+      display:flex;align-items:center;gap:8px;flex:0 0 auto;
     }
 
     /* Buttons */
     .btn{
       display:inline-flex;align-items:center;justify-content:center;gap:10px;
-      padding:12px 14px;
-      border-radius:16px;
+      padding:10px 12px;
+      border-radius:14px;
       border:1px solid var(--line);
       background:#fff;
       font-weight:900;
@@ -130,6 +116,8 @@
       box-shadow: var(--shadow2);
       transition: transform .12s ease, box-shadow .12s ease, filter .12s ease;
       user-select:none;
+      font-size:13px;
+      white-space:nowrap;
     }
     .btn:active{transform: translateY(1px)}
     .btn.primary{
@@ -144,13 +132,12 @@
       border-color: rgba(31,106,255,.18);
       color: var(--text);
     }
-    .btn.ghost{
-      background: #fff;
-      border-color: rgba(15,23,42,.10);
-      color: var(--text);
-    }
     .btn.disabled{
       opacity:.55; cursor:not-allowed; box-shadow:none;
+    }
+    @media (max-width:520px){
+      .topbar-actions .btn.soft{display:none;} /* موبایل: فقط CTA اصلی */
+      .brand-sub{max-width: 58vw;}
     }
 
     /* Hero */
@@ -446,21 +433,20 @@
 <body>
   <div class="container">
 
+    <!-- MINIMAL HEADER -->
     <div class="topbar">
       <div class="topbar-inner">
-        <div class="brand">
+        <a class="brand" href="#top" aria-label="Mobix">
           <img src="assets/logo.png" alt="Mobix | موبیکس">
           <div class="brand-txt">
             <div class="brand-title">Mobix | موبیکس</div>
             <div class="brand-sub">تعمیر موبایل با دریافت و تحویل توسط پیک موبیکس</div>
           </div>
-        </div>
+        </a>
 
-        <div class="nav">
-          <a href="#services">خدمات</a>
-          <a href="#why">چرا موبیکس؟</a>
-          <a href="#how">مراحل کار</a>
-          <a href="#waitlist">لیست انتظار</a>
+        <div class="topbar-actions">
+          <a class="btn soft" href="#how">مراحل کار</a>
+          <a class="btn primary" href="#waitlist">لیست انتظار</a>
         </div>
       </div>
     </div>
@@ -478,7 +464,7 @@
 
         <div class="cta">
           <a class="btn primary" href="#waitlist">عضویت در لیست انتظار</a>
-          <a class="btn soft" href="#how">نحوه انجام کار</a>
+          <a class="btn soft" href="#services">خدمات سریع</a>
           <span class="btn disabled" title="بعد از لانچ فعال می‌شود">دانلود اپ (به‌زودی)</span>
         </div>
 
@@ -713,7 +699,6 @@
       const name = (form.elements.name.value || '').trim();
       const phone = normalizePhone(form.elements.phone.value);
 
-      // اعتبارسنجی شماره ایران
       const ok = /^(\+98|0)?9\d{9}$/.test(phone);
       if(!ok){
         alert('شماره موبایل معتبر وارد کن (مثل 09xxxxxxxxx).');
