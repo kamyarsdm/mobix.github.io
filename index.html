@@ -3,14 +3,15 @@
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <title>Mobix | موبیکس — تعمیر موبایل درب منزل</title>
-  <meta name="description" content="موبیکس؛ تعمیر موبایل درب منزل. دریافت گوشی با پیک موبیکس، تعمیر توسط تعمیرکاران موبیکس و تحویل به شما. پیگیری مرحله‌ای و پشتیبانی داخل اپ." />
+  <title>Mobix | موبیکس — تعمیر موبایل</title>
+  <meta name="description" content="موبیکس؛ تعمیر موبایل با سرویس کامل. دریافت گوشی با پیک موبیکس، تعمیر توسط تعمیرکاران موبیکس و تحویل به شما. پیگیری مرحله‌ای و پشتیبانی داخل اپ." />
 
   <!-- Open Graph (برای واتساپ/تلگرام) -->
-  <meta property="og:title" content="Mobix | موبیکس — تعمیر موبایل درب منزل" />
-  <meta property="og:description" content="دریافت با پیک موبیکس، تعمیر توسط تعمیرکاران موبیکس، تحویل به شما. پیگیری مرحله‌ای و پشتیبانی داخل اپ." />
+  <meta property="og:title" content="Mobix | موبیکس — تعمیر موبایل" />
+  <meta property="og:description" content="دریافت با پیک موبیکس، تعمیر توسط تعمیرکاران موبیکس و تحویل به شما. پیگیری مرحله‌ای و پشتیبانی داخل اپ." />
   <meta property="og:type" content="website" />
-  <meta property="og:image" content="assets/hero.png" />
+  <!-- بهتره absolute باشه تا کارت اشتراک درست بیاد -->
+  <meta property="og:image" content="https://kamyarsdm.github.io/mobix.github.io/assets/hero.png" />
 
   <meta name="theme-color" content="#1F6AFF" />
   <link rel="icon" href="assets/logo.png" />
@@ -35,7 +36,6 @@
 
       --primary:#1F6AFF;
       --primary2:#3B82F6;
-      --purple:#A855F7;
       --success:#10B981;
 
       --chip:#F0F5FF;
@@ -46,13 +46,14 @@
 
     *{box-sizing:border-box}
     html,body{height:100%}
+    html{scroll-behavior:smooth}
     body{
       margin:0;
       font-family:"Vazirmatn", ui-sans-serif, system-ui, -apple-system, "Segoe UI", Roboto, Arial, sans-serif;
       color:var(--text);
       background:
         radial-gradient(1100px 520px at 82% -12%, rgba(31,106,255,.16), transparent 55%),
-        radial-gradient(900px 520px at 8% 10%, rgba(168,85,247,.10), transparent 55%),
+        radial-gradient(900px 520px at 8% 10%, rgba(59,130,246,.08), transparent 55%),
         radial-gradient(900px 700px at 50% 120%, rgba(16,185,129,.10), transparent 55%),
         var(--bg);
       -webkit-font-smoothing: antialiased;
@@ -80,16 +81,18 @@
     .brand{
       display:flex;align-items:center;gap:10px;min-width:0;
     }
+    /* لوگو بزرگ‌تر */
     .brand img{
-      width:42px;height:auto;
-      filter: drop-shadow(0 10px 18px rgba(31,106,255,.10));
+      width:56px;
+      height:auto;
+      filter: drop-shadow(0 10px 18px rgba(31,106,255,.12));
     }
     .brand-txt{min-width:0}
     .brand-title{
       font-weight:900;
       letter-spacing:-.35px;
       line-height:1.15;
-      font-size:14.5px;
+      font-size:15px;
     }
     .brand-sub{
       font-size:11.5px;
@@ -98,7 +101,8 @@
       white-space:nowrap;
       overflow:hidden;
       text-overflow:ellipsis;
-      max-width: 52vw;
+      max-width: 56vw;
+      font-weight:500;
     }
     .topbar-actions{
       display:flex;align-items:center;gap:8px;flex:0 0 auto;
@@ -136,8 +140,9 @@
       opacity:.55; cursor:not-allowed; box-shadow:none;
     }
     @media (max-width:520px){
-      .topbar-actions .btn.soft{display:none;} /* موبایل: فقط CTA اصلی */
-      .brand-sub{max-width: 58vw;}
+      .topbar-actions .btn.soft{display:none;}
+      .brand-sub{max-width: 62vw;}
+      .brand img{width:52px;}
     }
 
     /* Hero */
@@ -457,7 +462,7 @@
         <div class="badge"><span class="dot"></span> لانچ تا چند روز آینده</div>
         <h1>با خیال راحت بسپارید</h1>
         <p class="sub">
-          تعمیر موبایل درب منزل — دریافت گوشی با <b>پیک موبیکس</b>،
+          تعمیر موبایل — دریافت گوشی با <b>پیک موبیکس</b>،
           تعمیر توسط <b>تعمیرکاران موبیکس</b> و تحویل به شما.
           پیگیری مرحله‌ای و پشتیبانی داخل اپ.
         </p>
@@ -500,7 +505,7 @@
         </div>
 
         <div class="hero-art">
-          <img src="assets/hero.png" alt="سفارش تعمیر موبایل با موبیکس">
+          <img src="assets/hero.png" alt="سفارش تعمیر موبایل با موبیکس" loading="eager">
         </div>
       </div>
 
@@ -585,14 +590,14 @@
 
       <div class="why-grid">
         <div class="media">
-          <img src="assets/courier.png" alt="پیک اختصاصی موبیکس">
+          <img src="assets/courier.png" alt="پیک موبیکس" loading="lazy">
           <div class="media-caption">
             دریافت و تحویل توسط <b>پیک موبیکس</b> — تجربه‌ای سریع و بدون دردسر.
           </div>
         </div>
 
         <div class="media">
-          <img src="assets/pricing.png" alt="هماهنگی قیمت قبل از تعمیر">
+          <img src="assets/pricing.png" alt="هماهنگی قیمت قبل از تعمیر" loading="lazy">
           <div class="media-caption">
             قبل از تعمیر، <b>هزینه با شما هماهنگ می‌شود</b> و بدون تایید شما کاری انجام نمی‌شود.
           </div>
@@ -699,7 +704,7 @@
       const name = (form.elements.name.value || '').trim();
       const phone = normalizePhone(form.elements.phone.value);
 
-      const ok = /^(\+98|0)?9\d{9}$/.test(phone);
+      const ok = /^(\+98|0)?9\\d{9}$/.test(phone);
       if(!ok){
         alert('شماره موبایل معتبر وارد کن (مثل 09xxxxxxxxx).');
         return false;
@@ -710,7 +715,7 @@
         if(name) localStorage.setItem('mobix_waitlist_name', name);
       }catch(_){}
 
-      alert('ثبت شد ✅\nبه محض لانچ اپ، خبرت می‌کنیم.');
+      alert('ثبت شد ✅\\nبه محض لانچ اپ، خبرت می‌کنیم.');
       form.reset();
       return false;
     }
