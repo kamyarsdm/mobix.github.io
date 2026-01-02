@@ -368,7 +368,7 @@
     .stxt b{display:block;font-weight:900}
     .stxt span{display:block;color:var(--muted);font-size:13.5px;line-height:1.7;margin-top:4px}
 
-    /* KPI (fix text sizing / alignment) */
+    /* KPI */
     .kpi{
       display:grid;
       grid-template-columns:1fr 1fr 1fr;
@@ -453,10 +453,10 @@
       box-shadow:var(--shadow);
     }
 
-    /* ✅ Banner sizes fixed: consistent height on desktop + controlled on smaller screens */
+    /* ✅ Banner sizes fixed */
     .media .imgwrap{
       width:100%;
-      height:210px;              /* desktop height */
+      height:210px;
       background:
         radial-gradient(560px 240px at 70% 10%, rgba(31,106,255,.18), transparent 60%),
         radial-gradient(520px 240px at 10% 60%, rgba(59,130,246,.12), transparent 58%),
@@ -487,7 +487,7 @@
     }
     .media-caption b{color:var(--text)}
 
-    /* ✅ Support/Tracking banner (graphic) */
+    /* ✅ Support/Tracking banner (graphic + step-by-step pills) */
     .imgwrap-graphic{
       width:100%;
       height:210px;
@@ -501,6 +501,7 @@
       justify-content:center;
       border-bottom:1px solid var(--line);
       position:relative;
+      padding:12px;
     }
     .imgwrap-graphic:before{
       content:"";
@@ -514,14 +515,20 @@
     .graphic-center{
       position:relative;
       display:flex;
-      align-items:center;
-      gap:14px;
+      flex-direction:column;
+      gap:10px;
       padding:14px 16px;
       border-radius:20px;
       background:rgba(255,255,255,.08);
       border:1px solid rgba(255,255,255,.12);
       backdrop-filter: blur(10px);
       box-shadow:0 18px 36px rgba(0,0,0,.18);
+      width:min(520px, 100%);
+    }
+    .graphic-head{
+      display:flex;
+      align-items:center;
+      gap:12px;
     }
     .gicon{
       width:48px;height:48px;border-radius:18px;
@@ -534,11 +541,26 @@
     }
     .gtext b{display:block;color:#fff;font-weight:900}
     .gtext span{display:block;color:rgba(220,232,255,.88);font-size:13px;line-height:1.6;margin-top:4px}
+    .gsteps{
+      display:flex;
+      flex-wrap:wrap;
+      gap:8px;
+    }
+    .gstep{
+      padding:8px 10px;
+      border-radius:999px;
+      background:rgba(255,255,255,.10);
+      border:1px solid rgba(255,255,255,.14);
+      color:rgba(255,255,255,.92);
+      font-weight:900;
+      font-size:12.5px;
+      white-space:nowrap;
+    }
 
     @media(max-width:1200px){.imgwrap-graphic{height:200px}}
     @media(max-width:1024px){.imgwrap-graphic{height:190px}}
     @media(max-width:900px){.imgwrap-graphic{height:180px}}
-    @media(max-width:520px){.imgwrap-graphic{height:150px}}
+    @media(max-width:520px){.imgwrap-graphic{height:170px}}
 
     /* HOW IT WORKS */
     .timeline{
@@ -857,10 +879,8 @@
        MOBILE FIXES
        ========================= */
     @media (max-width: 520px){
-      /* space for floating bar (prevents overlap) */
       .container{ padding-bottom: 170px; }
 
-      /* topbar: more compact on mobile */
       .topbar-inner{
         border-radius:22px;
         padding:10px 10px;
@@ -869,14 +889,12 @@
       .brand-title{font-size:14px}
       .nav{gap:8px}
 
-      /* hero: reduce spacing + keep CTA readable */
       .card{padding:14px}
       h1{font-size:32px}
       .sub{font-size:14.5px;line-height:1.9}
       .cta{gap:8px}
       .btn{padding:10px 14px;border-radius:14px}
 
-      /* floating bar: turn into 2-row compact bar */
       .floating{ left:12px; right:12px; bottom:10px; }
       .floating-inner{
         border-radius:18px;
@@ -951,7 +969,6 @@
           </div>
         </div>
 
-        <!-- HERO IMAGE (بدون متن) -->
         <div class="hero-art">
           <img src="assets/hero-final.jpg" alt="Mobix Hero">
         </div>
@@ -974,7 +991,7 @@
           </div>
 
           <div class="app-wrap">
-            <!-- tracking sample (NOT مراحل کار) -->
+            <!-- tracking sample -->
             <div class="mock">
               <div class="mock-top">
                 <b>پیگیری سفارش</b>
@@ -1038,7 +1055,7 @@
                   </div>
                 </div>
                 <div class="step">
-                  <div class="sicon">🛡️</div>
+                  <div class="sicon">🧭</div>
                   <div class="stxt">
                     <b>پیگیری مرحله‌ای</b>
                     <span>وضعیت سفارش همیشه جلوی چشم شماست.</span>
@@ -1079,7 +1096,6 @@
           <div class="card" style="padding:16px;box-shadow:var(--shadow2)">
             <b style="font-weight:900">Android</b>
             <div class="dl-cards">
-              <!-- لینک‌ها را با لینک واقعی جایگزین کن -->
               <a class="badge" href="#" target="_blank" rel="noopener">
                 <span class="dot"></span>
                 کافه‌بازار
@@ -1137,14 +1153,22 @@
           </div>
         </div>
 
-        <!-- ✅ Banner: پشتیبانی و پیگیری مرحله‌ای نمایش داده شود -->
         <div class="media">
           <div class="imgwrap-graphic" aria-label="پشتیبانی و پیگیری مرحله‌ای">
             <div class="graphic-center">
-              <div class="gicon">🧭</div>
-              <div class="gtext">
-                <b>پشتیبانی و پیگیری مرحله‌ای</b>
-                <span>شفاف، مرحله‌به‌مرحله و همیشه در دسترس</span>
+              <div class="graphic-head">
+                <div class="gicon">🧭</div>
+                <div class="gtext">
+                  <b>پشتیبانی و پیگیری مرحله‌ای</b>
+                  <span>شفاف، مرحله‌به‌مرحله و همیشه در دسترس</span>
+                </div>
+              </div>
+              <div class="gsteps" aria-label="مراحل">
+                <div class="gstep">ثبت</div>
+                <div class="gstep">پیک</div>
+                <div class="gstep">هزینه</div>
+                <div class="gstep">تعمیر</div>
+                <div class="gstep">تحویل</div>
               </div>
             </div>
           </div>
@@ -1256,7 +1280,6 @@
               <span id="orderGate" class="status warn">برای ارسال نهایی باید وارد شوید</span>
             </div>
 
-            <!-- When logged in show a small logout area here -->
             <div id="loggedInBar" style="display:none;margin-top:10px">
               <div class="order-top" style="align-items:center">
                 <span class="status ok" id="loggedInText">وارد شده‌اید ✅</span>
@@ -1264,8 +1287,13 @@
               </div>
             </div>
 
-            <!-- فرم همیشه قابل پر کردن -->
             <div id="orderFormWrap">
+              <!-- ✅ required in your DB (customer_name not null) -->
+              <div class="field">
+                <div class="label">نام و نام خانوادگی</div>
+                <input id="customerName" class="input" placeholder="مثلا کامیار صادهمیری" />
+              </div>
+
               <div class="field">
                 <div class="label">مدل گوشی</div>
                 <input id="deviceModel" class="input" placeholder="مثلا iPhone 13 / Galaxy A52" />
@@ -1400,7 +1428,6 @@
       const SUPABASE_URL = "https://vrxfhfknmxmeatnfzpcg.supabase.co";
       const SUPABASE_ANON_KEY = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InZyeGZoZmtubXhtZWF0bmZ6cGNnIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NjYyNTg2MjksImV4cCI6MjA4MTgzNDYyOX0.iANOG9-g9GnVl58KDYI0A-oYNwfbL3oh2NBddZ2sLLs";
 
-      // Edge Functions (sms.ir)
       const OTP_REQUEST_URL = "https://vrxfhfknmxmeatnfzpcg.supabase.co/functions/v1/request-otp";
       const OTP_VERIFY_URL  = "https://vrxfhfknmxmeatnfzpcg.supabase.co/functions/v1/verify-otp";
 
@@ -1450,6 +1477,16 @@
         return obj.message || obj.error || (obj.errors && obj.errors[0] && (obj.errors[0].message || obj.errors[0])) || null;
       }
 
+      // ✅ generate order_no like your DB examples: MCC-YYMMDD-XXXX
+      function genOrderNo(){
+        const d = new Date();
+        const yy = String(d.getFullYear()).slice(-2);
+        const mm = String(d.getMonth()+1).padStart(2,"0");
+        const dd = String(d.getDate()).padStart(2,"0");
+        const rand = String(Math.floor(1000 + Math.random()*9000));
+        return `MCC-${yy}${mm}${dd}-${rand}`;
+      }
+
       // =========================
       // UI Elements
       // =========================
@@ -1475,6 +1512,7 @@
       const heroPrimaryCta = document.getElementById("heroPrimaryCta");
 
       const orderGate = document.getElementById("orderGate");
+      const customerName = document.getElementById("customerName");
       const deviceModel = document.getElementById("deviceModel");
       const problemDesc = document.getElementById("problemDesc");
       const address = document.getElementById("address");
@@ -1540,7 +1578,7 @@
           if(authCard) authCard.style.display = "none";        // ✅ بعد از ورود، بخش ورود دیده نشود
           if(loggedInBar) loggedInBar.style.display = "";
           if(loggedInText) loggedInText.textContent = "وارد شده‌اید ✅ (" + loginState.phone09 + ")";
-          if(logoutBtn) logoutBtn.style.display = "none";      // داخل authCard پنهان است
+          if(logoutBtn) logoutBtn.style.display = "none";
           setStatus(orderGate, "ok", "می‌توانید سفارش را ارسال کنید");
         }else{
           setStatus(sessionBadge, "warn", "وارد نشده‌اید");
@@ -1560,10 +1598,11 @@
       // =========================
       function saveDraft(){
         const draft = {
+          customer_name: (customerName.value || "").trim(),
           device_model: (deviceModel.value || "").trim(),
-          problem: (problemDesc.value || "").trim(),
-          address: (address.value || "").trim(),
-          pickup_time: (pickupTime.value || "").trim()
+          issue: (problemDesc.value || "").trim(),
+          pickup_address: (address.value || "").trim(),
+          pickup_time_text: (pickupTime.value || "").trim()
         };
         localStorage.setItem(DRAFT_KEY, JSON.stringify(draft));
       }
@@ -1573,10 +1612,11 @@
           if(!raw) return;
           const d = JSON.parse(raw);
           if(d && typeof d === "object"){
+            if(d.customer_name != null) customerName.value = d.customer_name;
             if(d.device_model != null) deviceModel.value = d.device_model;
-            if(d.problem != null) problemDesc.value = d.problem;
-            if(d.address != null) address.value = d.address;
-            if(d.pickup_time != null) pickupTime.value = d.pickup_time;
+            if(d.issue != null) problemDesc.value = d.issue;
+            if(d.pickup_address != null) address.value = d.pickup_address;
+            if(d.pickup_time_text != null) pickupTime.value = d.pickup_time_text;
           }
         }catch(_e){}
       }
@@ -1811,13 +1851,14 @@
       async function createOrder(){
         setMsg(orderMsg, "", "");
 
+        const cn = (customerName.value || "").trim();
         const dm = (deviceModel.value || "").trim();
-        const pr = (problemDesc.value || "").trim();
-        const ad = (address.value || "").trim();
+        const issue = (problemDesc.value || "").trim();
+        const addr = (address.value || "").trim();
         const pt = (pickupTime.value || "").trim();
 
-        if(!dm || !pr || !ad){
-          setMsg(orderMsg, "err", "مدل گوشی، مشکل و آدرس را کامل وارد کنید.");
+        if(!cn || !dm || !issue || !addr){
+          setMsg(orderMsg, "err", "نام، مدل گوشی، مشکل و آدرس را کامل وارد کنید.");
           return;
         }
 
@@ -1829,13 +1870,20 @@
         createOrderBtn.disabled = true;
         setMsg(orderMsg, "warn", "در حال ثبت سفارش…");
 
+        // ✅ match your DB columns (based on your table screenshot)
         const payload = {
+          order_no: genOrderNo(),
           customer_phone: loginState.phone09,
+          customer_name: cn,
           device_model: dm,
-          problem: pr,
-          address: ad,
-          pickup_time: pt || null,
-          status: "requested"
+          issue: issue,
+          pickup_address: addr,
+          pickup_time_text: pt || null,
+          delivery_method: "courier",
+          needs_issue_photo: false,
+          stage: "requested",
+          quoted_price_toman: 0,
+          price_approved: false
         };
 
         try{
@@ -1852,12 +1900,12 @@
           }
 
           if(!data){
-            console.warn("Insert returned no data");
             setMsg(orderMsg, "warn", "سفارش ثبت شد ولی پاسخی برنگشت. لطفاً «به‌روزرسانی» را بزنید.");
           }else{
             setMsg(orderMsg, "ok", "سفارش ثبت شد ✅");
           }
 
+          customerName.value = "";
           deviceModel.value = "";
           problemDesc.value = "";
           address.value = "";
@@ -1906,13 +1954,13 @@
         }
 
         ordersWrap.innerHTML = list.map(o => {
-          const id = o.id ?? o.order_id ?? "";
+          const id = o.order_no ?? o.id ?? "";
           const created = o.created_at ? fmtDate(o.created_at) : "";
-          const st = o.status ?? o.state ?? "requested";
+          const st = o.stage ?? o.status ?? o.state ?? "requested";
           const dm = o.device_model ?? o.model ?? "";
-          const pr = o.problem ?? o.issue ?? "";
-          const ad = o.address ?? "";
-          const pt = o.pickup_time ?? o.pickup_at ?? "";
+          const pr = o.issue ?? o.problem ?? "";
+          const ad = o.pickup_address ?? o.address ?? "";
+          const pt = o.pickup_time_text ?? o.pickup_time ?? "";
 
           return `
             <div class="order-item">
@@ -1969,7 +2017,7 @@
       if(logoutBtn) logoutBtn.addEventListener("click", logout);
 
       // Save draft on input changes
-      [deviceModel, problemDesc, address, pickupTime].forEach(el => {
+      [customerName, deviceModel, problemDesc, address, pickupTime].forEach(el => {
         if(!el) return;
         el.addEventListener("input", () => saveDraft());
       });
