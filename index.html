@@ -10,7 +10,7 @@
   <meta property="og:title" content="Mobix | موبیکس — تعمیر موبایل" />
   <meta property="og:description" content="تعمیر موبایل با سرویس کامل: ثبت درخواست، هماهنگی پیک، اعلام هزینه، تعمیر و تحویل." />
   <meta property="og:type" content="website" />
-  <meta property="og:image" content="https://mobixfix.ir/assets/hero.png" />
+  <meta property="og:image" content="https://mobixfix.ir/assets/hero-final.jpg" />
 
   <meta name="theme-color" content="#1F6AFF" />
   <link rel="icon" href="assets/logo.png" />
@@ -39,7 +39,7 @@
       --danger:#EF4444;
       --warn:#F59E0B;
 
-      --max:1120px;
+      --max:1160px;
     }
 
     *{box-sizing:border-box}
@@ -58,7 +58,11 @@
     a{text-decoration:none;color:inherit}
     img{max-width:100%;display:block}
 
-    .container{max-width:var(--max);margin:auto;padding:14px 16px 96px}
+    .container{
+      max-width:var(--max);
+      margin:auto;
+      padding:14px 16px 96px;
+    }
 
     /* TOP BAR */
     .topbar{
@@ -166,8 +170,8 @@
       border:1px solid var(--line);
       box-shadow:var(--shadow);
       background:
-        radial-gradient(600px 260px at 70% 0%, rgba(31,106,255,.22), transparent 60%),
-        radial-gradient(520px 260px at 10% 40%, rgba(59,130,246,.16), transparent 58%),
+        radial-gradient(600px 260px at 70% 0%, rgba(31,106,255,.18), transparent 60%),
+        radial-gradient(520px 260px at 10% 40%, rgba(59,130,246,.12), transparent 58%),
         #0B0F1A;
       max-height:360px;
     }
@@ -175,6 +179,8 @@
       width:100%;
       height:360px;
       object-fit:cover;
+      object-position:center;
+      filter:saturate(.98) brightness(1.03);
     }
     @media(max-width:980px){
       .hero-art{max-height:320px}
@@ -241,7 +247,7 @@
     }
     .mock-body{padding:14px}
 
-    /* Redesigned timeline inside mock */
+    /* Redesigned timeline inside preview */
     .mini-timeline{
       display:flex;
       flex-direction:column;
@@ -289,6 +295,7 @@
     .stxt b{display:block;font-weight:900}
     .stxt span{display:block;color:var(--muted);font-size:13.5px;line-height:1.7;margin-top:4px}
 
+    /* KPI (fix text sizing / alignment) */
     .kpi{
       display:grid;
       grid-template-columns:1fr 1fr 1fr;
@@ -318,7 +325,7 @@
     /* DOWNLOAD */
     .download-grid{
       display:grid;
-      grid-template-columns:1.1fr .9fr;
+      grid-template-columns:1.05fr .95fr;
       gap:12px;
       align-items:stretch;
     }
@@ -340,7 +347,9 @@
       display:flex;
       align-items:center;
       gap:10px;
+      min-width:220px;
     }
+    @media(max-width:520px){.badge{min-width:unset;width:100%}}
     .badge small{
       display:block;
       font-weight:800;
@@ -355,7 +364,7 @@
       flex:0 0 auto;
     }
 
-    /* WHY (۳ بنر کنار هم) */
+    /* WHY */
     .why-grid{
       display:grid;
       grid-template-columns:repeat(3,1fr);
@@ -372,7 +381,7 @@
     .media .imgwrap{
       width:100%;
       aspect-ratio: 16 / 9;
-      max-height:240px;
+      max-height:240px; /* prevent huge banners */
       background:
         radial-gradient(560px 240px at 70% 10%, rgba(31,106,255,.18), transparent 60%),
         radial-gradient(520px 240px at 10% 60%, rgba(59,130,246,.12), transparent 58%),
@@ -382,12 +391,9 @@
       justify-content:center;
       overflow:hidden;
     }
-    @media(max-width:1100px){
-      .media .imgwrap{max-height:210px}
-    }
-    @media(max-width:900px){
-      .media .imgwrap{max-height:190px}
-    }
+    @media(max-width:1200px){.media .imgwrap{max-height:220px}}
+    @media(max-width:1024px){.media .imgwrap{max-height:200px}}
+    @media(max-width:900px){.media .imgwrap{max-height:190px}}
     .media img{
       width:100%;
       height:100%;
@@ -401,6 +407,48 @@
       line-height:1.8;
     }
     .media-caption b{color:var(--text)}
+
+    /* Third banner (no repeated image / no external asset) */
+    .imgwrap-graphic{
+      position:relative;
+      width:100%;
+      aspect-ratio:16/9;
+      max-height:240px;
+      overflow:hidden;
+      background:
+        radial-gradient(420px 220px at 30% 20%, rgba(31,106,255,.22), transparent 60%),
+        radial-gradient(520px 260px at 80% 70%, rgba(59,130,246,.14), transparent 60%),
+        linear-gradient(135deg, #0B0F1A 0%, #0F1A33 60%, #0B0F1A 100%);
+      display:flex;
+      align-items:center;
+      justify-content:center;
+      border-bottom:1px solid var(--line);
+    }
+    @media(max-width:1200px){.imgwrap-graphic{max-height:220px}}
+    @media(max-width:1024px){.imgwrap-graphic{max-height:200px}}
+    @media(max-width:900px){.imgwrap-graphic{max-height:190px}}
+    .graphic-center{
+      display:flex;
+      align-items:center;
+      gap:12px;
+      padding:12px 14px;
+      border-radius:18px;
+      background:rgba(255,255,255,.08);
+      border:1px solid rgba(255,255,255,.12);
+      backdrop-filter: blur(8px);
+      box-shadow:0 18px 36px rgba(0,0,0,.18);
+    }
+    .gicon{
+      width:44px;height:44px;border-radius:16px;
+      background:linear-gradient(135deg, rgba(31,106,255,.30), rgba(59,130,246,.18));
+      border:1px solid rgba(59,130,246,.22);
+      display:flex;align-items:center;justify-content:center;
+      color:#DCE8FF;
+      font-weight:900;
+      flex:0 0 auto;
+    }
+    .gtext b{display:block;color:#fff;font-weight:900}
+    .gtext span{display:block;color:rgba(220,232,255,.85);font-size:13px;line-height:1.6;margin-top:3px}
 
     /* HOW IT WORKS */
     .timeline{
@@ -760,6 +808,7 @@
 
         <div class="cta">
           <a class="btn primary" href="#order" id="heroPrimaryCta">ثبت درخواست / پیگیری</a>
+          <a class="btn ghost" href="#download">دانلود اپ</a>
           <a class="btn ghost" href="#why">چرا موبیکس؟</a>
         </div>
 
@@ -774,20 +823,18 @@
           </div>
         </div>
 
-        <!-- ✅ HERO IMAGE (بدون متن) -->
-        <!-- اگر تصویر جدید ساختی، فقط اسم فایل را اینجا جایگزین کن -->
+        <!-- HERO IMAGE (بدون متن) -->
         <div class="hero-art">
-          <img src="assets/hero-new.png" alt="Mobix Hero">
+          <img src="assets/hero-final.jpg" alt="Mobix Hero">
         </div>
       </div>
 
-      <!-- APP PREVIEW -->
+      <!-- PREVIEW CARD -->
       <div class="card">
-        <!-- ✅ حذف متن "نمونه تجربه داخل اپ" -->
         <h2 style="margin:0 0 10px;font-weight:900">نمایی از پیگیری و پشتیبانی</h2>
 
         <div class="app-wrap">
-          <!-- ✅ پیگیری: بازطراحی شده و همان مراحل کار داخلش آمده -->
+          <!-- پیگیری: بازطراحی شده و همان مراحل کار داخلش آمده -->
           <div class="mock">
             <div class="mock-top">
               <b>پیگیری سفارش</b>
@@ -827,6 +874,7 @@
             </div>
           </div>
 
+          <!-- چت و پشتیبانی -->
           <div class="mock">
             <div class="mock-top">
               <b>چت و پشتیبانی</b>
@@ -855,7 +903,6 @@
                 </div>
               </div>
 
-              <!-- ✅ متن‌های ۳ باکس کوچیک مرتب‌تر شد -->
               <div class="kpi">
                 <div class="box">
                   <b>پیگیری مرحله‌ای</b>
@@ -879,7 +926,7 @@
       </div>
     </section>
 
-    <!-- ✅ DOWNLOAD APPS -->
+    <!-- DOWNLOAD APPS -->
     <section class="section" id="download">
       <div class="card">
         <h2 style="margin:0 0 8px;font-weight:900">دانلود اپ موبیکس</h2>
@@ -889,7 +936,7 @@
           <div class="card" style="padding:16px;box-shadow:var(--shadow2)">
             <b style="font-weight:900">Android</b>
             <div class="dl-cards">
-              <!-- لینک‌ها را بعداً با لینک واقعی جایگزین کن -->
+              <!-- لینک‌ها را با لینک واقعی جایگزین کن -->
               <a class="badge" href="#" target="_blank" rel="noopener">
                 <span class="dot"></span>
                 کافه‌بازار
@@ -952,10 +999,16 @@
           </div>
         </div>
 
-        <!-- ✅ حذف تکرار بنر hero: تصویر سوم جدا -->
+        <!-- سوم: بدون تکرار hero.png و بدون فایل جدید -->
         <div class="media">
-          <div class="imgwrap">
-            <img src="assets/support.png" alt="پشتیبانی و پیگیری">
+          <div class="imgwrap-graphic" aria-label="پشتیبانی و پیگیری">
+            <div class="graphic-center">
+              <div class="gicon">✓</div>
+              <div class="gtext">
+                <b>پشتیبانی و پیگیری</b>
+                <span>مرحله‌به‌مرحله، شفاف و قابل پیگیری</span>
+              </div>
+            </div>
           </div>
           <div class="media-caption">
             <b>پشتیبانی و پیگیری مرحله‌ای</b><br>
@@ -1090,7 +1143,7 @@
               <span id="orderGate" class="status warn">برای ارسال نهایی باید وارد شوید</span>
             </div>
 
-            <!-- ✅ فرم همیشه قابل پر کردن -->
+            <!-- فرم همیشه قابل پر کردن -->
             <div id="orderFormWrap">
               <div class="field">
                 <div class="label">مدل گوشی</div>
@@ -1113,11 +1166,6 @@
               <div class="field">
                 <div class="label">آدرس برای دریافت با پیک</div>
                 <textarea id="address" class="textarea" placeholder="آدرس دقیق + پلاک + واحد"></textarea>
-              </div>
-
-              <div class="field">
-                <div class="label">محله / منطقه (اختیاری)</div>
-                <input id="neighborhood" class="input" placeholder="مثلا سعادت‌آباد / نیاوران / ..." />
               </div>
 
               <div class="field">
@@ -1184,7 +1232,7 @@
               اگر کد پیامکی را دریافت نکردم چه کنم؟
               <span class="chev">+</span>
             </summary>
-            <div class="faq-a">پس از پایان تایمر ۲ دقیقه‌ای، امکان «ارسال مجدد» فعال می‌شود. همچنین مطمئن شوید پیامک‌های تبلیغاتی مسدود نیست.</div>
+            <div class="faq-a">پس از پایان تایمر ۲ دقیقه‌ای، امکان «ارسال مجدد» فعال می‌شود.</div>
           </details>
         </div>
       </div>
@@ -1304,7 +1352,6 @@
       const deviceModel = document.getElementById("deviceModel");
       const problemDesc = document.getElementById("problemDesc");
       const address = document.getElementById("address");
-      const neighborhood = document.getElementById("neighborhood");
       const pickupTime = document.getElementById("pickupTime");
       const createOrderBtn = document.getElementById("createOrderBtn");
       const refreshOrdersBtn = document.getElementById("refreshOrdersBtn");
@@ -1383,7 +1430,6 @@
           device_model: (deviceModel.value || "").trim(),
           problem: (problemDesc.value || "").trim(),
           address: (address.value || "").trim(),
-          neighborhood: (neighborhood.value || "").trim(),
           pickup_time: (pickupTime.value || "").trim()
         };
         localStorage.setItem(DRAFT_KEY, JSON.stringify(draft));
@@ -1397,7 +1443,6 @@
             if(d.device_model != null) deviceModel.value = d.device_model;
             if(d.problem != null) problemDesc.value = d.problem;
             if(d.address != null) address.value = d.address;
-            if(d.neighborhood != null) neighborhood.value = d.neighborhood;
             if(d.pickup_time != null) pickupTime.value = d.pickup_time;
           }
         }catch(_e){}
@@ -1636,7 +1681,6 @@
         const dm = (deviceModel.value || "").trim();
         const pr = (problemDesc.value || "").trim();
         const ad = (address.value || "").trim();
-        const nb = (neighborhood.value || "").trim();
         const pt = (pickupTime.value || "").trim();
 
         if(!dm || !pr || !ad){
@@ -1657,7 +1701,6 @@
           device_model: dm,
           problem: pr,
           address: ad,
-          neighborhood: nb || null,
           pickup_time: pt || null,
           status: "requested"
         };
@@ -1679,7 +1722,6 @@
         deviceModel.value = "";
         problemDesc.value = "";
         address.value = "";
-        neighborhood.value = "";
         pickupTime.value = "";
         localStorage.removeItem(DRAFT_KEY);
 
@@ -1724,7 +1766,6 @@
           const dm = o.device_model ?? o.model ?? "";
           const pr = o.problem ?? o.issue ?? "";
           const ad = o.address ?? "";
-          const nb = o.neighborhood ?? "";
           const pt = o.pickup_time ?? o.pickup_at ?? "";
 
           return `
@@ -1736,7 +1777,7 @@
               <div class="muted">
                 <b>مدل:</b> ${esc(dm)}<br>
                 <b>مشکل:</b> ${esc(pr)}<br>
-                <b>آدرس:</b> ${esc(ad)}${nb ? `<br><b>محله:</b> ${esc(nb)}` : ""}${pt ? `<br><b>زمان دریافت:</b> ${esc(pt)}` : ""}${created ? `<br><b>ثبت:</b> ${esc(created)}` : ""}
+                <b>آدرس:</b> ${esc(ad)}${pt ? `<br><b>زمان دریافت:</b> ${esc(pt)}` : ""}${created ? `<br><b>ثبت:</b> ${esc(created)}` : ""}
               </div>
               ${renderTrack(st)}
             </div>
@@ -1780,7 +1821,7 @@
       refreshOrdersBtn.addEventListener("click", loadOrders);
 
       // Save draft on input changes
-      [deviceModel, problemDesc, address, neighborhood, pickupTime].forEach(el => {
+      [deviceModel, problemDesc, address, pickupTime].forEach(el => {
         if(!el) return;
         el.addEventListener("input", () => saveDraft());
       });
