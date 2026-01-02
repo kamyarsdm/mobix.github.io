@@ -247,7 +247,6 @@
     }
     .mock-body{padding:14px}
 
-    /* Redesigned preview: tracking mini + chat */
     .preview-card{
       display:flex;
       flex-direction:column;
@@ -453,7 +452,7 @@
       box-shadow:var(--shadow);
     }
 
-    /* ✅ Banner sizes unified (desktop/tablet/mobile) */
+    /* unified banner height */
     .media .imgwrap{
       width:100%;
       height: clamp(150px, 22vw, 210px);
@@ -1366,9 +1365,6 @@
       const SUPABASE_URL = "https://vrxfhfknmxmeatnfzpcg.supabase.co";
       const SUPABASE_ANON_KEY = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InZyeGZoZmtubXhtZWF0bmZ6cGNnIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NjYyNTg2MjksImV4cCI6MjA4MTgzNDYyOX0.iANOG9-g9GnVl58KDYI0A-oYNwfbL3oh2NBddZ2sLLs";
 
-      const OTP_REQUEST_URL = "https://vrxfhfknmxmeatnfzpcg.supabase.co/functions/v1/request-otp";
-      const OTP_VERIFY_URL  = "https://vrxfhfknmxmeatnfzpcg.supabase.co/functions/v1/verify-otp";
-
       const supabase = window.supabase.createClient(SUPABASE_URL, SUPABASE_ANON_KEY);
 
       // =========================
@@ -1391,6 +1387,12 @@
         if(d.length === 10 && d.startsWith("9")) return "0" + d;
         return null;
       }
+      function toE164Iran(phone09){
+        // 09xxxxxxxxx -> +98 9xxxxxxxxx
+        const p = (phone09 || "").trim();
+        if(p.length !== 11 || !p.startsWith("09")) return null;
+        return "+98" + p.slice(1);
+      }
       function fmtDate(iso){
         try{
           const dt = new Date(iso);
@@ -1406,16 +1408,8 @@
           .replaceAll('"',"&quot;")
           .replaceAll("'","&#039;");
       }
-      async function safeJson(res){
-        try{ return await res.json(); }catch(e){ return null; }
-      }
-      function extractErrorMessage(obj){
-        if(!obj) return null;
-        if(typeof obj === "string") return obj;
-        return obj.message || obj.error || (obj.errors && obj.errors[0] && (obj.errors[0].message || obj.errors[0])) || null;
-      }
 
-      // ✅ generate order_no like your DB examples: MCC-YYMMDD-XXXX (same as app)
+      // ✅ order_no generation (same format across app/site)
       function genOrderNo(){
         const d = new Date();
         const yy = String(d.getFullYear()).slice(-2);
@@ -1466,11 +1460,11 @@
       // =========================
       // State
       // =========================
-      const LS_KEY = "mobix_site_login";
       const DRAFT_KEY = "mobix_site_order_draft";
-      let loginState = null; // { phone09: "09..." }
+      let loginState = null; // { phone09, phoneE164, userId }
 
       let lastPhone09 = null;
+      let lastPhoneE164 = null;
       let timerId = null;
       let remaining = 0;
 
@@ -1498,7 +1492,7 @@
         otpBox.style.display = show ? "" : "none";
       }
       function loggedIn(){
-        return !!(loginState && loginState.phone09);
+        return !!(loginState && loginState.userId && loginState.phone09);
       }
 
       function updateCtasText(){
@@ -1537,7 +1531,7 @@
       // =========================
       function saveDraft(){
         const draft = {
-          customer_name: (customerName.value || "").trim(),
+          customer_name: (customerName.value || "").trim( ),
           device_model: (deviceModel.value || "").trim(),
           wants_replacement_phone: !!(replacementPhone && replacementPhone.checked),
           issue: (problemDesc.value || "").trim(),
@@ -1590,51 +1584,6 @@
           }
           setStatus(timerPill, "warn", formatMMSS(remaining));
         }, 1000);
-      }
-
-      // =========================
-      // Edge calls
-      // =========================
-      async function requestOtpEdge(phone09){
-        const res = await fetch(OTP_REQUEST_URL, {
-          method: "POST",
-          headers: {
-            "Content-Type": "application/json",
-            "apikey": SUPABASE_ANON_KEY,
-            "Authorization": "Bearer " + SUPABASE_ANON_KEY
-          },
-          body: JSON.stringify({ phone: phone09 })
-        });
-        const json = await safeJson(res);
-        if(!res.ok){
-          const msg = extractErrorMessage(json) || ("HTTP " + res.status);
-          throw new Error(msg);
-        }
-        if(json && json.ok === false){
-          throw new Error(extractErrorMessage(json) || "ارسال کد ناموفق بود");
-        }
-        return json || { ok: true, expires_in_seconds: 120 };
-      }
-
-      async function verifyOtpEdge(phone09, code){
-        const res = await fetch(OTP_VERIFY_URL, {
-          method: "POST",
-          headers: {
-            "Content-Type": "application/json",
-            "apikey": SUPABASE_ANON_KEY,
-            "Authorization": "Bearer " + SUPABASE_ANON_KEY
-          },
-          body: JSON.stringify({ phone: phone09, code })
-        });
-        const json = await safeJson(res);
-        if(!res.ok){
-          const msg = extractErrorMessage(json) || ("HTTP " + res.status);
-          throw new Error(msg);
-        }
-        if(json && json.ok === false){
-          throw new Error(extractErrorMessage(json) || "ورود ناموفق بود");
-        }
-        return json || { ok: true };
       }
 
       // =========================
@@ -1697,7 +1646,7 @@
       }
 
       // =========================
-      // Actions
+      // Auth (Supabase Auth OTP)  ✅ fixes "orders not in dashboard"
       // =========================
       async function sendOtp(){
         setMsg(authMsg, "", "");
@@ -1707,7 +1656,8 @@
           return;
         }
         const phone09 = to09(d);
-        if(!phone09){
+        const phoneE164 = toE164Iran(phone09);
+        if(!phone09 || !phoneE164){
           setMsg(authMsg, "err", "شماره قابل تبدیل نیست. لطفاً دوباره تلاش کنید.");
           return;
         }
@@ -1717,14 +1667,20 @@
         setMsg(authMsg, "warn", "در حال ارسال کد…");
 
         try{
-          const out = await requestOtpEdge(phone09);
+          const { error } = await supabase.auth.signInWithOtp({ phone: phoneE164 });
+          if(error){
+            setMsg(authMsg, "err", "ارسال کد ناموفق بود: " + (error.message || "خطای نامشخص"));
+            showOtpBox(false);
+            stopTimer();
+            return;
+          }
+
           lastPhone09 = phone09;
+          lastPhoneE164 = phoneE164;
 
           showOtpBox(true);
           setMsg(authMsg, "ok", "کد ارسال شد ✅");
-
-          const secs = Number(out?.expires_in_seconds ?? 120);
-          startTimer(Number.isFinite(secs) ? secs : 120);
+          startTimer(120);
 
           authCode.focus();
         }catch(err){
@@ -1740,7 +1696,7 @@
         setMsg(authMsg, "", "");
         const code = normalizeDigits(authCode.value);
 
-        if(!lastPhone09){
+        if(!lastPhoneE164 || !lastPhone09){
           setMsg(authMsg, "err", "اول شماره را وارد کنید و کد را ارسال کنید.");
           return;
         }
@@ -1753,11 +1709,24 @@
         setMsg(authMsg, "warn", "در حال تایید کد…");
 
         try{
-          await verifyOtpEdge(lastPhone09, code);
+          const { data, error } = await supabase.auth.verifyOtp({
+            phone: lastPhoneE164,
+            token: code,
+            type: "sms"
+          });
 
-          loginState = { phone09: lastPhone09 };
-          localStorage.setItem(LS_KEY, JSON.stringify(loginState));
+          if(error){
+            setMsg(authMsg, "err", "ورود ناموفق بود: " + (error.message || "خطای نامشخص"));
+            return;
+          }
 
+          const userId = data?.user?.id || null;
+          if(!userId){
+            setMsg(authMsg, "err", "ورود انجام شد ولی شناسه کاربر برنگشت. لطفاً دوباره تلاش کنید.");
+            return;
+          }
+
+          loginState = { phone09: lastPhone09, phoneE164: lastPhoneE164, userId };
           authCode.value = "";
           setMsg(authMsg, "ok", "ورود انجام شد ✅");
 
@@ -1773,15 +1742,47 @@
 
       async function logout(){
         setMsg(authMsg, "", "");
+        try{ await supabase.auth.signOut(); }catch(_e){}
         loginState = null;
-        localStorage.removeItem(LS_KEY);
         lastPhone09 = null;
+        lastPhoneE164 = null;
         showOtpBox(false);
         stopTimer();
         setMsg(authMsg, "ok", "خارج شدید.");
         applyLoginUI();
       }
 
+      async function restoreSession(){
+        try{
+          const { data } = await supabase.auth.getUser();
+          const u = data?.user;
+          if(!u){
+            loginState = null;
+            return;
+          }
+
+          // phone from user is usually E.164 (e.g. +989...)
+          const phoneE164 = u.phone || null;
+          // fallback: keep lastPhone from input; but we need phone09 for order filter
+          let phone09 = null;
+          if(phoneE164 && phoneE164.startsWith("+98") && phoneE164.length >= 12){
+            phone09 = "0" + phoneE164.slice(3);
+          }
+
+          if(!phone09 || !phoneE164){
+            loginState = null;
+            return;
+          }
+
+          loginState = { phone09, phoneE164, userId: u.id };
+        }catch(_e){
+          loginState = null;
+        }
+      }
+
+      // =========================
+      // Order create / dashboard visibility ✅
+      // =========================
       function focusAuthWithMessage(){
         setMsg(orderMsg, "warn", "اطلاعات فرم ذخیره شد. برای ارسال نهایی، لطفاً با کد پیامکی وارد شوید.");
         saveDraft();
@@ -1822,8 +1823,12 @@
         createOrderBtn.disabled = true;
         setMsg(orderMsg, "warn", "در حال ثبت سفارش…");
 
+        // IMPORTANT:
+        // - order_no is the tracking code shared with app/site
+        // - user_id is filled (so internal dashboard filters won't miss it)
         const payload = {
           order_no: genOrderNo(),
+          user_id: loginState.userId,
           customer_phone: loginState.phone09,
           customer_name: cn,
           device_model: dm,
@@ -1884,7 +1889,7 @@
         const { data, error } = await supabase
           .from("orders")
           .select("*")
-          .eq("customer_phone", loginState.phone09)
+          .eq("user_id", loginState.userId)
           .order("created_at", { ascending:false });
 
         if(error){
@@ -1917,7 +1922,7 @@
           return `
             <div class="order-item">
               <div class="order-top">
-                <b>سفارش #${esc(id)}</b>
+                <b>کد پیگیری: ${esc(id)}</b>
                 <span class="pill">وضعیت: ${esc(statusLabel(st))}</span>
               </div>
               <div class="muted">
@@ -1944,58 +1949,54 @@
       // =========================
       // Init
       // =========================
-      try{
-        const raw = localStorage.getItem(LS_KEY);
-        loginState = raw ? JSON.parse(raw) : null;
-      }catch(_e){
-        loginState = null;
-      }
+      (async function init(){
+        await restoreSession();
+        applyLoginUI();
+        loadDraft();
+        if(loggedIn()){
+          await loadOrders();
+        }
 
-      applyLoginUI();
-      loadDraft();
-      if(loggedIn()){
-        loadOrders();
-      }
+        // events
+        sendOtpBtn.addEventListener("click", sendOtp);
+        verifyOtpBtn.addEventListener("click", verifyOtp);
+        resendBtn.addEventListener("click", resend);
 
-      // events
-      sendOtpBtn.addEventListener("click", sendOtp);
-      verifyOtpBtn.addEventListener("click", verifyOtp);
-      resendBtn.addEventListener("click", resend);
+        createOrderBtn.addEventListener("click", createOrder);
+        refreshOrdersBtn.addEventListener("click", loadOrders);
 
-      createOrderBtn.addEventListener("click", createOrder);
-      refreshOrdersBtn.addEventListener("click", loadOrders);
+        if(logoutBtn2) logoutBtn2.addEventListener("click", logout);
+        if(logoutBtn) logoutBtn.addEventListener("click", logout);
 
-      if(logoutBtn2) logoutBtn2.addEventListener("click", logout);
-      if(logoutBtn) logoutBtn.addEventListener("click", logout);
-
-      // Save draft on input changes
-      [customerName, deviceModel, problemDesc, address, pickupTime, replacementPhone].forEach(el => {
-        if(!el) return;
-        el.addEventListener("input", () => saveDraft());
-        el.addEventListener("change", () => saveDraft());
-      });
-
-      // Quick issue chips -> append to textarea
-      document.querySelectorAll(".qchip").forEach(btn => {
-        btn.addEventListener("click", () => {
-          const val = (btn.getAttribute("data-issue") || "").trim();
-          if(!val) return;
-          const cur = (problemDesc.value || "").trim();
-          const next = cur ? (cur + (cur.endsWith("،") || cur.endsWith(",") ? " " : "، ") + val) : val;
-          problemDesc.value = next;
-          problemDesc.focus();
-          saveDraft();
+        // Save draft on input changes
+        [customerName, deviceModel, problemDesc, address, pickupTime, replacementPhone].forEach(el => {
+          if(!el) return;
+          el.addEventListener("input", () => saveDraft());
+          el.addEventListener("change", () => saveDraft());
         });
-      });
 
-      // FAQ icon toggle (+ / -)
-      document.querySelectorAll("details").forEach(d => {
-        const s = d.querySelector("summary .chev");
-        if(!s) return;
-        d.addEventListener("toggle", () => {
-          s.textContent = d.open ? "−" : "+";
+        // Quick issue chips -> append to textarea
+        document.querySelectorAll(".qchip").forEach(btn => {
+          btn.addEventListener("click", () => {
+            const val = (btn.getAttribute("data-issue") || "").trim();
+            if(!val) return;
+            const cur = (problemDesc.value || "").trim();
+            const next = cur ? (cur + (cur.endsWith("،") || cur.endsWith(",") ? " " : "، ") + val) : val;
+            problemDesc.value = next;
+            problemDesc.focus();
+            saveDraft();
+          });
         });
-      });
+
+        // FAQ icon toggle (+ / -)
+        document.querySelectorAll("details").forEach(d => {
+          const s = d.querySelector("summary .chev");
+          if(!s) return;
+          d.addEventListener("toggle", () => {
+            s.textContent = d.open ? "−" : "+";
+          });
+        });
+      })();
     })();
   </script>
 </body>
