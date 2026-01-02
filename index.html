@@ -13,7 +13,7 @@
   <meta property="og:image" content="https://mobixfix.ir/assets/hero-final.jpg" />
 
   <meta name="theme-color" content="#1F6AFF" />
-  <link rel="icon" href="assets/logo.png" />
+  <link rel="icon" href="/mobix.github.io/assets/logo.png" />
 
   <!-- Vazirmatn -->
   <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -121,11 +121,6 @@
     .btn.ghost{
       background:rgba(255,255,255,.72);
     }
-    .btn.danger{
-      background:rgba(239,68,68,.10);
-      border:1px solid rgba(239,68,68,.25);
-      color:#7F1D1D;
-    }
     .btn:disabled{opacity:.55;cursor:not-allowed}
 
     /* HERO */
@@ -207,286 +202,12 @@
     .mini .t{font-weight:900}
     .mini .d{color:var(--muted);font-size:13.5px;line-height:1.75;margin-top:6px}
 
-    /* APP PREVIEW */
-    .app-wrap{
-      display:grid;
-      grid-template-columns: 1fr 1fr;
-      gap:12px;
-      margin-top:10px;
-      align-items:stretch;
-    }
-    @media(max-width:900px){.app-wrap{grid-template-columns:1fr}}
-
-    .mock{
-      border:1px solid var(--line);
-      border-radius:22px;
-      overflow:hidden;
-      box-shadow:var(--shadow);
-      background:linear-gradient(180deg, rgba(31,106,255,.08), rgba(255,255,255,1));
-      position:relative;
-      min-height:260px;
-    }
-    .mock-top{
-      display:flex;align-items:center;justify-content:space-between;
-      padding:12px 14px;
-      background:rgba(255,255,255,.86);
-      border-bottom:1px solid var(--line);
-      gap:10px;
-    }
-    .mock-top b{font-weight:900}
-    .pill{
-      display:inline-flex;align-items:center;gap:8px;
-      padding:7px 10px;
-      border-radius:999px;
-      background:rgba(31,106,255,.10);
-      border:1px solid rgba(31,106,255,.18);
-      color:#0B2A6A;
-      font-weight:900;
-      font-size:12.5px;
-      white-space:nowrap;
-    }
-    .mock-body{padding:14px}
-
-    /* Redesigned preview: tracking mini + chat */
-    .preview-card{
-      display:flex;
-      flex-direction:column;
-      gap:10px;
-    }
-    .mini-kpis{
-      display:grid;
-      grid-template-columns:1fr 1fr;
-      gap:10px;
-      margin-top:10px;
-    }
-    @media(max-width:520px){.mini-kpis{grid-template-columns:1fr}}
-    .mk{
-      border:1px solid var(--line);
-      background:#fff;
-      border-radius:18px;
-      padding:12px;
-      box-shadow:var(--shadow2);
-    }
-    .mk b{display:block;font-weight:900}
-    .mk span{display:block;color:var(--muted);font-size:13px;line-height:1.75;margin-top:6px}
-
-    .mini-track{
-      background:#fff;
-      border:1px solid var(--line);
-      border-radius:18px;
-      padding:12px;
-      box-shadow:var(--shadow2);
-    }
-    .mini-track-top{
-      display:flex;
-      align-items:center;
-      justify-content:space-between;
-      gap:10px;
-      flex-wrap:wrap;
-      margin-bottom:10px;
-    }
-    .mini-track-top b{font-weight:900}
-    .badge-status{
-      display:inline-flex;
-      align-items:center;
-      gap:8px;
-      padding:7px 10px;
-      border-radius:999px;
-      border:1px solid rgba(16,185,129,.22);
-      background:rgba(16,185,129,.08);
-      color:#0B3A2C;
-      font-weight:900;
-      font-size:12.6px;
-    }
-    .badge-status .dot{
-      width:10px;height:10px;border-radius:999px;background:var(--success);
-      box-shadow:0 8px 16px rgba(16,185,129,.18);
-    }
-
-    .progress{
-      height:10px;
-      border-radius:999px;
-      background:rgba(15,23,42,.06);
-      border:1px solid var(--line);
-      overflow:hidden;
-    }
-    .progress > i{
-      display:block;
-      height:100%;
-      width:62%;
-      background:linear-gradient(135deg,var(--primary),var(--primary2));
-      border-radius:999px;
-      box-shadow:0 10px 20px rgba(31,106,255,.18);
-    }
-
-    .mini-steps{
-      display:flex;
-      justify-content:space-between;
-      gap:8px;
-      margin-top:10px;
-    }
-    .mini-steps .st{
-      flex:1 1 auto;
-      border:1px solid var(--line);
-      border-radius:14px;
-      background:rgba(246,248,252,.55);
-      padding:10px;
-      text-align:center;
-      font-weight:900;
-      font-size:12.5px;
-      color:var(--muted);
-      min-width:0;
-    }
-    .mini-steps .st.active{
-      background:rgba(31,106,255,.10);
-      border-color:rgba(31,106,255,.22);
-      color:#0B2A6A;
-    }
-    .mini-steps .st.done{
-      background:rgba(16,185,129,.10);
-      border-color:rgba(16,185,129,.22);
-      color:#0B3A2C;
-    }
-
-    .step{
-      display:flex;gap:10px;align-items:flex-start;
-      padding:10px 10px;
-      border-radius:16px;
-      border:1px solid var(--line);
-      background:#fff;
-      margin-bottom:10px;
-    }
-    .step:last-child{margin-bottom:0}
-    .sicon{
-      width:34px;height:34px;border-radius:12px;
-      background:linear-gradient(135deg, rgba(31,106,255,.22), rgba(59,130,246,.12));
-      border:1px solid rgba(31,106,255,.18);
-      display:flex;align-items:center;justify-content:center;
-      font-weight:900;color:#0B2A6A;
-      flex:0 0 auto;
-    }
-    .stxt b{display:block;font-weight:900}
-    .stxt span{display:block;color:var(--muted);font-size:13.5px;line-height:1.7;margin-top:4px}
-
-    /* KPI */
-    .kpi{
-      display:grid;
-      grid-template-columns:1fr 1fr 1fr;
-      gap:10px;
-      margin-top:12px;
-    }
-    @media(max-width:520px){.kpi{grid-template-columns:1fr}}
-    .kpi .box{
-      border:1px solid var(--line);
-      background:#fff;
-      border-radius:18px;
-      padding:12px;
-      box-shadow:var(--shadow2);
-      min-height:92px;
-      display:flex;
-      flex-direction:column;
-      justify-content:flex-start;
-      gap:6px;
-    }
-    .kpi .box b{font-weight:900;font-size:13.5px;line-height:1.35}
-    .kpi .box div{color:var(--muted);font-size:12.8px;line-height:1.65;margin:0}
-
-    /* SECTIONS */
-    .section{margin-top:20px}
-    .section h2{font-size:20px;font-weight:900;margin:0 0 10px}
-
-    /* DOWNLOAD */
-    .download-grid{
-      display:grid;
-      grid-template-columns:1.05fr .95fr;
-      gap:12px;
-      align-items:stretch;
-    }
-    @media(max-width:900px){.download-grid{grid-template-columns:1fr}}
-    .dl-cards{
-      display:flex;
-      gap:10px;
-      flex-wrap:wrap;
-      margin-top:12px;
-    }
-    .badge{
-      padding:12px 14px;
-      border-radius:16px;
-      border:1px solid var(--line);
-      background:#fff;
-      box-shadow:var(--shadow2);
-      font-weight:900;
-      font-size:13.5px;
-      display:flex;
-      align-items:center;
-      gap:10px;
-      min-width:220px;
-    }
-    @media(max-width:520px){.badge{min-width:unset;width:100%}}
-    .badge small{
-      display:block;
-      font-weight:800;
-      color:var(--muted);
-      font-size:12px;
-      margin-top:2px;
-    }
-    .badge .dot{
-      width:12px;height:12px;border-radius:999px;
-      background:linear-gradient(135deg,var(--primary),var(--primary2));
-      box-shadow:0 8px 14px rgba(31,106,255,.22);
-      flex:0 0 auto;
-    }
-
-    /* WHY */
-    .why-grid{
-      display:grid;
-      grid-template-columns:repeat(3,1fr);
-      gap:12px;
-    }
-    @media(max-width:980px){.why-grid{grid-template-columns:1fr}}
-
-    .media{
-      background:#fff;
-      border-radius:20px;
-      border:1px solid var(--line);
-      overflow:hidden;
-      box-shadow:var(--shadow);
-    }
-
-    /* ✅ Banner sizes unified (desktop/tablet/mobile) */
-    .media .imgwrap{
-      width:100%;
-      height: clamp(150px, 22vw, 210px);
-      background:
-        radial-gradient(560px 240px at 70% 10%, rgba(31,106,255,.18), transparent 60%),
-        radial-gradient(520px 240px at 10% 60%, rgba(59,130,246,.12), transparent 58%),
-        #0B0F1A;
-      display:flex;
-      align-items:center;
-      justify-content:center;
-      overflow:hidden;
-      border-bottom:1px solid var(--line);
-    }
-    .media img{
-      width:100%;
-      height:100%;
-      object-fit:cover;
-      display:block;
-    }
-
-    .media-caption{
-      padding:12px 14px;
-      font-size:14px;
-      color:var(--muted);
-      line-height:1.8;
-    }
-    .media-caption b{color:var(--text)}
-
     /* HOW IT WORKS */
     .timeline{
       display:grid;
-      grid-template-columns:repeat(4,1fr);
+      grid-template-columns:repeat(5,1fr);
       gap:10px;
+      margin-top:10px;
     }
     @media(max-width:980px){.timeline{grid-template-columns:1fr 1fr}}
     @media(max-width:520px){.timeline{grid-template-columns:1fr}}
@@ -498,7 +219,7 @@
       padding:14px;
       position:relative;
       overflow:hidden;
-      min-height:180px;
+      min-height:165px;
     }
     .tcard:before{
       content:"";
@@ -518,70 +239,87 @@
     .tcard b{display:block;margin-top:10px;font-weight:900;position:relative}
     .tcard p{margin:6px 0 0;color:var(--muted);font-size:13.5px;line-height:1.8;position:relative}
 
-    /* AUTH + ORDER */
-    .grid-2{
+    /* WHY */
+    .why-grid{
+      display:grid;
+      grid-template-columns:repeat(3,1fr);
+      gap:12px;
+      margin-top:10px;
+    }
+    @media(max-width:980px){.why-grid{grid-template-columns:1fr}}
+
+    .media{
+      background:#fff;
+      border-radius:20px;
+      border:1px solid var(--line);
+      overflow:hidden;
+      box-shadow:var(--shadow);
+    }
+    .media .imgwrap{
+      width:100%;
+      height: clamp(150px, 22vw, 210px);
+      background:
+        radial-gradient(560px 240px at 70% 10%, rgba(31,106,255,.18), transparent 60%),
+        radial-gradient(520px 240px at 10% 60%, rgba(59,130,246,.12), transparent 58%),
+        #0B0F1A;
+      display:flex;
+      align-items:center;
+      justify-content:center;
+      overflow:hidden;
+      border-bottom:1px solid var(--line);
+    }
+    .media img{
+      width:100%;
+      height:100%;
+      object-fit:cover;
+      display:block;
+    }
+    .media-caption{
+      padding:12px 14px;
+      font-size:14px;
+      color:var(--muted);
+      line-height:1.8;
+    }
+    .media-caption b{color:var(--text)}
+
+    /* SERVICES */
+    .cards-3{
+      display:grid;
+      grid-template-columns:repeat(3,1fr);
+      gap:12px;
+      margin-top:10px;
+    }
+    @media(max-width:980px){.cards-3{grid-template-columns:1fr}}
+    .citem{
+      background:#fff;
+      border:1px solid var(--line);
+      border-radius:20px;
+      box-shadow:var(--shadow);
+      padding:14px;
+    }
+    .citem b{font-weight:900}
+    .citem p{margin:8px 0 0;color:var(--muted);line-height:1.9;font-size:14px}
+
+    /* BRIDGE */
+    .bridge{
       display:grid;
       grid-template-columns:1fr 1fr;
       gap:12px;
-      align-items:start;
+      margin-top:12px;
     }
-    @media(max-width:900px){.grid-2{grid-template-columns:1fr}}
-
-    .form{
-      margin-top:10px;
-      display:grid;
-      grid-template-columns:1fr auto;
-      gap:10px;
-      align-items:center;
-    }
-    @media(max-width:520px){.form{grid-template-columns:1fr}}
-
-    .input{
-      width:100%;
-      padding:12px 14px;
-      border-radius:16px;
-      border:1px solid var(--line);
+    @media(max-width:980px){.bridge{grid-template-columns:1fr}}
+    .bcard{
       background:#fff;
-      box-shadow:var(--shadow2);
-      font-family:inherit;
-      font-weight:700;
-      outline:none;
-    }
-
-    .field{
-      display:flex;
-      flex-direction:column;
-      gap:6px;
-      margin-top:10px;
-    }
-    .label{
-      font-size:13px;
-      font-weight:900;
-      color:var(--muted);
-    }
-    .textarea{
-      width:100%;
-      min-height:110px;
-      padding:12px 14px;
-      border-radius:16px;
       border:1px solid var(--line);
-      background:#fff;
+      border-radius:20px;
       box-shadow:var(--shadow2);
-      font-family:inherit;
-      font-weight:700;
-      outline:none;
-      resize:vertical;
-      line-height:1.9;
+      padding:14px;
     }
+    .bcard b{font-weight:900}
+    .bcard p{margin:8px 0 0;color:var(--muted);line-height:1.9;font-size:14px}
+    .bcard .actions{margin-top:12px;display:flex;gap:10px;flex-wrap:wrap}
 
-    .hint{
-      margin-top:10px;
-      color:var(--muted);
-      font-size:13px;
-      line-height:1.7;
-      white-space:pre-line;
-    }
-
+    /* STATUS */
     .status{
       display:inline-flex;
       align-items:center;
@@ -595,146 +333,31 @@
       white-space:nowrap;
     }
     .status.ok{border-color:rgba(16,185,129,.25);background:rgba(16,185,129,.08);color:#0B3A2C}
-    .status.err{border-color:rgba(239,68,68,.25);background:rgba(239,68,68,.08);color:#7F1D1D}
     .status.warn{border-color:rgba(245,158,11,.30);background:rgba(245,158,11,.10);color:#78350F}
 
-    .divider{height:1px;background:var(--line);margin:12px 0}
-
-    .orders{
-      display:flex;
-      flex-direction:column;
-      gap:10px;
-      margin-top:10px;
-    }
-    .order-item{
-      background:#fff;
-      border:1px solid var(--line);
-      border-radius:18px;
-      padding:12px;
-      box-shadow:var(--shadow2);
-      display:flex;
-      flex-direction:column;
-      gap:8px;
-    }
-    .order-top{
-      display:flex;
-      align-items:center;
-      justify-content:space-between;
-      gap:10px;
-      flex-wrap:wrap;
-    }
-    .order-top b{font-weight:900}
-    .muted{color:var(--muted);font-size:13.2px;line-height:1.8}
-
-    .track{
-      display:grid;
-      grid-template-columns:1fr;
-      gap:8px;
-      margin-top:4px;
-    }
-    .track-step{
-      display:flex;
-      align-items:flex-start;
-      gap:10px;
-      border:1px solid var(--line);
-      background:rgba(246,248,252,.55);
-      border-radius:16px;
-      padding:10px;
-    }
-    .track-bullet{
-      width:28px;height:28px;border-radius:12px;
-      display:flex;align-items:center;justify-content:center;
-      font-weight:900;
-      border:1px solid var(--line);
-      background:#fff;
-      flex:0 0 auto;
-    }
-    .track-step.done .track-bullet{
-      background:rgba(16,185,129,.10);
-      border-color:rgba(16,185,129,.25);
-      color:#0B3A2C;
-    }
-    .track-step.active .track-bullet{
-      background:rgba(31,106,255,.10);
-      border-color:rgba(31,106,255,.25);
-      color:#0B2A6A;
-    }
-    .track-step .tt b{display:block;font-weight:900}
-    .track-step .tt span{display:block;color:var(--muted);font-size:13px;line-height:1.8;margin-top:3px}
-
-    /* QUICK ISSUE CHIPS */
-    .quick-issues{
-      display:flex;
-      flex-wrap:wrap;
-      gap:8px;
-      margin-top:8px;
-    }
-    .qchip{
-      padding:8px 10px;
-      border-radius:999px;
-      border:1px solid var(--line);
-      background:rgba(246,248,252,.72);
-      font-weight:900;
-      font-size:12.8px;
-      cursor:pointer;
-      box-shadow:var(--shadow2);
-      user-select:none;
-    }
-
-    /* SIMPLE CONTENT CARDS */
-    .cards-3{
-      display:grid;
-      grid-template-columns:repeat(3,1fr);
-      gap:12px;
-    }
-    @media(max-width:980px){.cards-3{grid-template-columns:1fr}}
-    .citem{
-      background:#fff;
-      border:1px solid var(--line);
-      border-radius:20px;
-      box-shadow:var(--shadow);
-      padding:14px;
-    }
-    .citem b{font-weight:900}
-    .citem p{margin:8px 0 0;color:var(--muted);line-height:1.9;font-size:14px}
-
-    /* FAQ */
-    .faq{
-      display:grid;
-      grid-template-columns:1fr;
-      gap:10px;
-    }
-    details{
-      background:#fff;
-      border:1px solid var(--line);
-      border-radius:18px;
-      box-shadow:var(--shadow2);
-      padding:12px 14px;
-    }
-    summary{
-      cursor:pointer;
-      font-weight:900;
-      list-style:none;
-      display:flex;
-      align-items:center;
-      justify-content:space-between;
-      gap:10px;
-    }
-    summary::-webkit-details-marker{display:none}
-    .faq-a{
-      margin-top:8px;
+    /* FOOTER */
+    .footer{
+      margin-top:26px;
+      padding-top:14px;
+      border-top:1px solid var(--line);
+      font-size:13px;
       color:var(--muted);
-      line-height:1.9;
-      font-size:14px;
+      display:flex;
+      justify-content:space-between;
+      gap:10px;
+      flex-wrap:wrap;
+      align-items:center;
     }
-    .chev{
-      width:28px;height:28px;border-radius:12px;
-      display:flex;align-items:center;justify-content:center;
-      background:rgba(31,106,255,.10);
-      border:1px solid rgba(31,106,255,.18);
-      color:#0B2A6A;
-      flex:0 0 auto;
-      font-weight:900;
+
+    /* ENAMAD */
+    .enamad{
+      display:flex;
+      align-items:center;
+      justify-content:center;
+    }
+    .enamad img{
+      width:110px;
+      height:auto;
     }
 
     /* FLOATING CTA */
@@ -770,71 +393,13 @@
     .floating-inner .txt span{color:var(--muted);font-size:12.8px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
     .floating-inner .actions{display:flex;gap:8px;flex:0 0 auto;flex-wrap:wrap;justify-content:flex-end}
 
-    /* FOOTER */
-    .footer{
-      margin-top:26px;
-      padding-top:14px;
-      border-top:1px solid var(--line);
-      font-size:13px;
-      color:var(--muted);
-      display:flex;
-      justify-content:space-between;
-      gap:10px;
-      flex-wrap:wrap;
-      align-items:center;
-    }
-
-    /* ENAMAD */
-    .enamad{
-      display:flex;
-      align-items:center;
-      justify-content:center;
-    }
-    .enamad img{
-      width:110px;
-      height:auto;
-    }
-
-    /* Replacement phone checkbox row */
-    .checkrow{
-      display:flex;
-      align-items:center;
-      gap:10px;
-      padding:10px 12px;
-      border-radius:16px;
-      border:1px solid var(--line);
-      background:rgba(246,248,252,.55);
-      box-shadow:var(--shadow2);
-      margin-top:10px;
-    }
-    .checkrow input{
-      width:18px;height:18px;
-      accent-color: var(--primary);
-    }
-    .checkrow b{
-      font-weight:900;
-      font-size:13.5px;
-    }
-    .checkrow span{
-      color:var(--muted);
-      font-size:12.8px;
-      line-height:1.6;
-    }
-
-    /* =========================
-       MOBILE FIXES
-       ========================= */
+    /* MOBILE FIXES */
     @media (max-width: 520px){
       .container{ padding-bottom: 170px; }
-
-      .topbar-inner{
-        border-radius:22px;
-        padding:10px 10px;
-      }
+      .topbar-inner{ border-radius:22px; padding:10px 10px; }
       .brand img{width:52px}
       .brand-title{font-size:14px}
       .nav{gap:8px}
-
       .card{padding:14px}
       h1{font-size:32px}
       .sub{font-size:14.5px;line-height:1.9}
@@ -878,14 +443,16 @@
     <!-- HEADER -->
     <div class="topbar">
       <div class="topbar-inner">
-        <div class="brand">
-          <img src="assets/logo.png" alt="Mobix">
+        <a class="brand" href="/mobix.github.io/">
+          <img src="/mobix.github.io/assets/logo.png" alt="Mobix">
           <div class="brand-title">Mobix | موبیکس</div>
-        </div>
+        </a>
 
         <div class="nav">
-          <a class="chip" href="#why">چرا موبیکس؟</a>
-          <a class="btn primary" href="#order" id="navAuthBtn">ثبت نام / ورود</a>
+          <a class="chip" href="/mobix.github.io/">خانه</a>
+          <a class="chip" href="/mobix.github.io/about/">درباره ما</a>
+          <a class="chip" href="/mobix.github.io/contact/">تماس</a>
+          <a class="btn primary" href="/mobix.github.io/order/" id="authBtn">ثبت سفارش</a>
         </div>
       </div>
     </div>
@@ -893,195 +460,85 @@
     <!-- HERO -->
     <section class="hero" id="top">
       <div class="card">
-        <h1>با خیال راحت بسپارید</h1>
-        <p class="sub">
-          یک فرایند یکپارچه با تیم موبیکس: <b>ثبت درخواست</b>، <b>هماهنگی پیک</b>، <b>اعلام هزینه</b> و <b>تعمیر و تحویل</b>.
+        <div style="display:flex;align-items:flex-start;justify-content:space-between;gap:10px;flex-wrap:wrap">
+          <h1 style="margin:0">تعمیر موبایل، شفاف و قابل پیگیری</h1>
+          <span id="sessionBadge" class="status warn">وارد نشده‌اید</span>
+        </div>
+
+        <p class="sub" style="margin-top:10px">
+          موبیکس یک سرویس یکپارچه‌ست: <b>ثبت درخواست</b>، <b>هماهنگی پیک</b>، <b>اعلام هزینه قبل از اقدام</b> و <b>تعمیر و تحویل</b>.
         </p>
 
         <div class="cta">
-          <a class="btn primary" href="#order" id="heroPrimaryCta">ثبت درخواست / پیگیری</a>
-          <a class="btn ghost" href="#download">دانلود اپ</a>
-          <a class="btn ghost" href="#why">چرا موبیکس؟</a>
+          <a class="btn primary" href="/mobix.github.io/order/" id="heroCta">ثبت سفارش</a>
+          <a class="btn ghost" href="/mobix.github.io/about/">چرا موبیکس؟</a>
+          <a class="btn ghost" href="/mobix.github.io/contact/">ارتباط با ما</a>
         </div>
 
         <div class="mini-grid">
           <div class="mini">
-            <div class="t">شفاف و قابل پیگیری</div>
+            <div class="t">فرآیند شفاف</div>
             <div class="d">هر مرحله مشخصه؛ از ثبت تا تحویل.</div>
           </div>
           <div class="mini">
             <div class="t">قیمت قبل از اقدام</div>
-            <div class="d">قبل از هر کاری هزینه با شما هماهنگ می‌شه.</div>
+            <div class="d">بدون تایید شما تعمیر انجام نمی‌شود.</div>
           </div>
         </div>
 
         <div class="hero-art">
-          <img src="assets/hero-final.jpg" alt="Mobix Hero">
+          <img src="/mobix.github.io/assets/hero-final.jpg" alt="Mobix Hero">
         </div>
       </div>
 
-      <!-- PREVIEW CARD -->
+      <!-- Side card -->
       <div class="card">
-        <div class="preview-card">
-          <h2 style="margin:0;font-weight:900">نمایی از پیگیری و پشتیبانی</h2>
+        <h2 style="margin:0;font-weight:900;font-size:20px">مراحل کار (سرویس کامل)</h2>
+        <p class="sub" style="margin-top:8px">
+          شما همیشه می‌دانید سفارش دقیقاً در چه مرحله‌ای است.
+        </p>
 
-          <div class="mini-kpis">
-            <div class="mk">
-              <b>پیگیری مرحله‌ای</b>
-              <span>هر مرحله مشخصه و وضعیت شفافه.</span>
-            </div>
-            <div class="mk">
-              <b>پشتیبانی داخل اپ</b>
-              <span>هر سؤال/ابهام داشتی سریع می‌پرسی.</span>
-            </div>
+        <div class="timeline">
+          <div class="tcard">
+            <div class="tnum">1</div>
+            <b>ثبت درخواست</b>
+            <p>مدل گوشی و مشکل را ثبت می‌کنید.</p>
           </div>
-
-          <div class="app-wrap">
-            <!-- tracking sample -->
-            <div class="mock">
-              <div class="mock-top">
-                <b>پیگیری سفارش</b>
-                <span class="pill">آنلاین</span>
-              </div>
-              <div class="mock-body">
-                <div class="mini-track">
-                  <div class="mini-track-top">
-                    <b>سفارش #1284</b>
-                    <span class="badge-status"><span class="dot"></span>در حال تعمیر</span>
-                  </div>
-                  <div class="progress" aria-label="progress">
-                    <i></i>
-                  </div>
-                  <div class="mini-steps" aria-label="steps">
-                    <div class="st done">ثبت</div>
-                    <div class="st done">پیک</div>
-                    <div class="st active">تعمیر</div>
-                    <div class="st">تحویل</div>
-                  </div>
-                </div>
-
-                <div class="divider"></div>
-
-                <div class="step">
-                  <div class="sicon">🧾</div>
-                  <div class="stxt">
-                    <b>گزارش شفاف</b>
-                    <span>قطعه‌ها و کارهای انجام‌شده مشخص است.</span>
-                  </div>
-                </div>
-                <div class="step">
-                  <div class="sicon">💳</div>
-                  <div class="stxt">
-                    <b>قیمت قبل از اقدام</b>
-                    <span>بدون تایید شما کاری انجام نمی‌شود.</span>
-                  </div>
-                </div>
-              </div>
-            </div>
-
-            <!-- chat/support -->
-            <div class="mock">
-              <div class="mock-top">
-                <b>چت و پشتیبانی</b>
-                <span class="pill">پاسخ سریع</span>
-              </div>
-              <div class="mock-body">
-                <div class="step">
-                  <div class="sicon">💬</div>
-                  <div class="stxt">
-                    <b>چت داخل اپ</b>
-                    <span>همینجا سوال می‌پرسی و جواب می‌گیری.</span>
-                  </div>
-                </div>
-                <div class="step">
-                  <div class="sicon">📍</div>
-                  <div class="stxt">
-                    <b>هماهنگی پیک</b>
-                    <span>زمان دریافت/تحویل سریع هماهنگ می‌شود.</span>
-                  </div>
-                </div>
-                <div class="step">
-                  <div class="sicon">🧭</div>
-                  <div class="stxt">
-                    <b>پیگیری مرحله‌ای</b>
-                    <span>وضعیت سفارش همیشه جلوی چشم شماست.</span>
-                  </div>
-                </div>
-
-                <div class="kpi">
-                  <div class="box">
-                    <b>پیگیری مرحله‌ای</b>
-                    <div>از ثبت تا تحویل.</div>
-                  </div>
-                  <div class="box">
-                    <b>قیمت قبل از کار</b>
-                    <div>با تایید شما.</div>
-                  </div>
-                  <div class="box">
-                    <b>پشتیبانی</b>
-                    <div>داخل اپ.</div>
-                  </div>
-                </div>
-              </div>
-            </div>
+          <div class="tcard">
+            <div class="tnum">2</div>
+            <b>هماهنگی پیک</b>
+            <p>زمان دریافت را هماهنگ می‌کنیم.</p>
           </div>
-
-          <div class="divider"></div>
-          <div id="sessionBadge" class="status warn">وارد نشده‌اید</div>
+          <div class="tcard">
+            <div class="tnum">3</div>
+            <b>اعلام هزینه</b>
+            <p>قبل از تعمیر تایید می‌گیرید.</p>
+          </div>
+          <div class="tcard">
+            <div class="tnum">4</div>
+            <b>تعمیر</b>
+            <p>توسط تکنسین‌های موبیکس انجام می‌شود.</p>
+          </div>
+          <div class="tcard">
+            <div class="tnum">5</div>
+            <b>تحویل</b>
+            <p>با پیک به شما تحویل می‌شود.</p>
+          </div>
         </div>
-      </div>
-    </section>
 
-    <!-- DOWNLOAD APPS -->
-    <section class="section" id="download">
-      <div class="card">
-        <h2 style="margin:0 0 8px;font-weight:900">دانلود اپ موبیکس</h2>
-        <p class="sub">برای پیگیری راحت‌تر، سفارش و پشتیبانی داخل اپ انجام می‌شود.</p>
-
-        <div class="download-grid" style="margin-top:10px">
-          <div class="card" style="padding:16px;box-shadow:var(--shadow2)">
-            <b style="font-weight:900">Android</b>
-            <div class="dl-cards">
-              <a class="badge" href="#" target="_blank" rel="noopener">
-                <span class="dot"></span>
-                کافه‌بازار
-                <small>دانلود از بازار</small>
-              </a>
-              <a class="badge" href="#" target="_blank" rel="noopener">
-                <span class="dot"></span>
-                مایکت
-                <small>دانلود از مایکت</small>
-              </a>
-              <a class="badge" href="#" target="_blank" rel="noopener">
-                <span class="dot"></span>
-                دانلود مستقیم
-                <small>APK</small>
-              </a>
-            </div>
-          </div>
-
-          <div class="card" style="padding:16px;box-shadow:var(--shadow2)">
-            <b style="font-weight:900">iOS</b>
-            <div class="dl-cards">
-              <a class="badge" href="#" target="_blank" rel="noopener">
-                <span class="dot"></span>
-                نسخه وب
-                <small>برای iOS</small>
-              </a>
-            </div>
-            <div class="hint">اگر لینک iOS آماده شد همینجا اضافه می‌کنیم.</div>
-          </div>
+        <div style="margin-top:12px">
+          <a class="btn primary" href="/mobix.github.io/order/">شروع ثبت سفارش</a>
         </div>
       </div>
     </section>
 
     <!-- WHY -->
-    <section class="section" id="why">
-      <h2>چرا موبیکس؟</h2>
+    <section class="section" id="why" style="margin-top:20px">
+      <h2 style="font-size:20px;font-weight:900;margin:0 0 10px">چرا موبیکس؟</h2>
       <div class="why-grid">
         <div class="media">
           <div class="imgwrap">
-            <img src="assets/pricing.png" alt="هماهنگی قیمت">
+            <img src="/mobix.github.io/assets/pricing.png" alt="هماهنگی قیمت">
           </div>
           <div class="media-caption">
             <b>هماهنگی قیمت قبل از تعمیر</b><br>
@@ -1091,7 +548,7 @@
 
         <div class="media">
           <div class="imgwrap">
-            <img src="assets/courier.png" alt="پیک موبیکس">
+            <img src="/mobix.github.io/assets/courier.png" alt="پیک موبیکس">
           </div>
           <div class="media-caption">
             <b>پیک اختصاصی موبیکس</b><br>
@@ -1101,47 +558,21 @@
 
         <div class="media">
           <div class="imgwrap">
-            <img src="assets/support.png" alt="پشتیبانی و پیگیری مرحله‌ای">
+            <img src="/mobix.github.io/assets/support.png" alt="پشتیبانی و پیگیری مرحله‌ای">
           </div>
           <div class="media-caption">
-            <b>پشتیبانی و پیگیری مرحله‌ای</b><br>
-            وضعیت سفارش و هماهنگی‌ها شفاف و مرحله‌به‌مرحله.
+            <b>پیگیری مرحله‌ای</b><br>
+            وضعیت سفارش شفاف و مرحله‌به‌مرحله.
           </div>
         </div>
       </div>
     </section>
 
-    <!-- HOW IT WORKS -->
-    <section class="section" id="how">
-      <h2>مراحل کار</h2>
-      <div class="timeline">
-        <div class="tcard">
-          <div class="tnum">1</div>
-          <b>ثبت درخواست</b>
-          <p>مدل گوشی و مشکل رو ثبت می‌کنی تا سریع بررسی بشه.</p>
-        </div>
-        <div class="tcard">
-          <div class="tnum">2</div>
-          <b>هماهنگی پیک</b>
-          <p>زمان دریافت دستگاه رو هماهنگ می‌کنیم و پیک میاد.</p>
-        </div>
-        <div class="tcard">
-          <div class="tnum">3</div>
-          <b>اعلام هزینه</b>
-          <p>بعد از عیب‌یابی، هزینه دقیق اعلام می‌شه (با تایید شما).</p>
-        </div>
-        <div class="tcard">
-          <div class="tnum">4</div>
-          <b>تعمیر و تحویل</b>
-          <p>تعمیر انجام می‌شه و دستگاه با پیک به شما تحویل داده می‌شه.</p>
-        </div>
-      </div>
-    </section>
-
-    <!-- SERVICES -->
-    <section class="section" id="services">
+    <!-- SERVICES + BRIDGE -->
+    <section class="section" id="services" style="margin-top:20px">
       <div class="card">
         <h2 style="margin:0 0 10px;font-weight:900">چه تعمیراتی انجام می‌دهیم؟</h2>
+
         <div class="cards-3">
           <div class="citem">
             <b>نمایشگر و تاچ</b>
@@ -1156,171 +587,26 @@
             <p>عیب‌یابی تخصصی برد، رفع خاموشی، آب‌خوردگی و مشکلات پیچیده.</p>
           </div>
         </div>
-        <div class="hint" style="margin-top:10px">
-          اگر مشکل خاصی دارید هم ثبت کنید؛ بعد از بررسی دقیق، هزینه قبل از اقدام با شما هماهنگ می‌شود.
-        </div>
-      </div>
-    </section>
 
-    <!-- AUTH + ORDER + TRACK -->
-    <section class="section" id="order">
-      <div class="card">
-        <h2 style="margin:0 0 8px;font-weight:900">ثبت درخواست و پیگیری سفارش</h2>
-        <p class="sub">فرم را پر کنید؛ برای ارسال نهایی، با کد پیامکی وارد می‌شوید.</p>
+        <div class="divider" style="height:1px;background:var(--line);margin:12px 0"></div>
 
-        <div class="grid-2">
-
-          <!-- AUTH CARD (after login hidden) -->
-          <div class="card" id="authCard" style="padding:16px;box-shadow:var(--shadow2)">
-            <h2 style="margin:0 0 8px;font-weight:900;font-size:18px">ورود با کد پیامکی</h2>
-            <p class="sub" style="font-size:14.5px">کد یکبار مصرف ارسال می‌شود.</p>
-
-            <div class="field">
-              <div class="label">شماره موبایل</div>
-              <input id="authPhone" class="input" inputmode="numeric" placeholder="مثلا 0912xxxxxxx" />
-            </div>
-
-            <div class="form">
-              <button id="sendOtpBtn" class="btn primary" type="button">ارسال کد</button>
-              <button id="logoutBtn" class="btn danger" type="button" style="display:none">خروج</button>
-            </div>
-
-            <div id="otpBox" style="display:none">
-              <div class="field">
-                <div class="label">کد پیامکی</div>
-                <input id="authCode" class="input" inputmode="numeric" placeholder="کد ۶ رقمی" />
-              </div>
-
-              <div class="field" style="margin-top:8px">
-                <div id="timerPill" class="status warn">02:00</div>
-              </div>
-
-              <div class="form">
-                <button id="verifyOtpBtn" class="btn primary" type="button">تایید و ورود</button>
-                <button id="resendBtn" class="btn ghost" type="button" disabled>ارسال مجدد</button>
-              </div>
-            </div>
-
-            <div id="authMsg" class="hint" aria-live="polite"></div>
-          </div>
-
-          <!-- ORDER CARD -->
-          <div class="card" style="padding:16px;box-shadow:var(--shadow2)">
-            <div class="order-top">
-              <h2 style="margin:0;font-weight:900;font-size:18px">ثبت سفارش</h2>
-              <span id="orderGate" class="status warn">برای ارسال نهایی باید وارد شوید</span>
-            </div>
-
-            <div id="loggedInBar" style="display:none;margin-top:10px">
-              <div class="order-top" style="align-items:center">
-                <span class="status ok" id="loggedInText">وارد شده‌اید ✅</span>
-                <button id="logoutBtn2" class="btn danger" type="button">خروج</button>
-              </div>
-            </div>
-
-            <div id="orderFormWrap">
-              <div class="field">
-                <div class="label">نام و نام خانوادگی</div>
-                <input id="customerName" class="input" placeholder="نام و نام خانوادگی" />
-              </div>
-
-              <div class="field">
-                <div class="label">مدل گوشی</div>
-                <input id="deviceModel" class="input" placeholder="مثلا iPhone 13 / Galaxy A52" />
-              </div>
-
-              <div class="checkrow" aria-label="گوشی جایگزین">
-                <input id="replacementPhone" type="checkbox" />
-                <div style="display:flex;flex-direction:column;gap:2px">
-                  <b>نیاز به گوشی جایگزین دارم</b>
-                  <span>اگر در زمان تعمیر نیاز دارید، این گزینه را فعال کنید.</span>
-                </div>
-              </div>
-
-              <div class="field">
-                <div class="label">مشکل دستگاه</div>
-                <textarea id="problemDesc" class="textarea" placeholder="مثلا خاموش شده / شکستگی ال‌سی‌دی / مشکل شارژ ..."></textarea>
-                <div class="quick-issues" aria-label="مشکلات رایج">
-                  <div class="qchip" data-issue="شکستگی/خط روی ال‌سی‌دی">شکستگی LCD</div>
-                  <div class="qchip" data-issue="مشکل شارژ/سوکت شارژ">مشکل شارژ</div>
-                  <div class="qchip" data-issue="باتری ضعیف/زود خالی می‌کند">باتری</div>
-                  <div class="qchip" data-issue="آب‌خوردگی">آب‌خوردگی</div>
-                  <div class="qchip" data-issue="خاموشی/ریست شدن">خاموشی/ریست</div>
-                  <div class="qchip" data-issue="مشکل صدا/میکروفن">صدا/میکروفن</div>
-                </div>
-              </div>
-
-              <div class="field">
-                <div class="label">آدرس برای دریافت با پیک</div>
-                <textarea id="address" class="textarea" placeholder="آدرس دقیق + پلاک + واحد"></textarea>
-              </div>
-
-              <div class="field">
-                <div class="label">زمان پیشنهادی برای دریافت</div>
-                <input id="pickupTime" class="input" placeholder="مثلا امروز ۱۸ تا ۲۰ / فردا صبح" />
-              </div>
-
-              <div class="form">
-                <button id="createOrderBtn" class="btn primary" type="button">ثبت سفارش</button>
-                <button id="refreshOrdersBtn" class="btn ghost" type="button">به‌روزرسانی</button>
-              </div>
-
-              <div id="orderMsg" class="hint" aria-live="polite"></div>
-            </div>
-
-            <div class="divider"></div>
-
-            <div class="order-top">
-              <h2 style="margin:0;font-weight:900;font-size:18px">پیگیری سفارش‌های من</h2>
-              <span id="ordersCount" class="status">0</span>
-            </div>
-
-            <div id="ordersWrap" class="orders">
-              <div class="muted">بعد از ورود، سفارش‌های شما اینجا نمایش داده می‌شود.</div>
+        <div class="bridge">
+          <div class="bcard">
+            <b>ثبت سفارش از سایت</b>
+            <p>ثبت درخواست و مشاهده وضعیت سفارش‌ها، بدون نیاز به نصب.</p>
+            <div class="actions">
+              <a class="btn primary" href="/mobix.github.io/order/">ثبت سفارش</a>
+              <a class="btn ghost" href="/mobix.github.io/about/">درباره موبیکس</a>
             </div>
           </div>
-
-        </div>
-      </div>
-    </section>
-
-    <!-- FAQ -->
-    <section class="section" id="faq">
-      <div class="card">
-        <h2 style="margin:0 0 10px;font-weight:900">سوالات متداول</h2>
-
-        <div class="faq">
-          <details>
-            <summary>
-              هزینه تعمیر چطور مشخص می‌شود؟
-              <span class="chev">+</span>
-            </summary>
-            <div class="faq-a">بعد از عیب‌یابی، هزینه دقیق اعلام می‌شود و بدون تایید شما اقدامی انجام نمی‌شود.</div>
-          </details>
-
-          <details>
-            <summary>
-              دریافت و تحویل با پیک چطور انجام می‌شود؟
-              <span class="chev">+</span>
-            </summary>
-            <div class="faq-a">پس از ثبت سفارش، زمان دریافت هماهنگ می‌شود. پیک موبیکس دستگاه را دریافت و بعد از تعمیر تحویل می‌دهد.</div>
-          </details>
-
-          <details>
-            <summary>
-              چقدر طول می‌کشد تا تعمیر انجام شود؟
-              <span class="chev">+</span>
-            </summary>
-            <div class="faq-a">بسته به نوع مشکل متفاوت است. روند سفارش مرحله‌به‌مرحله نمایش داده می‌شود و در هر مرحله شما در جریان هستید.</div>
-          </details>
-
-          <details>
-            <summary>
-              اگر کد پیامکی را دریافت نکردم چه کنم؟
-              <span class="chev">+</span>
-            </summary>
-            <div class="faq-a">پس از پایان تایمر ۲ دقیقه‌ای، امکان «ارسال مجدد» فعال می‌شود.</div>
-          </details>
+          <div class="bcard">
+            <b>اپلیکیشن برای تجربه راحت‌تر</b>
+            <p>برای پیگیری سریع‌تر و تجربه راحت‌تر، از اپ هم می‌توانید استفاده کنید.</p>
+            <div class="actions">
+              <a class="btn ghost" href="/mobix.github.io/contact/">دریافت لینک اپ</a>
+              <a class="btn ghost" href="/mobix.github.io/order/">ورود / سفارش</a>
+            </div>
+          </div>
         </div>
       </div>
     </section>
@@ -1348,654 +634,53 @@
         <span>ثبت درخواست، هماهنگی پیک، اعلام هزینه، تعمیر و تحویل</span>
       </div>
       <div class="actions">
-        <a class="btn ghost" href="#why">چرا موبیکس؟</a>
-        <a class="btn ghost" href="#download">دانلود اپ</a>
-        <a class="btn primary" href="#order" id="floatingAuthBtn">ثبت نام / ورود</a>
+        <a class="btn ghost" href="/mobix.github.io/about/">درباره ما</a>
+        <a class="btn ghost" href="/mobix.github.io/contact/">تماس</a>
+        <a class="btn primary" href="/mobix.github.io/order/" id="floatingCta">ثبت سفارش</a>
       </div>
     </div>
   </div>
 
-  <!-- Supabase JS (CDN) -->
-  <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
-
   <script>
     (function(){
-      // =========================
-      // Supabase Config
-      // =========================
-      const SUPABASE_URL = "https://vrxfhfknmxmeatnfzpcg.supabase.co";
-      const SUPABASE_ANON_KEY = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InZyeGZoZmtubXhtZWF0bmZ6cGNnIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NjYyNTg2MjksImV4cCI6MjA4MTgzNDYyOX0.iANOG9-g9GnVl58KDYI0A-oYNwfbL3oh2NBddZ2sLLs";
+      const LS_KEY = "mobix_site_login_v2";
 
-      const OTP_REQUEST_URL = "https://vrxfhfknmxmeatnfzpcg.supabase.co/functions/v1/request-otp";
-      const OTP_VERIFY_URL  = "https://vrxfhfknmxmeatnfzpcg.supabase.co/functions/v1/verify-otp";
-
-      const supabase = window.supabase.createClient(SUPABASE_URL, SUPABASE_ANON_KEY);
-
-      // =========================
-      // Helpers
-      // =========================
-      function normalizeDigits(s){
-        return (s || "")
-          .replace(/[۰-۹]/g, d => "۰۱۲۳۴۵۶۷۸۹".indexOf(d))
-          .replace(/[^\d]/g, "");
-      }
-      function isValidIranMobile(d){
-        if(!d) return false;
-        if(d.length === 11 && d.startsWith("09")) return true;
-        if(d.length === 10 && d.startsWith("9")) return true;
-        return false;
-      }
-      function to09(d){
-        if(!d) return null;
-        if(d.length === 11 && d.startsWith("09")) return d;
-        if(d.length === 10 && d.startsWith("9")) return "0" + d;
-        return null;
-      }
-      function fmtDate(iso){
+      function readLogin(){
         try{
-          const dt = new Date(iso);
-          if(isNaN(dt.getTime())) return iso || "";
-          return dt.toLocaleString("fa-IR", { year:"numeric", month:"2-digit", day:"2-digit", hour:"2-digit", minute:"2-digit" });
-        }catch(e){ return iso || ""; }
-      }
-      function esc(s){
-        return (s ?? "").toString()
-          .replaceAll("&","&amp;")
-          .replaceAll("<","&lt;")
-          .replaceAll(">","&gt;")
-          .replaceAll('"',"&quot;")
-          .replaceAll("'","&#039;");
-      }
-      async function safeJson(res){
-        try{ return await res.json(); }catch(e){ return null; }
-      }
-      function extractErrorMessage(obj){
-        if(!obj) return null;
-        if(typeof obj === "string") return obj;
-        return obj.message || obj.error || (obj.errors && obj.errors[0] && (obj.errors[0].message || obj.errors[0])) || null;
+          const raw = localStorage.getItem(LS_KEY);
+          const st = raw ? JSON.parse(raw) : null;
+          if(st && typeof st === "object" && st.phone09) return st;
+          return null;
+        }catch(_e){ return null; }
       }
 
-      // ✅ generate order_no like your DB examples: MCC-YYMMDD-XXXX (same as app)
-      function genOrderNo(){
-        const d = new Date();
-        const yy = String(d.getFullYear()).slice(-2);
-        const mm = String(d.getMonth()+1).padStart(2,"0");
-        const dd = String(d.getDate()).padStart(2,"0");
-        const rand = String(Math.floor(1000 + Math.random()*9000));
-        return `MCC-${yy}${mm}${dd}-${rand}`;
-      }
+      function updateUI(){
+        const st = readLogin();
+        const loggedIn = !!st;
 
-      // =========================
-      // UI Elements
-      // =========================
-      const sessionBadge = document.getElementById("sessionBadge");
+        const badge = document.getElementById("sessionBadge");
+        const authBtn = document.getElementById("authBtn");
+        const heroCta = document.getElementById("heroCta");
+        const floatingCta = document.getElementById("floatingCta");
 
-      const authCard = document.getElementById("authCard");
-      const authPhone = document.getElementById("authPhone");
-      const authCode = document.getElementById("authCode");
-      const sendOtpBtn = document.getElementById("sendOtpBtn");
-      const verifyOtpBtn = document.getElementById("verifyOtpBtn");
-      const logoutBtn = document.getElementById("logoutBtn");
-      const logoutBtn2 = document.getElementById("logoutBtn2");
-      const loggedInBar = document.getElementById("loggedInBar");
-      const loggedInText = document.getElementById("loggedInText");
-
-      const resendBtn = document.getElementById("resendBtn");
-      const otpBox = document.getElementById("otpBox");
-      const authMsg = document.getElementById("authMsg");
-      const timerPill = document.getElementById("timerPill");
-
-      const navAuthBtn = document.getElementById("navAuthBtn");
-      const floatingAuthBtn = document.getElementById("floatingAuthBtn");
-      const heroPrimaryCta = document.getElementById("heroPrimaryCta");
-
-      const orderGate = document.getElementById("orderGate");
-      const customerName = document.getElementById("customerName");
-      const deviceModel = document.getElementById("deviceModel");
-      const replacementPhone = document.getElementById("replacementPhone");
-      const problemDesc = document.getElementById("problemDesc");
-      const address = document.getElementById("address");
-      const pickupTime = document.getElementById("pickupTime");
-      const createOrderBtn = document.getElementById("createOrderBtn");
-      const refreshOrdersBtn = document.getElementById("refreshOrdersBtn");
-      const orderMsg = document.getElementById("orderMsg");
-
-      const ordersWrap = document.getElementById("ordersWrap");
-      const ordersCount = document.getElementById("ordersCount");
-
-      // =========================
-      // State
-      // =========================
-      const LS_KEY = "mobix_site_login";
-      const DRAFT_KEY = "mobix_site_order_draft";
-      let loginState = null; // { phone09: "09..." }
-
-      let lastPhone09 = null;
-      let timerId = null;
-      let remaining = 0;
-
-      // =========================
-      // UI helpers
-      // =========================
-      function setStatus(el, type, text){
-        el.classList.remove("ok","err","warn");
-        if(type) el.classList.add(type);
-        el.textContent = text;
-      }
-      function setMsg(el, type, text){
-        if(!text){
-          el.textContent = "";
-          el.style.color = "var(--muted)";
-          return;
-        }
-        if(type === "ok") el.style.color = "var(--success)";
-        else if(type === "err") el.style.color = "var(--danger)";
-        else if(type === "warn") el.style.color = "var(--warn)";
-        else el.style.color = "var(--muted)";
-        el.textContent = text;
-      }
-      function showOtpBox(show){
-        otpBox.style.display = show ? "" : "none";
-      }
-      function loggedIn(){
-        return !!(loginState && loginState.phone09);
-      }
-
-      function updateCtasText(){
-        const li = loggedIn();
-        const txt = li ? "ثبت/پیگیری سفارش" : "ثبت نام / ورود";
-        if(navAuthBtn) navAuthBtn.textContent = txt;
-        if(floatingAuthBtn) floatingAuthBtn.textContent = txt;
-        if(heroPrimaryCta) heroPrimaryCta.textContent = li ? "پیگیری سفارش‌های من" : "ثبت درخواست / پیگیری";
-      }
-
-      function applyLoginUI(){
-        const li = loggedIn();
-
-        if(li){
-          setStatus(sessionBadge, "ok", "وارد شده‌اید ✅");
-          if(authCard) authCard.style.display = "none";
-          if(loggedInBar) loggedInBar.style.display = "";
-          if(loggedInText) loggedInText.textContent = "وارد شده‌اید ✅ (" + loginState.phone09 + ")";
-          if(logoutBtn) logoutBtn.style.display = "none";
-          setStatus(orderGate, "ok", "می‌توانید سفارش را ارسال کنید");
-        }else{
-          setStatus(sessionBadge, "warn", "وارد نشده‌اید");
-          if(authCard) authCard.style.display = "";
-          if(loggedInBar) loggedInBar.style.display = "none";
-          if(logoutBtn) logoutBtn.style.display = "none";
-          setStatus(orderGate, "warn", "برای ارسال نهایی باید وارد شوید");
-          ordersWrap.innerHTML = '<div class="muted">بعد از ورود، سفارش‌های شما اینجا نمایش داده می‌شود.</div>';
-          ordersCount.textContent = "0";
-        }
-
-        updateCtasText();
-      }
-
-      // =========================
-      // Draft
-      // =========================
-      function saveDraft(){
-        const draft = {
-          customer_name: (customerName.value || "").trim(),
-          device_model: (deviceModel.value || "").trim(),
-          wants_replacement_phone: !!(replacementPhone && replacementPhone.checked),
-          issue: (problemDesc.value || "").trim(),
-          pickup_address: (address.value || "").trim(),
-          pickup_time_text: (pickupTime.value || "").trim()
-        };
-        localStorage.setItem(DRAFT_KEY, JSON.stringify(draft));
-      }
-      function loadDraft(){
-        try{
-          const raw = localStorage.getItem(DRAFT_KEY);
-          if(!raw) return;
-          const d = JSON.parse(raw);
-          if(d && typeof d === "object"){
-            if(d.customer_name != null) customerName.value = d.customer_name;
-            if(d.device_model != null) deviceModel.value = d.device_model;
-            if(d.wants_replacement_phone != null && replacementPhone) replacementPhone.checked = !!d.wants_replacement_phone;
-            if(d.issue != null) problemDesc.value = d.issue;
-            if(d.pickup_address != null) address.value = d.pickup_address;
-            if(d.pickup_time_text != null) pickupTime.value = d.pickup_time_text;
-          }
-        }catch(_e){}
-      }
-
-      // =========================
-      // Timer (120s)
-      // =========================
-      function formatMMSS(sec){
-        const m = Math.floor(sec / 60);
-        const s = sec % 60;
-        return String(m).padStart(2,"0") + ":" + String(s).padStart(2,"0");
-      }
-      function stopTimer(){
-        if(timerId) clearInterval(timerId);
-        timerId = null;
-      }
-      function startTimer(seconds){
-        stopTimer();
-        remaining = seconds;
-        resendBtn.disabled = true;
-        setStatus(timerPill, "warn", formatMMSS(remaining));
-
-        timerId = setInterval(() => {
-          remaining -= 1;
-          if(remaining <= 0){
-            stopTimer();
-            setStatus(timerPill, "ok", "00:00");
-            resendBtn.disabled = false;
-            return;
-          }
-          setStatus(timerPill, "warn", formatMMSS(remaining));
-        }, 1000);
-      }
-
-      // =========================
-      // Edge calls
-      // =========================
-      async function requestOtpEdge(phone09){
-        const res = await fetch(OTP_REQUEST_URL, {
-          method: "POST",
-          headers: {
-            "Content-Type": "application/json",
-            "apikey": SUPABASE_ANON_KEY,
-            "Authorization": "Bearer " + SUPABASE_ANON_KEY
-          },
-          body: JSON.stringify({ phone: phone09 })
-        });
-        const json = await safeJson(res);
-        if(!res.ok){
-          const msg = extractErrorMessage(json) || ("HTTP " + res.status);
-          throw new Error(msg);
-        }
-        if(json && json.ok === false){
-          throw new Error(extractErrorMessage(json) || "ارسال کد ناموفق بود");
-        }
-        return json || { ok: true, expires_in_seconds: 120 };
-      }
-
-      async function verifyOtpEdge(phone09, code){
-        const res = await fetch(OTP_VERIFY_URL, {
-          method: "POST",
-          headers: {
-            "Content-Type": "application/json",
-            "apikey": SUPABASE_ANON_KEY,
-            "Authorization": "Bearer " + SUPABASE_ANON_KEY
-          },
-          body: JSON.stringify({ phone: phone09, code })
-        });
-        const json = await safeJson(res);
-        if(!res.ok){
-          const msg = extractErrorMessage(json) || ("HTTP " + res.status);
-          throw new Error(msg);
-        }
-        if(json && json.ok === false){
-          throw new Error(extractErrorMessage(json) || "ورود ناموفق بود");
-        }
-        return json || { ok: true };
-      }
-
-      // =========================
-      // Orders UI mapping
-      // =========================
-      const TRACK_STEPS = [
-        { key:"requested", title:"ثبت درخواست", desc:"درخواست شما ثبت شد و در حال بررسی است." },
-        { key:"picked_up", title:"دریافت با پیک", desc:"پیک موبیکس دستگاه را دریافت کرد." },
-        { key:"quoted", title:"اعلام/تأیید هزینه", desc:"هزینه اعلام شد و منتظر تایید شماست." },
-        { key:"repairing", title:"در حال تعمیر", desc:"تکنسین موبیکس در حال انجام تعمیر است." },
-        { key:"delivering", title:"ارسال برای تحویل", desc:"دستگاه آماده شده و در مسیر تحویل است." },
-        { key:"delivered", title:"تحویل به شما", desc:"دستگاه تحویل داده شد ✅" }
-      ];
-      function normalizeStatus(raw){
-        const s = (raw || "").toString().trim().toLowerCase();
-        if(["new","created","request","requested","pending"].includes(s)) return "requested";
-        if(["pickup","pickedup","picked_up","courier_pickup"].includes(s)) return "picked_up";
-        if(["quote","quoted","price","awaiting_approval","approved_pending"].includes(s)) return "quoted";
-        if(["repair","repairing","in_repair","fixing"].includes(s)) return "repairing";
-        if(["deliver","delivering","shipping","on_the_way"].includes(s)) return "delivering";
-        if(["done","delivered","completed","complete"].includes(s)) return "delivered";
-        return s || "requested";
-      }
-      function statusLabel(key){
-        const k = normalizeStatus(key);
-        const m = {
-          requested: "ثبت شده",
-          picked_up: "دریافت با پیک",
-          quoted: "اعلام هزینه",
-          repairing: "در حال تعمیر",
-          delivering: "در مسیر تحویل",
-          delivered: "تحویل شد"
-        };
-        return m[k] || k;
-      }
-      function stepIndex(key){
-        const idx = TRACK_STEPS.findIndex(x => x.key === key);
-        return idx < 0 ? 0 : idx;
-      }
-      function renderTrack(statusKey){
-        const norm = normalizeStatus(statusKey);
-        const activeIdx = stepIndex(norm);
-        return `
-          <div class="track">
-            ${TRACK_STEPS.map((s, i) => {
-              const cls = i < activeIdx ? "done" : (i === activeIdx ? "active" : "");
-              const bullet = i < activeIdx ? "✓" : (i === activeIdx ? "•" : (i+1));
-              return `
-                <div class="track-step ${cls}">
-                  <div class="track-bullet">${bullet}</div>
-                  <div class="tt">
-                    <b>${esc(s.title)}</b>
-                    <span>${esc(s.desc)}</span>
-                  </div>
-                </div>
-              `;
-            }).join("")}
-          </div>
-        `;
-      }
-
-      // =========================
-      // Actions
-      // =========================
-      async function sendOtp(){
-        setMsg(authMsg, "", "");
-        const d = normalizeDigits(authPhone.value);
-        if(!isValidIranMobile(d)){
-          setMsg(authMsg, "err", "شماره موبایل درست نیست. مثل 0912xxxxxxx وارد کنید.");
-          return;
-        }
-        const phone09 = to09(d);
-        if(!phone09){
-          setMsg(authMsg, "err", "شماره قابل تبدیل نیست. لطفاً دوباره تلاش کنید.");
-          return;
-        }
-
-        sendOtpBtn.disabled = true;
-        resendBtn.disabled = true;
-        setMsg(authMsg, "warn", "در حال ارسال کد…");
-
-        try{
-          const out = await requestOtpEdge(phone09);
-          lastPhone09 = phone09;
-
-          showOtpBox(true);
-          setMsg(authMsg, "ok", "کد ارسال شد ✅");
-
-          const secs = Number(out?.expires_in_seconds ?? 120);
-          startTimer(Number.isFinite(secs) ? secs : 120);
-
-          authCode.focus();
-        }catch(err){
-          setMsg(authMsg, "err", "ارسال کد ناموفق بود: " + (err?.message || "خطای نامشخص"));
-          showOtpBox(false);
-          stopTimer();
-        }finally{
-          sendOtpBtn.disabled = false;
-        }
-      }
-
-      async function verifyOtp(){
-        setMsg(authMsg, "", "");
-        const code = normalizeDigits(authCode.value);
-
-        if(!lastPhone09){
-          setMsg(authMsg, "err", "اول شماره را وارد کنید و کد را ارسال کنید.");
-          return;
-        }
-        if(!code || code.length < 4){
-          setMsg(authMsg, "err", "کد پیامکی را درست وارد کنید.");
-          return;
-        }
-
-        verifyOtpBtn.disabled = true;
-        setMsg(authMsg, "warn", "در حال تایید کد…");
-
-        try{
-          await verifyOtpEdge(lastPhone09, code);
-
-          loginState = { phone09: lastPhone09 };
-          localStorage.setItem(LS_KEY, JSON.stringify(loginState));
-
-          authCode.value = "";
-          setMsg(authMsg, "ok", "ورود انجام شد ✅");
-
-          applyLoginUI();
-          loadDraft();
-          await loadOrders();
-        }catch(err){
-          setMsg(authMsg, "err", "ورود ناموفق بود: " + (err?.message || "خطای نامشخص"));
-        }finally{
-          verifyOtpBtn.disabled = false;
-        }
-      }
-
-      async function logout(){
-        setMsg(authMsg, "", "");
-        loginState = null;
-        localStorage.removeItem(LS_KEY);
-        lastPhone09 = null;
-        showOtpBox(false);
-        stopTimer();
-        setMsg(authMsg, "ok", "خارج شدید.");
-        applyLoginUI();
-      }
-
-      function focusAuthWithMessage(){
-        setMsg(orderMsg, "warn", "اطلاعات فرم ذخیره شد. برای ارسال نهایی، لطفاً با کد پیامکی وارد شوید.");
-        saveDraft();
-        document.getElementById("order").scrollIntoView({ behavior:"smooth", block:"start" });
-        setTimeout(() => authPhone && authPhone.focus(), 350);
-      }
-
-      function buildIssueWithExtras(baseIssue){
-        const wants = !!(replacementPhone && replacementPhone.checked);
-        if(!wants) return baseIssue;
-        const suffix = "نیاز به گوشی جایگزین: بله";
-        const cur = (baseIssue || "").trim();
-        if(!cur) return suffix;
-        if(cur.includes(suffix)) return cur;
-        return cur + (cur.endsWith("،") || cur.endsWith(",") ? " " : "، ") + suffix;
-      }
-
-      async function createOrder(){
-        setMsg(orderMsg, "", "");
-
-        const cn = (customerName.value || "").trim();
-        const dm = (deviceModel.value || "").trim();
-        const issueRaw = (problemDesc.value || "").trim();
-        const issue = buildIssueWithExtras(issueRaw);
-        const addr = (address.value || "").trim();
-        const pt = (pickupTime.value || "").trim();
-
-        if(!cn || !dm || !issue || !addr){
-          setMsg(orderMsg, "err", "نام، مدل گوشی، مشکل و آدرس را کامل وارد کنید.");
-          return;
-        }
-
-        if(!loggedIn()){
-          focusAuthWithMessage();
-          return;
-        }
-
-        createOrderBtn.disabled = true;
-        setMsg(orderMsg, "warn", "در حال ثبت سفارش…");
-
-        const payload = {
-          order_no: genOrderNo(),
-          customer_phone: loginState.phone09,
-          customer_name: cn,
-          device_model: dm,
-          issue: issue,
-          pickup_address: addr,
-          pickup_time_text: pt || null,
-          delivery_method: "courier",
-          needs_issue_photo: false,
-          stage: "requested",
-          quoted_price_toman: 0,
-          price_approved: false
-        };
-
-        try{
-          const { data, error } = await supabase
-            .from("orders")
-            .insert(payload)
-            .select("*")
-            .single();
-
-          if(error){
-            console.error("Insert error:", error);
-            setMsg(orderMsg, "err", "ثبت سفارش ناموفق بود: " + (error.message || "خطای نامشخص"));
-            return;
-          }
-
-          if(!data){
-            setMsg(orderMsg, "warn", "سفارش ثبت شد ولی پاسخی برنگشت. لطفاً «به‌روزرسانی» را بزنید.");
+        if(badge){
+          badge.classList.remove("ok","warn");
+          if(loggedIn){
+            badge.classList.add("ok");
+            badge.textContent = "وارد شده‌اید ✅";
           }else{
-            setMsg(orderMsg, "ok", "سفارش ثبت شد ✅");
+            badge.classList.add("warn");
+            badge.textContent = "وارد نشده‌اید";
           }
-
-          customerName.value = "";
-          deviceModel.value = "";
-          if(replacementPhone) replacementPhone.checked = false;
-          problemDesc.value = "";
-          address.value = "";
-          pickupTime.value = "";
-          localStorage.removeItem(DRAFT_KEY);
-
-          await loadOrders();
-        }catch(e){
-          console.error("Create order exception:", e);
-          setMsg(orderMsg, "err", "ثبت سفارش ناموفق بود: " + (e?.message || "خطای نامشخص"));
-        }finally{
-          createOrderBtn.disabled = false;
-        }
-      }
-
-      async function loadOrders(){
-        if(!loggedIn()){
-          ordersCount.textContent = "0";
-          return;
         }
 
-        ordersWrap.innerHTML = '<div class="muted">در حال دریافت سفارش‌ها…</div>';
-
-        const { data, error } = await supabase
-          .from("orders")
-          .select("*")
-          .eq("customer_phone", loginState.phone09)
-          .order("created_at", { ascending:false });
-
-        if(error){
-          console.error("Load orders error:", error);
-          ordersWrap.innerHTML = `
-            <div class="status err">خواندن سفارش‌ها ناموفق بود</div>
-            <div class="hint" style="color:var(--danger)">${esc(error.message || "خطای نامشخص")}</div>
-          `;
-          ordersCount.textContent = "0";
-          return;
-        }
-
-        const list = data || [];
-        ordersCount.textContent = String(list.length);
-
-        if(list.length === 0){
-          ordersWrap.innerHTML = '<div class="muted">هنوز سفارشی ثبت نکرده‌اید.</div>';
-          return;
-        }
-
-        ordersWrap.innerHTML = list.map(o => {
-          const id = o.order_no ?? o.id ?? "";
-          const created = o.created_at ? fmtDate(o.created_at) : "";
-          const st = o.stage ?? o.status ?? o.state ?? "requested";
-          const dm = o.device_model ?? o.model ?? "";
-          const pr = o.issue ?? o.problem ?? "";
-          const ad = o.pickup_address ?? o.address ?? "";
-          const pt = o.pickup_time_text ?? o.pickup_time ?? "";
-
-          return `
-            <div class="order-item">
-              <div class="order-top">
-                <b>سفارش #${esc(id)}</b>
-                <span class="pill">وضعیت: ${esc(statusLabel(st))}</span>
-              </div>
-              <div class="muted">
-                <b>مدل:</b> ${esc(dm)}<br>
-                <b>مشکل:</b> ${esc(pr)}<br>
-                <b>آدرس:</b> ${esc(ad)}${pt ? `<br><b>زمان دریافت:</b> ${esc(pt)}` : ""}${created ? `<br><b>ثبت:</b> ${esc(created)}` : ""}
-              </div>
-              ${renderTrack(st)}
-            </div>
-          `;
-        }).join("");
+        const txt = loggedIn ? "سفارش‌های من" : "ثبت سفارش";
+        if(authBtn) authBtn.textContent = txt;
+        if(heroCta) heroCta.textContent = loggedIn ? "رفتن به سفارش‌های من" : "ثبت سفارش";
+        if(floatingCta) floatingCta.textContent = txt;
       }
 
-      async function resend(){
-        if(resendBtn.disabled) return;
-        if(!lastPhone09){
-          setMsg(authMsg, "err", "اول شماره را وارد کنید.");
-          return;
-        }
-        authPhone.value = lastPhone09;
-        await sendOtp();
-      }
-
-      // =========================
-      // Init
-      // =========================
-      try{
-        const raw = localStorage.getItem(LS_KEY);
-        loginState = raw ? JSON.parse(raw) : null;
-      }catch(_e){
-        loginState = null;
-      }
-
-      applyLoginUI();
-      loadDraft();
-      if(loggedIn()){
-        loadOrders();
-      }
-
-      // events
-      sendOtpBtn.addEventListener("click", sendOtp);
-      verifyOtpBtn.addEventListener("click", verifyOtp);
-      resendBtn.addEventListener("click", resend);
-
-      createOrderBtn.addEventListener("click", createOrder);
-      refreshOrdersBtn.addEventListener("click", loadOrders);
-
-      if(logoutBtn2) logoutBtn2.addEventListener("click", logout);
-      if(logoutBtn) logoutBtn.addEventListener("click", logout);
-
-      // Save draft on input changes
-      [customerName, deviceModel, problemDesc, address, pickupTime, replacementPhone].forEach(el => {
-        if(!el) return;
-        el.addEventListener("input", () => saveDraft());
-        el.addEventListener("change", () => saveDraft());
-      });
-
-      // Quick issue chips -> append to textarea
-      document.querySelectorAll(".qchip").forEach(btn => {
-        btn.addEventListener("click", () => {
-          const val = (btn.getAttribute("data-issue") || "").trim();
-          if(!val) return;
-          const cur = (problemDesc.value || "").trim();
-          const next = cur ? (cur + (cur.endsWith("،") || cur.endsWith(",") ? " " : "، ") + val) : val;
-          problemDesc.value = next;
-          problemDesc.focus();
-          saveDraft();
-        });
-      });
-
-      // FAQ icon toggle (+ / -)
-      document.querySelectorAll("details").forEach(d => {
-        const s = d.querySelector("summary .chev");
-        if(!s) return;
-        d.addEventListener("toggle", () => {
-          s.textContent = d.open ? "−" : "+";
-        });
-      });
+      document.addEventListener("DOMContentLoaded", updateUI);
     })();
   </script>
 </body>
