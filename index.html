@@ -289,7 +289,6 @@
       justify-content:center;
       overflow:hidden;
     }
-    /* ✅ ابعاد بنرها درست: پر کردن کادر */
     .media img{
       width:100%;
       height:100%;
@@ -304,7 +303,7 @@
     }
     .media-caption b{color:var(--text)}
 
-    /* HOW IT WORKS (فقط یک بار) */
+    /* HOW IT WORKS */
     .timeline{
       display:grid;
       grid-template-columns:repeat(4,1fr);
@@ -338,6 +337,21 @@
     }
     .tcard b{display:block;margin-top:10px;font-weight:900;position:relative}
     .tcard p{margin:6px 0 0;color:var(--muted);font-size:13.5px;line-height:1.8;position:relative}
+    .tmeta{
+      margin-top:10px;
+      display:inline-flex;
+      align-items:center;
+      gap:8px;
+      padding:7px 10px;
+      border-radius:999px;
+      border:1px solid var(--line);
+      background:rgba(246,248,252,.72);
+      color:var(--muted);
+      font-weight:800;
+      font-size:12.5px;
+      position:relative;
+      white-space:nowrap;
+    }
 
     /* AUTH + ORDER */
     .grid-2{
@@ -483,6 +497,42 @@
     .track-step .tt b{display:block;font-weight:900}
     .track-step .tt span{display:block;color:var(--muted);font-size:13px;line-height:1.8;margin-top:3px}
 
+    /* QUICK ISSUE CHIPS */
+    .quick-issues{
+      display:flex;
+      flex-wrap:wrap;
+      gap:8px;
+      margin-top:8px;
+    }
+    .qchip{
+      padding:8px 10px;
+      border-radius:999px;
+      border:1px solid var(--line);
+      background:rgba(246,248,252,.72);
+      font-weight:900;
+      font-size:12.8px;
+      cursor:pointer;
+      box-shadow:var(--shadow2);
+      user-select:none;
+    }
+
+    /* SIMPLE CONTENT CARDS */
+    .cards-3{
+      display:grid;
+      grid-template-columns:repeat(3,1fr);
+      gap:12px;
+    }
+    @media(max-width:980px){.cards-3{grid-template-columns:1fr}}
+    .citem{
+      background:#fff;
+      border:1px solid var(--line);
+      border-radius:20px;
+      box-shadow:var(--shadow);
+      padding:14px;
+    }
+    .citem b{font-weight:900}
+    .citem p{margin:8px 0 0;color:var(--muted);line-height:1.9;font-size:14px}
+
     /* FAQ */
     .faq{
       display:grid;
@@ -603,7 +653,6 @@
     <!-- HERO -->
     <section class="hero" id="top">
       <div class="card">
-        <!-- ✅ حذف: لانچ تا چند روز آینده -->
         <h1>با خیال راحت بسپارید</h1>
         <p class="sub">
           دریافت گوشی با <b>پیک موبیکس</b>، تعمیر توسط <b>تعمیرکاران موبیکس</b>
@@ -611,7 +660,7 @@
         </p>
 
         <div class="cta">
-          <a class="btn primary" href="#order">ثبت نام / ورود</a>
+          <a class="btn primary" href="#order" id="heroPrimaryCta">ثبت درخواست / پیگیری</a>
           <a class="btn ghost" href="#why">چرا موبیکس؟</a>
         </div>
 
@@ -751,7 +800,6 @@
 
         <div class="media">
           <div class="imgwrap">
-            <!-- اگر عکس جدا داری، مسیرش رو بذار. فعلاً از hero به‌عنوان بنر سوم استفاده شد تا خراب نشه -->
             <img src="assets/hero.png" alt="پشتیبانی و پیگیری">
           </div>
           <div class="media-caption">
@@ -762,7 +810,7 @@
       </div>
     </section>
 
-    <!-- HOW IT WORKS (یک بار) -->
+    <!-- HOW IT WORKS -->
     <section class="section" id="how">
       <h2>مراحل کار</h2>
       <div class="timeline">
@@ -770,31 +818,79 @@
           <div class="tnum">1</div>
           <b>ثبت درخواست</b>
           <p>مدل گوشی و مشکل رو ثبت می‌کنی تا سریع بررسی بشه.</p>
+          <div class="tmeta">زمان معمول: ۲ دقیقه</div>
         </div>
         <div class="tcard">
           <div class="tnum">2</div>
           <b>هماهنگی پیک</b>
           <p>زمان دریافت دستگاه رو هماهنگ می‌کنیم و پیک میاد.</p>
+          <div class="tmeta">زمان معمول: همان روز</div>
         </div>
         <div class="tcard">
           <div class="tnum">3</div>
           <b>اعلام هزینه</b>
           <p>بعد از عیب‌یابی، هزینه دقیق اعلام می‌شه (با تایید شما).</p>
+          <div class="tmeta">زمان معمول: ۱–۲ ساعت</div>
         </div>
         <div class="tcard">
           <div class="tnum">4</div>
           <b>تعمیر و تحویل</b>
           <p>تعمیر انجام می‌شه و دستگاه با پیک به شما تحویل داده می‌شه.</p>
+          <div class="tmeta">زمان معمول: بسته به مشکل</div>
         </div>
       </div>
     </section>
 
-    <!-- AUTH + ORDER + TRACK (یکی شده: ثبت نام/ورود + ثبت/پیگیری) -->
+    <!-- SERVICES -->
+    <section class="section" id="services">
+      <div class="card">
+        <h2 style="margin:0 0 10px;font-weight:900">چه تعمیراتی انجام می‌دهیم؟</h2>
+        <div class="cards-3">
+          <div class="citem">
+            <b>نمایشگر و تاچ</b>
+            <p>تعویض LCD/تاچ، فلت‌ها، مشکلات تصویر، خطوط و لکه‌های نمایشگر.</p>
+          </div>
+          <div class="citem">
+            <b>باتری و شارژ</b>
+            <p>تعویض باتری، رفع مشکل شارژ، سوکت شارژ، نوسان شارژ و داغی.</p>
+          </div>
+          <div class="citem">
+            <b>برد و آب‌خوردگی</b>
+            <p>عیب‌یابی تخصصی برد، رفع خاموشی، آب‌خوردگی و مشکلات پیچیده.</p>
+          </div>
+        </div>
+        <div class="hint" style="margin-top:10px">
+          اگر مشکل خاصی دارید هم ثبت کنید؛ بعد از بررسی دقیق، هزینه قبل از اقدام با شما هماهنگ می‌شود.
+        </div>
+      </div>
+    </section>
+
+    <!-- TESTIMONIALS -->
+    <section class="section" id="socialproof">
+      <div class="card">
+        <h2 style="margin:0 0 10px;font-weight:900">نظر مشتری‌ها</h2>
+        <div class="cards-3">
+          <div class="citem">
+            <b>«همون روز پیک اومد»</b>
+            <p>ثبت کردم، سریع هماهنگ شد و دستگاه رو گرفتن. مرحله‌به‌مرحله هم خبر دادن.</p>
+          </div>
+          <div class="citem">
+            <b>«قیمت رو قبلش گفتن»</b>
+            <p>اول عیب‌یابی و اعلام هزینه؛ بعد که تایید کردم تعمیر کردن. خیلی شفاف بود.</p>
+          </div>
+          <div class="citem">
+            <b>«تحویل مرتب و تمیز»</b>
+            <p>بعد از تعمیر، با پیک تحویل دادن. گزارش هم مشخص بود چی انجام شده.</p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- AUTH + ORDER + TRACK -->
     <section class="section" id="order">
       <div class="card">
-        <h2 style="margin:0 0 8px;font-weight:900">ثبت نام / ورود و پیگیری سفارش</h2>
-        <!-- ✅ حذف: "مثل اپ" و "Edge Function" -->
-        <p class="sub">شماره موبایل را وارد کنید، کد را بگیرید و وارد شوید.</p>
+        <h2 style="margin:0 0 8px;font-weight:900">ثبت درخواست و پیگیری سفارش</h2>
+        <p class="sub">می‌توانید فرم را پر کنید؛ برای ارسال نهایی، با کد پیامکی وارد می‌شوید.</p>
 
         <div class="grid-2">
 
@@ -819,7 +915,6 @@
                 <input id="authCode" class="input" inputmode="numeric" placeholder="کد ۶ رقمی" />
               </div>
 
-              <!-- ✅ تایمر ۱۲۰ ثانیه بعد از ارسال -->
               <div class="field" style="margin-top:8px">
                 <div id="timerPill" class="status warn">02:00</div>
               </div>
@@ -837,10 +932,11 @@
           <div class="card" style="padding:16px;box-shadow:var(--shadow2)">
             <div class="order-top">
               <h2 style="margin:0;font-weight:900;font-size:18px">ثبت سفارش</h2>
-              <span id="orderGate" class="status warn">برای ثبت سفارش باید وارد شوید</span>
+              <span id="orderGate" class="status warn">برای ارسال نهایی باید وارد شوید</span>
             </div>
 
-            <div id="orderFormWrap" style="display:none">
+            <!-- ✅ فرم همیشه قابل پر کردن است -->
+            <div id="orderFormWrap">
               <div class="field">
                 <div class="label">مدل گوشی</div>
                 <input id="deviceModel" class="input" placeholder="مثلا iPhone 13 / Galaxy A52" />
@@ -849,11 +945,24 @@
               <div class="field">
                 <div class="label">مشکل دستگاه</div>
                 <textarea id="problemDesc" class="textarea" placeholder="مثلا خاموش شده / شکستگی ال‌سی‌دی / مشکل شارژ ..."></textarea>
+                <div class="quick-issues" aria-label="مشکلات رایج">
+                  <div class="qchip" data-issue="شکستگی/خط روی ال‌سی‌دی">شکستگی LCD</div>
+                  <div class="qchip" data-issue="مشکل شارژ/سوکت شارژ">مشکل شارژ</div>
+                  <div class="qchip" data-issue="باتری ضعیف/زود خالی می‌کند">باتری</div>
+                  <div class="qchip" data-issue="آب‌خوردگی">آب‌خوردگی</div>
+                  <div class="qchip" data-issue="خاموشی/ریست شدن">خاموشی/ریست</div>
+                  <div class="qchip" data-issue="مشکل صدا/میکروفن">صدا/میکروفن</div>
+                </div>
               </div>
 
               <div class="field">
                 <div class="label">آدرس برای دریافت با پیک</div>
                 <textarea id="address" class="textarea" placeholder="آدرس دقیق + پلاک + واحد"></textarea>
+              </div>
+
+              <div class="field">
+                <div class="label">محله / منطقه (اختیاری)</div>
+                <input id="neighborhood" class="input" placeholder="مثلا سعادت‌آباد / نیاوران / ..." />
               </div>
 
               <div class="field">
@@ -912,7 +1021,7 @@
               چقدر طول می‌کشد تا تعمیر انجام شود؟
               <span class="chev">+</span>
             </summary>
-            <div class="faq-a">بسته به نوع مشکل متفاوت است، اما وضعیت سفارش مرحله‌به‌مرحله به شما اطلاع داده می‌شود.</div>
+            <div class="faq-a">بسته به نوع مشکل متفاوت است. روند سفارش مرحله‌به‌مرحله نمایش داده می‌شود و در هر مرحله شما در جریان هستید.</div>
           </details>
 
           <details>
@@ -920,7 +1029,31 @@
               اگر کد پیامکی را دریافت نکردم چه کنم؟
               <span class="chev">+</span>
             </summary>
-            <div class="faq-a">پس از پایان تایمر ۲ دقیقه‌ای، امکان «ارسال مجدد» فعال می‌شود.</div>
+            <div class="faq-a">پس از پایان تایمر ۲ دقیقه‌ای، امکان «ارسال مجدد» فعال می‌شود. همچنین مطمئن شوید پیامک‌های تبلیغاتی مسدود نیست.</div>
+          </details>
+
+          <details>
+            <summary>
+              چه مناطقی را پوشش می‌دهید؟
+              <span class="chev">+</span>
+            </summary>
+            <div class="faq-a">هنگام ثبت سفارش، آدرس و محله را وارد کنید؛ در صورت نیاز برای هماهنگی محدوده با شما تماس/پیام داده می‌شود.</div>
+          </details>
+
+          <details>
+            <summary>
+              قطعه اصلی است یا غیر اصلی؟
+              <span class="chev">+</span>
+            </summary>
+            <div class="faq-a">بسته به مدل و موجودی، گزینه‌ها اعلام می‌شود و قبل از اقدام با شما هماهنگ می‌گردد.</div>
+          </details>
+
+          <details>
+            <summary>
+              آیا گارانتی دارید؟
+              <span class="chev">+</span>
+            </summary>
+            <div class="faq-a">شرایط گارانتی بسته به نوع تعمیر/قطعه متفاوت است و هنگام اعلام هزینه، جزئیات به شما گفته می‌شود.</div>
           </details>
         </div>
       </div>
@@ -936,7 +1069,6 @@
         </a>
       </div>
 
-      <!-- ✅ حذف متن mobix.github.io -->
       <span></span>
     </div>
 
@@ -1033,11 +1165,15 @@
       const authMsg = document.getElementById("authMsg");
       const timerPill = document.getElementById("timerPill");
 
+      const navAuthBtn = document.getElementById("navAuthBtn");
+      const floatingAuthBtn = document.getElementById("floatingAuthBtn");
+      const heroPrimaryCta = document.getElementById("heroPrimaryCta");
+
       const orderGate = document.getElementById("orderGate");
-      const orderFormWrap = document.getElementById("orderFormWrap");
       const deviceModel = document.getElementById("deviceModel");
       const problemDesc = document.getElementById("problemDesc");
       const address = document.getElementById("address");
+      const neighborhood = document.getElementById("neighborhood");
       const pickupTime = document.getElementById("pickupTime");
       const createOrderBtn = document.getElementById("createOrderBtn");
       const refreshOrdersBtn = document.getElementById("refreshOrdersBtn");
@@ -1047,9 +1183,10 @@
       const ordersCount = document.getElementById("ordersCount");
 
       // =========================
-      // State (Login is custom because verify-otp returns only {ok:true})
+      // State
       // =========================
       const LS_KEY = "mobix_site_login";
+      const DRAFT_KEY = "mobix_site_order_draft";
       let loginState = null; // { phone09: "09..." }
 
       let lastPhone09 = null;
@@ -1079,22 +1216,60 @@
       function showOtpBox(show){
         otpBox.style.display = show ? "" : "none";
       }
+      function loggedIn(){
+        return !!(loginState && loginState.phone09);
+      }
+
+      function updateCtasText(){
+        const li = loggedIn();
+        const txt = li ? "ثبت/پیگیری سفارش" : "ثبت نام / ورود";
+        if(navAuthBtn) navAuthBtn.textContent = txt;
+        if(floatingAuthBtn) floatingAuthBtn.textContent = txt;
+        if(heroPrimaryCta) heroPrimaryCta.textContent = li ? "پیگیری سفارش‌های من" : "ثبت درخواست / پیگیری";
+      }
 
       function applyLoginUI(){
-        const loggedIn = !!(loginState && loginState.phone09);
-        if(loggedIn){
+        const li = loggedIn();
+        if(li){
           setStatus(sessionBadge, "ok", "وارد شده‌اید ✅");
           logoutBtn.style.display = "";
-          orderFormWrap.style.display = "";
-          setStatus(orderGate, "ok", "می‌توانید سفارش ثبت کنید");
+          setStatus(orderGate, "ok", "می‌توانید سفارش را ارسال کنید");
         }else{
           setStatus(sessionBadge, "warn", "وارد نشده‌اید");
           logoutBtn.style.display = "none";
-          orderFormWrap.style.display = "none";
-          setStatus(orderGate, "warn", "برای ثبت سفارش باید وارد شوید");
+          setStatus(orderGate, "warn", "برای ارسال نهایی باید وارد شوید");
           ordersWrap.innerHTML = '<div class="muted">بعد از ورود، سفارش‌های شما اینجا نمایش داده می‌شود.</div>';
           ordersCount.textContent = "0";
         }
+        updateCtasText();
+      }
+
+      // =========================
+      // Draft (save form before login)
+      // =========================
+      function saveDraft(){
+        const draft = {
+          device_model: (deviceModel.value || "").trim(),
+          problem: (problemDesc.value || "").trim(),
+          address: (address.value || "").trim(),
+          neighborhood: (neighborhood.value || "").trim(),
+          pickup_time: (pickupTime.value || "").trim()
+        };
+        localStorage.setItem(DRAFT_KEY, JSON.stringify(draft));
+      }
+      function loadDraft(){
+        try{
+          const raw = localStorage.getItem(DRAFT_KEY);
+          if(!raw) return;
+          const d = JSON.parse(raw);
+          if(d && typeof d === "object"){
+            if(d.device_model != null) deviceModel.value = d.device_model;
+            if(d.problem != null) problemDesc.value = d.problem;
+            if(d.address != null) address.value = d.address;
+            if(d.neighborhood != null) neighborhood.value = d.neighborhood;
+            if(d.pickup_time != null) pickupTime.value = d.pickup_time;
+          }
+        }catch(_e){}
       }
 
       // =========================
@@ -1128,9 +1303,7 @@
       }
 
       // =========================
-      // Edge calls (exactly as your functions expect)
-      // request-otp expects: { phone }
-      // verify-otp expects: { phone, code }
+      // Edge calls
       // =========================
       async function requestOtpEdge(phone09){
         const res = await fetch(OTP_REQUEST_URL, {
@@ -1195,6 +1368,18 @@
         if(["done","delivered","completed","complete"].includes(s)) return "delivered";
         return s || "requested";
       }
+      function statusLabel(key){
+        const k = normalizeStatus(key);
+        const m = {
+          requested: "ثبت شده",
+          picked_up: "دریافت با پیک",
+          quoted: "اعلام هزینه",
+          repairing: "در حال تعمیر",
+          delivering: "در مسیر تحویل",
+          delivered: "تحویل شد"
+        };
+        return m[k] || k;
+      }
       function stepIndex(key){
         const idx = TRACK_STEPS.findIndex(x => x.key === key);
         return idx < 0 ? 0 : idx;
@@ -1248,7 +1433,6 @@
           showOtpBox(true);
           setMsg(authMsg, "ok", "کد ارسال شد ✅");
 
-          // ✅ نمایش تایمر ۱۲۰ ثانیه
           const secs = Number(out?.expires_in_seconds ?? 120);
           startTimer(Number.isFinite(secs) ? secs : 120);
 
@@ -1281,13 +1465,16 @@
         try{
           await verifyOtpEdge(lastPhone09, code);
 
-          // ✅ چون verify-otp فقط {ok:true} می‌دهد، لاگین را لوکال نگه می‌داریم
           loginState = { phone09: lastPhone09 };
           localStorage.setItem(LS_KEY, JSON.stringify(loginState));
 
           authCode.value = "";
           setMsg(authMsg, "ok", "ورود انجام شد ✅");
           applyLoginUI();
+
+          // ✅ بعد از ورود: فرم draft را برگردان
+          loadDraft();
+
           await loadOrders();
         }catch(err){
           setMsg(authMsg, "err", "ورود ناموفق بود: " + (err?.message || "خطای نامشخص"));
@@ -1307,16 +1494,20 @@
         applyLoginUI();
       }
 
+      function focusAuthWithMessage(){
+        setMsg(orderMsg, "warn", "اطلاعات فرم ذخیره شد. برای ارسال نهایی، لطفاً با کد پیامکی وارد شوید.");
+        saveDraft();
+        document.getElementById("order").scrollIntoView({ behavior:"smooth", block:"start" });
+        setTimeout(() => authPhone.focus(), 350);
+      }
+
       async function createOrder(){
         setMsg(orderMsg, "", "");
-        if(!loginState || !loginState.phone09){
-          setMsg(orderMsg, "err", "اول وارد شوید.");
-          return;
-        }
 
         const dm = (deviceModel.value || "").trim();
         const pr = (problemDesc.value || "").trim();
         const ad = (address.value || "").trim();
+        const nb = (neighborhood.value || "").trim();
         const pt = (pickupTime.value || "").trim();
 
         if(!dm || !pr || !ad){
@@ -1324,16 +1515,21 @@
           return;
         }
 
+        // ✅ اگر وارد نیست: اجازه بده فرم پر شود، ولی ارسال نهایی را بعد از ورود انجام بده
+        if(!loggedIn()){
+          focusAuthWithMessage();
+          return;
+        }
+
         createOrderBtn.disabled = true;
         setMsg(orderMsg, "warn", "در حال ثبت سفارش…");
 
-        // توجه: این insert با anon key انجام می‌شود.
-        // اگر روی جدول orders RLS سخت‌گیرانه باشد، باید policy اجازه دهد.
         const payload = {
           customer_phone: loginState.phone09,
           device_model: dm,
           problem: pr,
           address: ad,
+          neighborhood: nb || null,
           pickup_time: pt || null,
           status: "requested"
         };
@@ -1355,13 +1551,15 @@
         deviceModel.value = "";
         problemDesc.value = "";
         address.value = "";
+        neighborhood.value = "";
         pickupTime.value = "";
+        localStorage.removeItem(DRAFT_KEY);
 
         await loadOrders();
       }
 
       async function loadOrders(){
-        if(!loginState || !loginState.phone09){
+        if(!loggedIn()){
           ordersCount.textContent = "0";
           return;
         }
@@ -1398,18 +1596,19 @@
           const dm = o.device_model ?? o.model ?? "";
           const pr = o.problem ?? o.issue ?? "";
           const ad = o.address ?? "";
+          const nb = o.neighborhood ?? "";
           const pt = o.pickup_time ?? o.pickup_at ?? "";
 
           return `
             <div class="order-item">
               <div class="order-top">
                 <b>سفارش #${esc(id)}</b>
-                <span class="pill">وضعیت: ${esc(normalizeStatus(st))}</span>
+                <span class="pill">وضعیت: ${esc(statusLabel(st))}</span>
               </div>
               <div class="muted">
                 <b>مدل:</b> ${esc(dm)}<br>
                 <b>مشکل:</b> ${esc(pr)}<br>
-                <b>آدرس:</b> ${esc(ad)}${pt ? `<br><b>زمان دریافت:</b> ${esc(pt)}` : ""}${created ? `<br><b>ثبت:</b> ${esc(created)}` : ""}
+                <b>آدرس:</b> ${esc(ad)}${nb ? `<br><b>محله:</b> ${esc(nb)}` : ""}${pt ? `<br><b>زمان دریافت:</b> ${esc(pt)}` : ""}${created ? `<br><b>ثبت:</b> ${esc(created)}` : ""}
               </div>
               ${renderTrack(st)}
             </div>
@@ -1438,7 +1637,8 @@
       }
 
       applyLoginUI();
-      if(loginState && loginState.phone09){
+      loadDraft();
+      if(loggedIn()){
         loadOrders();
       }
 
@@ -1450,6 +1650,27 @@
 
       createOrderBtn.addEventListener("click", createOrder);
       refreshOrdersBtn.addEventListener("click", loadOrders);
+
+      // Save draft on input changes
+      [deviceModel, problemDesc, address, neighborhood, pickupTime].forEach(el => {
+        if(!el) return;
+        el.addEventListener("input", () => {
+          saveDraft();
+        });
+      });
+
+      // Quick issue chips -> append to textarea
+      document.querySelectorAll(".qchip").forEach(btn => {
+        btn.addEventListener("click", () => {
+          const val = (btn.getAttribute("data-issue") || "").trim();
+          if(!val) return;
+          const cur = (problemDesc.value || "").trim();
+          const next = cur ? (cur + (cur.endsWith("،") || cur.endsWith(",") ? " " : "، ") + val) : val;
+          problemDesc.value = next;
+          problemDesc.focus();
+          saveDraft();
+        });
+      });
 
       // FAQ icon toggle (+ / -)
       document.querySelectorAll("details").forEach(d => {
