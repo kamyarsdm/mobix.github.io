@@ -453,10 +453,10 @@
       box-shadow:var(--shadow);
     }
 
-    /* ✅ Banner sizes fixed */
+    /* ✅ Banner sizes unified (desktop/tablet/mobile) */
     .media .imgwrap{
       width:100%;
-      height:210px;
+      height: clamp(150px, 22vw, 210px);
       background:
         radial-gradient(560px 240px at 70% 10%, rgba(31,106,255,.18), transparent 60%),
         radial-gradient(520px 240px at 10% 60%, rgba(59,130,246,.12), transparent 58%),
@@ -474,11 +474,6 @@
       display:block;
     }
 
-    @media(max-width:1200px){.media .imgwrap{height:200px}}
-    @media(max-width:1024px){.media .imgwrap{height:190px}}
-    @media(max-width:900px){.media .imgwrap{height:180px}}
-    @media(max-width:520px){.media .imgwrap{height:150px}}
-
     .media-caption{
       padding:12px 14px;
       font-size:14px;
@@ -486,81 +481,6 @@
       line-height:1.8;
     }
     .media-caption b{color:var(--text)}
-
-    /* ✅ Support/Tracking banner (graphic + step-by-step pills) */
-    .imgwrap-graphic{
-      width:100%;
-      height:210px;
-      overflow:hidden;
-      background:
-        radial-gradient(420px 220px at 30% 20%, rgba(31,106,255,.26), transparent 62%),
-        radial-gradient(520px 260px at 80% 70%, rgba(59,130,246,.16), transparent 62%),
-        linear-gradient(135deg, #0B0F1A 0%, #0F1A33 60%, #0B0F1A 100%);
-      display:flex;
-      align-items:center;
-      justify-content:center;
-      border-bottom:1px solid var(--line);
-      position:relative;
-      padding:12px;
-    }
-    .imgwrap-graphic:before{
-      content:"";
-      position:absolute;
-      inset:-40px;
-      background:
-        radial-gradient(280px 140px at 18% 35%, rgba(255,255,255,.10), transparent 60%),
-        radial-gradient(260px 160px at 88% 60%, rgba(255,255,255,.08), transparent 60%);
-      pointer-events:none;
-    }
-    .graphic-center{
-      position:relative;
-      display:flex;
-      flex-direction:column;
-      gap:10px;
-      padding:14px 16px;
-      border-radius:20px;
-      background:rgba(255,255,255,.08);
-      border:1px solid rgba(255,255,255,.12);
-      backdrop-filter: blur(10px);
-      box-shadow:0 18px 36px rgba(0,0,0,.18);
-      width:min(520px, 100%);
-    }
-    .graphic-head{
-      display:flex;
-      align-items:center;
-      gap:12px;
-    }
-    .gicon{
-      width:48px;height:48px;border-radius:18px;
-      background:linear-gradient(135deg, rgba(31,106,255,.34), rgba(59,130,246,.18));
-      border:1px solid rgba(59,130,246,.22);
-      display:flex;align-items:center;justify-content:center;
-      color:#DCE8FF;
-      font-weight:900;
-      flex:0 0 auto;
-    }
-    .gtext b{display:block;color:#fff;font-weight:900}
-    .gtext span{display:block;color:rgba(220,232,255,.88);font-size:13px;line-height:1.6;margin-top:4px}
-    .gsteps{
-      display:flex;
-      flex-wrap:wrap;
-      gap:8px;
-    }
-    .gstep{
-      padding:8px 10px;
-      border-radius:999px;
-      background:rgba(255,255,255,.10);
-      border:1px solid rgba(255,255,255,.14);
-      color:rgba(255,255,255,.92);
-      font-weight:900;
-      font-size:12.5px;
-      white-space:nowrap;
-    }
-
-    @media(max-width:1200px){.imgwrap-graphic{height:200px}}
-    @media(max-width:1024px){.imgwrap-graphic{height:190px}}
-    @media(max-width:900px){.imgwrap-graphic{height:180px}}
-    @media(max-width:520px){.imgwrap-graphic{height:170px}}
 
     /* HOW IT WORKS */
     .timeline{
@@ -875,6 +795,32 @@
       height:auto;
     }
 
+    /* Replacement phone checkbox row */
+    .checkrow{
+      display:flex;
+      align-items:center;
+      gap:10px;
+      padding:10px 12px;
+      border-radius:16px;
+      border:1px solid var(--line);
+      background:rgba(246,248,252,.55);
+      box-shadow:var(--shadow2);
+      margin-top:10px;
+    }
+    .checkrow input{
+      width:18px;height:18px;
+      accent-color: var(--primary);
+    }
+    .checkrow b{
+      font-weight:900;
+      font-size:13.5px;
+    }
+    .checkrow span{
+      color:var(--muted);
+      font-size:12.8px;
+      line-height:1.6;
+    }
+
     /* =========================
        MOBILE FIXES
        ========================= */
@@ -1154,23 +1100,8 @@
         </div>
 
         <div class="media">
-          <div class="imgwrap-graphic" aria-label="پشتیبانی و پیگیری مرحله‌ای">
-            <div class="graphic-center">
-              <div class="graphic-head">
-                <div class="gicon">🧭</div>
-                <div class="gtext">
-                  <b>پشتیبانی و پیگیری مرحله‌ای</b>
-                  <span>شفاف، مرحله‌به‌مرحله و همیشه در دسترس</span>
-                </div>
-              </div>
-              <div class="gsteps" aria-label="مراحل">
-                <div class="gstep">ثبت</div>
-                <div class="gstep">پیک</div>
-                <div class="gstep">هزینه</div>
-                <div class="gstep">تعمیر</div>
-                <div class="gstep">تحویل</div>
-              </div>
-            </div>
+          <div class="imgwrap">
+            <img src="assets/support.png" alt="پشتیبانی و پیگیری مرحله‌ای">
           </div>
           <div class="media-caption">
             <b>پشتیبانی و پیگیری مرحله‌ای</b><br>
@@ -1288,15 +1219,22 @@
             </div>
 
             <div id="orderFormWrap">
-              <!-- ✅ required in your DB (customer_name not null) -->
               <div class="field">
                 <div class="label">نام و نام خانوادگی</div>
-                <input id="customerName" class="input" placeholder="مثلا کامیار صادهمیری" />
+                <input id="customerName" class="input" placeholder="نام و نام خانوادگی" />
               </div>
 
               <div class="field">
                 <div class="label">مدل گوشی</div>
                 <input id="deviceModel" class="input" placeholder="مثلا iPhone 13 / Galaxy A52" />
+              </div>
+
+              <div class="checkrow" aria-label="گوشی جایگزین">
+                <input id="replacementPhone" type="checkbox" />
+                <div style="display:flex;flex-direction:column;gap:2px">
+                  <b>نیاز به گوشی جایگزین دارم</b>
+                  <span>اگر در زمان تعمیر نیاز دارید، این گزینه را فعال کنید.</span>
+                </div>
               </div>
 
               <div class="field">
@@ -1477,7 +1415,7 @@
         return obj.message || obj.error || (obj.errors && obj.errors[0] && (obj.errors[0].message || obj.errors[0])) || null;
       }
 
-      // ✅ generate order_no like your DB examples: MCC-YYMMDD-XXXX
+      // ✅ generate order_no like your DB examples: MCC-YYMMDD-XXXX (same as app)
       function genOrderNo(){
         const d = new Date();
         const yy = String(d.getFullYear()).slice(-2);
@@ -1514,6 +1452,7 @@
       const orderGate = document.getElementById("orderGate");
       const customerName = document.getElementById("customerName");
       const deviceModel = document.getElementById("deviceModel");
+      const replacementPhone = document.getElementById("replacementPhone");
       const problemDesc = document.getElementById("problemDesc");
       const address = document.getElementById("address");
       const pickupTime = document.getElementById("pickupTime");
@@ -1575,7 +1514,7 @@
 
         if(li){
           setStatus(sessionBadge, "ok", "وارد شده‌اید ✅");
-          if(authCard) authCard.style.display = "none";        // ✅ بعد از ورود، بخش ورود دیده نشود
+          if(authCard) authCard.style.display = "none";
           if(loggedInBar) loggedInBar.style.display = "";
           if(loggedInText) loggedInText.textContent = "وارد شده‌اید ✅ (" + loginState.phone09 + ")";
           if(logoutBtn) logoutBtn.style.display = "none";
@@ -1600,6 +1539,7 @@
         const draft = {
           customer_name: (customerName.value || "").trim(),
           device_model: (deviceModel.value || "").trim(),
+          wants_replacement_phone: !!(replacementPhone && replacementPhone.checked),
           issue: (problemDesc.value || "").trim(),
           pickup_address: (address.value || "").trim(),
           pickup_time_text: (pickupTime.value || "").trim()
@@ -1614,6 +1554,7 @@
           if(d && typeof d === "object"){
             if(d.customer_name != null) customerName.value = d.customer_name;
             if(d.device_model != null) deviceModel.value = d.device_model;
+            if(d.wants_replacement_phone != null && replacementPhone) replacementPhone.checked = !!d.wants_replacement_phone;
             if(d.issue != null) problemDesc.value = d.issue;
             if(d.pickup_address != null) address.value = d.pickup_address;
             if(d.pickup_time_text != null) pickupTime.value = d.pickup_time_text;
@@ -1848,12 +1789,23 @@
         setTimeout(() => authPhone && authPhone.focus(), 350);
       }
 
+      function buildIssueWithExtras(baseIssue){
+        const wants = !!(replacementPhone && replacementPhone.checked);
+        if(!wants) return baseIssue;
+        const suffix = "نیاز به گوشی جایگزین: بله";
+        const cur = (baseIssue || "").trim();
+        if(!cur) return suffix;
+        if(cur.includes(suffix)) return cur;
+        return cur + (cur.endsWith("،") || cur.endsWith(",") ? " " : "، ") + suffix;
+      }
+
       async function createOrder(){
         setMsg(orderMsg, "", "");
 
         const cn = (customerName.value || "").trim();
         const dm = (deviceModel.value || "").trim();
-        const issue = (problemDesc.value || "").trim();
+        const issueRaw = (problemDesc.value || "").trim();
+        const issue = buildIssueWithExtras(issueRaw);
         const addr = (address.value || "").trim();
         const pt = (pickupTime.value || "").trim();
 
@@ -1870,7 +1822,6 @@
         createOrderBtn.disabled = true;
         setMsg(orderMsg, "warn", "در حال ثبت سفارش…");
 
-        // ✅ match your DB columns (based on your table screenshot)
         const payload = {
           order_no: genOrderNo(),
           customer_phone: loginState.phone09,
@@ -1907,6 +1858,7 @@
 
           customerName.value = "";
           deviceModel.value = "";
+          if(replacementPhone) replacementPhone.checked = false;
           problemDesc.value = "";
           address.value = "";
           pickupTime.value = "";
@@ -2017,9 +1969,10 @@
       if(logoutBtn) logoutBtn.addEventListener("click", logout);
 
       // Save draft on input changes
-      [customerName, deviceModel, problemDesc, address, pickupTime].forEach(el => {
+      [customerName, deviceModel, problemDesc, address, pickupTime, replacementPhone].forEach(el => {
         if(!el) return;
         el.addEventListener("input", () => saveDraft());
+        el.addEventListener("change", () => saveDraft());
       });
 
       // Quick issue chips -> append to textarea
