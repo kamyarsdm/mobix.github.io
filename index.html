@@ -90,6 +90,7 @@
       font-weight:800;
       font-size:13px;
       box-shadow:var(--shadow2);
+      white-space:nowrap;
     }
 
     .btn{
@@ -136,26 +137,10 @@
       box-shadow:var(--shadow);
     }
 
-    .badge{
-      display:inline-flex;align-items:center;gap:8px;
-      padding:9px 12px;
-      border-radius:999px;
-      border:1px solid rgba(16,185,129,.22);
-      background:rgba(16,185,129,.08);
-      color:#0B3A2C;
-      font-weight:900;
-      font-size:13px;
-    }
-    .dot{
-      width:10px;height:10px;border-radius:50%;
-      background:var(--success);
-      box-shadow:0 0 0 6px rgba(16,185,129,.18);
-    }
-
     h1{
       font-size:44px;
       font-weight:900;
-      margin:12px 0 8px;
+      margin:0 0 8px;
       letter-spacing:-.3px;
     }
     @media(max-width:520px){h1{font-size:34px}}
@@ -278,14 +263,13 @@
     .section{margin-top:20px}
     .section h2{font-size:20px;font-weight:900;margin:0 0 10px}
 
-    /* WHY */
+    /* WHY (۳ بنر کنار هم) */
     .why-grid{
       display:grid;
-      grid-template-columns:1fr 1fr;
+      grid-template-columns:repeat(3,1fr);
       gap:12px;
     }
-    @media(max-width:900px){.why-grid{grid-template-columns:1fr}}
-
+    @media(max-width:980px){.why-grid{grid-template-columns:1fr}}
     .media{
       background:#fff;
       border-radius:20px;
@@ -305,10 +289,11 @@
       justify-content:center;
       overflow:hidden;
     }
+    /* ✅ ابعاد بنرها درست: پر کردن کادر */
     .media img{
       width:100%;
       height:100%;
-      object-fit:contain;
+      object-fit:cover;
       display:block;
     }
     .media-caption{
@@ -319,7 +304,7 @@
     }
     .media-caption b{color:var(--text)}
 
-    /* HOW IT WORKS */
+    /* HOW IT WORKS (فقط یک بار) */
     .timeline{
       display:grid;
       grid-template-columns:repeat(4,1fr);
@@ -428,15 +413,13 @@
       background:rgba(255,255,255,.86);
       font-weight:900;
       font-size:12.8px;
+      white-space:nowrap;
     }
     .status.ok{border-color:rgba(16,185,129,.25);background:rgba(16,185,129,.08);color:#0B3A2C}
     .status.err{border-color:rgba(239,68,68,.25);background:rgba(239,68,68,.08);color:#7F1D1D}
     .status.warn{border-color:rgba(245,158,11,.30);background:rgba(245,158,11,.10);color:#78350F}
 
-    .divider{
-      height:1px;background:var(--line);
-      margin:12px 0;
-    }
+    .divider{height:1px;background:var(--line);margin:12px 0}
 
     .orders{
       display:flex;
@@ -499,6 +482,45 @@
     }
     .track-step .tt b{display:block;font-weight:900}
     .track-step .tt span{display:block;color:var(--muted);font-size:13px;line-height:1.8;margin-top:3px}
+
+    /* FAQ */
+    .faq{
+      display:grid;
+      grid-template-columns:1fr;
+      gap:10px;
+    }
+    details{
+      background:#fff;
+      border:1px solid var(--line);
+      border-radius:18px;
+      box-shadow:var(--shadow2);
+      padding:12px 14px;
+    }
+    summary{
+      cursor:pointer;
+      font-weight:900;
+      list-style:none;
+      display:flex;
+      align-items:center;
+      justify-content:space-between;
+      gap:10px;
+    }
+    summary::-webkit-details-marker{display:none}
+    .faq-a{
+      margin-top:8px;
+      color:var(--muted);
+      line-height:1.9;
+      font-size:14px;
+    }
+    .chev{
+      width:28px;height:28px;border-radius:12px;
+      display:flex;align-items:center;justify-content:center;
+      background:rgba(31,106,255,.10);
+      border:1px solid rgba(31,106,255,.18);
+      color:#0B2A6A;
+      flex:0 0 auto;
+      font-weight:900;
+    }
 
     /* FLOATING CTA */
     .floating{
@@ -573,9 +595,7 @@
 
         <div class="nav">
           <a class="chip" href="#why">چرا موبیکس؟</a>
-          <a class="chip" href="#how">مراحل کار</a>
-          <a class="chip" href="#order">ثبت/پیگیری سفارش</a>
-          <button class="btn ghost" id="navAuthBtn" type="button">ورود</button>
+          <a class="btn primary" href="#order" id="navAuthBtn">ثبت نام / ورود</a>
         </div>
       </div>
     </div>
@@ -583,8 +603,7 @@
     <!-- HERO -->
     <section class="hero" id="top">
       <div class="card">
-        <span class="badge"><span class="dot"></span> لانچ تا چند روز آینده</span>
-
+        <!-- ✅ حذف: لانچ تا چند روز آینده -->
         <h1>با خیال راحت بسپارید</h1>
         <p class="sub">
           دریافت گوشی با <b>پیک موبیکس</b>، تعمیر توسط <b>تعمیرکاران موبیکس</b>
@@ -592,8 +611,8 @@
         </p>
 
         <div class="cta">
-          <a class="btn primary" href="#order">ثبت سفارش آنلاین</a>
-          <a class="btn ghost" href="#how">مراحل کار</a>
+          <a class="btn primary" href="#order">ثبت نام / ورود</a>
+          <a class="btn ghost" href="#why">چرا موبیکس؟</a>
         </div>
 
         <div class="mini-grid">
@@ -702,11 +721,11 @@
         </div>
 
         <div class="divider"></div>
-        <div id="sessionBadge" class="status warn">در حال بررسی وضعیت ورود…</div>
+        <div id="sessionBadge" class="status warn">وارد نشده‌اید</div>
       </div>
     </section>
 
-    <!-- WHY -->
+    <!-- WHY (۳ بنر کنار هم) -->
     <section class="section" id="why">
       <h2>چرا موبیکس؟</h2>
       <div class="why-grid">
@@ -729,12 +748,23 @@
             دریافت و تحویل دستگاه بدون دردسر.
           </div>
         </div>
+
+        <div class="media">
+          <div class="imgwrap">
+            <!-- اگر عکس جدا داری، مسیرش رو بذار. فعلاً از hero به‌عنوان بنر سوم استفاده شد تا خراب نشه -->
+            <img src="assets/hero.png" alt="پشتیبانی و پیگیری">
+          </div>
+          <div class="media-caption">
+            <b>پشتیبانی و پیگیری مرحله‌ای</b><br>
+            وضعیت سفارش و هماهنگی‌ها شفاف و مرحله‌به‌مرحله.
+          </div>
+        </div>
       </div>
     </section>
 
-    <!-- HOW IT WORKS -->
+    <!-- HOW IT WORKS (یک بار) -->
     <section class="section" id="how">
-      <h2>نحوه انجام کار</h2>
+      <h2>مراحل کار</h2>
       <div class="timeline">
         <div class="tcard">
           <div class="tnum">1</div>
@@ -759,18 +789,19 @@
       </div>
     </section>
 
-    <!-- ORDER + TRACK -->
+    <!-- AUTH + ORDER + TRACK (یکی شده: ثبت نام/ورود + ثبت/پیگیری) -->
     <section class="section" id="order">
       <div class="card">
-        <h2 style="margin:0 0 8px;font-weight:900">ثبت و پیگیری سفارش (مثل اپ)</h2>
-        <p class="sub">با Edge Function + sms.ir وارد شوید، سفارش ثبت کنید و مرحله‌ای پیگیری کنید.</p>
+        <h2 style="margin:0 0 8px;font-weight:900">ثبت نام / ورود و پیگیری سفارش</h2>
+        <!-- ✅ حذف: "مثل اپ" و "Edge Function" -->
+        <p class="sub">شماره موبایل را وارد کنید، کد را بگیرید و وارد شوید.</p>
 
         <div class="grid-2">
 
           <!-- AUTH CARD -->
           <div class="card" style="padding:16px;box-shadow:var(--shadow2)">
             <h2 style="margin:0 0 8px;font-weight:900;font-size:18px">ورود با کد پیامکی</h2>
-            <p class="sub" style="font-size:14.5px">کد از طریق sms.ir ارسال می‌شود. بعد از ورود، سفارش‌های شما نمایش داده می‌شود.</p>
+            <p class="sub" style="font-size:14.5px">کد یکبار مصرف ارسال می‌شود.</p>
 
             <div class="field">
               <div class="label">شماره موبایل</div>
@@ -779,7 +810,7 @@
 
             <div class="form">
               <button id="sendOtpBtn" class="btn primary" type="button">ارسال کد</button>
-              <div></div>
+              <button id="logoutBtn" class="btn danger" type="button" style="display:none">خروج</button>
             </div>
 
             <div id="otpBox" style="display:none">
@@ -787,9 +818,15 @@
                 <div class="label">کد پیامکی</div>
                 <input id="authCode" class="input" inputmode="numeric" placeholder="کد ۶ رقمی" />
               </div>
+
+              <!-- ✅ تایمر ۱۲۰ ثانیه بعد از ارسال -->
+              <div class="field" style="margin-top:8px">
+                <div id="timerPill" class="status warn">02:00</div>
+              </div>
+
               <div class="form">
                 <button id="verifyOtpBtn" class="btn primary" type="button">تایید و ورود</button>
-                <button id="logoutBtn" class="btn danger" type="button" style="display:none">خروج</button>
+                <button id="resendBtn" class="btn ghost" type="button" disabled>ارسال مجدد</button>
               </div>
             </div>
 
@@ -848,6 +885,47 @@
       </div>
     </section>
 
+    <!-- FAQ -->
+    <section class="section" id="faq">
+      <div class="card">
+        <h2 style="margin:0 0 10px;font-weight:900">سوالات متداول</h2>
+
+        <div class="faq">
+          <details>
+            <summary>
+              هزینه تعمیر چطور مشخص می‌شود؟
+              <span class="chev">+</span>
+            </summary>
+            <div class="faq-a">بعد از عیب‌یابی، هزینه دقیق اعلام می‌شود و بدون تایید شما اقدامی انجام نمی‌شود.</div>
+          </details>
+
+          <details>
+            <summary>
+              دریافت و تحویل با پیک چطور انجام می‌شود؟
+              <span class="chev">+</span>
+            </summary>
+            <div class="faq-a">پس از ثبت سفارش، زمان دریافت هماهنگ می‌شود. پیک موبیکس دستگاه را دریافت و بعد از تعمیر تحویل می‌دهد.</div>
+          </details>
+
+          <details>
+            <summary>
+              چقدر طول می‌کشد تا تعمیر انجام شود؟
+              <span class="chev">+</span>
+            </summary>
+            <div class="faq-a">بسته به نوع مشکل متفاوت است، اما وضعیت سفارش مرحله‌به‌مرحله به شما اطلاع داده می‌شود.</div>
+          </details>
+
+          <details>
+            <summary>
+              اگر کد پیامکی را دریافت نکردم چه کنم؟
+              <span class="chev">+</span>
+            </summary>
+            <div class="faq-a">پس از پایان تایمر ۲ دقیقه‌ای، امکان «ارسال مجدد» فعال می‌شود.</div>
+          </details>
+        </div>
+      </div>
+    </section>
+
     <!-- FOOTER -->
     <div class="footer">
       <span>© Mobix</span>
@@ -858,7 +936,8 @@
         </a>
       </div>
 
-      <span>mobix.github.io</span>
+      <!-- ✅ حذف متن mobix.github.io -->
+      <span></span>
     </div>
 
   </div>
@@ -871,9 +950,9 @@
         <span>پیک، تعمیر، تحویل + پیگیری مرحله‌ای داخل اپ</span>
       </div>
       <div class="actions">
-        <a class="btn ghost" href="#how">مراحل</a>
-        <a class="btn ghost" href="#order">ثبت/پیگیری</a>
-        <button class="btn primary" id="floatingAuthBtn" type="button">ورود</button>
+        <a class="btn ghost" href="#why">چرا موبیکس؟</a>
+        <a class="btn ghost" href="#faq">سوالات</a>
+        <a class="btn primary" href="#order" id="floatingAuthBtn">ثبت نام / ورود</a>
       </div>
     </div>
   </div>
@@ -883,14 +962,21 @@
 
   <script>
     (function(){
+      // =========================
+      // Supabase Config
+      // =========================
       const SUPABASE_URL = "https://vrxfhfknmxmeatnfzpcg.supabase.co";
       const SUPABASE_ANON_KEY = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InZyeGZoZmtubXhtZWF0bmZ6cGNnIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NjYyNTg2MjksImV4cCI6MjA4MTgzNDYyOX0.iANOG9-g9GnVl58KDYI0A-oYNwfbL3oh2NBddZ2sLLs";
 
+      // Edge Functions (sms.ir)
       const OTP_REQUEST_URL = "https://vrxfhfknmxmeatnfzpcg.supabase.co/functions/v1/request-otp";
       const OTP_VERIFY_URL  = "https://vrxfhfknmxmeatnfzpcg.supabase.co/functions/v1/verify-otp";
 
       const supabase = window.supabase.createClient(SUPABASE_URL, SUPABASE_ANON_KEY);
 
+      // =========================
+      // Helpers
+      // =========================
       function normalizeDigits(s){
         return (s || "")
           .replace(/[۰-۹]/g, d => "۰۱۲۳۴۵۶۷۸۹".indexOf(d))
@@ -903,16 +989,9 @@
         return false;
       }
       function to09(d){
-        // 912... -> 0912...
         if(!d) return null;
         if(d.length === 11 && d.startsWith("09")) return d;
         if(d.length === 10 && d.startsWith("9")) return "0" + d;
-        return null;
-      }
-      function toE164IranFrom09(d09){
-        // 0912... -> +98912...
-        if(!d09) return null;
-        if(d09.length === 11 && d09.startsWith("09")) return "+98" + d09.slice(1);
         return null;
       }
       function fmtDate(iso){
@@ -939,8 +1018,9 @@
         return obj.message || obj.error || (obj.errors && obj.errors[0] && (obj.errors[0].message || obj.errors[0])) || null;
       }
 
-      const navAuthBtn = document.getElementById("navAuthBtn");
-      const floatingAuthBtn = document.getElementById("floatingAuthBtn");
+      // =========================
+      // UI Elements
+      // =========================
       const sessionBadge = document.getElementById("sessionBadge");
 
       const authPhone = document.getElementById("authPhone");
@@ -948,8 +1028,10 @@
       const sendOtpBtn = document.getElementById("sendOtpBtn");
       const verifyOtpBtn = document.getElementById("verifyOtpBtn");
       const logoutBtn = document.getElementById("logoutBtn");
+      const resendBtn = document.getElementById("resendBtn");
       const otpBox = document.getElementById("otpBox");
       const authMsg = document.getElementById("authMsg");
+      const timerPill = document.getElementById("timerPill");
 
       const orderGate = document.getElementById("orderGate");
       const orderFormWrap = document.getElementById("orderFormWrap");
@@ -964,9 +1046,19 @@
       const ordersWrap = document.getElementById("ordersWrap");
       const ordersCount = document.getElementById("ordersCount");
 
-      let lastPhone09 = null;     // ✅ برای Edge Function (احتمالاً انتظار 09...)
-      let lastPhoneE164 = null;   // ✅ برای سازگاری احتمالی (+98...)
+      // =========================
+      // State (Login is custom because verify-otp returns only {ok:true})
+      // =========================
+      const LS_KEY = "mobix_site_login";
+      let loginState = null; // { phone09: "09..." }
 
+      let lastPhone09 = null;
+      let timerId = null;
+      let remaining = 0;
+
+      // =========================
+      // UI helpers
+      // =========================
       function setStatus(el, type, text){
         el.classList.remove("ok","err","warn");
         if(type) el.classList.add(type);
@@ -984,22 +1076,19 @@
         else el.style.color = "var(--muted)";
         el.textContent = text;
       }
-      function showAuthBox(show){
+      function showOtpBox(show){
         otpBox.style.display = show ? "" : "none";
       }
-      function setLoggedInUI(user){
-        const loggedIn = !!user;
+
+      function applyLoginUI(){
+        const loggedIn = !!(loginState && loginState.phone09);
         if(loggedIn){
           setStatus(sessionBadge, "ok", "وارد شده‌اید ✅");
-          navAuthBtn.textContent = "حساب من";
-          floatingAuthBtn.textContent = "حساب من";
           logoutBtn.style.display = "";
           orderFormWrap.style.display = "";
           setStatus(orderGate, "ok", "می‌توانید سفارش ثبت کنید");
         }else{
           setStatus(sessionBadge, "warn", "وارد نشده‌اید");
-          navAuthBtn.textContent = "ورود";
-          floatingAuthBtn.textContent = "ورود";
           logoutBtn.style.display = "none";
           orderFormWrap.style.display = "none";
           setStatus(orderGate, "warn", "برای ثبت سفارش باید وارد شوید");
@@ -1007,13 +1096,87 @@
           ordersCount.textContent = "0";
         }
       }
-      function scrollToOrder(){
-        const el = document.getElementById("order");
-        if(el) el.scrollIntoView({ behavior:"smooth", block:"start" });
-      }
-      navAuthBtn.addEventListener("click", function(){ scrollToOrder(); authPhone.focus(); });
-      floatingAuthBtn.addEventListener("click", function(){ scrollToOrder(); authPhone.focus(); });
 
+      // =========================
+      // Timer (120s)
+      // =========================
+      function formatMMSS(sec){
+        const m = Math.floor(sec / 60);
+        const s = sec % 60;
+        return String(m).padStart(2,"0") + ":" + String(s).padStart(2,"0");
+      }
+      function stopTimer(){
+        if(timerId) clearInterval(timerId);
+        timerId = null;
+      }
+      function startTimer(seconds){
+        stopTimer();
+        remaining = seconds;
+        resendBtn.disabled = true;
+        setStatus(timerPill, "warn", formatMMSS(remaining));
+
+        timerId = setInterval(() => {
+          remaining -= 1;
+          if(remaining <= 0){
+            stopTimer();
+            setStatus(timerPill, "ok", "00:00");
+            resendBtn.disabled = false;
+            return;
+          }
+          setStatus(timerPill, "warn", formatMMSS(remaining));
+        }, 1000);
+      }
+
+      // =========================
+      // Edge calls (exactly as your functions expect)
+      // request-otp expects: { phone }
+      // verify-otp expects: { phone, code }
+      // =========================
+      async function requestOtpEdge(phone09){
+        const res = await fetch(OTP_REQUEST_URL, {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+            "apikey": SUPABASE_ANON_KEY,
+            "Authorization": "Bearer " + SUPABASE_ANON_KEY
+          },
+          body: JSON.stringify({ phone: phone09 })
+        });
+        const json = await safeJson(res);
+        if(!res.ok){
+          const msg = extractErrorMessage(json) || ("HTTP " + res.status);
+          throw new Error(msg);
+        }
+        if(json && json.ok === false){
+          throw new Error(extractErrorMessage(json) || "ارسال کد ناموفق بود");
+        }
+        return json || { ok: true, expires_in_seconds: 120 };
+      }
+
+      async function verifyOtpEdge(phone09, code){
+        const res = await fetch(OTP_VERIFY_URL, {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+            "apikey": SUPABASE_ANON_KEY,
+            "Authorization": "Bearer " + SUPABASE_ANON_KEY
+          },
+          body: JSON.stringify({ phone: phone09, code })
+        });
+        const json = await safeJson(res);
+        if(!res.ok){
+          const msg = extractErrorMessage(json) || ("HTTP " + res.status);
+          throw new Error(msg);
+        }
+        if(json && json.ok === false){
+          throw new Error(extractErrorMessage(json) || "ورود ناموفق بود");
+        }
+        return json || { ok: true };
+      }
+
+      // =========================
+      // Orders UI mapping
+      // =========================
       const TRACK_STEPS = [
         { key:"requested", title:"ثبت درخواست", desc:"درخواست شما ثبت شد و در حال بررسی است." },
         { key:"picked_up", title:"دریافت با پیک", desc:"پیک موبیکس دستگاه را دریافت کرد." },
@@ -1058,91 +1221,9 @@
         `;
       }
 
-      async function refreshSession(){
-        const { data, error } = await supabase.auth.getSession();
-        if(error){
-          setStatus(sessionBadge, "err", "خطا در گرفتن سشن");
-          setLoggedInUI(null);
-          return null;
-        }
-        const user = data?.session?.user || null;
-        setLoggedInUI(user);
-        if(user) await loadOrders();
-        return user;
-      }
-
-      // ✅ request-otp (Edge Function)
-      async function requestOtpEdge(phone09, phoneE164){
-        const res = await fetch(OTP_REQUEST_URL, {
-          method: "POST",
-          headers: {
-            "Content-Type": "application/json",
-            "apikey": SUPABASE_ANON_KEY,
-            "Authorization": "Bearer " + SUPABASE_ANON_KEY
-          },
-          body: JSON.stringify({
-            phone: phone09,      // ✅ رایج‌ترین: 09...
-            phone_e164: phoneE164, // ✅ برای سازگاری
-            e164: phoneE164        // ✅ برای سازگاری
-          })
-        });
-        const json = await safeJson(res);
-        if(!res.ok){
-          const msg = extractErrorMessage(json) || ("HTTP " + res.status);
-          throw new Error(msg);
-        }
-        return json || { ok: true };
-      }
-
-      // ✅ verify-otp (Edge Function) + setSession
-      async function verifyOtpEdgeAndSetSession(phone09, phoneE164, code){
-        const res = await fetch(OTP_VERIFY_URL, {
-          method: "POST",
-          headers: {
-            "Content-Type": "application/json",
-            "apikey": SUPABASE_ANON_KEY,
-            "Authorization": "Bearer " + SUPABASE_ANON_KEY
-          },
-          body: JSON.stringify({
-            phone: phone09,        // ✅ طبق خطا: phone required
-            code: code,            // ✅ طبق خطا: code required
-            token: code,           // ✅ برای سازگاری (اگر قبلاً token بوده)
-            phone_e164: phoneE164, // ✅ برای سازگاری
-            e164: phoneE164        // ✅ برای سازگاری
-          })
-        });
-
-        const json = await safeJson(res);
-        if(!res.ok){
-          const msg = extractErrorMessage(json) || ("HTTP " + res.status);
-          throw new Error(msg);
-        }
-
-        const access_token =
-          json?.access_token ||
-          json?.session?.access_token ||
-          json?.data?.session?.access_token ||
-          json?.data?.access_token ||
-          json?.tokens?.access_token ||
-          null;
-
-        const refresh_token =
-          json?.refresh_token ||
-          json?.session?.refresh_token ||
-          json?.data?.session?.refresh_token ||
-          json?.data?.refresh_token ||
-          json?.tokens?.refresh_token ||
-          null;
-
-        if(!access_token || !refresh_token){
-          throw new Error("پاسخ verify شامل access_token/refresh_token نبود. (باید خروجی verify-otp را با سایت هماهنگ کنیم)");
-        }
-
-        const { error } = await supabase.auth.setSession({ access_token, refresh_token });
-        if(error) throw new Error(error.message || "خطا در setSession");
-        return json;
-      }
-
+      // =========================
+      // Actions
+      // =========================
       async function sendOtp(){
         setMsg(authMsg, "", "");
         const d = normalizeDigits(authPhone.value);
@@ -1150,28 +1231,32 @@
           setMsg(authMsg, "err", "شماره موبایل درست نیست. مثل 0912xxxxxxx وارد کنید.");
           return;
         }
-
         const phone09 = to09(d);
-        const phoneE164 = toE164IranFrom09(phone09);
-
         if(!phone09){
           setMsg(authMsg, "err", "شماره قابل تبدیل نیست. لطفاً دوباره تلاش کنید.");
           return;
         }
 
         sendOtpBtn.disabled = true;
+        resendBtn.disabled = true;
         setMsg(authMsg, "warn", "در حال ارسال کد…");
 
         try{
-          await requestOtpEdge(phone09, phoneE164);
+          const out = await requestOtpEdge(phone09);
           lastPhone09 = phone09;
-          lastPhoneE164 = phoneE164;
-          showAuthBox(true);
-          setMsg(authMsg, "ok", "کد ارسال شد ✅ حالا کد را وارد کنید.");
+
+          showOtpBox(true);
+          setMsg(authMsg, "ok", "کد ارسال شد ✅");
+
+          // ✅ نمایش تایمر ۱۲۰ ثانیه
+          const secs = Number(out?.expires_in_seconds ?? 120);
+          startTimer(Number.isFinite(secs) ? secs : 120);
+
           authCode.focus();
         }catch(err){
           setMsg(authMsg, "err", "ارسال کد ناموفق بود: " + (err?.message || "خطای نامشخص"));
-          showAuthBox(false);
+          showOtpBox(false);
+          stopTimer();
         }finally{
           sendOtpBtn.disabled = false;
         }
@@ -1194,10 +1279,16 @@
         setMsg(authMsg, "warn", "در حال تایید کد…");
 
         try{
-          await verifyOtpEdgeAndSetSession(lastPhone09, lastPhoneE164, code);
+          await verifyOtpEdge(lastPhone09, code);
+
+          // ✅ چون verify-otp فقط {ok:true} می‌دهد، لاگین را لوکال نگه می‌داریم
+          loginState = { phone09: lastPhone09 };
+          localStorage.setItem(LS_KEY, JSON.stringify(loginState));
+
           authCode.value = "";
           setMsg(authMsg, "ok", "ورود انجام شد ✅");
-          await refreshSession();
+          applyLoginUI();
+          await loadOrders();
         }catch(err){
           setMsg(authMsg, "err", "ورود ناموفق بود: " + (err?.message || "خطای نامشخص"));
         }finally{
@@ -1207,22 +1298,18 @@
 
       async function logout(){
         setMsg(authMsg, "", "");
-        const { error } = await supabase.auth.signOut();
-        if(error){
-          setMsg(authMsg, "err", "خروج ناموفق: " + (error.message || "خطای نامشخص"));
-          return;
-        }
+        loginState = null;
+        localStorage.removeItem(LS_KEY);
         lastPhone09 = null;
-        lastPhoneE164 = null;
-        showAuthBox(false);
+        showOtpBox(false);
+        stopTimer();
         setMsg(authMsg, "ok", "خارج شدید.");
-        await refreshSession();
+        applyLoginUI();
       }
 
       async function createOrder(){
         setMsg(orderMsg, "", "");
-        const user = (await supabase.auth.getUser()).data?.user;
-        if(!user){
+        if(!loginState || !loginState.phone09){
           setMsg(orderMsg, "err", "اول وارد شوید.");
           return;
         }
@@ -1240,9 +1327,10 @@
         createOrderBtn.disabled = true;
         setMsg(orderMsg, "warn", "در حال ثبت سفارش…");
 
+        // توجه: این insert با anon key انجام می‌شود.
+        // اگر روی جدول orders RLS سخت‌گیرانه باشد، باید policy اجازه دهد.
         const payload = {
-          user_id: user.id,
-          customer_phone: user.phone || lastPhoneE164 || lastPhone09,
+          customer_phone: loginState.phone09,
           device_model: dm,
           problem: pr,
           address: ad,
@@ -1273,41 +1361,29 @@
       }
 
       async function loadOrders(){
-        const user = (await supabase.auth.getUser()).data?.user;
-        if(!user){
+        if(!loginState || !loginState.phone09){
           ordersCount.textContent = "0";
           return;
         }
 
         ordersWrap.innerHTML = '<div class="muted">در حال دریافت سفارش‌ها…</div>';
 
-        let res = await supabase
+        const { data, error } = await supabase
           .from("orders")
           .select("*")
-          .eq("user_id", user.id)
+          .eq("customer_phone", loginState.phone09)
           .order("created_at", { ascending:false });
 
-        if(res.error){
-          const phone = user.phone || lastPhoneE164 || lastPhone09;
-          if(phone){
-            res = await supabase
-              .from("orders")
-              .select("*")
-              .eq("customer_phone", phone)
-              .order("created_at", { ascending:false });
-          }
-        }
-
-        if(res.error){
+        if(error){
           ordersWrap.innerHTML = `
             <div class="status err">خواندن سفارش‌ها ناموفق بود</div>
-            <div class="hint" style="color:var(--danger)">${esc(res.error.message || "خطای نامشخص")}</div>
+            <div class="hint" style="color:var(--danger)">${esc(error.message || "خطای نامشخص")}</div>
           `;
           ordersCount.textContent = "0";
           return;
         }
 
-        const list = res.data || [];
+        const list = data || [];
         ordersCount.textContent = String(list.length);
 
         if(list.length === 0){
@@ -1341,18 +1417,48 @@
         }).join("");
       }
 
+      async function resend(){
+        if(resendBtn.disabled) return;
+        if(!lastPhone09){
+          setMsg(authMsg, "err", "اول شماره را وارد کنید.");
+          return;
+        }
+        authPhone.value = lastPhone09;
+        await sendOtp();
+      }
+
+      // =========================
+      // Init
+      // =========================
+      try{
+        const raw = localStorage.getItem(LS_KEY);
+        loginState = raw ? JSON.parse(raw) : null;
+      }catch(_e){
+        loginState = null;
+      }
+
+      applyLoginUI();
+      if(loginState && loginState.phone09){
+        loadOrders();
+      }
+
+      // events
       sendOtpBtn.addEventListener("click", sendOtp);
       verifyOtpBtn.addEventListener("click", verifyOtp);
       logoutBtn.addEventListener("click", logout);
+      resendBtn.addEventListener("click", resend);
 
       createOrderBtn.addEventListener("click", createOrder);
       refreshOrdersBtn.addEventListener("click", loadOrders);
 
-      supabase.auth.onAuthStateChange((_event, _session) => {
-        refreshSession();
+      // FAQ icon toggle (+ / -)
+      document.querySelectorAll("details").forEach(d => {
+        const s = d.querySelector("summary .chev");
+        if(!s) return;
+        d.addEventListener("toggle", () => {
+          s.textContent = d.open ? "−" : "+";
+        });
       });
-
-      refreshSession();
     })();
   </script>
 </body>
