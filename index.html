@@ -163,6 +163,30 @@
 
     .cta{display:flex;gap:10px;margin-top:14px;flex-wrap:wrap}
 
+    /* warranty short text near main CTA */
+    .warranty{
+      margin-top:10px;
+      display:inline-flex;
+      align-items:center;
+      gap:8px;
+      padding:8px 10px;
+      border-radius:999px;
+      border:1px solid rgba(16,185,129,.22);
+      background:rgba(16,185,129,.08);
+      color:#0B3A2C;
+      font-weight:900;
+      font-size:12.8px;
+      box-shadow:var(--shadow2);
+      width:fit-content;
+      max-width:100%;
+    }
+    .warranty .dot{
+      width:10px;height:10px;border-radius:999px;
+      background:var(--success);
+      box-shadow:0 10px 18px rgba(16,185,129,.18);
+      flex:0 0 auto;
+    }
+
     .hero-art{
       margin-top:14px;
       border-radius:20px;
@@ -777,6 +801,79 @@
       width:110px;
       height:auto;
     }
+
+    /* =========================
+       MOBILE FIXES
+       ========================= */
+    @media (max-width: 520px){
+      /* space for floating bar (prevents overlap) */
+      .container{ padding-bottom: 170px; }
+
+      /* topbar: more compact on mobile */
+      .topbar-inner{
+        border-radius:22px;
+        padding:10px 10px;
+      }
+      .brand img{width:52px}
+      .brand-title{font-size:14px}
+      .nav{gap:8px}
+
+      /* hero: reduce spacing + keep CTA readable */
+      .card{padding:14px}
+      h1{font-size:32px}
+      .sub{font-size:14.5px;line-height:1.9}
+      .cta{
+        gap:8px;
+      }
+      .btn{
+        padding:10px 14px;
+        border-radius:14px;
+      }
+      .warranty{
+        width:100%;
+        justify-content:center;
+        border-radius:16px;
+      }
+
+      /* floating bar: turn into 2-row compact bar */
+      .floating{ left:12px; right:12px; bottom:10px; }
+      .floating-inner{
+        border-radius:18px;
+        padding:10px;
+        flex-wrap:wrap;
+        gap:8px;
+        justify-content:center;
+      }
+      .floating-inner .txt{
+        width:100%;
+        align-items:center;
+        text-align:center;
+      }
+      .floating-inner .txt b,
+      .floating-inner .txt span{
+        white-space:normal;
+        overflow:visible;
+        text-overflow:unset;
+      }
+      .floating-inner .actions{
+        width:100%;
+        justify-content:center;
+      }
+      .floating-inner .actions .btn{
+        flex:1 1 auto;
+        min-width:0;
+      }
+
+      /* downloads: make badges full width */
+      .dl-cards{gap:8px}
+      .badge{border-radius:14px}
+
+      /* banners: keep reasonable height */
+      .media .imgwrap,
+      .imgwrap-graphic{
+        max-height:170px;
+      }
+    }
   </style>
 </head>
 
@@ -810,6 +907,12 @@
           <a class="btn primary" href="#order" id="heroPrimaryCta">ثبت درخواست / پیگیری</a>
           <a class="btn ghost" href="#download">دانلود اپ</a>
           <a class="btn ghost" href="#why">چرا موبیکس؟</a>
+        </div>
+
+        <!-- کوتاهِ ضمانت کنار CTA اصلی -->
+        <div class="warranty" aria-label="Warranty">
+          <span class="dot"></span>
+          ضمانت تعمیر/قطعه: <b>۳۰ روز</b>
         </div>
 
         <div class="mini-grid">
