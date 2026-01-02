@@ -5,17 +5,17 @@
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <title>Mobix | موبیکس — تعمیر موبایل</title>
 
-  <meta name="description" content="موبیکس؛ تعمیر موبایل با سرویس کامل. دریافت و تحویل با پیک موبیکس، تعمیر توسط تعمیرکاران موبیکس و پیگیری مرحله‌ای." />
+  <meta name="description" content="موبیکس؛ تعمیر موبایل با سرویس کامل. دریافت و تحویل با پیک موبیکس، تعمیر توسط تیم موبیکس و پیگیری مرحله‌ای." />
 
   <meta property="og:title" content="Mobix | موبیکس — تعمیر موبایل" />
-  <meta property="og:description" content="تعمیر موبایل با سرویس کامل: ثبت درخواست، هماهنگی پیک، اعلام هزینه، تعمیر و تحویل." />
+  <meta property="og:description" content="تعمیر موبایل با فرآیند شفاف، قیمت قبل از اقدام و پیگیری مرحله‌ای." />
   <meta property="og:type" content="website" />
-  <meta property="og:image" content="https://mobixfix.ir/assets/hero-final.jpg" />
+  <meta property="og:image" content="https://kamyarsdm.github.io/mobix.github.io/assets/hero-new.png" />
 
   <meta name="theme-color" content="#1F6AFF" />
   <link rel="icon" href="/mobix.github.io/assets/logo.png" />
 
-  <!-- Vazirmatn -->
+  <!-- Font -->
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Vazirmatn:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet">
@@ -28,110 +28,79 @@
       --muted:#5B6B84;
       --line:rgba(15,23,42,.08);
 
-      --shadow: 0 14px 36px rgba(15,23,42,.10);
-      --shadow2: 0 8px 18px rgba(15,23,42,.08);
+      --shadow:0 14px 36px rgba(15,23,42,.10);
+      --shadow2:0 8px 18px rgba(15,23,42,.08);
 
       --radius:20px;
 
       --primary:#1F6AFF;
       --primary2:#3B82F6;
-      --success:#10B981;
-      --danger:#EF4444;
-      --warn:#F59E0B;
 
       --max:1160px;
     }
 
     *{box-sizing:border-box}
-    html{scroll-behavior:smooth}
     body{
       margin:0;
-      font-family:"Vazirmatn", system-ui, sans-serif;
-      background:
-        radial-gradient(1000px 500px at 80% -10%, rgba(31,106,255,.16), transparent 55%),
-        radial-gradient(900px 600px at 20% 10%, rgba(59,130,246,.08), transparent 55%),
-        var(--bg);
+      font-family:"Vazirmatn",system-ui,sans-serif;
+      background:var(--bg);
       color:var(--text);
-      overflow-x:hidden;
     }
-
     a{text-decoration:none;color:inherit}
     img{max-width:100%;display:block}
 
     .container{
       max-width:var(--max);
       margin:auto;
-      padding:14px 16px 96px;
+      padding:16px 16px 120px;
     }
 
-    /* TOP BAR */
+    /* HEADER */
     .topbar{
-      position:sticky;top:0;z-index:50;
-      padding:10px 0;
-      backdrop-filter: blur(12px);
+      position:sticky;top:0;z-index:10;
+      backdrop-filter:blur(10px);
     }
     .topbar-inner{
-      display:flex;align-items:center;justify-content:space-between;
-      background:rgba(246,248,252,.86);
+      display:flex;
+      justify-content:space-between;
+      align-items:center;
+      background:rgba(255,255,255,.9);
       border:1px solid var(--line);
       border-radius:999px;
-      padding:10px 12px;
+      padding:10px 14px;
       box-shadow:var(--shadow2);
-      gap:10px;
     }
-    .brand{display:flex;align-items:center;gap:10px;min-width:0}
-    .brand img{width:64px;height:auto}
-    .brand-title{font-weight:900;font-size:15px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
-
-    .nav{
-      display:flex;align-items:center;gap:8px;flex-wrap:wrap;
-      justify-content:flex-end;
-    }
+    .brand{display:flex;align-items:center;gap:10px;font-weight:900}
+    .brand img{width:48px}
+    .nav{display:flex;gap:8px}
     .chip{
-      padding:9px 12px;
+      padding:8px 12px;
       border-radius:999px;
       border:1px solid var(--line);
-      background:rgba(255,255,255,.86);
-      font-weight:800;
+      background:#fff;
+      font-weight:700;
       font-size:13px;
-      box-shadow:var(--shadow2);
-      white-space:nowrap;
     }
-
     .btn{
       padding:10px 16px;
       border-radius:14px;
       font-weight:900;
-      border:1px solid var(--line);
-      background:#fff;
-      box-shadow:var(--shadow2);
-      cursor:pointer;
-      font-family:inherit;
-      white-space:nowrap;
-      display:inline-flex;
-      align-items:center;
-      justify-content:center;
-      gap:8px;
-    }
-    .btn.primary{
+      border:none;
       background:linear-gradient(135deg,var(--primary),var(--primary2));
       color:#fff;
-      border:none;
+      cursor:pointer;
     }
-    .btn.ghost{
-      background:rgba(255,255,255,.72);
-    }
-    .btn:disabled{opacity:.55;cursor:not-allowed}
 
     /* HERO */
     .hero{
-      margin-top:16px;
       display:grid;
-      grid-template-columns:1.05fr .95fr;
+      grid-template-columns:1.1fr .9fr;
       gap:14px;
-      align-items:start;
+      margin-top:18px;
     }
-    @media(max-width:980px){.hero{grid-template-columns:1fr}}
+    @media(max-width:900px){
+      .hero{grid-template-columns:1fr}
+    }
 
     .card{
       background:var(--card);
@@ -142,546 +111,195 @@
     }
 
     h1{
-      font-size:44px;
-      font-weight:900;
+      font-size:42px;
       margin:0 0 8px;
-      letter-spacing:-.3px;
+      font-weight:900;
     }
-    @media(max-width:520px){h1{font-size:34px}}
+    @media(max-width:520px){h1{font-size:32px}}
 
     .sub{
       color:var(--muted);
       font-size:15.5px;
-      line-height:1.85;
-      margin:0;
+      line-height:1.9;
     }
 
-    .cta{display:flex;gap:10px;margin-top:14px;flex-wrap:wrap}
+    .cta{
+      display:flex;
+      gap:10px;
+      margin-top:14px;
+      flex-wrap:wrap;
+    }
 
     .hero-art{
-      margin-top:14px;
       border-radius:20px;
       overflow:hidden;
       border:1px solid var(--line);
       box-shadow:var(--shadow);
-      background:
-        radial-gradient(600px 260px at 70% 0%, rgba(31,106,255,.18), transparent 60%),
-        radial-gradient(520px 260px at 10% 40%, rgba(59,130,246,.12), transparent 58%),
-        #0B0F1A;
-      max-height:360px;
     }
     .hero-art img{
       width:100%;
       height:360px;
       object-fit:cover;
-      object-position:center;
-      filter:saturate(.98) brightness(1.03);
-    }
-    @media(max-width:980px){
-      .hero-art{max-height:320px}
-      .hero-art img{height:320px}
     }
     @media(max-width:520px){
-      .hero-art{max-height:220px}
       .hero-art img{height:220px}
     }
 
-    .mini-grid{
-      display:grid;
-      grid-template-columns:1fr 1fr;
-      gap:10px;
-      margin-top:14px;
-    }
-    @media(max-width:520px){.mini-grid{grid-template-columns:1fr}}
-    .mini{
-      background:linear-gradient(180deg, rgba(31,106,255,.06), rgba(255,255,255,1));
-      border:1px solid var(--line);
-      border-radius:18px;
-      padding:12px 12px;
-    }
-    .mini .t{font-weight:900}
-    .mini .d{color:var(--muted);font-size:13.5px;line-height:1.75;margin-top:6px}
-
-    /* HOW IT WORKS */
-    .timeline{
+    /* PROCESS */
+    .steps{
       display:grid;
       grid-template-columns:repeat(5,1fr);
       gap:10px;
-      margin-top:10px;
+      margin-top:14px;
     }
-    @media(max-width:980px){.timeline{grid-template-columns:1fr 1fr}}
-    @media(max-width:520px){.timeline{grid-template-columns:1fr}}
-    .tcard{
-      border:1px solid var(--line);
-      border-radius:20px;
+    @media(max-width:900px){.steps{grid-template-columns:1fr 1fr}}
+    @media(max-width:520px){.steps{grid-template-columns:1fr}}
+
+    .step{
       background:#fff;
-      box-shadow:var(--shadow2);
+      border:1px solid var(--line);
+      border-radius:18px;
       padding:14px;
-      position:relative;
-      overflow:hidden;
-      min-height:165px;
+      box-shadow:var(--shadow2);
     }
-    .tcard:before{
-      content:"";
-      position:absolute;inset:-60px -60px auto auto;
-      width:180px;height:180px;border-radius:999px;
-      background:rgba(31,106,255,.08);
-      transform:rotate(12deg);
-    }
-    .tnum{
-      width:38px;height:38px;border-radius:14px;
-      display:flex;align-items:center;justify-content:center;
-      background:linear-gradient(135deg,var(--primary),var(--primary2));
-      color:#fff;font-weight:900;
-      box-shadow:0 12px 22px rgba(31,106,255,.22);
-      position:relative;
-    }
-    .tcard b{display:block;margin-top:10px;font-weight:900;position:relative}
-    .tcard p{margin:6px 0 0;color:var(--muted);font-size:13.5px;line-height:1.8;position:relative}
+    .step b{font-weight:900}
+    .step p{margin:6px 0 0;color:var(--muted);font-size:13.5px}
 
     /* WHY */
-    .why-grid{
+    .why{
+      margin-top:22px;
       display:grid;
       grid-template-columns:repeat(3,1fr);
       gap:12px;
-      margin-top:10px;
     }
-    @media(max-width:980px){.why-grid{grid-template-columns:1fr}}
+    @media(max-width:900px){.why{grid-template-columns:1fr}}
 
-    .media{
+    .why-item{
       background:#fff;
-      border-radius:20px;
       border:1px solid var(--line);
+      border-radius:18px;
       overflow:hidden;
       box-shadow:var(--shadow);
     }
-    .media .imgwrap{
+    .why-item img{
+      height:180px;
       width:100%;
-      height: clamp(150px, 22vw, 210px);
-      background:
-        radial-gradient(560px 240px at 70% 10%, rgba(31,106,255,.18), transparent 60%),
-        radial-gradient(520px 240px at 10% 60%, rgba(59,130,246,.12), transparent 58%),
-        #0B0F1A;
-      display:flex;
-      align-items:center;
-      justify-content:center;
-      overflow:hidden;
-      border-bottom:1px solid var(--line);
-    }
-    .media img{
-      width:100%;
-      height:100%;
       object-fit:cover;
-      display:block;
     }
-    .media-caption{
-      padding:12px 14px;
+    .why-item div{
+      padding:14px;
       font-size:14px;
       color:var(--muted);
-      line-height:1.8;
     }
-    .media-caption b{color:var(--text)}
-
-    /* SERVICES */
-    .cards-3{
-      display:grid;
-      grid-template-columns:repeat(3,1fr);
-      gap:12px;
-      margin-top:10px;
-    }
-    @media(max-width:980px){.cards-3{grid-template-columns:1fr}}
-    .citem{
-      background:#fff;
-      border:1px solid var(--line);
-      border-radius:20px;
-      box-shadow:var(--shadow);
-      padding:14px;
-    }
-    .citem b{font-weight:900}
-    .citem p{margin:8px 0 0;color:var(--muted);line-height:1.9;font-size:14px}
-
-    /* BRIDGE */
-    .bridge{
-      display:grid;
-      grid-template-columns:1fr 1fr;
-      gap:12px;
-      margin-top:12px;
-    }
-    @media(max-width:980px){.bridge{grid-template-columns:1fr}}
-    .bcard{
-      background:#fff;
-      border:1px solid var(--line);
-      border-radius:20px;
-      box-shadow:var(--shadow2);
-      padding:14px;
-    }
-    .bcard b{font-weight:900}
-    .bcard p{margin:8px 0 0;color:var(--muted);line-height:1.9;font-size:14px}
-    .bcard .actions{margin-top:12px;display:flex;gap:10px;flex-wrap:wrap}
-
-    /* STATUS */
-    .status{
-      display:inline-flex;
-      align-items:center;
-      gap:8px;
-      padding:8px 10px;
-      border-radius:999px;
-      border:1px solid var(--line);
-      background:rgba(255,255,255,.86);
-      font-weight:900;
-      font-size:12.8px;
-      white-space:nowrap;
-    }
-    .status.ok{border-color:rgba(16,185,129,.25);background:rgba(16,185,129,.08);color:#0B3A2C}
-    .status.warn{border-color:rgba(245,158,11,.30);background:rgba(245,158,11,.10);color:#78350F}
 
     /* FOOTER */
     .footer{
-      margin-top:26px;
+      margin-top:28px;
       padding-top:14px;
       border-top:1px solid var(--line);
       font-size:13px;
       color:var(--muted);
       display:flex;
       justify-content:space-between;
-      gap:10px;
+      align-items:center;
       flex-wrap:wrap;
-      align-items:center;
-    }
-
-    /* ENAMAD */
-    .enamad{
-      display:flex;
-      align-items:center;
-      justify-content:center;
-    }
-    .enamad img{
-      width:110px;
-      height:auto;
     }
 
     /* FLOATING CTA */
     .floating{
       position:fixed;
-      left:16px;
-      right:16px;
-      bottom:14px;
-      z-index:60;
-      display:flex;
-      justify-content:center;
-      pointer-events:none;
+      left:16px;right:16px;bottom:14px;
+      display:flex;justify-content:center;
     }
     .floating-inner{
-      width:min(var(--max), 980px);
-      pointer-events:auto;
-      background:rgba(255,255,255,.86);
+      background:rgba(255,255,255,.9);
       border:1px solid var(--line);
       border-radius:999px;
-      box-shadow:var(--shadow);
-      padding:10px;
+      padding:10px 14px;
       display:flex;
       align-items:center;
-      justify-content:space-between;
       gap:10px;
-      backdrop-filter: blur(12px);
-    }
-    .floating-inner .txt{
-      display:flex;flex-direction:column;gap:2px;
-      min-width:0;
-    }
-    .floating-inner .txt b{font-weight:900;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
-    .floating-inner .txt span{color:var(--muted);font-size:12.8px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
-    .floating-inner .actions{display:flex;gap:8px;flex:0 0 auto;flex-wrap:wrap;justify-content:flex-end}
-
-    /* MOBILE FIXES */
-    @media (max-width: 520px){
-      .container{ padding-bottom: 170px; }
-      .topbar-inner{ border-radius:22px; padding:10px 10px; }
-      .brand img{width:52px}
-      .brand-title{font-size:14px}
-      .nav{gap:8px}
-      .card{padding:14px}
-      h1{font-size:32px}
-      .sub{font-size:14.5px;line-height:1.9}
-      .cta{gap:8px}
-      .btn{padding:10px 14px;border-radius:14px}
-
-      .floating{ left:12px; right:12px; bottom:10px; }
-      .floating-inner{
-        border-radius:18px;
-        padding:10px;
-        flex-wrap:wrap;
-        gap:8px;
-        justify-content:center;
-      }
-      .floating-inner .txt{
-        width:100%;
-        align-items:center;
-        text-align:center;
-      }
-      .floating-inner .txt b,
-      .floating-inner .txt span{
-        white-space:normal;
-        overflow:visible;
-        text-overflow:unset;
-      }
-      .floating-inner .actions{
-        width:100%;
-        justify-content:center;
-      }
-      .floating-inner .actions .btn{
-        flex:1 1 auto;
-        min-width:0;
-      }
+      box-shadow:var(--shadow);
     }
   </style>
 </head>
 
 <body>
-  <div class="container">
 
-    <!-- HEADER -->
-    <div class="topbar">
-      <div class="topbar-inner">
-        <a class="brand" href="/mobix.github.io/">
-          <img src="/mobix.github.io/assets/logo.png" alt="Mobix">
-          <div class="brand-title">Mobix | موبیکس</div>
-        </a>
+<div class="container">
 
-        <div class="nav">
-          <a class="chip" href="/mobix.github.io/">خانه</a>
-          <a class="chip" href="/mobix.github.io/about/">درباره ما</a>
-          <a class="chip" href="/mobix.github.io/contact/">تماس</a>
-          <a class="btn primary" href="/mobix.github.io/order/" id="authBtn">ثبت سفارش</a>
-        </div>
-      </div>
-    </div>
-
-    <!-- HERO -->
-    <section class="hero" id="top">
-      <div class="card">
-        <div style="display:flex;align-items:flex-start;justify-content:space-between;gap:10px;flex-wrap:wrap">
-          <h1 style="margin:0">تعمیر موبایل، شفاف و قابل پیگیری</h1>
-          <span id="sessionBadge" class="status warn">وارد نشده‌اید</span>
-        </div>
-
-        <p class="sub" style="margin-top:10px">
-          موبیکس یک سرویس یکپارچه‌ست: <b>ثبت درخواست</b>، <b>هماهنگی پیک</b>، <b>اعلام هزینه قبل از اقدام</b> و <b>تعمیر و تحویل</b>.
-        </p>
-
-        <div class="cta">
-          <a class="btn primary" href="/mobix.github.io/order/" id="heroCta">ثبت سفارش</a>
-          <a class="btn ghost" href="/mobix.github.io/about/">چرا موبیکس؟</a>
-          <a class="btn ghost" href="/mobix.github.io/contact/">ارتباط با ما</a>
-        </div>
-
-        <div class="mini-grid">
-          <div class="mini">
-            <div class="t">فرآیند شفاف</div>
-            <div class="d">هر مرحله مشخصه؛ از ثبت تا تحویل.</div>
-          </div>
-          <div class="mini">
-            <div class="t">قیمت قبل از اقدام</div>
-            <div class="d">بدون تایید شما تعمیر انجام نمی‌شود.</div>
-          </div>
-        </div>
-
-        <div class="hero-art">
-          <img src="/mobix.github.io/assets/hero-final.jpg" alt="Mobix Hero">
-        </div>
-      </div>
-
-      <!-- Side card -->
-      <div class="card">
-        <h2 style="margin:0;font-weight:900;font-size:20px">مراحل کار (سرویس کامل)</h2>
-        <p class="sub" style="margin-top:8px">
-          شما همیشه می‌دانید سفارش دقیقاً در چه مرحله‌ای است.
-        </p>
-
-        <div class="timeline">
-          <div class="tcard">
-            <div class="tnum">1</div>
-            <b>ثبت درخواست</b>
-            <p>مدل گوشی و مشکل را ثبت می‌کنید.</p>
-          </div>
-          <div class="tcard">
-            <div class="tnum">2</div>
-            <b>هماهنگی پیک</b>
-            <p>زمان دریافت را هماهنگ می‌کنیم.</p>
-          </div>
-          <div class="tcard">
-            <div class="tnum">3</div>
-            <b>اعلام هزینه</b>
-            <p>قبل از تعمیر تایید می‌گیرید.</p>
-          </div>
-          <div class="tcard">
-            <div class="tnum">4</div>
-            <b>تعمیر</b>
-            <p>توسط تکنسین‌های موبیکس انجام می‌شود.</p>
-          </div>
-          <div class="tcard">
-            <div class="tnum">5</div>
-            <b>تحویل</b>
-            <p>با پیک به شما تحویل می‌شود.</p>
-          </div>
-        </div>
-
-        <div style="margin-top:12px">
-          <a class="btn primary" href="/mobix.github.io/order/">شروع ثبت سفارش</a>
-        </div>
-      </div>
-    </section>
-
-    <!-- WHY -->
-    <section class="section" id="why" style="margin-top:20px">
-      <h2 style="font-size:20px;font-weight:900;margin:0 0 10px">چرا موبیکس؟</h2>
-      <div class="why-grid">
-        <div class="media">
-          <div class="imgwrap">
-            <img src="/mobix.github.io/assets/pricing.png" alt="هماهنگی قیمت">
-          </div>
-          <div class="media-caption">
-            <b>هماهنگی قیمت قبل از تعمیر</b><br>
-            قبل از هر اقدامی، هزینه با شما هماهنگ می‌شود.
-          </div>
-        </div>
-
-        <div class="media">
-          <div class="imgwrap">
-            <img src="/mobix.github.io/assets/courier.png" alt="پیک موبیکس">
-          </div>
-          <div class="media-caption">
-            <b>پیک اختصاصی موبیکس</b><br>
-            دریافت و تحویل دستگاه بدون دردسر.
-          </div>
-        </div>
-
-        <div class="media">
-          <div class="imgwrap">
-            <img src="/mobix.github.io/assets/support.png" alt="پشتیبانی و پیگیری مرحله‌ای">
-          </div>
-          <div class="media-caption">
-            <b>پیگیری مرحله‌ای</b><br>
-            وضعیت سفارش شفاف و مرحله‌به‌مرحله.
-          </div>
-        </div>
-      </div>
-    </section>
-
-    <!-- SERVICES + BRIDGE -->
-    <section class="section" id="services" style="margin-top:20px">
-      <div class="card">
-        <h2 style="margin:0 0 10px;font-weight:900">چه تعمیراتی انجام می‌دهیم؟</h2>
-
-        <div class="cards-3">
-          <div class="citem">
-            <b>نمایشگر و تاچ</b>
-            <p>تعویض LCD/تاچ، فلت‌ها، مشکلات تصویر، خطوط و لکه‌های نمایشگر.</p>
-          </div>
-          <div class="citem">
-            <b>باتری و شارژ</b>
-            <p>تعویض باتری، رفع مشکل شارژ، سوکت شارژ، نوسان شارژ و داغی.</p>
-          </div>
-          <div class="citem">
-            <b>برد و آب‌خوردگی</b>
-            <p>عیب‌یابی تخصصی برد، رفع خاموشی، آب‌خوردگی و مشکلات پیچیده.</p>
-          </div>
-        </div>
-
-        <div class="divider" style="height:1px;background:var(--line);margin:12px 0"></div>
-
-        <div class="bridge">
-          <div class="bcard">
-            <b>ثبت سفارش از سایت</b>
-            <p>ثبت درخواست و مشاهده وضعیت سفارش‌ها، بدون نیاز به نصب.</p>
-            <div class="actions">
-              <a class="btn primary" href="/mobix.github.io/order/">ثبت سفارش</a>
-              <a class="btn ghost" href="/mobix.github.io/about/">درباره موبیکس</a>
-            </div>
-          </div>
-          <div class="bcard">
-            <b>اپلیکیشن برای تجربه راحت‌تر</b>
-            <p>برای پیگیری سریع‌تر و تجربه راحت‌تر، از اپ هم می‌توانید استفاده کنید.</p>
-            <div class="actions">
-              <a class="btn ghost" href="/mobix.github.io/contact/">دریافت لینک اپ</a>
-              <a class="btn ghost" href="/mobix.github.io/order/">ورود / سفارش</a>
-            </div>
-          </div>
-        </div>
-      </div>
-    </section>
-
-    <!-- FOOTER -->
-    <div class="footer">
-      <span>© Mobix</span>
-
-      <div class="enamad">
-        <a referrerpolicy="origin" target="_blank" href="https://trustseal.enamad.ir/?id=695372&Code=DiznrIm0BJGpnPrtdWijxsgtOlPs8Aqf">
-          <img referrerpolicy="origin" src="https://trustseal.enamad.ir/logo.aspx?id=695372&Code=DiznrIm0BJGpnPrtdWijxsgtOlPs8Aqf" alt="اینماد" style="cursor:pointer" code="DiznrIm0BJGpnPrtdWijxsgtOlPs8Aqf">
-        </a>
-      </div>
-
-      <span></span>
-    </div>
-
-  </div>
-
-  <!-- Floating CTA -->
-  <div class="floating" role="navigation" aria-label="CTA">
-    <div class="floating-inner">
-      <div class="txt">
-        <b>موبیکس — تعمیر موبایل با سرویس کامل</b>
-        <span>ثبت درخواست، هماهنگی پیک، اعلام هزینه، تعمیر و تحویل</span>
-      </div>
-      <div class="actions">
-        <a class="btn ghost" href="/mobix.github.io/about/">درباره ما</a>
-        <a class="btn ghost" href="/mobix.github.io/contact/">تماس</a>
-        <a class="btn primary" href="/mobix.github.io/order/" id="floatingCta">ثبت سفارش</a>
+  <!-- HEADER -->
+  <div class="topbar">
+    <div class="topbar-inner">
+      <a class="brand" href="/mobix.github.io/">
+        <img src="/mobix.github.io/assets/logo.png" alt="Mobix">
+        Mobix | موبیکس
+      </a>
+      <div class="nav">
+        <a class="chip" href="/mobix.github.io/about/">درباره ما</a>
+        <a class="chip" href="/mobix.github.io/contact/">تماس</a>
+        <a class="btn" href="/mobix.github.io/order/">ثبت سفارش</a>
       </div>
     </div>
   </div>
 
-  <script>
-    (function(){
-      const LS_KEY = "mobix_site_login_v2";
+  <!-- HERO -->
+  <section class="hero">
+    <div class="card">
+      <h1>تعمیر موبایل، شفاف و قابل پیگیری</h1>
+      <p class="sub">
+        موبیکس یک سرویس کامل است: ثبت درخواست، دریافت با پیک، اعلام هزینه قبل از تعمیر،
+        تعمیر توسط تیم داخلی و تحویل مرحله‌به‌مرحله.
+      </p>
+      <div class="cta">
+        <a class="btn" href="/mobix.github.io/order/">ثبت سفارش</a>
+      </div>
+    </div>
 
-      function readLogin(){
-        try{
-          const raw = localStorage.getItem(LS_KEY);
-          const st = raw ? JSON.parse(raw) : null;
-          if(st && typeof st === "object" && st.phone09) return st;
-          return null;
-        }catch(_e){ return null; }
-      }
+    <div class="hero-art">
+      <img src="/mobix.github.io/assets/hero-new.png" alt="Mobix Hero">
+    </div>
+  </section>
 
-      function updateUI(){
-        const st = readLogin();
-        const loggedIn = !!st;
+  <!-- PROCESS -->
+  <div class="steps">
+    <div class="step"><b>ثبت درخواست</b><p>اطلاعات دستگاه را ثبت می‌کنید</p></div>
+    <div class="step"><b>پیک موبیکس</b><p>دریافت دستگاه از شما</p></div>
+    <div class="step"><b>اعلام هزینه</b><p>قبل از تعمیر تایید می‌گیرید</p></div>
+    <div class="step"><b>تعمیر</b><p>توسط تیم موبیکس</p></div>
+    <div class="step"><b>تحویل</b><p>دستگاه سالم تحویل می‌شود</p></div>
+  </div>
 
-        const badge = document.getElementById("sessionBadge");
-        const authBtn = document.getElementById("authBtn");
-        const heroCta = document.getElementById("heroCta");
-        const floatingCta = document.getElementById("floatingCta");
+  <!-- WHY -->
+  <div class="why">
+    <div class="why-item">
+      <img src="/mobix.github.io/assets/pricing.png">
+      <div><b>قیمت قبل از اقدام</b><br>بدون تایید شما کاری انجام نمی‌شود</div>
+    </div>
+    <div class="why-item">
+      <img src="/mobix.github.io/assets/courier.png">
+      <div><b>پیک اختصاصی</b><br>دریافت و تحویل بدون دردسر</div>
+    </div>
+    <div class="why-item">
+      <img src="/mobix.github.io/assets/support.png">
+      <div><b>پیگیری مرحله‌ای</b><br>همیشه از وضعیت سفارش باخبر هستید</div>
+    </div>
+  </div>
 
-        if(badge){
-          badge.classList.remove("ok","warn");
-          if(loggedIn){
-            badge.classList.add("ok");
-            badge.textContent = "وارد شده‌اید ✅";
-          }else{
-            badge.classList.add("warn");
-            badge.textContent = "وارد نشده‌اید";
-          }
-        }
+  <!-- FOOTER -->
+  <div class="footer">
+    <span>© Mobix</span>
+  </div>
 
-        const txt = loggedIn ? "سفارش‌های من" : "ثبت سفارش";
-        if(authBtn) authBtn.textContent = txt;
-        if(heroCta) heroCta.textContent = loggedIn ? "رفتن به سفارش‌های من" : "ثبت سفارش";
-        if(floatingCta) floatingCta.textContent = txt;
-      }
+</div>
 
-      document.addEventListener("DOMContentLoaded", updateUI);
-    })();
-  </script>
+<!-- FLOATING CTA -->
+<div class="floating">
+  <div class="floating-inner">
+    <span>شروع تعمیر موبایل با موبیکس</span>
+    <a class="btn" href="/mobix.github.io/order/">ثبت سفارش</a>
+  </div>
+</div>
+
 </body>
 </html>
