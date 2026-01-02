@@ -5,12 +5,12 @@
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <title>Mobix | موبیکس — تعمیر موبایل</title>
 
-  <meta name="description" content="موبیکس؛ تعمیر موبایل با سرویس کامل. دریافت گوشی با پیک موبیکس، تعمیر توسط تعمیرکاران موبیکس و تحویل به شما. پیگیری مرحله‌ای و پشتیبانی داخل اپ." />
+  <meta name="description" content="موبیکس؛ تعمیر موبایل با سرویس کامل. دریافت و تحویل با پیک موبیکس، تعمیر توسط تعمیرکاران موبیکس و پیگیری مرحله‌ای." />
 
   <meta property="og:title" content="Mobix | موبیکس — تعمیر موبایل" />
-  <meta property="og:description" content="تعمیر موبایل با پیک موبیکس، پیگیری مرحله‌ای و پشتیبانی داخل اپ." />
+  <meta property="og:description" content="تعمیر موبایل با سرویس کامل: ثبت درخواست، هماهنگی پیک، اعلام هزینه، تعمیر و تحویل." />
   <meta property="og:type" content="website" />
-  <meta property="og:image" content="https://kamyarsdm.github.io/mobix.github.io/assets/hero.png" />
+  <meta property="og:image" content="https://mobixfix.ir/assets/hero.png" />
 
   <meta name="theme-color" content="#1F6AFF" />
   <link rel="icon" href="assets/logo.png" />
@@ -39,7 +39,7 @@
       --danger:#EF4444;
       --warn:#F59E0B;
 
-      --max:1160px;
+      --max:1120px;
     }
 
     *{box-sizing:border-box}
@@ -52,6 +52,7 @@
         radial-gradient(900px 600px at 20% 10%, rgba(59,130,246,.08), transparent 55%),
         var(--bg);
       color:var(--text);
+      overflow-x:hidden;
     }
 
     a{text-decoration:none;color:inherit}
@@ -103,6 +104,10 @@
       cursor:pointer;
       font-family:inherit;
       white-space:nowrap;
+      display:inline-flex;
+      align-items:center;
+      justify-content:center;
+      gap:8px;
     }
     .btn.primary{
       background:linear-gradient(135deg,var(--primary),var(--primary2));
@@ -123,7 +128,7 @@
     .hero{
       margin-top:16px;
       display:grid;
-      grid-template-columns:1.1fr .9fr;
+      grid-template-columns:1.05fr .95fr;
       gap:14px;
       align-items:start;
     }
@@ -164,8 +169,21 @@
         radial-gradient(600px 260px at 70% 0%, rgba(31,106,255,.22), transparent 60%),
         radial-gradient(520px 260px at 10% 40%, rgba(59,130,246,.16), transparent 58%),
         #0B0F1A;
+      max-height:360px;
     }
-    .hero-art img{width:100%;height:auto}
+    .hero-art img{
+      width:100%;
+      height:360px;
+      object-fit:cover;
+    }
+    @media(max-width:980px){
+      .hero-art{max-height:320px}
+      .hero-art img{height:320px}
+    }
+    @media(max-width:520px){
+      .hero-art{max-height:240px}
+      .hero-art img{height:240px}
+    }
 
     .mini-grid{
       display:grid;
@@ -222,6 +240,35 @@
       white-space:nowrap;
     }
     .mock-body{padding:14px}
+
+    /* Redesigned timeline inside mock */
+    .mini-timeline{
+      display:flex;
+      flex-direction:column;
+      gap:10px;
+      margin-top:4px;
+    }
+    .mstep{
+      display:flex;
+      gap:10px;
+      align-items:flex-start;
+      padding:10px 10px;
+      border-radius:16px;
+      border:1px solid var(--line);
+      background:#fff;
+    }
+    .mnum{
+      width:34px;height:34px;border-radius:12px;
+      background:linear-gradient(135deg,var(--primary),var(--primary2));
+      color:#fff;
+      display:flex;align-items:center;justify-content:center;
+      font-weight:900;
+      flex:0 0 auto;
+      box-shadow:0 10px 18px rgba(31,106,255,.18);
+    }
+    .mtxt b{display:block;font-weight:900}
+    .mtxt span{display:block;color:var(--muted);font-size:13.2px;line-height:1.7;margin-top:4px}
+
     .step{
       display:flex;gap:10px;align-items:flex-start;
       padding:10px 10px;
@@ -255,13 +302,58 @@
       border-radius:18px;
       padding:12px;
       box-shadow:var(--shadow2);
+      min-height:92px;
+      display:flex;
+      flex-direction:column;
+      justify-content:flex-start;
+      gap:6px;
     }
-    .kpi .box b{font-weight:900}
-    .kpi .box div{color:var(--muted);font-size:13.5px;line-height:1.7;margin-top:6px}
+    .kpi .box b{font-weight:900;font-size:13.5px;line-height:1.35}
+    .kpi .box div{color:var(--muted);font-size:12.8px;line-height:1.65;margin:0}
 
     /* SECTIONS */
     .section{margin-top:20px}
     .section h2{font-size:20px;font-weight:900;margin:0 0 10px}
+
+    /* DOWNLOAD */
+    .download-grid{
+      display:grid;
+      grid-template-columns:1.1fr .9fr;
+      gap:12px;
+      align-items:stretch;
+    }
+    @media(max-width:900px){.download-grid{grid-template-columns:1fr}}
+    .dl-cards{
+      display:flex;
+      gap:10px;
+      flex-wrap:wrap;
+      margin-top:12px;
+    }
+    .badge{
+      padding:12px 14px;
+      border-radius:16px;
+      border:1px solid var(--line);
+      background:#fff;
+      box-shadow:var(--shadow2);
+      font-weight:900;
+      font-size:13.5px;
+      display:flex;
+      align-items:center;
+      gap:10px;
+    }
+    .badge small{
+      display:block;
+      font-weight:800;
+      color:var(--muted);
+      font-size:12px;
+      margin-top:2px;
+    }
+    .badge .dot{
+      width:12px;height:12px;border-radius:999px;
+      background:linear-gradient(135deg,var(--primary),var(--primary2));
+      box-shadow:0 8px 14px rgba(31,106,255,.22);
+      flex:0 0 auto;
+    }
 
     /* WHY (۳ بنر کنار هم) */
     .why-grid{
@@ -280,6 +372,7 @@
     .media .imgwrap{
       width:100%;
       aspect-ratio: 16 / 9;
+      max-height:240px;
       background:
         radial-gradient(560px 240px at 70% 10%, rgba(31,106,255,.18), transparent 60%),
         radial-gradient(520px 240px at 10% 60%, rgba(59,130,246,.12), transparent 58%),
@@ -288,6 +381,12 @@
       align-items:center;
       justify-content:center;
       overflow:hidden;
+    }
+    @media(max-width:1100px){
+      .media .imgwrap{max-height:210px}
+    }
+    @media(max-width:900px){
+      .media .imgwrap{max-height:190px}
     }
     .media img{
       width:100%;
@@ -319,6 +418,7 @@
       padding:14px;
       position:relative;
       overflow:hidden;
+      min-height:180px;
     }
     .tcard:before{
       content:"";
@@ -655,8 +755,7 @@
       <div class="card">
         <h1>با خیال راحت بسپارید</h1>
         <p class="sub">
-          دریافت گوشی با <b>پیک موبیکس</b>، تعمیر توسط <b>تعمیرکاران موبیکس</b>
-          و تحویل به شما با <b>پیگیری مرحله‌ای</b> و <b>پشتیبانی داخل اپ</b>.
+          یک فرایند یکپارچه با تیم موبیکس: <b>ثبت درخواست</b>، <b>هماهنگی پیک</b>، <b>اعلام هزینه</b> و <b>تعمیر و تحویل</b>.
         </p>
 
         <div class="cta">
@@ -667,7 +766,7 @@
         <div class="mini-grid">
           <div class="mini">
             <div class="t">شفاف و قابل پیگیری</div>
-            <div class="d">هر مرحله مشخصه؛ از دریافت تا تحویل.</div>
+            <div class="d">هر مرحله مشخصه؛ از ثبت تا تحویل.</div>
           </div>
           <div class="mini">
             <div class="t">قیمت قبل از اقدام</div>
@@ -675,49 +774,54 @@
           </div>
         </div>
 
+        <!-- ✅ HERO IMAGE (بدون متن) -->
+        <!-- اگر تصویر جدید ساختی، فقط اسم فایل را اینجا جایگزین کن -->
         <div class="hero-art">
-          <img src="assets/hero.png" alt="Mobix Hero">
+          <img src="assets/hero-new.png" alt="Mobix Hero">
         </div>
       </div>
 
       <!-- APP PREVIEW -->
       <div class="card">
-        <h2 style="margin:0 0 8px;font-weight:900">نمونه تجربه داخل اپ</h2>
-        <p class="sub">همین شکلی مرحله‌ای می‌بینی چی داره انجام می‌شه.</p>
+        <!-- ✅ حذف متن "نمونه تجربه داخل اپ" -->
+        <h2 style="margin:0 0 10px;font-weight:900">نمایی از پیگیری و پشتیبانی</h2>
 
         <div class="app-wrap">
+          <!-- ✅ پیگیری: بازطراحی شده و همان مراحل کار داخلش آمده -->
           <div class="mock">
             <div class="mock-top">
               <b>پیگیری سفارش</b>
-              <span class="pill">وضعیت: در حال تعمیر</span>
+              <span class="pill">مرحله‌ای</span>
             </div>
             <div class="mock-body">
-              <div class="step">
-                <div class="sicon">1</div>
-                <div class="stxt">
-                  <b>ثبت درخواست</b>
-                  <span>مشخصات دستگاه و مشکل رو ثبت می‌کنی.</span>
+              <div class="mini-timeline">
+                <div class="mstep">
+                  <div class="mnum">1</div>
+                  <div class="mtxt">
+                    <b>ثبت درخواست</b>
+                    <span>مدل گوشی و مشکل را ثبت می‌کنید.</span>
+                  </div>
                 </div>
-              </div>
-              <div class="step">
-                <div class="sicon">2</div>
-                <div class="stxt">
-                  <b>دریافت با پیک</b>
-                  <span>پیک موبیکس دستگاه رو تحویل می‌گیره.</span>
+                <div class="mstep">
+                  <div class="mnum">2</div>
+                  <div class="mtxt">
+                    <b>هماهنگی پیک</b>
+                    <span>زمان دریافت دستگاه هماهنگ می‌شود.</span>
+                  </div>
                 </div>
-              </div>
-              <div class="step">
-                <div class="sicon">3</div>
-                <div class="stxt">
-                  <b>تأیید هزینه</b>
-                  <span>هزینه دقیق قبل از اقدام بهت اعلام می‌شه.</span>
+                <div class="mstep">
+                  <div class="mnum">3</div>
+                  <div class="mtxt">
+                    <b>اعلام هزینه</b>
+                    <span>بعد از عیب‌یابی، هزینه دقیق اعلام می‌شود.</span>
+                  </div>
                 </div>
-              </div>
-              <div class="step">
-                <div class="sicon">4</div>
-                <div class="stxt">
-                  <b>تحویل به شما</b>
-                  <span>پس از تعمیر، دستگاه با پیک تحویل داده می‌شه.</span>
+                <div class="mstep">
+                  <div class="mnum">4</div>
+                  <div class="mtxt">
+                    <b>تعمیر و تحویل</b>
+                    <span>پس از تعمیر، دستگاه با پیک تحویل داده می‌شود.</span>
+                  </div>
                 </div>
               </div>
             </div>
@@ -740,25 +844,26 @@
                 <div class="sicon">🛡️</div>
                 <div class="stxt">
                   <b>گزارش شفاف</b>
-                  <span>کارهایی که انجام شده و قطعه‌ها مشخصه.</span>
+                  <span>کارهای انجام‌شده و قطعه‌ها مشخص است.</span>
                 </div>
               </div>
               <div class="step">
                 <div class="sicon">⚡</div>
                 <div class="stxt">
                   <b>هماهنگی سریع</b>
-                  <span>برای زمان‌بندی پیک و تحویل، سریع هماهنگ می‌شه.</span>
+                  <span>برای زمان‌بندی پیک و تحویل، سریع هماهنگ می‌شود.</span>
                 </div>
               </div>
 
+              <!-- ✅ متن‌های ۳ باکس کوچیک مرتب‌تر شد -->
               <div class="kpi">
                 <div class="box">
                   <b>پیگیری مرحله‌ای</b>
-                  <div>مثل داشبورد سفارش، لحظه‌ای.</div>
+                  <div>وضعیت سفارش همیشه جلوی چشم شماست.</div>
                 </div>
                 <div class="box">
                   <b>قیمت قبل از کار</b>
-                  <div>بدون تایید شما کاری انجام نمی‌شه.</div>
+                  <div>بدون تایید شما کاری انجام نمی‌شود.</div>
                 </div>
                 <div class="box">
                   <b>سرویس یکپارچه</b>
@@ -774,7 +879,56 @@
       </div>
     </section>
 
-    <!-- WHY (۳ بنر کنار هم) -->
+    <!-- ✅ DOWNLOAD APPS -->
+    <section class="section" id="download">
+      <div class="card">
+        <h2 style="margin:0 0 8px;font-weight:900">دانلود اپ موبیکس</h2>
+        <p class="sub">برای پیگیری راحت‌تر، سفارش و پشتیبانی داخل اپ انجام می‌شود.</p>
+
+        <div class="download-grid" style="margin-top:10px">
+          <div class="card" style="padding:16px;box-shadow:var(--shadow2)">
+            <b style="font-weight:900">Android</b>
+            <div class="dl-cards">
+              <!-- لینک‌ها را بعداً با لینک واقعی جایگزین کن -->
+              <a class="badge" href="#" target="_blank" rel="noopener">
+                <span class="dot"></span>
+                کافه‌بازار
+                <small>دانلود از بازار</small>
+              </a>
+              <a class="badge" href="#" target="_blank" rel="noopener">
+                <span class="dot"></span>
+                مایکت
+                <small>دانلود از مایکت</small>
+              </a>
+              <a class="badge" href="#" target="_blank" rel="noopener">
+                <span class="dot"></span>
+                دانلود مستقیم
+                <small>APK</small>
+              </a>
+            </div>
+          </div>
+
+          <div class="card" style="padding:16px;box-shadow:var(--shadow2)">
+            <b style="font-weight:900">iOS / Web App</b>
+            <div class="dl-cards">
+              <a class="badge" href="#" target="_blank" rel="noopener">
+                <span class="dot"></span>
+                TestFlight
+                <small>در صورت فعال بودن</small>
+              </a>
+              <a class="badge" href="#" target="_blank" rel="noopener">
+                <span class="dot"></span>
+                نسخه وب
+                <small>استفاده در مرورگر</small>
+              </a>
+            </div>
+            <div class="hint">اگر نسخه iOS هنوز فعال نیست، می‌توانیم نسخه وب (PWA) را بهینه کنیم.</div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- WHY -->
     <section class="section" id="why">
       <h2>چرا موبیکس؟</h2>
       <div class="why-grid">
@@ -798,9 +952,10 @@
           </div>
         </div>
 
+        <!-- ✅ حذف تکرار بنر hero: تصویر سوم جدا -->
         <div class="media">
           <div class="imgwrap">
-            <img src="assets/hero.png" alt="پشتیبانی و پیگیری">
+            <img src="assets/support.png" alt="پشتیبانی و پیگیری">
           </div>
           <div class="media-caption">
             <b>پشتیبانی و پیگیری مرحله‌ای</b><br>
@@ -871,7 +1026,7 @@
         <h2 style="margin:0 0 10px;font-weight:900">نظر مشتری‌ها</h2>
         <div class="cards-3">
           <div class="citem">
-            <b>«همون روز پیک اومد»</b>
+            <b>«هماهنگی خیلی سریع بود»</b>
             <p>ثبت کردم، سریع هماهنگ شد و دستگاه رو گرفتن. مرحله‌به‌مرحله هم خبر دادن.</p>
           </div>
           <div class="citem">
@@ -879,7 +1034,7 @@
             <p>اول عیب‌یابی و اعلام هزینه؛ بعد که تایید کردم تعمیر کردن. خیلی شفاف بود.</p>
           </div>
           <div class="citem">
-            <b>«تحویل مرتب و تمیز»</b>
+            <b>«تحویل مرتب و دقیق»</b>
             <p>بعد از تعمیر، با پیک تحویل دادن. گزارش هم مشخص بود چی انجام شده.</p>
           </div>
         </div>
@@ -935,7 +1090,7 @@
               <span id="orderGate" class="status warn">برای ارسال نهایی باید وارد شوید</span>
             </div>
 
-            <!-- ✅ فرم همیشه قابل پر کردن است -->
+            <!-- ✅ فرم همیشه قابل پر کردن -->
             <div id="orderFormWrap">
               <div class="field">
                 <div class="label">مدل گوشی</div>
@@ -1031,30 +1186,6 @@
             </summary>
             <div class="faq-a">پس از پایان تایمر ۲ دقیقه‌ای، امکان «ارسال مجدد» فعال می‌شود. همچنین مطمئن شوید پیامک‌های تبلیغاتی مسدود نیست.</div>
           </details>
-
-          <details>
-            <summary>
-              چه مناطقی را پوشش می‌دهید؟
-              <span class="chev">+</span>
-            </summary>
-            <div class="faq-a">هنگام ثبت سفارش، آدرس و محله را وارد کنید؛ در صورت نیاز برای هماهنگی محدوده با شما تماس/پیام داده می‌شود.</div>
-          </details>
-
-          <details>
-            <summary>
-              قطعه اصلی است یا غیر اصلی؟
-              <span class="chev">+</span>
-            </summary>
-            <div class="faq-a">بسته به مدل و موجودی، گزینه‌ها اعلام می‌شود و قبل از اقدام با شما هماهنگ می‌گردد.</div>
-          </details>
-
-          <details>
-            <summary>
-              آیا گارانتی دارید؟
-              <span class="chev">+</span>
-            </summary>
-            <div class="faq-a">شرایط گارانتی بسته به نوع تعمیر/قطعه متفاوت است و هنگام اعلام هزینه، جزئیات به شما گفته می‌شود.</div>
-          </details>
         </div>
       </div>
     </section>
@@ -1079,11 +1210,11 @@
     <div class="floating-inner">
       <div class="txt">
         <b>موبیکس — تعمیر موبایل با سرویس کامل</b>
-        <span>پیک، تعمیر، تحویل + پیگیری مرحله‌ای داخل اپ</span>
+        <span>ثبت درخواست، هماهنگی پیک، اعلام هزینه، تعمیر و تحویل</span>
       </div>
       <div class="actions">
         <a class="btn ghost" href="#why">چرا موبیکس؟</a>
-        <a class="btn ghost" href="#faq">سوالات</a>
+        <a class="btn ghost" href="#download">دانلود اپ</a>
         <a class="btn primary" href="#order" id="floatingAuthBtn">ثبت نام / ورود</a>
       </div>
     </div>
@@ -1245,7 +1376,7 @@
       }
 
       // =========================
-      // Draft (save form before login)
+      // Draft
       // =========================
       function saveDraft(){
         const draft = {
@@ -1472,9 +1603,7 @@
           setMsg(authMsg, "ok", "ورود انجام شد ✅");
           applyLoginUI();
 
-          // ✅ بعد از ورود: فرم draft را برگردان
           loadDraft();
-
           await loadOrders();
         }catch(err){
           setMsg(authMsg, "err", "ورود ناموفق بود: " + (err?.message || "خطای نامشخص"));
@@ -1515,7 +1644,6 @@
           return;
         }
 
-        // ✅ اگر وارد نیست: اجازه بده فرم پر شود، ولی ارسال نهایی را بعد از ورود انجام بده
         if(!loggedIn()){
           focusAuthWithMessage();
           return;
@@ -1654,9 +1782,7 @@
       // Save draft on input changes
       [deviceModel, problemDesc, address, neighborhood, pickupTime].forEach(el => {
         if(!el) return;
-        el.addEventListener("input", () => {
-          saveDraft();
-        });
+        el.addEventListener("input", () => saveDraft());
       });
 
       // Quick issue chips -> append to textarea
