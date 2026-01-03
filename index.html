@@ -3,19 +3,18 @@
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <title>Mobix | موبیکس — تعمیر موبایل</title>
+  <title>موبیکس — تعمیر موبایل با سرویس کامل</title>
 
-  <meta name="description" content="موبیکس؛ تعمیر موبایل با سرویس کامل. دریافت و تحویل با پیک موبیکس، تعمیر توسط تیم موبیکس و پیگیری مرحله‌ای." />
-
-  <meta property="og:title" content="Mobix | موبیکس — تعمیر موبایل" />
-  <meta property="og:description" content="تعمیر موبایل با فرآیند شفاف، قیمت قبل از اقدام و پیگیری مرحله‌ای." />
+  <meta name="description" content="گوشی رو بسپار، ما فرآیند رو مدیریت می‌کنیم. زمان و محل دریافت و تحویل رو خودت مشخص می‌کنی. قیمت قبل از اقدام + پیگیری مرحله‌ای." />
+  <meta property="og:title" content="موبیکس — تعمیر موبایل با سرویس کامل" />
+  <meta property="og:description" content="گوشی رو بسپار، ما فرآیند رو مدیریت می‌کنیم. قیمت قبل از اقدام + پیگیری مرحله‌ای." />
   <meta property="og:type" content="website" />
   <meta property="og:image" content="assets/hero-new.png" />
 
   <meta name="theme-color" content="#1F6AFF" />
   <link rel="icon" href="assets/logo.png" />
 
-  <!-- Font -->
+  <!-- Vazirmatn -->
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Vazirmatn:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet">
@@ -31,7 +30,7 @@
       --shadow:0 14px 36px rgba(15,23,42,.10);
       --shadow2:0 8px 18px rgba(15,23,42,.08);
 
-      --radius:20px;
+      --radius:22px;
 
       --primary:#1F6AFF;
       --primary2:#3B82F6;
@@ -43,10 +42,10 @@
     html{scroll-behavior:smooth}
     body{
       margin:0;
-      font-family:"Vazirmatn",system-ui,sans-serif;
+      font-family:"Vazirmatn", system-ui, sans-serif;
       background:
-        radial-gradient(1000px 500px at 80% -10%, rgba(31,106,255,.16), transparent 55%),
-        radial-gradient(900px 600px at 20% 10%, rgba(59,130,246,.08), transparent 55%),
+        radial-gradient(1000px 520px at 85% -10%, rgba(31,106,255,.16), transparent 56%),
+        radial-gradient(900px 640px at 15% 10%, rgba(59,130,246,.09), transparent 55%),
         var(--bg);
       color:var(--text);
       overflow-x:hidden;
@@ -60,7 +59,7 @@
       padding:14px 16px 120px;
     }
 
-    /* HEADER */
+    /* TOP BAR */
     .topbar{
       position:sticky;top:0;z-index:50;
       padding:10px 0;
@@ -75,24 +74,20 @@
       box-shadow:var(--shadow2);
       gap:10px;
     }
-    .brand{display:flex;align-items:center;gap:10px;min-width:0}
-    .brand img{width:56px;height:auto}
-    .brand-title{font-weight:900;font-size:15px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+    .brand{
+      display:flex;align-items:center;gap:10px;min-width:0;
+    }
+    .brand img{width:52px;height:auto}
+    .brand-title{
+      font-weight:900;font-size:15px;
+      white-space:nowrap;overflow:hidden;text-overflow:ellipsis;
+    }
 
     .nav{
       display:flex;align-items:center;gap:8px;flex-wrap:wrap;
       justify-content:flex-end;
     }
-    .chip{
-      padding:9px 12px;
-      border-radius:999px;
-      border:1px solid var(--line);
-      background:rgba(255,255,255,.86);
-      font-weight:800;
-      font-size:13px;
-      box-shadow:var(--shadow2);
-      white-space:nowrap;
-    }
+
     .btn{
       padding:10px 16px;
       border-radius:14px;
@@ -110,11 +105,10 @@
     }
     .btn.primary{
       background:linear-gradient(135deg,var(--primary),var(--primary2));
-      color:#fff;
-      border:none;
+      color:#fff;border:none;
     }
     .btn.ghost{
-      background:rgba(255,255,255,.72);
+      background:rgba(255,255,255,.78);
     }
 
     /* HERO */
@@ -135,32 +129,30 @@
       box-shadow:var(--shadow);
     }
 
-    h1{
+    .hero-title{
       font-size:44px;
-      font-weight:900;
-      margin:0 0 8px;
-      letter-spacing:-.3px;
-    }
-    @media(max-width:520px){h1{font-size:34px}}
-
-    .sub{
-      color:var(--muted);
-      font-size:15.5px;
-      line-height:1.85;
+      font-weight:950;
       margin:0;
+      letter-spacing:-.35px;
+      line-height:1.18;
     }
+    @media(max-width:520px){.hero-title{font-size:32px}}
 
-    .cta{display:flex;gap:10px;margin-top:14px;flex-wrap:wrap}
+    .cta{
+      display:flex;
+      gap:10px;
+      margin-top:14px;
+      flex-wrap:wrap;
+    }
 
     .hero-art{
-      margin-top:14px;
       border-radius:20px;
       overflow:hidden;
       border:1px solid var(--line);
       box-shadow:var(--shadow);
       background:
-        radial-gradient(600px 260px at 70% 0%, rgba(31,106,255,.18), transparent 60%),
-        radial-gradient(520px 260px at 10% 40%, rgba(59,130,246,.12), transparent 58%),
+        radial-gradient(640px 280px at 70% 0%, rgba(31,106,255,.18), transparent 60%),
+        radial-gradient(520px 280px at 10% 40%, rgba(59,130,246,.12), transparent 58%),
         #0B0F1A;
       max-height:360px;
     }
@@ -180,122 +172,122 @@
       .hero-art img{height:220px}
     }
 
-    .mini-grid{
-      display:grid;
-      grid-template-columns:1fr 1fr;
-      gap:10px;
-      margin-top:14px;
+    /* INTERVENTION */
+    .section{margin-top:18px}
+    .sec-title{
+      font-weight:950;
+      font-size:18px;
+      margin:0 0 10px;
+      letter-spacing:-.2px;
     }
-    @media(max-width:520px){.mini-grid{grid-template-columns:1fr}}
-    .mini{
-      background:linear-gradient(180deg, rgba(31,106,255,.06), rgba(255,255,255,1));
-      border:1px solid var(--line);
-      border-radius:18px;
-      padding:12px 12px;
-    }
-    .mini .t{font-weight:900}
-    .mini .d{color:var(--muted);font-size:13.5px;line-height:1.75;margin-top:6px}
-
-    /* HOW IT WORKS */
-    .timeline{
-      display:grid;
-      grid-template-columns:repeat(5,1fr);
-      gap:10px;
-      margin-top:10px;
-    }
-    @media(max-width:980px){.timeline{grid-template-columns:1fr 1fr}}
-    @media(max-width:520px){.timeline{grid-template-columns:1fr}}
-    .tcard{
-      border:1px solid var(--line);
-      border-radius:20px;
-      background:#fff;
-      box-shadow:var(--shadow2);
-      padding:14px;
-      position:relative;
-      overflow:hidden;
-      min-height:165px;
-    }
-    .tcard:before{
-      content:"";
-      position:absolute;inset:-60px -60px auto auto;
-      width:180px;height:180px;border-radius:999px;
-      background:rgba(31,106,255,.08);
-      transform:rotate(12deg);
-    }
-    .tnum{
-      width:38px;height:38px;border-radius:14px;
-      display:flex;align-items:center;justify-content:center;
-      background:linear-gradient(135deg,var(--primary),var(--primary2));
-      color:#fff;font-weight:900;
-      box-shadow:0 12px 22px rgba(31,106,255,.22);
-      position:relative;
-    }
-    .tcard b{display:block;margin-top:10px;font-weight:900;position:relative}
-    .tcard p{margin:6px 0 0;color:var(--muted);font-size:13.5px;line-height:1.8;position:relative}
-
-    /* WHY */
-    .why-grid{
+    .grid-3{
       display:grid;
       grid-template-columns:repeat(3,1fr);
-      gap:12px;
-      margin-top:10px;
+      gap:10px;
     }
-    @media(max-width:980px){.why-grid{grid-template-columns:1fr}}
-    .media{
-      background:#fff;
-      border-radius:20px;
+    @media(max-width:980px){.grid-3{grid-template-columns:1fr}}
+    .focus-card{
       border:1px solid var(--line);
-      overflow:hidden;
-      box-shadow:var(--shadow);
+      background:#fff;
+      border-radius:18px;
+      padding:14px;
+      box-shadow:var(--shadow2);
     }
-    .media .imgwrap{
-      width:100%;
-      height: clamp(150px, 22vw, 210px);
-      background:
-        radial-gradient(560px 240px at 70% 10%, rgba(31,106,255,.18), transparent 60%),
-        radial-gradient(520px 240px at 10% 60%, rgba(59,130,246,.12), transparent 58%),
-        #0B0F1A;
+    .focus-k{
       display:flex;
       align-items:center;
-      justify-content:center;
-      overflow:hidden;
-      border-bottom:1px solid var(--line);
+      justify-content:space-between;
+      gap:10px;
     }
-    .media img{
-      width:100%;
-      height:100%;
-      object-fit:cover;
-      display:block;
+    .focus-k b{
+      font-weight:950;
+      font-size:14.5px;
+      letter-spacing:-.15px;
     }
-    .media-caption{
-      padding:12px 14px;
-      font-size:14px;
-      color:var(--muted);
-      line-height:1.8;
+    .tag{
+      display:inline-flex;
+      align-items:center;
+      gap:8px;
+      padding:7px 10px;
+      border-radius:999px;
+      background:rgba(31,106,255,.09);
+      border:1px solid rgba(31,106,255,.18);
+      color:#0B2A6A;
+      font-weight:900;
+      font-size:12.2px;
+      white-space:nowrap;
     }
-    .media-caption b{color:var(--text)}
-
-    /* SERVICES */
-    .cards-3{
-      display:grid;
-      grid-template-columns:repeat(3,1fr);
-      gap:12px;
+    .focus-desc{
       margin-top:10px;
+      color:var(--muted);
+      font-size:13.6px;
+      line-height:1.9;
     }
-    @media(max-width:980px){.cards-3{grid-template-columns:1fr}}
-    .citem{
-      background:#fff;
-      border:1px solid var(--line);
-      border-radius:20px;
-      box-shadow:var(--shadow);
-      padding:14px;
-    }
-    .citem b{font-weight:900}
-    .citem p{margin:8px 0 0;color:var(--muted);line-height:1.9;font-size:14px}
 
-    /* CONTACT STRIP */
+    /* QUICK START */
+    .qs-wrap{
+      display:flex;
+      flex-direction:column;
+      gap:10px;
+    }
+    .qs-head{
+      display:flex;align-items:center;justify-content:space-between;gap:10px;flex-wrap:wrap;
+    }
+    .qs-head p{
+      margin:0;
+      color:var(--muted);
+      font-size:13.6px;
+      line-height:1.9;
+    }
+    .chips{
+      display:flex;
+      flex-wrap:wrap;
+      gap:8px;
+    }
+    .chip{
+      padding:9px 12px;
+      border-radius:999px;
+      border:1px solid var(--line);
+      background:rgba(255,255,255,.86);
+      font-weight:900;
+      font-size:13px;
+      box-shadow:var(--shadow2);
+      user-select:none;
+      cursor:pointer;
+      display:inline-flex;
+      align-items:center;
+      gap:8px;
+    }
+
+    /* COURIER */
+    .callout{
+      display:flex;
+      align-items:flex-start;
+      justify-content:space-between;
+      gap:12px;
+      flex-wrap:wrap;
+      padding:14px;
+      border-radius:20px;
+      border:1px solid var(--line);
+      background:rgba(255,255,255,.86);
+      box-shadow:var(--shadow2);
+    }
+    .callout b{
+      font-weight:950;
+      font-size:15px;
+      letter-spacing:-.15px;
+    }
+    .callout span{
+      display:block;
+      color:var(--muted);
+      font-size:13.6px;
+      line-height:1.9;
+      margin-top:6px;
+      white-space:pre-line;
+    }
+
+    /* CONTACT */
     .contact-strip{
-      margin-top:18px;
       display:flex;
       align-items:center;
       justify-content:space-between;
@@ -307,12 +299,16 @@
       background:rgba(255,255,255,.86);
       box-shadow:var(--shadow2);
     }
-    .contact-strip b{font-weight:900}
-    .contact-strip span{color:var(--muted);font-size:13.5px;line-height:1.8}
+    .contact-strip b{font-weight:950}
+    .contact-strip span{
+      color:var(--muted);
+      font-size:13.6px;
+      line-height:1.9;
+    }
 
     /* FOOTER */
     .footer{
-      margin-top:26px;
+      margin-top:24px;
       padding-top:14px;
       border-top:1px solid var(--line);
       font-size:13px;
@@ -323,24 +319,13 @@
       flex-wrap:wrap;
       align-items:center;
     }
-
-    /* ENAMAD */
-    .enamad{
-      display:flex;
-      align-items:center;
-      justify-content:center;
-    }
-    .enamad img{
-      width:110px;
-      height:auto;
-    }
+    .enamad{display:flex;align-items:center;justify-content:center}
+    .enamad img{width:110px;height:auto}
 
     /* FLOATING CTA */
     .floating{
       position:fixed;
-      left:16px;
-      right:16px;
-      bottom:14px;
+      left:16px;right:16px;bottom:14px;
       z-index:60;
       display:flex;
       justify-content:center;
@@ -359,37 +344,35 @@
       justify-content:space-between;
       gap:10px;
       backdrop-filter: blur(12px);
+      flex-wrap:wrap;
     }
     .floating-inner .txt{
       display:flex;flex-direction:column;gap:2px;
       min-width:0;
     }
-    .floating-inner .txt b{font-weight:900;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
-    .floating-inner .txt span{color:var(--muted);font-size:12.8px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
-    .floating-inner .actions{display:flex;gap:8px;flex:0 0 auto;flex-wrap:wrap;justify-content:flex-end}
+    .floating-inner .txt b{
+      font-weight:950;
+      white-space:nowrap;overflow:hidden;text-overflow:ellipsis;
+    }
+    .floating-inner .txt span{
+      color:var(--muted);
+      font-size:12.8px;
+      white-space:nowrap;overflow:hidden;text-overflow:ellipsis;
+    }
+    .floating-inner .actions{
+      display:flex;gap:8px;flex:0 0 auto;flex-wrap:wrap;justify-content:flex-end;
+    }
 
-    /* MOBILE FIXES */
+    /* MOBILE */
     @media (max-width: 520px){
       .container{ padding-bottom: 170px; }
-      .topbar-inner{
-        border-radius:22px;
-        padding:10px 10px;
-      }
-      .brand img{width:52px}
-      .brand-title{font-size:14px}
-      .nav{gap:8px}
+      .topbar-inner{border-radius:22px}
+      .brand img{width:48px}
       .card{padding:14px}
-      h1{font-size:32px}
-      .sub{font-size:14.5px;line-height:1.9}
-      .cta{gap:8px}
-      .btn{padding:10px 14px;border-radius:14px}
-
       .floating{ left:12px; right:12px; bottom:10px; }
       .floating-inner{
         border-radius:18px;
         padding:10px;
-        flex-wrap:wrap;
-        gap:8px;
         justify-content:center;
       }
       .floating-inner .txt{
@@ -418,20 +401,17 @@
 <body>
   <div class="container">
 
-    <!-- HEADER -->
+    <!-- HEADER (مینیمال) -->
     <div class="topbar">
       <div class="topbar-inner">
-        <a class="brand" href="./">
-          <img src="assets/logo.png" alt="Mobix">
-          <!-- فقط یک بار نام برند -->
+        <a class="brand" href="./" aria-label="Mobix">
+          <img src="assets/logo.png" alt="موبیکس">
           <div class="brand-title">موبیکس</div>
         </a>
 
-        <div class="nav">
-          <a class="chip" href="#why">چرا موبیکس؟</a>
-          <a class="chip" href="#services">خدمات</a>
-          <!-- تماس از هدر حذف شد -->
-          <a class="btn primary" href="order/" id="authBtn">ثبت سفارش</a>
+        <div class="nav" aria-label="Navigation">
+          <a class="btn ghost" href="order/">سفارش‌های من</a>
+          <a class="btn primary" href="order/">ثبت سفارش</a>
         </div>
       </div>
     </div>
@@ -439,150 +419,101 @@
     <!-- HERO -->
     <section class="hero" id="top">
       <div class="card">
-        <h1>تعمیر موبایل، شفاف و قابل پیگیری</h1>
+        <h1 class="hero-title">گوشی رو بسپار، ما فرآیند رو مدیریت می‌کنیم</h1>
 
-        <p class="sub" style="margin-top:10px">
-          موبیکس یک سرویس کامل است: <b>ثبت درخواست</b>، <b>هماهنگی پیک</b>، <b>اعلام هزینه قبل از اقدام</b> و <b>تعمیر و تحویل</b>.
-        </p>
-
-        <div class="cta">
-          <a class="btn primary" href="order/" id="heroCta">ثبت سفارش</a>
-          <a class="btn ghost" href="#why">چرا موبیکس؟</a>
-          <a class="btn ghost" href="#contact">تماس با ما</a>
-        </div>
-
-        <div class="mini-grid">
-          <div class="mini">
-            <div class="t">فرآیند شفاف</div>
-            <div class="d">هر مرحله مشخصه؛ از ثبت تا تحویل.</div>
-          </div>
-          <div class="mini">
-            <div class="t">قیمت قبل از اقدام</div>
-            <div class="d">بدون تایید شما تعمیر انجام نمی‌شود.</div>
-          </div>
-        </div>
-
-        <div class="hero-art">
-          <!-- ✅ hero-new -->
-          <img src="assets/hero-new.png" alt="Mobix Hero">
-        </div>
-      </div>
-
-      <!-- Side card -->
-      <div class="card">
-        <h2 style="margin:0;font-weight:900;font-size:20px">مراحل کار (سرویس کامل)</h2>
-        <p class="sub" style="margin-top:8px">
-          شما همیشه می‌دانید سفارش دقیقاً در چه مرحله‌ای است.
-        </p>
-
-        <div class="timeline">
-          <div class="tcard">
-            <div class="tnum">1</div>
-            <b>ثبت درخواست</b>
-            <p>مدل گوشی و مشکل را ثبت می‌کنید.</p>
-          </div>
-          <div class="tcard">
-            <div class="tnum">2</div>
-            <b>هماهنگی پیک</b>
-            <p>زمان دریافت را هماهنگ می‌کنیم.</p>
-          </div>
-          <div class="tcard">
-            <div class="tnum">3</div>
-            <b>اعلام هزینه</b>
-            <p>قبل از تعمیر تایید می‌گیرید.</p>
-          </div>
-          <div class="tcard">
-            <div class="tnum">4</div>
-            <b>تعمیر</b>
-            <p>توسط تیم موبیکس انجام می‌شود.</p>
-          </div>
-          <div class="tcard">
-            <div class="tnum">5</div>
-            <b>تحویل</b>
-            <p>با پیک تحویل می‌شود.</p>
-          </div>
-        </div>
-
-        <div style="margin-top:12px;display:flex;gap:10px;flex-wrap:wrap">
-          <a class="btn primary" href="order/">شروع ثبت سفارش</a>
-          <a class="btn ghost" href="#contact">تماس با ما</a>
-        </div>
-      </div>
-    </section>
-
-    <!-- WHY -->
-    <section class="section" id="why" style="margin-top:20px">
-      <h2 style="font-size:20px;font-weight:900;margin:0 0 10px">چرا موبیکس؟</h2>
-      <div class="why-grid">
-        <div class="media">
-          <div class="imgwrap">
-            <img src="assets/pricing.png" alt="هماهنگی قیمت">
-          </div>
-          <div class="media-caption">
-            <b>هماهنگی قیمت قبل از تعمیر</b><br>
-            قبل از هر اقدامی، هزینه با شما هماهنگ می‌شود.
-          </div>
-        </div>
-
-        <div class="media">
-          <div class="imgwrap">
-            <img src="assets/courier.png" alt="پیک موبیکس">
-          </div>
-          <div class="media-caption">
-            <b>پیک اختصاصی موبیکس</b><br>
-            دریافت و تحویل دستگاه بدون دردسر.
-          </div>
-        </div>
-
-        <div class="media">
-          <div class="imgwrap">
-            <img src="assets/support.png" alt="پشتیبانی و پیگیری مرحله‌ای">
-          </div>
-          <div class="media-caption">
-            <b>پیگیری مرحله‌ای</b><br>
-            وضعیت سفارش شفاف و مرحله‌به‌مرحله.
-          </div>
-        </div>
-      </div>
-    </section>
-
-    <!-- SERVICES -->
-    <section class="section" id="services" style="margin-top:20px">
-      <div class="card">
-        <h2 style="margin:0 0 10px;font-weight:900">چه تعمیراتی انجام می‌دهیم؟</h2>
-
-        <div class="cards-3">
-          <div class="citem">
-            <b>نمایشگر و تاچ</b>
-            <p>تعویض LCD/تاچ، فلت‌ها، مشکلات تصویر، خطوط و لکه‌های نمایشگر.</p>
-          </div>
-          <div class="citem">
-            <b>باتری و شارژ</b>
-            <p>تعویض باتری، رفع مشکل شارژ، سوکت شارژ، نوسان شارژ و داغی.</p>
-          </div>
-          <div class="citem">
-            <b>برد و آب‌خوردگی</b>
-            <p>عیب‌یابی تخصصی برد، رفع خاموشی، آب‌خوردگی و مشکلات پیچیده.</p>
-          </div>
-        </div>
-
-        <div style="margin-top:14px;display:flex;gap:10px;flex-wrap:wrap">
+        <div class="cta" aria-label="Primary actions">
           <a class="btn primary" href="order/">ثبت سفارش</a>
-          <a class="btn ghost" href="#contact">تماس با ما</a>
+          <a class="btn ghost" href="#quick">شروع سریع</a>
+        </div>
+
+        <!-- نقاط دخالت تو (جایگزین زیرتیتر) -->
+        <div class="section" aria-label="User control points">
+          <div class="sec-title">فقط اینجاها لازم است تو در جریان باشی</div>
+
+          <div class="grid-3">
+            <div class="focus-card">
+              <div class="focus-k">
+                <b>اینجا تصمیم با توئه</b>
+                <span class="tag">تأیید هزینه</span>
+              </div>
+              <div class="focus-desc">قبل از هر تعمیر، هزینه دقیق اعلام می‌شه.</div>
+            </div>
+
+            <div class="focus-card">
+              <div class="focus-k">
+                <b>اینجا لازم نیست کاری بکنی</b>
+                <span class="tag">تعمیر</span>
+              </div>
+              <div class="focus-desc">تعمیر توسط تیم موبیکس انجام می‌شه.</div>
+            </div>
+
+            <div class="focus-card">
+              <div class="focus-k">
+                <b>اینجا خبرت می‌کنیم</b>
+                <span class="tag">تحویل</span>
+              </div>
+              <div class="focus-desc">وقتی آماده تحویل شد، بهت اطلاع می‌دیم.</div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="hero-art" aria-label="Hero image">
+        <img src="assets/hero-new.png" alt="Mobix Hero">
+      </div>
+    </section>
+
+    <!-- QUICK START -->
+    <section class="section" id="quick">
+      <div class="card">
+        <div class="qs-wrap">
+          <div class="qs-head">
+            <div class="sec-title" style="margin:0">شروع سریع</div>
+            <p>مشکل گوشی رو انتخاب کن تا سفارش با همون گزینه آماده بشه.</p>
+          </div>
+
+          <div class="chips" role="list" aria-label="Quick issues">
+            <a class="chip" role="listitem" href="order/?issue=lcd">شکستگی LCD</a>
+            <a class="chip" role="listitem" href="order/?issue=charge">مشکل شارژ</a>
+            <a class="chip" role="listitem" href="order/?issue=battery">باتری</a>
+            <a class="chip" role="listitem" href="order/?issue=water">آب‌خوردگی</a>
+            <a class="chip" role="listitem" href="order/?issue=power">خاموشی/ریست</a>
+            <a class="chip" role="listitem" href="order/?issue=other">سایر</a>
+          </div>
+
+          <div style="display:flex;gap:10px;flex-wrap:wrap;margin-top:8px">
+            <a class="btn primary" href="order/">ادامه و ثبت سفارش</a>
+            <a class="btn ghost" href="#contact">تماس با ما</a>
+          </div>
         </div>
       </div>
     </section>
 
-    <!-- CONTACT (جایگزین تماس در هدر) -->
-    <section class="section" id="contact" style="margin-top:20px">
-      <div class="contact-strip">
-        <div style="display:flex;flex-direction:column;gap:4px;min-width:0">
-          <b>تماس با ما</b>
-          <span>اگر سوالی دارید یا نیاز به راهنمایی دارید، از صفحه تماس با ما پیام بدهید.</span>
+    <!-- COURIER (کاربردی، نه تبلیغاتی) -->
+    <section class="section" aria-label="Courier benefit">
+      <div class="callout">
+        <div style="min-width:0">
+          <b>زمان و محل دریافت و تحویل رو خودت مشخص می‌کنی</b>
+          <span>پیک موبیکس طبق همون زمان‌بندی میاد.</span>
         </div>
         <div style="display:flex;gap:10px;flex-wrap:wrap">
-          <a class="btn primary" href="contact/">صفحه تماس با ما</a>
-          <a class="btn ghost" href="order/">ثبت سفارش</a>
+          <a class="btn primary" href="order/">ثبت سفارش</a>
+          <a class="btn ghost" href="order/">پیگیری سفارش</a>
+        </div>
+      </div>
+    </section>
+
+    <!-- CONTACT + CHAT -->
+    <section class="section" id="contact" aria-label="Contact">
+      <div class="contact-strip">
+        <div style="display:flex;flex-direction:column;gap:4px;min-width:0">
+          <b>سؤال داری؟ همینجا بپرس</b>
+          <span>اگر مطمئن نیستی مشکل چیه، قبل از ثبت سفارش راهنمایی‌ات می‌کنیم.</span>
+        </div>
+        <div style="display:flex;gap:10px;flex-wrap:wrap">
+          <a class="btn ghost" href="contact/">تماس با ما</a>
+          <!-- چت آنلاین: فعلاً لینک/اسکریپت ندادی، این دکمه آماده است -->
+          <button class="btn primary" type="button" onclick="window.dispatchEvent(new Event('mobix_open_chat'))">چت آنلاین</button>
         </div>
       </div>
     </section>
@@ -591,10 +522,9 @@
     <div class="footer">
       <span>© Mobix</span>
 
-      <!-- ✅ اینماد جدید -->
       <div class="enamad" aria-label="اینماد">
         <a referrerpolicy="origin" target="_blank" href="https://trustseal.enamad.ir/?id=5414923&Code=DiznrIm0BJGpnPrtdWijxsgtOlPs8Aqf">
-          <img referrerpolicy="origin" src="https://trustseal.enamad.ir/logo.aspx?id=5414923&Code=DiznrIm0BJGpnPrtdWijxsgtOlPs8Aqf" alt="اینماد" style="cursor:pointer" code="DiznrIm0BJGpnPrtdWijxsgtOlPs8Aqf">
+          <img referrerpolicy="origin" src="https://trustseal.enamad.ir/logo.aspx?id=5414923&Code=DiznrIm0BJGpnPrtdWijxsgtOlPs8Aqf" alt="" style="cursor:pointer" code="DiznrIm0BJGpnPrtdWijxsgtOlPs8Aqf">
         </a>
       </div>
 
@@ -603,19 +533,23 @@
 
   </div>
 
-  <!-- Floating CTA -->
+  <!-- FLOATING CTA -->
   <div class="floating" role="navigation" aria-label="CTA">
     <div class="floating-inner">
       <div class="txt">
-        <b>موبیکس — تعمیر موبایل با سرویس کامل</b>
-        <span>ثبت درخواست، هماهنگی پیک، اعلام هزینه، تعمیر و تحویل</span>
+        <b>موبیکس — سرویس کامل تعمیر موبایل</b>
+        <span>قیمت قبل از اقدام · پیگیری مرحله‌ای · پیک رفت‌وبرگشت</span>
       </div>
       <div class="actions">
-        <a class="btn ghost" href="#why">چرا موبیکس؟</a>
-        <a class="btn ghost" href="contact/">تماس با ما</a>
-        <a class="btn primary" href="order/" id="floatingCta">ثبت سفارش</a>
+        <a class="btn ghost" href="order/">سفارش‌های من</a>
+        <a class="btn primary" href="order/">ثبت سفارش</a>
       </div>
     </div>
   </div>
+
+  <script>
+    // (اختیاری) اگر بعداً اسکریپت چت آنلاین اضافه کردی، این رو گوش کن
+    // مثال: window.addEventListener('mobix_open_chat', () => CrispChat.open());
+  </script>
 </body>
 </html>
