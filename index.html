@@ -36,7 +36,6 @@
       --primary:#1F6AFF;
       --primary2:#3B82F6;
 
-      /* ✅ کنترل “عرض مؤثر” برای فول‌اسکرین */
       --max:1120px;
     }
 
@@ -47,8 +46,6 @@
       font-family:"Vazirmatn", system-ui, sans-serif;
       color:var(--text);
       overflow-x:hidden;
-
-      /* ✅ بک‌گراند لایه‌دارتر برای حس پریمیوم */
       background:
         radial-gradient(980px 520px at 85% -10%, rgba(31,106,255,.20), transparent 58%),
         radial-gradient(900px 520px at 15% 10%, rgba(59,130,246,.10), transparent 60%),
@@ -58,48 +55,61 @@
 
     a{text-decoration:none;color:inherit}
     img{max-width:100%;display:block}
-
-    .container{
-      max-width:var(--max);
-      margin:auto;
-      padding:14px 16px 56px;
-    }
-
-    /* ✅ ریتم فاصله‌ها (یکدست) */
+    .container{max-width:var(--max);margin:auto;padding:14px 16px 56px}
     .section{margin-top:24px}
 
     /* TOP BAR */
     .topbar{
       position:sticky;top:0;z-index:50;
-      padding:10px 0;
+      padding:12px 0;
       backdrop-filter: blur(14px);
+      transition: padding .18s ease;
     }
+
     .topbar-inner{
       display:flex;align-items:center;justify-content:space-between;
       background:rgba(248,250,255,.78);
       border:1px solid var(--line);
       border-radius:999px;
-      padding:10px 12px;
+      padding:14px 14px;
       box-shadow:var(--shadow3);
       gap:10px;
+      transition:
+        padding .18s ease,
+        background .18s ease,
+        box-shadow .18s ease,
+        transform .18s ease;
     }
-    .brand{
-      display:flex;align-items:center;gap:10px;min-width:0;
+
+    /* ✅ حالت جمع‌شده در اسکرول */
+    .topbar.scrolled{ padding:8px 0; }
+    .topbar.scrolled .topbar-inner{
+      padding:10px 12px;
+      background:rgba(248,250,255,.88);
+      box-shadow:0 14px 32px rgba(15,23,42,.10);
+      transform: translateY(-1px);
     }
-    .brand img{width:64px;height:auto}
+
+    .brand{display:flex;align-items:center;gap:10px;min-width:0}
+    /* ✅ لوگو کمی بزرگ‌تر + در اسکرول کمی جمع می‌شود */
+    .brand img{
+      width:70px;height:auto;
+      transition: width .18s ease;
+    }
+    .topbar.scrolled .brand img{ width:62px; }
+
     .brand-title{
-      font-weight:950;font-size:15px;
+      font-weight:980;
+      font-size:15.5px;
       white-space:nowrap;overflow:hidden;text-overflow:ellipsis;
       letter-spacing:-.15px;
+      transition: opacity .18s ease;
     }
 
-    .nav{
-      display:flex;align-items:center;gap:8px;flex-wrap:wrap;
-      justify-content:flex-end;
-    }
+    .nav{display:flex;align-items:center;gap:8px;flex-wrap:wrap;justify-content:flex-end}
 
     .btn{
-      padding:10px 16px;
+      padding:11px 18px;
       border-radius:14px;
       font-weight:950;
       border:1px solid rgba(15,23,42,.10);
@@ -112,35 +122,15 @@
       align-items:center;
       justify-content:center;
       gap:8px;
+      transition: transform .12s ease, box-shadow .12s ease, padding .18s ease;
     }
+    .btn:hover{ transform: translateY(-1px); box-shadow:0 16px 30px rgba(15,23,42,.10); }
     .btn.primary{
       background:linear-gradient(135deg,var(--primary),var(--primary2));
       color:#fff;border:none;
       box-shadow:0 16px 30px rgba(31,106,255,.18);
     }
-    .btn.ghost{
-      background:rgba(255,255,255,.78);
-    }
-
-    /* ✅ ریز-استیتوس محصولی داخل هدر */
-    .header-kicker{
-      display:flex;align-items:center;gap:8px;
-      padding:8px 10px;
-      border-radius:999px;
-      border:1px solid rgba(16,185,129,.18);
-      background:rgba(16,185,129,.06);
-      color:#0B3A2C;
-      font-weight:900;
-      font-size:12.3px;
-      white-space:nowrap;
-      box-shadow:var(--shadow3);
-    }
-    .header-kicker i{
-      width:9px;height:9px;border-radius:999px;
-      background:#10B981;
-      box-shadow:0 10px 18px rgba(16,185,129,.22);
-      display:inline-block;
-    }
+    .topbar.scrolled .btn{ padding:10px 16px; }
 
     /* HERO */
     .hero{
@@ -169,12 +159,7 @@
     }
     @media(max-width:520px){.hero-title{font-size:32px}}
 
-    .cta{
-      display:flex;
-      gap:10px;
-      margin-top:14px;
-      flex-wrap:wrap;
-    }
+    .cta{display:flex;gap:10px;margin-top:14px;flex-wrap:wrap}
 
     .hero-art{
       border-radius:22px;
@@ -204,7 +189,6 @@
     }
 
     /* CONTROL CARDS */
-    /* ✅ جمع‌وجورتر + ارتفاع یکسان */
     .grid-3{
       display:grid;
       grid-template-columns:repeat(3,1fr);
@@ -225,9 +209,7 @@
       justify-content:flex-start;
     }
     .focus-k{display:flex;align-items:center;justify-content:space-between;gap:10px}
-    .focus-k b{
-      font-weight:950;font-size:14.5px;letter-spacing:-.15px;
-    }
+    .focus-k b{font-weight:950;font-size:14.5px;letter-spacing:-.15px}
     .tag{
       display:inline-flex;align-items:center;gap:8px;
       padding:7px 10px;border-radius:999px;
@@ -235,14 +217,9 @@
       border:1px solid rgba(31,106,255,.18);
       color:#0B2A6A;font-weight:900;font-size:12.2px;white-space:nowrap;
     }
-    .focus-desc{
-      margin-top:10px;
-      color:var(--muted);
-      font-size:13.6px;
-      line-height:1.9;
-    }
+    .focus-desc{margin-top:10px;color:var(--muted);font-size:13.6px;line-height:1.9}
 
-    /* ✅ Progress مینی برای حس “سیستم” */
+    /* Mini progress */
     .mini-progress{
       margin-top:14px;
       padding:12px 12px;
@@ -257,12 +234,7 @@
     }
     .mp-top b{font-weight:950;font-size:13.5px;letter-spacing:-.15px}
     .mp-top span{color:var(--muted);font-size:12.8px}
-    .mp-steps{
-      display:flex;
-      gap:8px;
-      justify-content:space-between;
-      flex-wrap:wrap;
-    }
+    .mp-steps{display:flex;gap:8px;justify-content:space-between;flex-wrap:wrap}
     .mp-steps .s{
       flex:1 1 auto;
       min-width:140px;
@@ -299,10 +271,7 @@
       display:inline-flex;align-items:center;gap:8px;
       transition:transform .12s ease, box-shadow .12s ease;
     }
-    .chip:hover{
-      transform:translateY(-1px);
-      box-shadow:0 16px 30px rgba(15,23,42,.10);
-    }
+    .chip:hover{transform:translateY(-1px);box-shadow:0 16px 30px rgba(15,23,42,.10)}
 
     /* COURIER */
     .callout{
@@ -350,23 +319,24 @@
       cursor:pointer;
       display:block;
       opacity:.95;
-      filter: saturate(.96);
+      filter:saturate(.96);
     }
 
-    /* ✅ فول‌اسکرین: فاصله عمودی کنترل شود */
     @media (min-width: 1400px){
       .container{padding-top:18px}
       .hero{margin-top:18px}
       .section{margin-top:22px}
     }
 
-    /* MOBILE */
     @media (max-width: 520px){
       .topbar-inner{border-radius:22px}
-      .brand img{width:60px}
+      .brand img{width:62px}
+      .topbar.scrolled .brand img{width:58px}
       .card{padding:14px}
       .mp-steps .s{min-width:0;flex:1 1 100%}
       .enamad img{width:92px}
+      .btn{padding:10px 14px}
+      .topbar.scrolled .btn{padding:9px 13px}
     }
   </style>
 </head>
@@ -375,7 +345,7 @@
   <div class="container">
 
     <!-- HEADER -->
-    <div class="topbar">
+    <div class="topbar" id="topbar">
       <div class="topbar-inner">
         <a class="brand" href="./" aria-label="Mobix">
           <img src="assets/logo.png" alt="موبیکس">
@@ -383,10 +353,7 @@
         </a>
 
         <div class="nav" aria-label="Navigation">
-          <div class="header-kicker" title="پاسخ‌گویی آنلاین">
-            <i></i> پاسخ‌گویی آنلاین
-          </div>
-          <a class="btn ghost" href="order/">سفارش‌های من</a>
+          <!-- ✅ فقط یک CTA -->
           <a class="btn primary" href="order/">ثبت سفارش</a>
         </div>
       </div>
@@ -399,7 +366,7 @@
 
         <div class="cta" aria-label="Primary actions">
           <a class="btn primary" href="order/">ثبت سفارش</a>
-          <a class="btn ghost" href="#quick">شروع سریع</a>
+          <a class="btn" href="#quick">شروع سریع</a>
         </div>
 
         <div class="grid-3" aria-label="Control points">
@@ -481,7 +448,7 @@
         </div>
         <div style="display:flex;gap:10px;flex-wrap:wrap">
           <a class="btn primary" href="order/">ثبت سفارش</a>
-          <a class="btn ghost" href="order/">پیگیری سفارش</a>
+          <a class="btn" href="order/">پیگیری سفارش</a>
         </div>
       </div>
     </section>
@@ -494,7 +461,7 @@
           <span>اگر مطمئن نیستی مشکل چیه، قبل از ثبت سفارش راهنمایی‌ات می‌کنیم.</span>
         </div>
         <div style="display:flex;gap:10px;flex-wrap:wrap">
-          <a class="btn ghost" href="contact/">تماس با ما</a>
+          <a class="btn" href="contact/">تماس با ما</a>
           <button class="btn primary" type="button" onclick="window.dispatchEvent(new Event('mobix_open_chat'))">چت آنلاین</button>
         </div>
       </div>
@@ -518,6 +485,26 @@
   </div>
 
   <script>
+    (function(){
+      const topbar = document.getElementById("topbar");
+      if(!topbar) return;
+
+      let ticking = false;
+      function onScroll(){
+        if(ticking) return;
+        ticking = true;
+        requestAnimationFrame(() => {
+          const y = window.scrollY || document.documentElement.scrollTop || 0;
+          if(y > 14) topbar.classList.add("scrolled");
+          else topbar.classList.remove("scrolled");
+          ticking = false;
+        });
+      }
+
+      onScroll();
+      window.addEventListener("scroll", onScroll, { passive: true });
+    })();
+
     // (اختیاری) اگر بعداً اسکریپت چت آنلاین اضافه کردی، این رو گوش کن
     // مثال: window.addEventListener('mobix_open_chat', () => CrispChat.open());
   </script>
