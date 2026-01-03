@@ -1,0 +1,1191 @@
+<!doctype html>
+<html lang="fa" dir="rtl">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>ثبت سفارش | موبیکس</title>
+
+  <meta name="description" content="ثبت سفارش تعمیر موبایل و پیگیری مرحله‌ای سفارش‌ها در موبیکس." />
+  <meta name="theme-color" content="#1F6AFF" />
+  <link rel="icon" href="../assets/logo.png" />
+
+  <!-- Vazirmatn (Body) -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Vazirmatn:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet">
+
+  <!-- Peyda (Headings) -->
+  <style>
+    @font-face {
+      font-family: 'Peyda';
+      src: url('https://cdn.jsdelivr.net/gh/fontstore/Peyda@main/Peyda-Bold.woff2') format('woff2');
+      font-weight: 700;
+      font-style: normal;
+      font-display: swap;
+    }
+  </style>
+
+  <style>
+    :root{
+      --bg:#F6F8FC;
+      --card:rgba(255,255,255,.92);
+      --text:#0B1220;
+      --muted:#5B6B84;
+      --line:rgba(15,23,42,.085);
+
+      --shadow:0 18px 48px rgba(15,23,42,.10);
+      --shadow2:0 10px 26px rgba(15,23,42,.08);
+      --shadow3:0 10px 24px rgba(15,23,42,.07);
+
+      --radius:22px;
+
+      --primary:#1F6AFF;
+      --primary2:#3B82F6;
+
+      --success:#10B981;
+      --danger:#EF4444;
+      --warn:#F59E0B;
+
+      --max:1120px;
+    }
+
+    *{box-sizing:border-box}
+    html{scroll-behavior:smooth}
+    body{
+      margin:0;
+      font-family:"Vazirmatn", system-ui, sans-serif;
+      background:
+        radial-gradient(980px 520px at 85% -10%, rgba(31,106,255,.20), transparent 58%),
+        radial-gradient(900px 520px at 15% 10%, rgba(59,130,246,.10), transparent 60%),
+        linear-gradient(180deg, #F8FAFF, #F6F8FC 45%, #F6F8FC);
+      color:var(--text);
+      overflow-x:hidden;
+    }
+
+    a{text-decoration:none;color:inherit}
+    img{max-width:100%;display:block}
+
+    .container{max-width:var(--max);margin:auto;padding:14px 16px 64px}
+    .card{
+      background:var(--card);
+      border:1px solid var(--line);
+      border-radius:var(--radius);
+      padding:18px;
+      box-shadow:var(--shadow);
+    }
+
+    /* Header */
+    .topbar{
+      position:sticky;top:0;z-index:50;
+      padding:14px 0;
+      backdrop-filter: blur(14px);
+      transition: padding .18s ease;
+    }
+    .topbar-inner{
+      display:flex;align-items:center;justify-content:space-between;
+      gap:12px;
+      background:rgba(255,255,255,.62);
+      border:1px solid rgba(15,23,42,.10);
+      border-radius:22px;
+      padding:14px 16px;
+      box-shadow:var(--shadow3);
+      transition: padding .18s ease, background .18s ease, box-shadow .18s ease, transform .18s ease, border-color .18s ease;
+    }
+    .topbar.scrolled{ padding:8px 0; }
+    .topbar.scrolled .topbar-inner{
+      padding:10px 14px;
+      background:rgba(255,255,255,.78);
+      border-color: rgba(15,23,42,.12);
+      box-shadow:0 16px 34px rgba(15,23,42,.10);
+      transform: translateY(-1px);
+    }
+
+    .brand{display:flex;align-items:center;gap:12px;min-width:0}
+    .brand img{width:72px;height:auto;transition: width .18s ease}
+    .topbar.scrolled .brand img{width:62px}
+    .brand-meta{display:flex;flex-direction:column;gap:3px;min-width:0}
+    .brand-title{font-weight:980;font-size:15.8px;letter-spacing:-.18px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;line-height:1.2}
+    .brand-sub{color:var(--muted);font-size:12.7px;font-weight:800;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;line-height:1.2}
+
+    .nav{display:flex;align-items:center;gap:10px;flex-wrap:wrap;justify-content:flex-end}
+    .chip{
+      padding:9px 12px;border-radius:999px;
+      border:1px solid rgba(15,23,42,.10);
+      background:rgba(255,255,255,.86);
+      font-weight:900;font-size:13px;
+      box-shadow:0 10px 18px rgba(15,23,42,.05);
+      white-space:nowrap;
+      transition: transform .12s ease, box-shadow .12s ease;
+    }
+    .chip:hover{transform:translateY(-1px);box-shadow:0 16px 30px rgba(15,23,42,.10)}
+    .btn{
+      padding:11px 18px;border-radius:16px;
+      font-weight:950;
+      border:1px solid rgba(15,23,42,.10);
+      background:#fff;
+      box-shadow:0 10px 20px rgba(15,23,42,.06);
+      cursor:pointer;
+      font-family:inherit;
+      white-space:nowrap;
+      display:inline-flex;align-items:center;justify-content:center;gap:8px;
+      transition: transform .12s ease, box-shadow .12s ease, padding .18s ease, border-radius .18s ease, opacity .12s ease;
+    }
+    .btn:hover{ transform: translateY(-1px); box-shadow:0 16px 30px rgba(15,23,42,.10); }
+    .btn.primary{
+      background:linear-gradient(135deg,var(--primary),var(--primary2));
+      color:#fff;border:none;
+      box-shadow:0 18px 34px rgba(31,106,255,.18);
+    }
+    .btn.ghost{background:rgba(255,255,255,.72)}
+    .btn.danger{
+      background:rgba(239,68,68,.10);
+      border:1px solid rgba(239,68,68,.25);
+      color:#7F1D1D;
+    }
+    .btn:disabled{opacity:.55;cursor:not-allowed}
+    .topbar.scrolled .btn{padding:10px 16px;border-radius:14px}
+
+    /* Page Title */
+    .page-head{margin-top:16px}
+    .h1{
+      font-family:"Peyda","Vazirmatn",sans-serif;
+      font-size:28px;
+      font-weight:700;
+      letter-spacing:-.25px;
+      margin:0;
+      line-height:1.25;
+    }
+    .sub{margin:10px 0 0;color:var(--muted);font-size:14px;line-height:1.9}
+
+    /* Layout */
+    .grid{
+      margin-top:14px;
+      display:grid;
+      grid-template-columns: .92fr 1.08fr;
+      gap:12px;
+      align-items:start;
+    }
+    @media(max-width:980px){.grid{grid-template-columns:1fr}}
+
+    /* Tabs */
+    .tabs{
+      display:flex;gap:8px;flex-wrap:wrap;
+      margin-top:12px;
+    }
+    .tab{
+      padding:10px 14px;
+      border-radius:14px;
+      border:1px solid rgba(15,23,42,.10);
+      background:rgba(255,255,255,.86);
+      box-shadow:0 10px 18px rgba(15,23,42,.05);
+      font-weight:950;
+      font-size:13px;
+      cursor:pointer;
+      user-select:none;
+    }
+    .tab.active{
+      background:rgba(31,106,255,.10);
+      border-color:rgba(31,106,255,.22);
+      color:#0B2A6A;
+    }
+
+    /* Status */
+    .status{
+      display:inline-flex;
+      align-items:center;
+      gap:8px;
+      padding:8px 10px;
+      border-radius:999px;
+      border:1px solid rgba(15,23,42,.10);
+      background:rgba(255,255,255,.86);
+      font-weight:900;
+      font-size:12.8px;
+      white-space:nowrap;
+    }
+    .status.ok{border-color:rgba(16,185,129,.25);background:rgba(16,185,129,.08);color:#0B3A2C}
+    .status.err{border-color:rgba(239,68,68,.25);background:rgba(239,68,68,.08);color:#7F1D1D}
+    .status.warn{border-color:rgba(245,158,11,.30);background:rgba(245,158,11,.10);color:#78350F}
+
+    .divider{height:1px;background:var(--line);margin:12px 0}
+
+    /* Form */
+    .field{display:flex;flex-direction:column;gap:6px;margin-top:10px}
+    .label{font-size:13px;font-weight:900;color:var(--muted)}
+    .input{
+      width:100%;
+      padding:12px 14px;
+      border-radius:16px;
+      border:1px solid rgba(15,23,42,.10);
+      background:#fff;
+      box-shadow:0 10px 18px rgba(15,23,42,.05);
+      font-family:inherit;
+      font-weight:800;
+      outline:none;
+    }
+    .textarea{
+      width:100%;
+      min-height:110px;
+      padding:12px 14px;
+      border-radius:16px;
+      border:1px solid rgba(15,23,42,.10);
+      background:#fff;
+      box-shadow:0 10px 18px rgba(15,23,42,.05);
+      font-family:inherit;
+      font-weight:800;
+      outline:none;
+      resize:vertical;
+      line-height:1.9;
+    }
+    .hint{
+      margin-top:10px;
+      color:var(--muted);
+      font-size:13px;
+      line-height:1.7;
+      white-space:pre-line;
+    }
+
+    .row{
+      display:grid;
+      grid-template-columns:1fr 1fr;
+      gap:10px;
+    }
+    @media(max-width:520px){.row{grid-template-columns:1fr}}
+
+    .actions{
+      display:flex;gap:10px;flex-wrap:wrap;
+      margin-top:12px;
+    }
+
+    /* Quick issues */
+    .quick{
+      display:flex;
+      flex-wrap:wrap;
+      gap:8px;
+      margin-top:10px;
+    }
+    .qchip{
+      padding:8px 10px;
+      border-radius:999px;
+      border:1px solid rgba(15,23,42,.10);
+      background:rgba(246,248,252,.72);
+      font-weight:950;
+      font-size:12.8px;
+      cursor:pointer;
+      box-shadow:0 10px 18px rgba(15,23,42,.05);
+      user-select:none;
+    }
+
+    /* Replacement checkbox */
+    .checkrow{
+      display:flex;
+      align-items:center;
+      gap:10px;
+      padding:10px 12px;
+      border-radius:16px;
+      border:1px solid rgba(15,23,42,.10);
+      background:rgba(246,248,252,.55);
+      box-shadow:0 10px 18px rgba(15,23,42,.05);
+      margin-top:10px;
+    }
+    .checkrow input{width:18px;height:18px;accent-color:var(--primary)}
+    .checkrow b{font-weight:950;font-size:13.5px}
+    .checkrow span{color:var(--muted);font-size:12.8px;line-height:1.6}
+
+    /* Auth */
+    .otp-row{
+      display:grid;
+      grid-template-columns:1fr auto;
+      gap:10px;
+      align-items:center;
+      margin-top:10px;
+    }
+    @media(max-width:520px){.otp-row{grid-template-columns:1fr}}
+
+    /* Orders */
+    .orders{display:flex;flex-direction:column;gap:10px;margin-top:10px}
+    .order-item{
+      background:#fff;
+      border:1px solid rgba(15,23,42,.10);
+      border-radius:18px;
+      padding:12px;
+      box-shadow:0 10px 18px rgba(15,23,42,.05);
+      display:flex;flex-direction:column;gap:8px;
+    }
+    .order-top{display:flex;align-items:center;justify-content:space-between;gap:10px;flex-wrap:wrap}
+    .order-top b{font-weight:980}
+
+    .pill{
+      display:inline-flex;align-items:center;gap:8px;
+      padding:7px 10px;border-radius:999px;
+      background:rgba(31,106,255,.10);
+      border:1px solid rgba(31,106,255,.18);
+      color:#0B2A6A;font-weight:950;font-size:12.5px;white-space:nowrap;
+    }
+
+    /* Tracking */
+    .track{display:grid;grid-template-columns:1fr;gap:8px;margin-top:6px}
+    .track-step{
+      display:flex;align-items:flex-start;gap:10px;
+      border:1px solid rgba(15,23,42,.10);
+      background:rgba(246,248,252,.55);
+      border-radius:16px;
+      padding:10px;
+    }
+    .track-bullet{
+      width:28px;height:28px;border-radius:12px;
+      display:flex;align-items:center;justify-content:center;
+      font-weight:950;
+      border:1px solid rgba(15,23,42,.10);
+      background:#fff;
+      flex:0 0 auto;
+    }
+    .track-step.done .track-bullet{
+      background:rgba(16,185,129,.10);
+      border-color:rgba(16,185,129,.25);
+      color:#0B3A2C;
+    }
+    .track-step.active .track-bullet{
+      background:rgba(31,106,255,.10);
+      border-color:rgba(31,106,255,.25);
+      color:#0B2A6A;
+    }
+    .track-step .tt b{display:block;font-weight:980}
+    .track-step .tt span{display:block;color:var(--muted);font-size:13px;line-height:1.8;margin-top:3px}
+
+    @media(max-width:520px){
+      .container{padding-bottom:90px}
+      .card{padding:14px}
+      .brand img{width:66px}
+      .topbar.scrolled .brand img{width:60px}
+      .h1{font-size:24px}
+    }
+  </style>
+</head>
+
+<body>
+  <div class="container">
+
+    <!-- HEADER -->
+    <div class="topbar" id="topbar">
+      <div class="topbar-inner">
+        <a class="brand" href="../" aria-label="Mobix">
+          <img src="../assets/logo.png" alt="موبیکس">
+          <div class="brand-meta">
+            <div class="brand-title">موبیکس</div>
+            <div class="brand-sub">سرویس تخصصی تعمیر موبایل</div>
+          </div>
+        </a>
+
+        <div class="nav">
+          <a class="chip" href="../about/">درباره ما</a>
+          <a class="chip" href="../contact/">تماس</a>
+          <a class="btn primary" href="#form">ثبت سفارش</a>
+        </div>
+      </div>
+    </div>
+
+    <!-- PAGE HEAD -->
+    <div class="page-head card">
+      <h1 class="h1">ورود، ثبت سفارش و پیگیری</h1>
+      <p class="sub">با کد پیامکی وارد شوید، سفارش ثبت کنید و وضعیت سفارش‌ها را مرحله‌به‌مرحله ببینید.</p>
+
+      <div class="tabs" role="tablist" aria-label="Tabs">
+        <button class="tab active" id="tabCreate" type="button" role="tab" aria-selected="true">ثبت سفارش</button>
+        <button class="tab" id="tabMine" type="button" role="tab" aria-selected="false">سفارش‌های من</button>
+        <span id="sessionBadge" class="status warn" style="margin-inline-start:auto">وارد نشده‌اید</span>
+      </div>
+    </div>
+
+    <div class="grid">
+
+      <!-- AUTH CARD -->
+      <div class="card" id="authCard">
+        <div style="display:flex;align-items:center;justify-content:space-between;gap:10px;flex-wrap:wrap">
+          <b style="font-weight:980">ورود با کد پیامکی</b>
+          <button id="logoutBtn" class="btn danger" type="button" style="display:none">خروج</button>
+        </div>
+        <div class="hint" style="margin-top:8px">برای ثبت و مشاهده سفارش‌ها باید وارد شوید.</div>
+
+        <div class="field">
+          <div class="label">شماره موبایل</div>
+          <input id="authPhone" class="input" inputmode="numeric" placeholder="مثلا 0912xxxxxxx" />
+        </div>
+
+        <div class="actions">
+          <button id="sendOtpBtn" class="btn primary" type="button">ارسال کد</button>
+          <button id="resendBtn" class="btn ghost" type="button" disabled>ارسال مجدد</button>
+          <span id="timerPill" class="status warn">02:00</span>
+        </div>
+
+        <div class="field" id="otpBox" style="display:none">
+          <div class="label">کد پیامکی</div>
+          <input id="authCode" class="input" inputmode="numeric" placeholder="کد ۶ رقمی" />
+          <div class="actions">
+            <button id="verifyOtpBtn" class="btn primary" type="button">تایید و ورود</button>
+          </div>
+        </div>
+
+        <div id="authMsg" class="hint" aria-live="polite"></div>
+
+        <div class="divider"></div>
+
+        <div class="hint">
+          نکته: اگر کد دیر رسید، بعد از پایان تایمر «ارسال مجدد» فعال می‌شود.
+        </div>
+      </div>
+
+      <!-- MAIN CARD (Create + Mine) -->
+      <div class="card" id="form">
+        <!-- Create Section -->
+        <div id="createSection">
+          <div class="order-top">
+            <b style="font-weight:980;font-size:16px">ثبت سفارش</b>
+            <span id="orderGate" class="status warn">برای ارسال نهایی باید وارد شوید</span>
+          </div>
+
+          <div class="field">
+            <div class="label">نام و نام خانوادگی</div>
+            <input id="customerName" class="input" placeholder="نام و نام خانوادگی" />
+          </div>
+
+          <div class="field">
+            <div class="label">مدل گوشی</div>
+            <input id="deviceModel" class="input" placeholder="مثلا iPhone 13 / Galaxy A52" />
+          </div>
+
+          <div class="checkrow" aria-label="گوشی جایگزین">
+            <input id="replacementPhone" type="checkbox" />
+            <div style="display:flex;flex-direction:column;gap:2px">
+              <b>نیاز به گوشی جایگزین دارم</b>
+              <span>اگر در زمان تعمیر نیاز دارید، این گزینه را فعال کنید.</span>
+            </div>
+          </div>
+
+          <div class="field">
+            <div class="label">مشکل دستگاه</div>
+            <textarea id="problemDesc" class="textarea" placeholder="مثلا خاموش شده / شکستگی ال‌سی‌دی / مشکل شارژ ..."></textarea>
+            <div class="quick" aria-label="مشکلات رایج">
+              <div class="qchip" data-issue="شکستگی/خط روی ال‌سی‌دی">شکستگی LCD</div>
+              <div class="qchip" data-issue="مشکل شارژ/سوکت شارژ">مشکل شارژ</div>
+              <div class="qchip" data-issue="باتری ضعیف/زود خالی می‌کند">باتری</div>
+              <div class="qchip" data-issue="آب‌خوردگی">آب‌خوردگی</div>
+              <div class="qchip" data-issue="خاموشی/ریست شدن">خاموشی/ریست</div>
+              <div class="qchip" data-issue="مشکل صدا/میکروفن">صدا/میکروفن</div>
+            </div>
+          </div>
+
+          <div class="field">
+            <div class="label">آدرس برای دریافت با پیک</div>
+            <textarea id="address" class="textarea" placeholder="آدرس دقیق + پلاک + واحد"></textarea>
+          </div>
+
+          <div class="row">
+            <div class="field" style="margin-top:0">
+              <div class="label">زمان پیشنهادی برای دریافت</div>
+              <input id="pickupTime" class="input" placeholder="مثلا امروز ۱۸ تا ۲۰ / فردا صبح" />
+            </div>
+            <div class="field" style="margin-top:0">
+              <div class="label">شماره تماس (اختیاری)</div>
+              <input id="altPhone" class="input" inputmode="numeric" placeholder="اگر شماره دیگری دارید" />
+            </div>
+          </div>
+
+          <div class="actions">
+            <button id="createOrderBtn" class="btn primary" type="button">ثبت سفارش</button>
+            <button id="toMineBtn" class="btn ghost" type="button">رفتن به سفارش‌های من</button>
+          </div>
+
+          <div id="orderMsg" class="hint" aria-live="polite"></div>
+        </div>
+
+        <!-- Mine Section -->
+        <div id="mineSection" style="display:none">
+          <div class="order-top">
+            <b style="font-weight:980;font-size:16px">سفارش‌های من</b>
+            <span id="ordersCount" class="status">0</span>
+          </div>
+
+          <div class="actions" style="margin-top:10px">
+            <button id="refreshOrdersBtn" class="btn ghost" type="button">به‌روزرسانی</button>
+            <button id="toCreateBtn" class="btn primary" type="button">ثبت سفارش جدید</button>
+          </div>
+
+          <div id="ordersWrap" class="orders" style="margin-top:12px">
+            <div class="hint">بعد از ورود، سفارش‌های شما اینجا نمایش داده می‌شود.</div>
+          </div>
+        </div>
+      </div>
+
+    </div>
+  </div>
+
+  <!-- Supabase JS -->
+  <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+
+  <script>
+    (function(){
+      // =========================
+      // Supabase Config
+      // =========================
+      const SUPABASE_URL = "https://vrxfhfknmxmeatnfzpcg.supabase.co";
+      const SUPABASE_ANON_KEY = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InZyeGZoZmtubXhtZWF0bmZ6cGNnIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NjYyNTg2MjksImV4cCI6MjA4MTgzNDYyOX0.iANOG9-g9GnVl58KDYI0A-oYNwfbL3oh2NBddZ2sLLs";
+
+      const OTP_REQUEST_URL = "https://vrxfhfknmxmeatnfzpcg.supabase.co/functions/v1/request-otp";
+      const OTP_VERIFY_URL  = "https://vrxfhfknmxmeatnfzpcg.supabase.co/functions/v1/verify-otp";
+
+      const supabase = window.supabase.createClient(SUPABASE_URL, SUPABASE_ANON_KEY);
+
+      // =========================
+      // Helpers
+      // =========================
+      function normalizeDigits(s){
+        return (s || "")
+          .replace(/[۰-۹]/g, d => "۰۱۲۳۴۵۶۷۸۹".indexOf(d))
+          .replace(/[^\d]/g, "");
+      }
+      function isValidIranMobile(d){
+        if(!d) return false;
+        if(d.length === 11 && d.startsWith("09")) return true;
+        if(d.length === 10 && d.startsWith("9")) return true;
+        return false;
+      }
+      function to09(d){
+        if(!d) return null;
+        if(d.length === 11 && d.startsWith("09")) return d;
+        if(d.length === 10 && d.startsWith("9")) return "0" + d;
+        return null;
+      }
+      function esc(s){
+        return (s ?? "").toString()
+          .replaceAll("&","&amp;")
+          .replaceAll("<","&lt;")
+          .replaceAll(">","&gt;")
+          .replaceAll('"',"&quot;")
+          .replaceAll("'","&#039;");
+      }
+      function fmtDate(iso){
+        try{
+          const dt = new Date(iso);
+          if(isNaN(dt.getTime())) return iso || "";
+          return dt.toLocaleString("fa-IR", { year:"numeric", month:"2-digit", day:"2-digit", hour:"2-digit", minute:"2-digit" });
+        }catch(e){ return iso || ""; }
+      }
+      async function safeJson(res){
+        try{ return await res.json(); }catch(e){ return null; }
+      }
+      function extractErrorMessage(obj){
+        if(!obj) return null;
+        if(typeof obj === "string") return obj;
+        return obj.message || obj.error || (obj.errors && obj.errors[0] && (obj.errors[0].message || obj.errors[0])) || null;
+      }
+      function setStatus(el, type, text){
+        el.classList.remove("ok","err","warn");
+        if(type) el.classList.add(type);
+        el.textContent = text;
+      }
+      function setMsg(el, type, text){
+        if(!text){
+          el.textContent = "";
+          el.style.color = "var(--muted)";
+          return;
+        }
+        if(type === "ok") el.style.color = "var(--success)";
+        else if(type === "err") el.style.color = "var(--danger)";
+        else if(type === "warn") el.style.color = "var(--warn)";
+        else el.style.color = "var(--muted)";
+        el.textContent = text;
+      }
+
+      // ✅ order_no: MCC-YYMMDD-XXXX
+      function genOrderNo(){
+        const d = new Date();
+        const yy = String(d.getFullYear()).slice(-2);
+        const mm = String(d.getMonth()+1).padStart(2,"0");
+        const dd = String(d.getDate()).padStart(2,"0");
+        const rand = String(Math.floor(1000 + Math.random()*9000));
+        return `MCC-${yy}${mm}${dd}-${rand}`;
+      }
+
+      // =========================
+      // Tracking
+      // =========================
+      const TRACK_STEPS = [
+        { key:"requested",  title:"ثبت درخواست",     desc:"درخواست شما ثبت شد و در حال بررسی است." },
+        { key:"picked_up",  title:"دریافت با پیک",   desc:"پیک موبیکس دستگاه را دریافت کرد." },
+        { key:"quoted",     title:"اعلام/تأیید هزینه", desc:"هزینه اعلام شد و منتظر تایید شماست." },
+        { key:"repairing",  title:"در حال تعمیر",    desc:"تکنسین موبیکس در حال انجام تعمیر است." },
+        { key:"delivering", title:"ارسال برای تحویل", desc:"دستگاه آماده شده و در مسیر تحویل است." },
+        { key:"delivered",  title:"تحویل به شما",    desc:"دستگاه تحویل داده شد ✅" }
+      ];
+      function normalizeStatus(raw){
+        const s = (raw || "").toString().trim().toLowerCase();
+        if(["new","created","request","requested","pending"].includes(s)) return "requested";
+        if(["pickup","pickedup","picked_up","courier_pickup"].includes(s)) return "picked_up";
+        if(["quote","quoted","price","awaiting_approval","approved_pending"].includes(s)) return "quoted";
+        if(["repair","repairing","in_repair","fixing"].includes(s)) return "repairing";
+        if(["deliver","delivering","shipping","on_the_way"].includes(s)) return "delivering";
+        if(["done","delivered","completed","complete"].includes(s)) return "delivered";
+        return s || "requested";
+      }
+      function statusLabel(key){
+        const k = normalizeStatus(key);
+        const m = {
+          requested: "ثبت شده",
+          picked_up: "دریافت با پیک",
+          quoted: "اعلام هزینه",
+          repairing: "در حال تعمیر",
+          delivering: "در مسیر تحویل",
+          delivered: "تحویل شد"
+        };
+        return m[k] || k;
+      }
+      function stepIndex(key){
+        const idx = TRACK_STEPS.findIndex(x => x.key === key);
+        return idx < 0 ? 0 : idx;
+      }
+      function renderTrack(statusKey){
+        const norm = normalizeStatus(statusKey);
+        const activeIdx = stepIndex(norm);
+        return `
+          <div class="track">
+            ${TRACK_STEPS.map((s, i) => {
+              const cls = i < activeIdx ? "done" : (i === activeIdx ? "active" : "");
+              const bullet = i < activeIdx ? "✓" : (i === activeIdx ? "•" : (i+1));
+              return `
+                <div class="track-step ${cls}">
+                  <div class="track-bullet">${bullet}</div>
+                  <div class="tt">
+                    <b>${esc(s.title)}</b>
+                    <span>${esc(s.desc)}</span>
+                  </div>
+                </div>
+              `;
+            }).join("")}
+          </div>
+        `;
+      }
+
+      // =========================
+      // UI Elements
+      // =========================
+      const sessionBadge = document.getElementById("sessionBadge");
+
+      const tabCreate = document.getElementById("tabCreate");
+      const tabMine = document.getElementById("tabMine");
+      const createSection = document.getElementById("createSection");
+      const mineSection = document.getElementById("mineSection");
+      const toMineBtn = document.getElementById("toMineBtn");
+      const toCreateBtn = document.getElementById("toCreateBtn");
+
+      const authCard = document.getElementById("authCard");
+      const authPhone = document.getElementById("authPhone");
+      const authCode = document.getElementById("authCode");
+      const sendOtpBtn = document.getElementById("sendOtpBtn");
+      const resendBtn = document.getElementById("resendBtn");
+      const verifyOtpBtn = document.getElementById("verifyOtpBtn");
+      const otpBox = document.getElementById("otpBox");
+      const timerPill = document.getElementById("timerPill");
+      const authMsg = document.getElementById("authMsg");
+      const logoutBtn = document.getElementById("logoutBtn");
+
+      const orderGate = document.getElementById("orderGate");
+      const customerName = document.getElementById("customerName");
+      const deviceModel = document.getElementById("deviceModel");
+      const replacementPhone = document.getElementById("replacementPhone");
+      const problemDesc = document.getElementById("problemDesc");
+      const address = document.getElementById("address");
+      const pickupTime = document.getElementById("pickupTime");
+      const altPhone = document.getElementById("altPhone");
+      const createOrderBtn = document.getElementById("createOrderBtn");
+      const orderMsg = document.getElementById("orderMsg");
+
+      const refreshOrdersBtn = document.getElementById("refreshOrdersBtn");
+      const ordersWrap = document.getElementById("ordersWrap");
+      const ordersCount = document.getElementById("ordersCount");
+
+      // =========================
+      // State
+      // =========================
+      const LS_KEY = "mobix_site_login_v2";
+      const DRAFT_KEY = "mobix_order_draft_v2";
+
+      let loginState = null; // { phone09 }
+      let lastPhone09 = null;
+      let timerId = null;
+      let remaining = 0;
+
+      // =========================
+      // Tabs
+      // =========================
+      function setTab(which){
+        const isCreate = which === "create";
+        tabCreate.classList.toggle("active", isCreate);
+        tabMine.classList.toggle("active", !isCreate);
+        tabCreate.setAttribute("aria-selected", isCreate ? "true" : "false");
+        tabMine.setAttribute("aria-selected", !isCreate ? "true" : "false");
+        createSection.style.display = isCreate ? "" : "none";
+        mineSection.style.display = isCreate ? "none" : "";
+        if(!isCreate) loadOrders();
+      }
+
+      // =========================
+      // Draft
+      // =========================
+      function saveDraft(){
+        const draft = {
+          customer_name: (customerName.value || "").trim(),
+          device_model: (deviceModel.value || "").trim(),
+          wants_replacement_phone: !!(replacementPhone && replacementPhone.checked),
+          issue: (problemDesc.value || "").trim(),
+          pickup_address: (address.value || "").trim(),
+          pickup_time_text: (pickupTime.value || "").trim(),
+          alt_phone: (altPhone.value || "").trim()
+        };
+        localStorage.setItem(DRAFT_KEY, JSON.stringify(draft));
+      }
+      function loadDraft(){
+        try{
+          const raw = localStorage.getItem(DRAFT_KEY);
+          if(!raw) return;
+          const d = JSON.parse(raw);
+          if(d && typeof d === "object"){
+            if(d.customer_name != null) customerName.value = d.customer_name;
+            if(d.device_model != null) deviceModel.value = d.device_model;
+            if(d.wants_replacement_phone != null && replacementPhone) replacementPhone.checked = !!d.wants_replacement_phone;
+            if(d.issue != null) problemDesc.value = d.issue;
+            if(d.pickup_address != null) address.value = d.pickup_address;
+            if(d.pickup_time_text != null) pickupTime.value = d.pickup_time_text;
+            if(d.alt_phone != null) altPhone.value = d.alt_phone;
+          }
+        }catch(_e){}
+      }
+
+      // =========================
+      // Timer
+      // =========================
+      function formatMMSS(sec){
+        const m = Math.floor(sec / 60);
+        const s = sec % 60;
+        return String(m).padStart(2,"0") + ":" + String(s).padStart(2,"0");
+      }
+      function stopTimer(){
+        if(timerId) clearInterval(timerId);
+        timerId = null;
+      }
+      function startTimer(seconds){
+        stopTimer();
+        remaining = seconds;
+        resendBtn.disabled = true;
+        setStatus(timerPill, "warn", formatMMSS(remaining));
+
+        timerId = setInterval(() => {
+          remaining -= 1;
+          if(remaining <= 0){
+            stopTimer();
+            setStatus(timerPill, "ok", "00:00");
+            resendBtn.disabled = false;
+            return;
+          }
+          setStatus(timerPill, "warn", formatMMSS(remaining));
+        }, 1000);
+      }
+
+      // =========================
+      // Auth (Edge Functions)
+      // =========================
+      async function requestOtpEdge(phone09){
+        const res = await fetch(OTP_REQUEST_URL, {
+          method: "POST",
+          headers: {
+            "Content-Type":"application/json",
+            "apikey": SUPABASE_ANON_KEY,
+            "Authorization": "Bearer " + SUPABASE_ANON_KEY
+          },
+          body: JSON.stringify({ phone: phone09 })
+        });
+        const json = await safeJson(res);
+        if(!res.ok){
+          const msg = extractErrorMessage(json) || ("HTTP " + res.status);
+          throw new Error(msg);
+        }
+        if(json && json.ok === false){
+          throw new Error(extractErrorMessage(json) || "ارسال کد ناموفق بود");
+        }
+        return json || { ok:true, expires_in_seconds: 120 };
+      }
+
+      async function verifyOtpEdge(phone09, code){
+        const res = await fetch(OTP_VERIFY_URL, {
+          method: "POST",
+          headers: {
+            "Content-Type":"application/json",
+            "apikey": SUPABASE_ANON_KEY,
+            "Authorization": "Bearer " + SUPABASE_ANON_KEY
+          },
+          body: JSON.stringify({ phone: phone09, code })
+        });
+        const json = await safeJson(res);
+        if(!res.ok){
+          const msg = extractErrorMessage(json) || ("HTTP " + res.status);
+          throw new Error(msg);
+        }
+        if(json && json.ok === false){
+          throw new Error(extractErrorMessage(json) || "ورود ناموفق بود");
+        }
+        return json || { ok:true };
+      }
+
+      function loggedIn(){
+        return !!(loginState && loginState.phone09);
+      }
+      function applyLoginUI(){
+        if(loggedIn()){
+          setStatus(sessionBadge, "ok", "وارد شده‌اید ✅ (" + loginState.phone09 + ")");
+          setStatus(orderGate, "ok", "می‌توانید سفارش را ارسال کنید");
+          logoutBtn.style.display = "";
+        }else{
+          setStatus(sessionBadge, "warn", "وارد نشده‌اید");
+          setStatus(orderGate, "warn", "برای ارسال نهایی باید وارد شوید");
+          logoutBtn.style.display = "none";
+          ordersWrap.innerHTML = '<div class="hint">بعد از ورود، سفارش‌های شما اینجا نمایش داده می‌شود.</div>';
+          ordersCount.textContent = "0";
+        }
+      }
+
+      async function sendOtp(){
+        setMsg(authMsg, "", "");
+        const d = normalizeDigits(authPhone.value);
+        if(!isValidIranMobile(d)){
+          setMsg(authMsg, "err", "شماره موبایل درست نیست. مثل 0912xxxxxxx وارد کنید.");
+          return;
+        }
+        const phone09 = to09(d);
+        if(!phone09){
+          setMsg(authMsg, "err", "شماره قابل تبدیل نیست. لطفاً دوباره تلاش کنید.");
+          return;
+        }
+
+        sendOtpBtn.disabled = true;
+        resendBtn.disabled = true;
+        setMsg(authMsg, "warn", "در حال ارسال کد…");
+
+        try{
+          const out = await requestOtpEdge(phone09);
+          lastPhone09 = phone09;
+
+          otpBox.style.display = "";
+          setMsg(authMsg, "ok", "کد ارسال شد ✅");
+
+          const secs = Number(out?.expires_in_seconds ?? 120);
+          startTimer(Number.isFinite(secs) ? secs : 120);
+
+          authCode.focus();
+        }catch(err){
+          otpBox.style.display = "none";
+          stopTimer();
+          setMsg(authMsg, "err", "ارسال کد ناموفق بود: " + (err?.message || "خطای نامشخص"));
+        }finally{
+          sendOtpBtn.disabled = false;
+        }
+      }
+
+      async function verifyOtp(){
+        setMsg(authMsg, "", "");
+        const code = normalizeDigits(authCode.value);
+
+        if(!lastPhone09){
+          setMsg(authMsg, "err", "اول شماره را وارد کنید و کد را ارسال کنید.");
+          return;
+        }
+        if(!code || code.length < 4){
+          setMsg(authMsg, "err", "کد پیامکی را درست وارد کنید.");
+          return;
+        }
+
+        verifyOtpBtn.disabled = true;
+        setMsg(authMsg, "warn", "در حال تایید کد…");
+
+        try{
+          await verifyOtpEdge(lastPhone09, code);
+
+          loginState = { phone09: lastPhone09 };
+          localStorage.setItem(LS_KEY, JSON.stringify(loginState));
+
+          authCode.value = "";
+          setMsg(authMsg, "ok", "ورود انجام شد ✅");
+
+          applyLoginUI();
+          loadDraft();
+
+          // If user is on "My orders", auto refresh
+          if(mineSection.style.display !== "none") loadOrders();
+        }catch(err){
+          setMsg(authMsg, "err", "ورود ناموفق بود: " + (err?.message || "خطای نامشخص"));
+        }finally{
+          verifyOtpBtn.disabled = false;
+        }
+      }
+
+      function logout(){
+        setMsg(authMsg, "", "");
+        loginState = null;
+        localStorage.removeItem(LS_KEY);
+        lastPhone09 = null;
+        otpBox.style.display = "none";
+        stopTimer();
+        setMsg(authMsg, "ok", "خارج شدید.");
+        applyLoginUI();
+      }
+
+      function focusAuthGate(){
+        setMsg(orderMsg, "warn", "اطلاعات فرم ذخیره شد. برای ارسال نهایی، لطفاً با کد پیامکی وارد شوید.");
+        saveDraft();
+        authPhone.focus();
+        window.scrollTo({ top: authCard.getBoundingClientRect().top + window.scrollY - 120, behavior:"smooth" });
+      }
+
+      function buildIssueWithExtras(baseIssue){
+        const wants = !!(replacementPhone && replacementPhone.checked);
+        const alt = normalizeDigits(altPhone.value || "");
+        const parts = [];
+        const cur = (baseIssue || "").trim();
+        if(cur) parts.push(cur);
+
+        if(wants) parts.push("نیاز به گوشی جایگزین: بله");
+        if(alt && isValidIranMobile(alt)) parts.push("شماره تماس جایگزین: " + to09(alt));
+
+        return parts.join("، ");
+      }
+
+      // =========================
+      // Orders
+      // =========================
+      async function createOrder(){
+        setMsg(orderMsg, "", "");
+
+        const cn = (customerName.value || "").trim();
+        const dm = (deviceModel.value || "").trim();
+        const issueRaw = (problemDesc.value || "").trim();
+        const issue = buildIssueWithExtras(issueRaw);
+        const addr = (address.value || "").trim();
+        const pt = (pickupTime.value || "").trim();
+
+        if(!cn || !dm || !issue || !addr){
+          setMsg(orderMsg, "err", "نام، مدل گوشی، مشکل و آدرس را کامل وارد کنید.");
+          return;
+        }
+
+        if(!loggedIn()){
+          focusAuthGate();
+          return;
+        }
+
+        createOrderBtn.disabled = true;
+        setMsg(orderMsg, "warn", "در حال ثبت سفارش…");
+
+        // ✅ IMPORTANT: do NOT send needs_issue_photo (avoids schema-cache error)
+        const payload = {
+          order_no: genOrderNo(),
+          customer_phone: loginState.phone09,
+          customer_name: cn,
+          device_model: dm,
+          issue: issue,
+          pickup_address: addr,
+          pickup_time_text: pt || null,
+          delivery_method: "courier",
+          stage: "requested",
+          quoted_price_toman: 0,
+          price_approved: false
+        };
+
+        try{
+          const { data, error } = await supabase
+            .from("orders")
+            .insert(payload)
+            .select("*")
+            .single();
+
+          if(error){
+            console.error("Insert error:", error);
+            setMsg(orderMsg, "err", "ثبت سفارش ناموفق بود: " + (error.message || "خطای نامشخص"));
+            return;
+          }
+
+          setMsg(orderMsg, "ok", "سفارش ثبت شد ✅");
+
+          // reset
+          customerName.value = "";
+          deviceModel.value = "";
+          if(replacementPhone) replacementPhone.checked = false;
+          problemDesc.value = "";
+          address.value = "";
+          pickupTime.value = "";
+          altPhone.value = "";
+          localStorage.removeItem(DRAFT_KEY);
+
+          // move to "My orders"
+          setTab("mine");
+          await loadOrders();
+        }catch(e){
+          console.error("Create order exception:", e);
+          setMsg(orderMsg, "err", "ثبت سفارش ناموفق بود: " + (e?.message || "خطای نامشخص"));
+        }finally{
+          createOrderBtn.disabled = false;
+        }
+      }
+
+      async function loadOrders(){
+        if(!loggedIn()){
+          ordersCount.textContent = "0";
+          ordersWrap.innerHTML = '<div class="hint">بعد از ورود، سفارش‌های شما اینجا نمایش داده می‌شود.</div>';
+          return;
+        }
+
+        ordersWrap.innerHTML = '<div class="hint">در حال دریافت سفارش‌ها…</div>';
+
+        const { data, error } = await supabase
+          .from("orders")
+          .select("*")
+          .eq("customer_phone", loginState.phone09)
+          .order("created_at", { ascending:false });
+
+        if(error){
+          console.error("Load orders error:", error);
+          ordersWrap.innerHTML = `
+            <div class="status err">خواندن سفارش‌ها ناموفق بود</div>
+            <div class="hint" style="color:var(--danger)">${esc(error.message || "خطای نامشخص")}</div>
+          `;
+          ordersCount.textContent = "0";
+          return;
+        }
+
+        const list = data || [];
+        ordersCount.textContent = String(list.length);
+
+        if(list.length === 0){
+          ordersWrap.innerHTML = '<div class="hint">هنوز سفارشی ثبت نکرده‌اید.</div>';
+          return;
+        }
+
+        ordersWrap.innerHTML = list.map(o => {
+          const id = o.order_no ?? o.id ?? "";
+          const created = o.created_at ? fmtDate(o.created_at) : "";
+          const st = o.stage ?? o.status ?? o.state ?? "requested";
+          const dm = o.device_model ?? o.model ?? "";
+          const pr = o.issue ?? o.problem ?? "";
+          const ad = o.pickup_address ?? o.address ?? "";
+          const pt = o.pickup_time_text ?? o.pickup_time ?? "";
+
+          return `
+            <div class="order-item">
+              <div class="order-top">
+                <b>سفارش #${esc(id)}</b>
+                <span class="pill">وضعیت: ${esc(statusLabel(st))}</span>
+              </div>
+              <div class="hint" style="margin-top:0">
+                <b>مدل:</b> ${esc(dm)}<br>
+                <b>مشکل:</b> ${esc(pr)}<br>
+                <b>آدرس:</b> ${esc(ad)}${pt ? `<br><b>زمان دریافت:</b> ${esc(pt)}` : ""}${created ? `<br><b>ثبت:</b> ${esc(created)}` : ""}
+              </div>
+              ${renderTrack(st)}
+            </div>
+          `;
+        }).join("");
+      }
+
+      // =========================
+      // Init / UX
+      // =========================
+      // URL prefill: ?issue=lcd
+      function prefillFromQuery(){
+        const qs = new URLSearchParams(location.search);
+        const issue = (qs.get("issue") || "").toLowerCase();
+        const map = {
+          lcd: "شکستگی/خط روی ال‌سی‌دی",
+          charge: "مشکل شارژ/سوکت شارژ",
+          battery: "باتری ضعیف/زود خالی می‌کند",
+          water: "آب‌خوردگی",
+          power: "خاموشی/ریست شدن",
+          other: ""
+        };
+        const t = map[issue];
+        if(t && !problemDesc.value) problemDesc.value = t;
+      }
+
+      // topbar shrink
+      (function(){
+        const topbar = document.getElementById("topbar");
+        if(!topbar) return;
+        let ticking = false;
+        function onScroll(){
+          if(ticking) return;
+          ticking = true;
+          requestAnimationFrame(() => {
+            const y = window.scrollY || document.documentElement.scrollTop || 0;
+            if(y > 14) topbar.classList.add("scrolled");
+            else topbar.classList.remove("scrolled");
+            ticking = false;
+          });
+        }
+        onScroll();
+        window.addEventListener("scroll", onScroll, { passive:true });
+      })();
+
+      // Load login
+      try{
+        const raw = localStorage.getItem(LS_KEY);
+        loginState = raw ? JSON.parse(raw) : null;
+      }catch(_e){ loginState = null; }
+
+      applyLoginUI();
+      loadDraft();
+      prefillFromQuery();
+
+      // Events
+      tabCreate.addEventListener("click", () => setTab("create"));
+      tabMine.addEventListener("click", () => setTab("mine"));
+      toMineBtn.addEventListener("click", () => setTab("mine"));
+      toCreateBtn.addEventListener("click", () => setTab("create"));
+
+      sendOtpBtn.addEventListener("click", sendOtp);
+      resendBtn.addEventListener("click", async () => {
+        if(resendBtn.disabled) return;
+        if(!lastPhone09){
+          setMsg(authMsg, "err", "اول شماره را وارد کنید.");
+          return;
+        }
+        authPhone.value = lastPhone09;
+        await sendOtp();
+      });
+      verifyOtpBtn.addEventListener("click", verifyOtp);
+      logoutBtn.addEventListener("click", logout);
+
+      createOrderBtn.addEventListener("click", createOrder);
+      refreshOrdersBtn.addEventListener("click", loadOrders);
+
+      // Save draft
+      [customerName, deviceModel, problemDesc, address, pickupTime, altPhone, replacementPhone].forEach(el => {
+        if(!el) return;
+        el.addEventListener("input", saveDraft);
+        el.addEventListener("change", saveDraft);
+      });
+
+      // Quick issue chips
+      document.querySelectorAll(".qchip").forEach(btn => {
+        btn.addEventListener("click", () => {
+          const val = (btn.getAttribute("data-issue") || "").trim();
+          if(!val) return;
+          const cur = (problemDesc.value || "").trim();
+          const next = cur ? (cur + (cur.endsWith("،") || cur.endsWith(",") ? " " : "، ") + val) : val;
+          problemDesc.value = next;
+          problemDesc.focus();
+          saveDraft();
+        });
+      });
+
+      // If already logged in and user opens mine by default? keep create as default
+      setTab("create");
+    })();
+  </script>
+</body>
+</html>
