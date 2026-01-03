@@ -3,11 +3,11 @@
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <title>موبیکس — تعمیر موبایل با سرویس کامل</title>
+  <title>موبیکس — تعمیر موبایل</title>
 
-  <meta name="description" content="تعمیر موبایل با سرویس کامل موبیکس: دریافت و تحویل با پیک، قیمت قبل از اقدام، پیگیری مرحله‌ای." />
-  <meta property="og:title" content="موبیکس — تعمیر موبایل با سرویس کامل" />
-  <meta property="og:description" content="دریافت و تحویل با پیک + قیمت قبل از اقدام + پیگیری مرحله‌ای" />
+  <meta name="description" content="موبیکس؛ سرویس تخصصی تعمیر موبایل. سریع، شفاف، قابل پیگیری." />
+  <meta property="og:title" content="موبیکس — تعمیر موبایل" />
+  <meta property="og:description" content="سرویس تخصصی تعمیر موبایل. سریع، شفاف، قابل پیگیری." />
   <meta property="og:type" content="website" />
   <meta property="og:image" content="assets/hero-new.png" />
 
@@ -21,7 +21,6 @@
 
   <style>
     :root{
-      --bg:#F6F8FC;
       --text:#0B1220;
       --muted:#5B6B84;
       --line:rgba(15,23,42,.085);
@@ -67,12 +66,10 @@
       backdrop-filter: blur(14px);
       transition: padding .18s ease;
     }
-
     .topbar-inner{
       display:flex;align-items:center;justify-content:space-between;
       gap:12px;
 
-      /* ✅ به‌جای pill ساده: کارت شیشه‌ای حرفه‌ای */
       background:rgba(255,255,255,.62);
       border:1px solid rgba(15,23,42,.10);
       border-radius:22px;
@@ -86,7 +83,6 @@
         transform .18s ease,
         border-color .18s ease;
     }
-
     .topbar.scrolled{ padding:8px 0; }
     .topbar.scrolled .topbar-inner{
       padding:10px 14px;
@@ -96,9 +92,7 @@
       transform: translateY(-1px);
     }
 
-    .brand{
-      display:flex;align-items:center;gap:12px;min-width:0;
-    }
+    .brand{display:flex;align-items:center;gap:12px;min-width:0}
     .brand img{
       width:74px;height:auto;
       transition: width .18s ease;
@@ -115,20 +109,13 @@
       line-height:1.2;
     }
 
-    /* ✅ امضای کوچک، بدون حس تبلیغ */
+    /* ✅ replaced */
     .brand-sub{
-      display:flex;align-items:center;gap:8px;
       color:var(--muted);
       font-size:12.6px;
       font-weight:800;
       white-space:nowrap;overflow:hidden;text-overflow:ellipsis;
-    }
-    .brand-sub i{
-      width:10px;height:10px;border-radius:999px;
-      background:linear-gradient(135deg,var(--primary),var(--primary2));
-      box-shadow:0 10px 18px rgba(31,106,255,.18);
-      display:inline-block;
-      flex:0 0 auto;
+      line-height:1.2;
     }
 
     .nav{display:flex;align-items:center;gap:10px;flex-wrap:wrap;justify-content:flex-end}
@@ -147,7 +134,7 @@
       align-items:center;
       justify-content:center;
       gap:8px;
-      transition: transform .12s ease, box-shadow .12s ease, padding .18s ease;
+      transition: transform .12s ease, box-shadow .12s ease, padding .18s ease, border-radius .18s ease;
     }
     .btn:hover{ transform: translateY(-1px); box-shadow:0 16px 30px rgba(15,23,42,.10); }
     .btn.primary{
@@ -155,7 +142,12 @@
       color:#fff;border:none;
       box-shadow:0 18px 34px rgba(31,106,255,.18);
     }
-    .topbar.scrolled .btn{ padding:10px 16px; }
+
+    /* ✅ shrink button subtly */
+    .topbar.scrolled .btn{
+      padding:10px 16px;
+      border-radius:14px;
+    }
 
     /* =========================
        HERO
@@ -177,7 +169,7 @@
       box-shadow:var(--shadow);
     }
 
-    /* ✅ کوچکتر + حرفه‌ای‌تر */
+    /* ✅ final chosen title */
     .hero-title{
       font-size:34px;
       font-weight:980;
@@ -186,16 +178,6 @@
       line-height:1.22;
     }
     @media(max-width:520px){.hero-title{font-size:28px}}
-
-    /* ✅ یک خط کوتاه، نه زیرتیتر طولانی */
-    .hero-line{
-      margin-top:10px;
-      color:var(--muted);
-      font-size:14.2px;
-      line-height:1.95;
-      font-weight:700;
-    }
-    .hero-line b{color:var(--text);font-weight:950}
 
     .hero-art{
       border-radius:22px;
@@ -333,21 +315,84 @@
     .contact-strip b{font-weight:980}
     .contact-strip span{color:var(--muted);font-size:13.6px;line-height:1.9}
 
-    /* FOOTER */
-    .footer{
-      margin-top:22px;
-      padding-top:14px;
-      border-top:1px solid rgba(15,23,42,.08);
-      font-size:13px;
-      color:var(--muted);
-      display:flex;
-      justify-content:space-between;
-      gap:10px;
-      flex-wrap:wrap;
-      align-items:flex-end;
+    /* =========================
+       FOOTER (Upgraded)
+       ========================= */
+    footer{margin-top:22px}
+
+    .footer-card{
+      background:rgba(255,255,255,.92);
+      border:1px solid rgba(15,23,42,.08);
+      border-radius:26px;
+      box-shadow:var(--shadow);
+      padding:18px;
+      overflow:hidden;
+      position:relative;
     }
-    .footer-left{display:flex;flex-direction:column;gap:6px}
-    .footer-right{display:flex;align-items:flex-end}
+    .footer-card:before{
+      content:"";
+      position:absolute;
+      inset:-140px -140px auto auto;
+      width:280px;height:280px;border-radius:999px;
+      background:rgba(31,106,255,.06);
+      transform:rotate(12deg);
+      pointer-events:none;
+    }
+
+    .footer-grid{
+      display:grid;
+      grid-template-columns: 1.2fr 1fr 1.2fr;
+      gap:14px;
+      align-items:start;
+      position:relative;
+    }
+    @media(max-width:980px){.footer-grid{grid-template-columns:1fr}}
+    .f-title{
+      font-weight:980;
+      letter-spacing:-.2px;
+      margin:0;
+      font-size:15px;
+    }
+    .f-muted{color:var(--muted);font-size:13.4px;line-height:1.9;margin-top:8px}
+    .f-links{
+      display:flex;
+      flex-direction:column;
+      gap:8px;
+      margin-top:10px;
+    }
+    .f-links a{
+      color:var(--text);
+      font-weight:900;
+      font-size:13.6px;
+      padding:8px 10px;
+      border-radius:14px;
+      border:1px solid rgba(15,23,42,.08);
+      background:rgba(246,248,252,.55);
+      box-shadow:0 10px 18px rgba(15,23,42,.04);
+      width:fit-content;
+      transition:transform .12s ease, box-shadow .12s ease;
+    }
+    .f-links a:hover{
+      transform:translateY(-1px);
+      box-shadow:0 16px 30px rgba(15,23,42,.08);
+    }
+
+    .f-kpis{
+      display:grid;
+      grid-template-columns:1fr 1fr;
+      gap:10px;
+      margin-top:10px;
+    }
+    @media(max-width:980px){.f-kpis{grid-template-columns:1fr}}
+    .fk{
+      border:1px solid rgba(15,23,42,.08);
+      border-radius:18px;
+      background:#fff;
+      box-shadow:0 10px 18px rgba(15,23,42,.05);
+      padding:12px;
+    }
+    .fk b{display:block;font-weight:980;font-size:13px}
+    .fk span{display:block;color:var(--muted);font-size:12.8px;line-height:1.7;margin-top:6px}
 
     .enamad img{
       width:96px;
@@ -358,10 +403,24 @@
       filter:saturate(.96);
     }
 
+    .footer-bottom{
+      margin-top:14px;
+      padding-top:12px;
+      border-top:1px solid rgba(15,23,42,.08);
+      display:flex;
+      justify-content:space-between;
+      gap:10px;
+      flex-wrap:wrap;
+      color:var(--muted);
+      font-size:12.8px;
+      position:relative;
+    }
+
     @media (max-width: 520px){
       .card{padding:14px}
       .brand img{width:66px}
       .topbar.scrolled .brand img{width:60px}
+      .hero-title{font-size:28px}
       .mp-steps .s{min-width:0;flex:1 1 100%}
       .enamad img{width:92px}
       .btn{padding:10px 14px}
@@ -380,12 +439,11 @@
           <img src="assets/logo.png" alt="موبیکس">
           <div class="brand-meta">
             <div class="brand-title">موبیکس</div>
-            <div class="brand-sub"><i></i> سرویس کامل</div>
+            <div class="brand-sub">سرویس تخصصی تعمیر موبایل</div>
           </div>
         </a>
 
         <div class="nav" aria-label="Navigation">
-          <!-- ✅ فقط یک CTA در کل صفحه (طبق تصمیم تو) -->
           <a class="btn primary" href="order/">ثبت سفارش</a>
         </div>
       </div>
@@ -394,10 +452,7 @@
     <!-- HERO -->
     <section class="hero" id="top">
       <div class="card">
-        <h1 class="hero-title">تعمیر موبایل، از دریافت تا تحویل</h1>
-        <div class="hero-line">
-          <b>زمان و مکان</b> رو شما تعیین می‌کنید. <b>قیمت قبل از اقدام</b>.
-        </div>
+        <h1 class="hero-title">تعمیر موبایل؛ سریع، شفاف، قابل پیگیری</h1>
 
         <div class="grid-3" aria-label="Control points">
           <div class="focus-card">
@@ -490,16 +545,67 @@
     </section>
 
     <!-- FOOTER -->
-    <footer class="footer" aria-label="Footer">
-      <div class="footer-left">
-        <span>© Mobix</span>
-      </div>
+    <footer aria-label="Footer">
+      <div class="footer-card">
+        <div class="footer-grid">
+          <!-- Brand -->
+          <div>
+            <div style="display:flex;align-items:center;gap:10px">
+              <img src="assets/logo.png" alt="موبیکس" style="width:58px;height:auto">
+              <div>
+                <div class="f-title">موبیکس</div>
+                <div class="f-muted" style="margin-top:4px">سرویس تخصصی تعمیر موبایل</div>
+              </div>
+            </div>
 
-      <div class="footer-right">
-        <div class="enamad" aria-label="اینماد">
-          <a referrerpolicy="origin" target="_blank" href="https://trustseal.enamad.ir/?id=5414923&Code=DiznrIm0BJGpnPrtdWijxsgtOlPs8Aqf">
-            <img referrerpolicy="origin" src="https://trustseal.enamad.ir/logo.aspx?id=5414923&Code=DiznrIm0BJGpnPrtdWijxsgtOlPs8Aqf" alt="" style="cursor:pointer" code="DiznrIm0BJGpnPrtdWijxsgtOlPs8Aqf">
-          </a>
+            <div class="f-kpis">
+              <div class="fk">
+                <b>قیمت قبل از اقدام</b>
+                <span>قبل از هر تعمیر، هزینه با شما هماهنگ می‌شود.</span>
+              </div>
+              <div class="fk">
+                <b>پیگیری مرحله‌ای</b>
+                <span>وضعیت سفارش همیشه شفاف و قابل پیگیری است.</span>
+              </div>
+            </div>
+          </div>
+
+          <!-- Links -->
+          <div>
+            <div class="f-title">دسترسی سریع</div>
+            <div class="f-links" aria-label="Footer links">
+              <a href="about/">درباره ما</a>
+              <a href="contact/">تماس با ما</a>
+              <a href="order/">ثبت سفارش</a>
+              <a href="#quick">شروع سریع</a>
+            </div>
+          </div>
+
+          <!-- Trust -->
+          <div>
+            <div class="f-title">اعتماد و مجوزها</div>
+            <div class="f-muted">اطلاعات و مجوزها برای اطمینان شما.</div>
+
+            <div style="margin-top:12px;display:flex;gap:12px;align-items:flex-end;flex-wrap:wrap">
+              <div class="enamad" aria-label="اینماد">
+                <a referrerpolicy="origin" target="_blank" href="https://trustseal.enamad.ir/?id=5414923&Code=DiznrIm0BJGpnPrtdWijxsgtOlPs8Aqf">
+                  <img referrerpolicy="origin" src="https://trustseal.enamad.ir/logo.aspx?id=5414923&Code=DiznrIm0BJGpnPrtdWijxsgtOlPs8Aqf" alt="" style="cursor:pointer" code="DiznrIm0BJGpnPrtdWijxsgtOlPs8Aqf">
+                </a>
+              </div>
+
+              <div style="display:flex;flex-direction:column;gap:6px;min-width:220px">
+                <div class="fk" style="padding:12px 14px">
+                  <b>پیک موبیکس</b>
+                  <span>زمان و مکان دریافت/تحویل را شما تعیین می‌کنید.</span>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="footer-bottom">
+          <span>© Mobix — همه حقوق محفوظ است</span>
+          <span>سریع • شفاف • قابل پیگیری</span>
         </div>
       </div>
     </footer>
@@ -527,7 +633,7 @@
       window.addEventListener("scroll", onScroll, { passive: true });
     })();
 
-    // (اختیاری) اگر بعداً اسکریپت چت آنلاین اضافه کردی:
+    // (اختیاری) بعداً برای چت آنلاین:
     // window.addEventListener('mobix_open_chat', () => CrispChat.open());
   </script>
 </body>
