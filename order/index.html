@@ -117,6 +117,11 @@
       border:1px solid rgba(239,68,68,.25);
       color:#7F1D1D;
     }
+    .btn.warn{
+      background:rgba(245,158,11,.12);
+      border:1px solid rgba(245,158,11,.28);
+      color:#78350F;
+    }
     .btn:disabled{opacity:.55;cursor:not-allowed}
 
     /* CARDS */
@@ -347,6 +352,22 @@
       font-size:12.5px;
       white-space:nowrap;
     }
+    .pill.warn{
+      background:rgba(245,158,11,.10);
+      border-color:rgba(245,158,11,.22);
+      color:#78350F;
+    }
+    .pill.ok{
+      background:rgba(16,185,129,.08);
+      border-color:rgba(16,185,129,.22);
+      color:#0B3A2C;
+    }
+    .pill.err{
+      background:rgba(239,68,68,.08);
+      border-color:rgba(239,68,68,.22);
+      color:#7F1D1D;
+    }
+
     .muted{color:var(--muted);font-size:13.2px;line-height:1.9}
 
     /* Tracking */
@@ -386,7 +407,81 @@
     .track-step .tt b{display:block;font-weight:900}
     .track-step .tt span{display:block;color:var(--muted);font-size:13px;line-height:1.85;margin-top:3px}
 
-    /* Footer (simple here; you said later it should match home - we keep clean now) */
+    /* Price approval actions */
+    .price-actions{
+      display:flex;
+      gap:10px;
+      flex-wrap:wrap;
+      justify-content:flex-start;
+      margin-top:10px;
+    }
+
+    /* Modal */
+    .modal-backdrop{
+      position:fixed;
+      inset:0;
+      background:rgba(11,18,32,.45);
+      backdrop-filter: blur(6px);
+      display:none;
+      align-items:center;
+      justify-content:center;
+      padding:16px;
+      z-index:999;
+    }
+    .modal{
+      width:min(640px, 100%);
+      background:#fff;
+      border:1px solid var(--line);
+      border-radius:22px;
+      box-shadow: 0 22px 60px rgba(15,23,42,.22);
+      padding:16px;
+    }
+    .modal h2{
+      margin:0;
+      font-size:18px;
+      font-weight:900;
+      line-height:1.6;
+    }
+    .modal .modal-sub{
+      margin:6px 0 0;
+      color:var(--muted);
+      line-height:1.9;
+      font-size:13.5px;
+    }
+    .modal .modal-box{
+      margin-top:12px;
+      border:1px solid var(--line);
+      background:rgba(246,248,252,.55);
+      border-radius:18px;
+      padding:12px;
+      box-shadow:var(--shadow2);
+    }
+    .modal .modal-row{
+      display:flex;
+      align-items:center;
+      justify-content:space-between;
+      gap:10px;
+      flex-wrap:wrap;
+      margin-top:10px;
+    }
+    .modal .modal-actions{
+      margin-top:14px;
+      display:flex;
+      gap:10px;
+      flex-wrap:wrap;
+      justify-content:flex-start;
+    }
+    .modal .close-x{
+      border:1px solid var(--line);
+      background:#fff;
+      border-radius:12px;
+      padding:8px 10px;
+      font-weight:900;
+      cursor:pointer;
+      box-shadow:var(--shadow2);
+    }
+
+    /* Footer */
     .footer{
       margin-top:18px;
       padding-top:14px;
@@ -455,7 +550,8 @@
         <div class="divider"></div>
         <div class="muted">
           • بعد از ورود، نام شما یک‌بار ثبت می‌شود و برای سفارش‌های بعدی نیاز نیست دوباره وارد کنید.<br>
-          • هر زمان قیمت اعلام شود، داخل همین صفحه در سفارش‌های شما نمایش داده می‌شود.
+          • هر زمان قیمت اعلام شود، داخل همین صفحه در سفارش‌های شما نمایش داده می‌شود.<br>
+          • بعد از اعلام قیمت، تایید/رد قیمت همینجا انجام می‌شود (دو مرحله‌ای).
         </div>
       </div>
     </section>
@@ -526,7 +622,6 @@
 
           <div class="field">
             <div class="label">نام و نام خانوادگی</div>
-            <!-- FIX #1: do NOT use Kamyar or any personal name -->
             <input id="fullName" class="input" placeholder="نام و نام خانوادگی" value="" />
           </div>
 
@@ -608,7 +703,6 @@
     <div class="footer">
       <span>© Mobix</span>
       <div class="enamad">
-        <!-- Enamad -->
         <a referrerpolicy="origin" target="_blank" href="https://trustseal.enamad.ir/?id=5414923&Code=DiznrIm0BJGpnPrtdWijxsgtOlPs8Aqf">
           <img referrerpolicy="origin" src="https://trustseal.enamad.ir/logo.aspx?id=5414923&Code=DiznrIm0BJGpnPrtdWijxsgtOlPs8Aqf" alt="اینماد" style="cursor:pointer" code="DiznrIm0BJGpnPrtdWijxsgtOlPs8Aqf">
         </a>
@@ -616,6 +710,47 @@
       <span></span>
     </div>
 
+  </div>
+
+  <!-- PRICE APPROVAL MODAL (Two-step) -->
+  <div class="modal-backdrop" id="priceModalBackdrop" aria-hidden="true">
+    <div class="modal" role="dialog" aria-modal="true" aria-labelledby="priceModalTitle">
+      <div class="order-top">
+        <h2 id="priceModalTitle">تایید قیمت (مرحله ۲)</h2>
+        <button class="close-x" type="button" id="priceModalClose">بستن</button>
+      </div>
+      <p class="modal-sub" id="priceModalSub">
+        قبل از تایید نهایی، قیمت و جزئیات را یک‌بار دیگر بررسی کنید.
+      </p>
+
+      <div class="modal-box">
+        <div class="modal-row">
+          <span class="status" id="priceModalOrderNo">سفارش: -</span>
+          <span class="status ok" id="priceModalPrice">-</span>
+        </div>
+        <div class="divider"></div>
+        <div class="muted" id="priceModalHint">
+          • با تایید نهایی، سفارش وارد مرحله پرداخت می‌شود (درگاه پرداخت: به زودی).<br>
+          • اگر قیمت را نمی‌پذیرید، «رد قیمت» را بزنید.
+        </div>
+
+        <div class="checkrow" style="margin-top:12px">
+          <input id="priceFinalCheck" type="checkbox" />
+          <div>
+            <b>تایید می‌کنم</b>
+            <span>قیمت اعلام‌شده را بررسی کردم و تایید می‌کنم.</span>
+          </div>
+        </div>
+      </div>
+
+      <div class="modal-actions">
+        <button class="btn primary" id="priceFinalApproveBtn" type="button" disabled>تایید نهایی</button>
+        <button class="btn danger" id="priceFinalRejectBtn" type="button">رد قیمت</button>
+        <button class="btn ghost" id="priceModalCancel" type="button">انصراف</button>
+      </div>
+
+      <div class="hint" id="priceModalMsg" aria-live="polite"></div>
+    </div>
   </div>
 
   <!-- Supabase JS -->
@@ -733,6 +868,17 @@
       const ordersWrap = document.getElementById("ordersWrap");
       const ordersCount = document.getElementById("ordersCount");
 
+      // Modal elements
+      const priceModalBackdrop = document.getElementById("priceModalBackdrop");
+      const priceModalClose = document.getElementById("priceModalClose");
+      const priceModalCancel = document.getElementById("priceModalCancel");
+      const priceFinalCheck = document.getElementById("priceFinalCheck");
+      const priceFinalApproveBtn = document.getElementById("priceFinalApproveBtn");
+      const priceFinalRejectBtn = document.getElementById("priceFinalRejectBtn");
+      const priceModalOrderNo = document.getElementById("priceModalOrderNo");
+      const priceModalPrice = document.getElementById("priceModalPrice");
+      const priceModalMsg = document.getElementById("priceModalMsg");
+
       // =========================
       // State
       // =========================
@@ -746,6 +892,13 @@
       let lastPhone09 = null;
       let timerId = null;
       let remaining = 0;
+
+      // Realtime / Polling
+      let realtimeChannel = null;
+      let pollTimer = null;
+
+      // Modal order state
+      let modalOrder = null; // current order object for approval
 
       // =========================
       // UI Helpers
@@ -880,7 +1033,7 @@
       }
 
       // =========================
-      // Status mapping (FIX #4)
+      // Status mapping (Fix: price_quoted)
       // =========================
       const STATUS_FA = {
         requested: "ثبت شده",
@@ -906,14 +1059,23 @@
 
       function normalizeStatus(raw){
         const s = (raw || "").toString().trim().toLowerCase();
+
+        // --- important: map your dashboard values ---
+        if(["price_quoted","pricequoted","price-quoted"].includes(s)) return "quoted";
+        if(["quoted","quote","price","awaiting_approval","approved_pending"].includes(s)) return "quoted";
+
         if(["new","created","request","requested","pending"].includes(s)) return "requested";
-        if(["pickup","pickedup","picked_up","courier_pickup","received"].includes(s)) return s === "received" ? "picked_up" : "picked_up";
-        if(["quote","quoted","price","awaiting_approval","approved_pending"].includes(s)) return "quoted";
+
+        if(["pickup","pickedup","picked_up","courier_pickup","received"].includes(s)){
+          return "picked_up";
+        }
+
         if(["repair","repairing","in_repair","fixing"].includes(s)) return "repairing";
         if(["deliver","delivering","shipping","on_the_way"].includes(s)) return "delivering";
         if(["done","delivered","completed","complete"].includes(s)) return "delivered";
         if(["reject","rejected","declined"].includes(s)) return "rejected";
         if(["cancel","canceled","cancelled"].includes(s)) return "canceled";
+
         return s || "requested";
       }
 
@@ -950,7 +1112,79 @@
       }
 
       // =========================
-      // UI Apply (FIX #3: guide only before login)
+      // Price approval helpers
+      // =========================
+      function approvalStateFromOrder(o){
+        // price_approval is text in your table (pending / approved / rejected / not_needed)
+        const pa = (o && o.price_approval != null) ? String(o.price_approval).trim().toLowerCase() : "";
+        if(pa === "approved") return "approved";
+        if(pa === "rejected") return "rejected";
+        if(pa === "not_needed") return "not_needed";
+        if(pa === "pending") return "pending";
+
+        // fallback to boolean if needed
+        if(o && o.price_approved === true) return "approved";
+        return pa || "pending";
+      }
+
+      function approvalLabelFa(state){
+        const s = (state || "").toLowerCase();
+        if(s === "approved") return "تایید شده";
+        if(s === "rejected") return "رد شده";
+        if(s === "not_needed") return "نیازی نیست";
+        if(s === "pending") return "در انتظار تایید شما";
+        return "در انتظار تایید شما";
+      }
+
+      function approvalPillClass(state){
+        const s = (state || "").toLowerCase();
+        if(s === "approved") return "pill ok";
+        if(s === "rejected") return "pill err";
+        return "pill warn";
+      }
+
+      function shouldShowPriceActions(o){
+        // only when stage is price quoted and approval is pending
+        const stageNorm = normalizeStatus(o?.stage ?? o?.status ?? "");
+        const appr = approvalStateFromOrder(o);
+
+        // If price is not set, no actions
+        const hasPrice = Number(o?.quoted_price_toman || 0) > 0;
+
+        return hasPrice && stageNorm === "quoted" && appr === "pending";
+      }
+
+      // =========================
+      // Modal control
+      // =========================
+      function openPriceModal(order){
+        modalOrder = order || null;
+        priceFinalCheck.checked = false;
+        priceFinalApproveBtn.disabled = true;
+        setMsg(priceModalMsg, "", "");
+
+        const orderNo = modalOrder?.order_no ?? modalOrder?.id ?? "-";
+        const priceText = formatToman(modalOrder?.quoted_price_toman) || "—";
+
+        priceModalOrderNo.textContent = "سفارش: " + orderNo;
+        priceModalPrice.textContent = priceText;
+        priceModalPrice.className = "status ok";
+
+        priceModalBackdrop.style.display = "flex";
+        priceModalBackdrop.setAttribute("aria-hidden", "false");
+      }
+
+      function closePriceModal(){
+        priceModalBackdrop.style.display = "none";
+        priceModalBackdrop.setAttribute("aria-hidden", "true");
+        modalOrder = null;
+        priceFinalCheck.checked = false;
+        priceFinalApproveBtn.disabled = true;
+        setMsg(priceModalMsg, "", "");
+      }
+
+      // =========================
+      // UI Apply (guide only before login)
       // =========================
       function applyLoginUI(){
         const li = loggedIn();
@@ -961,12 +1195,11 @@
           if(navLogoutBtn) navLogoutBtn.style.display = "";
           setStatus(orderGate, "ok", "می‌توانید سفارش را ارسال کنید");
 
-          // FIX #3: show guide before login, after login remove/hide it
+          // guide only before login
           if(guideCard){
             guideCard.style.display = "none";
           }
 
-          // show greeting if name exists
           if(hasProfileName()){
             helloBadge.style.display = "";
             helloBadge.className = "status ok";
@@ -975,16 +1208,13 @@
             helloBadge.style.display = "none";
           }
 
-          // show profile card if name missing
           profileCard.style.display = hasProfileName() ? "none" : "";
-
         }else{
           setStatus(sessionBadge, "warn", "وارد نشده‌اید");
           if(authCard) authCard.style.display = "";
           if(navLogoutBtn) navLogoutBtn.style.display = "none";
           setStatus(orderGate, "warn", "برای ارسال نهایی باید وارد شوید");
 
-          // FIX #3: guide visible before login
           if(guideCard){
             guideCard.style.display = "";
           }
@@ -994,6 +1224,62 @@
 
           ordersWrap.innerHTML = '<div class="muted">بعد از ورود، سفارش‌های شما اینجا نمایش داده می‌شود.</div>';
           ordersCount.textContent = "0";
+        }
+      }
+
+      // =========================
+      // Realtime + Polling
+      // =========================
+      function stopRealtime(){
+        try{
+          if(realtimeChannel){
+            supabase.removeChannel(realtimeChannel);
+            realtimeChannel = null;
+          }
+        }catch(_e){}
+      }
+
+      function stopPolling(){
+        if(pollTimer) clearInterval(pollTimer);
+        pollTimer = null;
+      }
+
+      function startPolling(){
+        stopPolling();
+        // هر 20 ثانیه یکبار برای اینکه حتی اگر Realtime اجازه نداد، مرحله‌ها آپدیت شود
+        pollTimer = setInterval(() => {
+          if(loggedIn()) loadOrders();
+        }, 20000);
+      }
+
+      function startRealtime(){
+        stopRealtime();
+
+        if(!loggedIn()) return;
+
+        // NOTE:
+        // اگر Realtime/RLS اجازه فیلتر ندهد، همچنان polling فعال است و دکمه «به‌روزرسانی» هم هست.
+        // این کانال فقط برای اینکه "پس از تغییر داشبورد" خودکار آپدیت شود.
+        try{
+          realtimeChannel = supabase.channel("mobix-orders-realtime")
+            .on(
+              "postgres_changes",
+              {
+                event: "*",
+                schema: "public",
+                table: "orders",
+                filter: "customer_phone=eq." + loginState.phone09
+              },
+              (_payload) => {
+                loadOrders();
+              }
+            )
+            .subscribe((status) => {
+              // اگر وصل شد یا نشد، مهم نیست چون polling هم داریم.
+              // status می‌تواند SUBSCRIBED/CHANNEL_ERROR/TIMED_OUT باشد.
+            });
+        }catch(_e){
+          // ignore and rely on polling
         }
       }
 
@@ -1070,6 +1356,10 @@
 
           applyLoginUI();
           loadDraft();
+
+          startRealtime();
+          startPolling();
+
           await loadOrders();
         }catch(err){
           setMsg(authMsg, "err", "ورود ناموفق بود: " + (err?.message || "خطای نامشخص"));
@@ -1097,12 +1387,15 @@
         otpWrap.style.display = "none";
         stopTimer();
 
+        stopRealtime();
+        stopPolling();
+
         setMsg(authMsg, "ok", "خارج شدید.");
         applyLoginUI();
       }
 
       // =========================
-      // Profile (ask name after login)
+      // Profile
       // =========================
       function loadProfile(){
         try{
@@ -1191,8 +1484,7 @@
           stage: "requested",
           quoted_price_toman: 0,
           price_approved: false,
-          price_approved: false,
-          // your table has: needs_loaner_phone (boolean)
+          price_approval: "not_needed",
           needs_loaner_phone: !!(replacementPhone && replacementPhone.checked)
         };
 
@@ -1232,7 +1524,84 @@
       }
 
       // =========================
-      // Load orders (FIX #4 and FIX #5)
+      // Price approval actions (two-step)
+      // =========================
+      async function updatePriceApproval(order, action){
+        // action: "approve" | "reject"
+        if(!order) return;
+
+        const id = order.id;
+        const orderNo = order.order_no || id;
+
+        if(!id){
+          setMsg(priceModalMsg, "err", "شناسه سفارش پیدا نشد.");
+          return;
+        }
+
+        priceFinalApproveBtn.disabled = true;
+        priceFinalRejectBtn.disabled = true;
+        setMsg(priceModalMsg, "warn", "در حال ثبت نتیجه…");
+
+        try{
+          if(action === "approve"){
+            // stage stays quoted; approval becomes approved; price_approved true
+            const { error } = await supabase
+              .from("orders")
+              .update({
+                price_approved: true,
+                price_approval: "approved"
+              })
+              .eq("id", id);
+
+            if(error){
+              console.error("Approve update error:", error);
+              setMsg(priceModalMsg, "err", "ثبت تایید ناموفق بود: " + (error.message || "خطای نامشخص"));
+              return;
+            }
+
+            setMsg(priceModalMsg, "ok", "قیمت تایید شد ✅ (درگاه پرداخت: به زودی)");
+            // close after short delay
+            setTimeout(() => {
+              closePriceModal();
+              loadOrders();
+            }, 900);
+          }else if(action === "reject"){
+            const { error } = await supabase
+              .from("orders")
+              .update({
+                price_approved: false,
+                price_approval: "rejected"
+              })
+              .eq("id", id);
+
+            if(error){
+              console.error("Reject update error:", error);
+              setMsg(priceModalMsg, "err", "ثبت رد ناموفق بود: " + (error.message || "خطای نامشخص"));
+              return;
+            }
+
+            setMsg(priceModalMsg, "ok", "قیمت رد شد ✅");
+            setTimeout(() => {
+              closePriceModal();
+              loadOrders();
+            }, 900);
+          }else{
+            setMsg(priceModalMsg, "err", "عملیات نامعتبر است.");
+          }
+        }catch(e){
+          console.error("Price approval exception:", e);
+          setMsg(priceModalMsg, "err", "خطا: " + (e?.message || "خطای نامشخص"));
+        }finally{
+          // if still open, re-enable buttons based on checkbox
+          if(priceModalBackdrop.style.display === "flex"){
+            priceFinalRejectBtn.disabled = false;
+            priceFinalApproveBtn.disabled = !priceFinalCheck.checked;
+          }
+        }
+      }
+
+      // =========================
+      // Load orders (Fix: Persian status + stage updates + show approve/reject)
       // =========================
       async function loadOrders(){
         if(!loggedIn()){
@@ -1269,7 +1638,9 @@
         ordersWrap.innerHTML = list.map(o => {
           const id = o.order_no ?? o.id ?? "";
           const created = o.created_at ? fmtDate(o.created_at) : "";
-          const rawStage = (o.stage ?? o.status ?? o.state ?? "requested");
+
+          // IMPORTANT: Always prefer stage for tracking (dashboard edits stage)
+          const rawStage = (o.stage != null && String(o.stage).trim() !== "") ? o.stage : (o.status ?? o.state ?? "requested");
           const stNorm = normalizeStatus(rawStage);
 
           const dm = o.device_model ?? o.model ?? "";
@@ -1277,16 +1648,49 @@
           const ad = o.pickup_address ?? o.address ?? "";
           const pt = o.pickup_time_text ?? o.pickup_time ?? "";
 
-          // FIX #5: price display from quoted_price_toman
+          // price info
           const priceText = formatToman(o.quoted_price_toman);
+          const hasPrice = !!priceText;
 
+          // approval info
+          const appr = approvalStateFromOrder(o);
+          const apprLabel = approvalLabelFa(appr);
+
+          // loaner
           const needsLoaner = !!(o.needs_loaner_phone);
 
+          // show action buttons only when price quoted & pending
+          const showActions = shouldShowPriceActions(o);
+
+          // action UI
+          const actionsHtml = showActions ? `
+            <div class="price-actions">
+              <button class="btn warn" type="button"
+                data-act="open-approve"
+                data-order-id="${esc(String(o.id ?? ""))}">
+                تایید قیمت
+              </button>
+              <button class="btn danger" type="button"
+                data-act="reject-direct"
+                data-order-id="${esc(String(o.id ?? ""))}">
+                رد قیمت
+              </button>
+              <span class="status warn">تایید دو مرحله‌ای است</span>
+            </div>
+          ` : "";
+
+          const priceHeaderRight = hasPrice
+            ? `<span class="status ok">${esc(priceText)}</span>`
+            : `<span class="status warn">در انتظار اعلام قیمت</span>`;
+
+          const apprPill = (stNorm === "quoted" && hasPrice)
+            ? `<span class="${approvalPillClass(appr)}">وضعیت قیمت: ${esc(apprLabel)}</span>`
+            : "";
+
           return `
-            <div class="order-item">
+            <div class="order-item" data-order-row="1" data-order-id="${esc(String(o.id ?? ""))}">
               <div class="order-top">
                 <b>سفارش #${esc(id)}</b>
-                <!-- FIX #4: Persian status -->
                 <span class="pill">وضعیت: ${esc(statusLabelFa(stNorm))}</span>
               </div>
 
@@ -1304,16 +1708,101 @@
 
               <div class="order-top">
                 <b style="font-weight:900">قیمت</b>
-                <span class="status ${priceText ? "ok" : "warn"}">
-                  ${priceText ? esc(priceText) : "در انتظار اعلام قیمت"}
-                </span>
+                ${priceHeaderRight}
               </div>
+
+              ${apprPill ? `<div class="order-top">${apprPill}</div>` : ""}
+
+              ${actionsHtml}
 
               ${renderTrack(stNorm)}
             </div>
           `;
         }).join("");
+
+        // bind buttons after render
+        bindOrderActionButtons(list);
       }
+
+      function bindOrderActionButtons(orderList){
+        // remove previous handlers by using event delegation on ordersWrap
+        // but to keep it very deterministic, we'll attach once with a flag.
+        // We'll use delegation anyway because re-render happens often.
+
+        // Ensure only one delegation is attached
+        if(!ordersWrap.__mobixDelegationAttached){
+          ordersWrap.addEventListener("click", async (e) => {
+            const target = e.target;
+            if(!target) return;
+
+            const btn = target.closest("button[data-act]");
+            if(!btn) return;
+
+            const act = btn.getAttribute("data-act");
+            const idStr = btn.getAttribute("data-order-id");
+            const orderId = Number(idStr);
+
+            if(!Number.isFinite(orderId)) return;
+
+            // find order in current DOM set by reading from latest orderList in closure not possible
+            // so we fetch minimal by scanning DOM and then using lastKnownOrders map.
+            const order = lastKnownOrders.get(orderId);
+            if(!order) return;
+
+            if(act === "open-approve"){
+              // First step: open modal (second step inside modal)
+              openPriceModal(order);
+              return;
+            }
+
+            if(act === "reject-direct"){
+              // For reject, we still do two-step? You requested two-step for تایید قیمت.
+              // Reject can be single-step (fast), but we do a confirm to prevent mistake.
+              const ok = confirm("قیمت را رد می‌کنید؟ این کار قابل بازگشت نیست.");
+              if(!ok) return;
+
+              // Do reject without modal (quick)
+              // But still keep UI consistent: we can reuse modal with reject path if you want.
+              // Here: direct update.
+              try{
+                btn.disabled = true;
+                const { error } = await supabase
+                  .from("orders")
+                  .update({
+                    price_approved: false,
+                    price_approval: "rejected"
+                  })
+                  .eq("id", orderId);
+
+                if(error){
+                  alert("ثبت رد ناموفق بود: " + (error.message || "خطای نامشخص"));
+                  btn.disabled = false;
+                  return;
+                }
+
+                await loadOrders();
+              }catch(ex){
+                alert("خطا: " + (ex?.message || "خطای نامشخص"));
+                btn.disabled = false;
+              }
+              return;
+            }
+          });
+
+          ordersWrap.__mobixDelegationAttached = true;
+        }
+
+        // Refresh map
+        lastKnownOrders.clear();
+        (orderList || []).forEach(o => {
+          if(o && Number.isFinite(Number(o.id))){
+            lastKnownOrders.set(Number(o.id), o);
+          }
+        });
+      }
+
+      // Keep latest orders for action handlers
+      const lastKnownOrders = new Map();
 
       // =========================
       // Init
@@ -1327,19 +1816,22 @@
 
       loadProfile();
 
-      // Ensure name input is never prefilled with personal name
+      // Ensure name input is never prefilled with any fixed name
       if(fullName){
         fullName.value = hasProfileName() ? String(profileState.full_name) : "";
-        if(!hasProfileName()){
-          // FIX #1: keep placeholder generic; value empty
-          fullName.setAttribute("placeholder", "نام و نام خانوادگی");
-        }
+        fullName.setAttribute("placeholder", "نام و نام خانوادگی");
       }
 
       applyLoginUI();
       loadDraft();
+
       if(loggedIn()){
+        startRealtime();
+        startPolling();
         loadOrders();
+      }else{
+        stopRealtime();
+        stopPolling();
       }
 
       // =========================
@@ -1380,6 +1872,31 @@
           problemDesc.focus();
           saveDraft();
         });
+      });
+
+      // Modal events
+      function closeByBackdrop(e){
+        if(e.target === priceModalBackdrop) closePriceModal();
+      }
+      priceModalBackdrop.addEventListener("click", closeByBackdrop);
+      priceModalClose.addEventListener("click", closePriceModal);
+      priceModalCancel.addEventListener("click", closePriceModal);
+
+      priceFinalCheck.addEventListener("change", () => {
+        priceFinalApproveBtn.disabled = !priceFinalCheck.checked;
+      });
+
+      priceFinalApproveBtn.addEventListener("click", async () => {
+        if(!modalOrder) return;
+        if(!priceFinalCheck.checked) return;
+        await updatePriceApproval(modalOrder, "approve");
+      });
+
+      priceFinalRejectBtn.addEventListener("click", async () => {
+        if(!modalOrder) return;
+        const ok = confirm("قیمت را رد می‌کنید؟");
+        if(!ok) return;
+        await updatePriceApproval(modalOrder, "reject");
       });
 
     })();
