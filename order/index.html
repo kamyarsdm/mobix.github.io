@@ -9,10 +9,34 @@
   <meta name="theme-color" content="#1F6AFF" />
   <link rel="icon" href="../assets/logo.png" />
 
-  <!-- Vazirmatn -->
-  <link rel="preconnect" href="https://fonts.googleapis.com">
-  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Vazirmatn:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet">
+  <link rel="preconnect" href="https://cdn.jsdelivr.net" crossorigin>
+  <link rel="preconnect" href="https://fastly.jsdelivr.net" crossorigin>
+  <link rel="dns-prefetch" href="https://cdn.jsdelivr.net">
+  <link rel="dns-prefetch" href="https://fastly.jsdelivr.net">
+
+  <style>
+    @font-face {
+      font-family: 'Peyda';
+      src: url('https://cdn.jsdelivr.net/gh/MHgh0st/Assets@main/fonts/Peyda/PeydaWeb-Regular.woff2') format('woff2');
+      font-weight: 400;
+      font-style: normal;
+      font-display: swap;
+    }
+    @font-face {
+      font-family: 'Peyda';
+      src: url('https://cdn.jsdelivr.net/gh/MHgh0st/Assets@main/fonts/Peyda/PeydaWeb-Bold.woff2') format('woff2');
+      font-weight: 700;
+      font-style: normal;
+      font-display: swap;
+    }
+    @font-face {
+      font-family: 'Peyda';
+      src: url('https://cdn.jsdelivr.net/gh/MHgh0st/Assets@main/fonts/Peyda/PeydaWeb-Black.woff2') format('woff2');
+      font-weight: 900;
+      font-style: normal;
+      font-display: swap;
+    }
+  </style>
 
   <style>
     :root{
@@ -41,7 +65,7 @@
     html{scroll-behavior:smooth}
     body{
       margin:0;
-      font-family:"Vazirmatn", system-ui, sans-serif;
+      font-family:"Peyda", system-ui, sans-serif;
       background:
         radial-gradient(1000px 500px at 80% -10%, rgba(31,106,255,.16), transparent 55%),
         radial-gradient(900px 600px at 20% 10%, rgba(59,130,246,.08), transparent 55%),
@@ -58,7 +82,6 @@
       padding:14px 16px 56px;
     }
 
-    /* TOP BAR */
     .topbar{
       position:sticky;top:0;z-index:50;
       padding:10px 0;
@@ -82,7 +105,7 @@
       font-weight:900;font-size:14px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis
     }
     .brand-title span{
-      font-weight:800;font-size:12.5px;color:var(--muted);white-space:nowrap;overflow:hidden;text-overflow:ellipsis
+      font-weight:700;font-size:12.5px;color:var(--muted);white-space:nowrap;overflow:hidden;text-overflow:ellipsis
     }
 
     .nav{
@@ -93,7 +116,7 @@
     .btn{
       padding:10px 16px;
       border-radius:14px;
-      font-weight:900;
+      font-weight:700;
       border:1px solid var(--line);
       background:#fff;
       box-shadow:var(--shadow2);
@@ -109,6 +132,7 @@
       background:linear-gradient(135deg,var(--primary),var(--primary2));
       color:#fff;
       border:none;
+      font-weight:700;
     }
     .btn.ghost{
       background:rgba(255,255,255,.72);
@@ -125,7 +149,6 @@
     }
     .btn:disabled{opacity:.55;cursor:not-allowed}
 
-    /* CARDS */
     .card{
       background:var(--card);
       border:1px solid var(--line);
@@ -177,7 +200,6 @@
 
     .divider{height:1px;background:var(--line);margin:12px 0}
 
-    /* GRID */
     .grid-2{
       display:grid;
       grid-template-columns:1fr 1fr;
@@ -187,7 +209,6 @@
     }
     @media(max-width:980px){.grid-2{grid-template-columns:1fr}}
 
-    /* FORMS */
     .field{
       display:flex;
       flex-direction:column;
@@ -207,7 +228,7 @@
       background:#fff;
       box-shadow:var(--shadow2);
       font-family:inherit;
-      font-weight:800;
+      font-weight:700;
       outline:none;
     }
     .textarea{
@@ -219,7 +240,7 @@
       background:#fff;
       box-shadow:var(--shadow2);
       font-family:inherit;
-      font-weight:800;
+      font-weight:700;
       outline:none;
       resize:vertical;
       line-height:1.9;
@@ -241,7 +262,6 @@
       white-space:pre-line;
     }
 
-    /* OTP box */
     .otp-box{
       margin-top:10px;
       padding:12px;
@@ -255,7 +275,6 @@
       margin-top:8px;
     }
 
-    /* Terms checkbox */
     .checkrow{
       display:flex;
       align-items:flex-start;
@@ -286,7 +305,6 @@
       display:block;
     }
 
-    /* Quick issues */
     .quick-issues{
       display:flex;
       flex-wrap:wrap;
@@ -305,7 +323,6 @@
       user-select:none;
     }
 
-    /* Replacement phone line */
     .replacement-note{
       margin-top:8px;
       padding:10px 12px;
@@ -317,7 +334,6 @@
       line-height:1.8;
     }
 
-    /* Orders */
     .orders{
       display:flex;
       flex-direction:column;
@@ -371,7 +387,6 @@
 
     .muted{color:var(--muted);font-size:13.2px;line-height:1.9}
 
-    /* Tracking */
     .track{
       display:grid;
       grid-template-columns:1fr;
@@ -408,7 +423,6 @@
     .track-step .tt b{display:block;font-weight:900}
     .track-step .tt span{display:block;color:var(--muted);font-size:13px;line-height:1.85;margin-top:3px}
 
-    /* Price approval actions */
     .price-actions{
       display:flex;
       gap:10px;
@@ -417,7 +431,6 @@
       margin-top:10px;
     }
 
-    /* Dashboard message (order update) */
     .dash-note{
       margin-top:10px;
       padding:10px 12px;
@@ -427,7 +440,7 @@
       color:#0B2A6A;
       box-shadow:var(--shadow2);
       line-height:1.9;
-      font-weight:800;
+      font-weight:700;
       font-size:13px;
       white-space:pre-line;
     }
@@ -453,7 +466,6 @@
       border-radius:999px;
     }
 
-    /* Chat */
     details.chat-details{
       margin-top:10px;
       border:1px solid var(--line);
@@ -502,7 +514,7 @@
       border:1px solid var(--line);
       background:rgba(246,248,252,.72);
       line-height:1.85;
-      font-weight:800;
+      font-weight:700;
       font-size:13.2px;
       white-space:pre-line;
       word-break:break-word;
@@ -510,7 +522,7 @@
     .chat-msg .meta{
       font-size:11.5px;
       color:var(--muted);
-      font-weight:800;
+      font-weight:700;
     }
     .chat-msg.me{
       align-self:flex-end;
@@ -535,7 +547,6 @@
       .chat-input-row{grid-template-columns:1fr}
     }
 
-    /* Modal */
     .modal-backdrop{
       position:fixed;
       inset:0;
@@ -600,9 +611,6 @@
       box-shadow:var(--shadow2);
     }
 
-    /* =========================
-       FOOTER (Same as Home)
-       ========================= */
     footer{margin-top:22px}
 
     .footer-card{
@@ -634,7 +642,7 @@
     @media(max-width:980px){.footer-grid{grid-template-columns:1fr}}
 
     .f-title{
-      font-weight:980;
+      font-weight:900;
       letter-spacing:-.2px;
       margin:0;
       font-size:15px;
@@ -649,14 +657,18 @@
     }
     .f-links a{
       color:var(--text);
-      font-weight:900;
+      font-weight:700;
       font-size:13.6px;
       padding:8px 10px;
       border-radius:14px;
       border:1px solid rgba(15,23,42,.08);
       background:rgba(246,248,252,.55);
       box-shadow:0 10px 18px rgba(15,23,42,.04);
-      width:fit-content;
+      width:100%;
+      display:flex;
+      align-items:center;
+      justify-content:center;
+      text-align:center;
       transition:transform .12s ease, box-shadow .12s ease;
     }
     .f-links a:hover{
@@ -677,7 +689,7 @@
       box-shadow:0 10px 18px rgba(15,23,42,.05);
       padding:12px;
     }
-    .fk b{display:block;font-weight:980;font-size:13px}
+    .fk b{display:block;font-weight:900;font-size:13px}
     .fk span{display:block;color:var(--muted);font-size:12.8px;line-height:1.7;margin-top:6px}
 
     .enamad-wrap{
@@ -688,7 +700,15 @@
       gap:12px;
       flex-wrap:wrap;
     }
-    .enamad-wrap img{
+    .enamad img{
+      width:96px;
+      height:auto;
+      cursor:pointer;
+      display:block;
+      opacity:.95;
+      filter:saturate(.96);
+    }
+    .bitpay img{
       width:96px;
       height:auto;
       cursor:pointer;
@@ -717,7 +737,8 @@
       .card{padding:14px}
       .container{padding-bottom:40px}
       .footer-card{padding:14px}
-      .enamad-wrap img{width:92px}
+      .enamad img{width:92px}
+      .bitpay img{width:92px}
     }
   </style>
 </head>
@@ -725,7 +746,6 @@
 <body>
   <div class="container">
 
-    <!-- HEADER -->
     <div class="topbar">
       <div class="topbar-inner">
         <a class="brand" href="../">
@@ -743,7 +763,6 @@
       </div>
     </div>
 
-    <!-- HERO -->
     <section class="hero">
       <div class="card">
         <h1>ورود، ثبت سفارش و پیگیری</h1>
@@ -770,7 +789,6 @@
 
     <div class="grid-2">
 
-      <!-- AUTH CARD -->
       <div class="card" id="authCard">
         <h1 style="font-size:20px;margin:0 0 6px;font-weight:900">ورود با کد پیامکی</h1>
         <p class="sub" style="font-size:14.5px">کد یکبار مصرف ارسال می‌شود.</p>
@@ -813,10 +831,7 @@
         <div id="authMsg" class="hint" aria-live="polite"></div>
       </div>
 
-      <!-- RIGHT COLUMN: PROFILE + ORDER + ORDERS -->
       <div class="card" id="mainCard">
-
-        <!-- Greeting -->
         <div class="order-top">
           <h1 style="font-size:20px;margin:0;font-weight:900">ثبت سفارش</h1>
           <div id="helloBadge" class="status" style="display:none"></div>
@@ -825,7 +840,6 @@
 
         <div class="divider"></div>
 
-        <!-- Profile (ask name after login) -->
         <div id="profileCard" style="display:none">
           <div class="order-top">
             <b style="font-weight:900">تکمیل مشخصات</b>
@@ -845,7 +859,6 @@
           <div class="divider"></div>
         </div>
 
-        <!-- Order form -->
         <div id="orderFormWrap">
           <div class="order-top">
             <b style="font-weight:900">اطلاعات سفارش</b>
@@ -898,7 +911,6 @@
           <div class="divider"></div>
         </div>
 
-        <!-- Orders -->
         <div class="order-top">
           <b style="font-weight:900">سفارش‌های من</b>
           <span id="ordersCount" class="status">0</span>
@@ -911,12 +923,10 @@
       </div>
     </div>
 
-    <!-- FOOTER (Same as Home) -->
     <footer aria-label="Footer">
       <div class="footer-card">
         <div class="footer-grid">
 
-          <!-- Brand + KPIs + Courier -->
           <div>
             <div style="display:flex;align-items:center;gap:10px">
               <img src="../assets/logo.png" alt="موبیکس" style="width:58px;height:auto">
@@ -944,33 +954,31 @@
             </div>
           </div>
 
-          <!-- Links -->
           <div>
             <div class="f-title">دسترسی سریع</div>
             <div class="f-links" aria-label="Footer links">
-              <a href="../about/">درباره ما</a>
               <a href="../contact/">تماس با ما</a>
               <a href="../order/">ثبت سفارش</a>
+              <a href="../support/">پشتیبانی</a>
               <a href="../terms/">قوانین و شرایط</a>
               <a href="../privacy/">حریم خصوصی</a>
             </div>
           </div>
 
-          <!-- Trust -->
           <div>
             <div class="f-title">اعتماد و مجوزها</div>
             <div class="f-muted">اطلاعات و مجوزها برای اطمینان شما.</div>
 
-            <div class="enamad-wrap" aria-label="اینماد">
-              <a href="https://trustseal.enamad.ir/?id=5414923" target="_blank" rel="noopener noreferrer" referrerpolicy="origin">
-                <img
-                  src="https://trustseal.enamad.ir/logo.aspx?id=5414923&Code=DiznrIm0BJGpnPrtdWijxsgtOlPs8Aqf"
-                  alt="اینماد موبیکس"
-                  referrerpolicy="origin"
-                  style="cursor:pointer"
-                  code="DiznrIm0BJGpnPrtdWijxsgtOlPs8Aqf"
-                >
-              </a>
+            <div class="enamad-wrap" aria-label="اینماد و بیت‌پی">
+              <div class="enamad">
+                <a referrerpolicy='origin' target='_blank' href='https://trustseal.enamad.ir/?id=5414923&Code=DiznrIm0BJGpnPrtdWijxsgtOlPs8Aqf'>
+                  <img referrerpolicy='origin' src='https://trustseal.enamad.ir/logo.aspx?id=5414923&Code=DiznrIm0BJGpnPrtdWijxsgtOlPs8Aqf' alt='' style='cursor:pointer' code='DiznrIm0BJGpnPrtdWijxsgtOlPs8Aqf'>
+                </a>
+              </div>
+
+              <div class="bitpay">
+                <a href="https://bitpay.ir/certificate-579080-mobixfix.ir" target="_blank"><img src="https://bitpay.ir/theme/public/images/trusted-logo.svg"/></a>
+              </div>
             </div>
           </div>
 
@@ -985,7 +993,6 @@
 
   </div>
 
-  <!-- PRICE APPROVAL MODAL (Two-step) -->
   <div class="modal-backdrop" id="priceModalBackdrop" aria-hidden="true">
     <div class="modal" role="dialog" aria-modal="true" aria-labelledby="priceModalTitle">
       <div class="order-top">
@@ -1026,14 +1033,10 @@
     </div>
   </div>
 
-  <!-- Supabase JS -->
   <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
 
   <script>
     (function(){
-      // =========================
-      // Supabase Config
-      // =========================
       const SUPABASE_URL = "https://vrxfhfknmxmeatnfzpcg.supabase.co";
       const SUPABASE_ANON_KEY = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InZyeGZoZmtubXhtZWF0bmZ6cGNnIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NjYyNTg2MjksImV4cCI6MjA4MTgzNDYyOX0.iANOG9-g9GnVl58KDYI0A-oYNwfbL3oh2NBddZ2sLLs";
 
@@ -1042,9 +1045,6 @@
 
       const supabase = window.supabase.createClient(SUPABASE_URL, SUPABASE_ANON_KEY);
 
-      // =========================
-      // Helpers
-      // =========================
       function normalizeDigits(s){
         return (s || "")
           .replace(/[۰-۹]/g, d => "۰۱۲۳۴۵۶۷۸۹".indexOf(d))
@@ -1091,7 +1091,6 @@
         return x.toLocaleString("fa-IR") + " تومان";
       }
 
-      // ✅ order_no: MCC-YYMMDD-XXXX
       function genOrderNo(){
         const d = new Date();
         const yy = String(d.getFullYear()).slice(-2);
@@ -1101,9 +1100,6 @@
         return `MCC-${yy}${mm}${dd}-${rand}`;
       }
 
-      // =========================
-      // UI Elements
-      // =========================
       const sessionBadge = document.getElementById("sessionBadge");
 
       const guideCard = document.getElementById("guideCard");
@@ -1141,7 +1137,6 @@
       const ordersWrap = document.getElementById("ordersWrap");
       const ordersCount = document.getElementById("ordersCount");
 
-      // Modal elements
       const priceModalBackdrop = document.getElementById("priceModalBackdrop");
       const priceModalClose = document.getElementById("priceModalClose");
       const priceModalCancel = document.getElementById("priceModalCancel");
@@ -1152,39 +1147,29 @@
       const priceModalPrice = document.getElementById("priceModalPrice");
       const priceModalMsg = document.getElementById("priceModalMsg");
 
-      // =========================
-      // State
-      // =========================
       const LS_LOGIN = "mobix_site_login";
       const LS_PROFILE = "mobix_site_profile";
       const DRAFT_KEY = "mobix_site_order_draft";
 
-      let loginState = null;   // { phone09 }
-      let profileState = null; // { full_name }
+      let loginState = null;
+      let profileState = null;
 
       let lastPhone09 = null;
       let timerId = null;
       let remaining = 0;
 
-      // Realtime / Polling
       let realtimeChannel = null;
       let pollTimer = null;
 
-      // Extra realtime channels (updates + chat)
       let updatesRealtimeChannel = null;
       let chatRealtimeChannel = null;
 
-      // Modal order state
-      let modalOrder = null; // current order object for approval
+      let modalOrder = null;
 
-      // Latest maps
-      const lastKnownOrders = new Map();   // id -> order
-      const lastKnownUpdates = new Map();  // order_no -> { message, stage, created_at }
-      const lastKnownChats = new Map();    // order_no -> [messages]
+      const lastKnownOrders = new Map();
+      const lastKnownUpdates = new Map();
+      const lastKnownChats = new Map();
 
-      // =========================
-      // UI Helpers
-      // =========================
       function setStatus(el, type, text){
         el.classList.remove("ok","err","warn");
         if(type) el.classList.add(type);
@@ -1211,9 +1196,6 @@
         return n.length >= 2;
       }
 
-      // =========================
-      // Draft
-      // =========================
       function saveDraft(){
         const draft = {
           device_model: (deviceModel.value || "").trim(),
@@ -1239,9 +1221,6 @@
         }catch(_e){}
       }
 
-      // =========================
-      // Timer (120s)
-      // =========================
       function formatMMSS(sec){
         const m = Math.floor(sec / 60);
         const s = sec % 60;
@@ -1269,11 +1248,8 @@
         }, 1000);
       }
 
-      // =========================
-      // Edge calls
-      // =========================
       async function requestOtpEdge(phone09){
-        const res = await fetch("https://vrxfhfknmxmeatnfzpcg.supabase.co/functions/v1/request-otp", {
+        const res = await fetch(OTP_REQUEST_URL, {
           method: "POST",
           headers: {
             "Content-Type": "application/json",
@@ -1294,7 +1270,7 @@
       }
 
       async function verifyOtpEdge(phone09, code){
-        const res = await fetch("https://vrxfhfknmxmeatnfzpcg.supabase.co/functions/v1/verify-otp", {
+        const res = await fetch(OTP_VERIFY_URL, {
           method: "POST",
           headers: {
             "Content-Type": "application/json",
@@ -1314,9 +1290,6 @@
         return json || { ok: true };
       }
 
-      // =========================
-      // Status mapping (Fix: price_quoted)
-      // =========================
       const STATUS_FA = {
         requested: "ثبت شده",
         received: "دریافت شده",
@@ -1342,7 +1315,6 @@
       function normalizeStatus(raw){
         const s = (raw || "").toString().trim().toLowerCase();
 
-        // --- important: map your dashboard values ---
         if(["price_quoted","pricequoted","price-quoted"].includes(s)) return "quoted";
         if(["quoted","quote","price","awaiting_approval","approved_pending"].includes(s)) return "quoted";
 
@@ -1393,16 +1365,12 @@
         `;
       }
 
-      // =========================
-      // Price approval helpers
-      // =========================
       function approvalStateFromOrder(o){
         const pa = (o && o.price_approval != null) ? String(o.price_approval).trim().toLowerCase() : "";
         if(pa === "approved") return "approved";
         if(pa === "rejected") return "rejected";
         if(pa === "not_needed") return "not_needed";
         if(pa === "pending") return "pending";
-
         if(o && o.price_approved === true) return "approved";
         return pa || "pending";
       }
@@ -1430,9 +1398,6 @@
         return hasPrice && stageNorm === "quoted" && appr === "pending";
       }
 
-      // =========================
-      // Modal control
-      // =========================
       function openPriceModal(order){
         modalOrder = order || null;
         priceFinalCheck.checked = false;
@@ -1459,9 +1424,6 @@
         setMsg(priceModalMsg, "", "");
       }
 
-      // =========================
-      // UI Apply (guide only before login)
-      // =========================
       function applyLoginUI(){
         const li = loggedIn();
 
@@ -1502,9 +1464,6 @@
         }
       }
 
-      // =========================
-      // Realtime + Polling
-      // =========================
       function stopRealtime(){
         try{
           if(realtimeChannel){
@@ -1513,7 +1472,6 @@
           }
         }catch(_e){}
       }
-
       function stopRealtimeUpdates(){
         try{
           if(updatesRealtimeChannel){
@@ -1522,7 +1480,6 @@
           }
         }catch(_e){}
       }
-
       function stopRealtimeChat(){
         try{
           if(chatRealtimeChannel){
@@ -1531,12 +1488,10 @@
           }
         }catch(_e){}
       }
-
       function stopPolling(){
         if(pollTimer) clearInterval(pollTimer);
         pollTimer = null;
       }
-
       function startPolling(){
         stopPolling();
         pollTimer = setInterval(() => {
@@ -1546,7 +1501,6 @@
 
       function startRealtime(){
         stopRealtime();
-
         if(!loggedIn()) return;
 
         try{
@@ -1576,7 +1530,6 @@
         const list = (orderNos || []).filter(Boolean);
         if(list.length === 0) return;
 
-        // Realtime filter for text: in.("A","B")
         const quoted = list.map(x => '"' + String(x).replaceAll('"','') + '"').join(",");
         const filterIn = "order_no=in.(" + quoted + ")";
 
@@ -1601,9 +1554,6 @@
         }catch(_e){}
       }
 
-      // =========================
-      // Actions: Auth
-      // =========================
       async function sendOtp(){
         setMsg(authMsg, "", "");
 
@@ -1714,9 +1664,6 @@
         applyLoginUI();
       }
 
-      // =========================
-      // Profile
-      // =========================
       function loadProfile(){
         try{
           const raw = localStorage.getItem(LS_PROFILE);
@@ -1750,9 +1697,6 @@
         return true;
       }
 
-      // =========================
-      // Order create
-      // =========================
       function buildIssueWithExtras(baseIssue){
         const wants = !!(replacementPhone && replacementPhone.checked);
         if(!wants) return baseIssue;
@@ -1816,7 +1760,6 @@
             .single();
 
           if(error){
-            console.error("Insert error:", error);
             setMsg(orderMsg, "err", "ثبت سفارش ناموفق بود: " + (error.message || "خطای نامشخص"));
             return;
           }
@@ -1836,16 +1779,12 @@
 
           await loadOrders();
         }catch(e){
-          console.error("Create order exception:", e);
           setMsg(orderMsg, "err", "ثبت سفارش ناموفق بود: " + (e?.message || "خطای نامشخص"));
         }finally{
           createOrderBtn.disabled = false;
         }
       }
 
-      // =========================
-      // Price approval actions (two-step)
-      // =========================
       async function updatePriceApproval(order, action){
         if(!order) return;
 
@@ -1871,7 +1810,6 @@
               .eq("id", id);
 
             if(error){
-              console.error("Approve update error:", error);
               setMsg(priceModalMsg, "err", "ثبت تایید ناموفق بود: " + (error.message || "خطای نامشخص"));
               return;
             }
@@ -1891,7 +1829,6 @@
               .eq("id", id);
 
             if(error){
-              console.error("Reject update error:", error);
               setMsg(priceModalMsg, "err", "ثبت رد ناموفق بود: " + (error.message || "خطای نامشخص"));
               return;
             }
@@ -1905,7 +1842,6 @@
             setMsg(priceModalMsg, "err", "عملیات نامعتبر است.");
           }
         }catch(e){
-          console.error("Price approval exception:", e);
           setMsg(priceModalMsg, "err", "خطا: " + (e?.message || "خطای نامشخص"));
         }finally{
           if(priceModalBackdrop.style.display === "flex"){
@@ -1915,9 +1851,6 @@
         }
       }
 
-      // =========================
-      // Dashboard updates (message next to status)
-      // =========================
       function pickLatestUpdateForOrder(orderNo){
         if(!orderNo) return null;
         return lastKnownUpdates.get(String(orderNo)) || null;
@@ -1937,19 +1870,11 @@
         return "موبیکس";
       }
 
-      // =========================
-      // Chat actions
-      // =========================
       async function sendChatMessage(orderNo, text){
         const t = (text || "").trim();
         const on = (orderNo || "").trim();
-        if(!on){
-          alert("شماره سفارش پیدا نشد.");
-          return false;
-        }
-        if(t.length < 1){
-          return false;
-        }
+        if(!on) return false;
+        if(t.length < 1) return false;
 
         try{
           const payload = {
@@ -1963,22 +1888,17 @@
             .insert(payload);
 
           if(error){
-            console.error("Chat insert error:", error);
             alert("ارسال پیام ناموفق بود: " + (error.message || "خطای نامشخص"));
             return false;
           }
 
           return true;
         }catch(e){
-          console.error("Chat send exception:", e);
           alert("ارسال پیام ناموفق بود: " + (e?.message || "خطای نامشخص"));
           return false;
         }
       }
 
-      // =========================
-      // Load orders + updates + chat
-      // =========================
       async function loadOrders(){
         if(!loggedIn()){
           ordersCount.textContent = "0";
@@ -1994,7 +1914,6 @@
           .order("created_at", { ascending:false });
 
         if(error){
-          console.error("Load orders error:", error);
           ordersWrap.innerHTML = `
             <div class="status err">خواندن سفارش‌ها ناموفق بود</div>
             <div class="hint" style="color:var(--danger)">${esc(error.message || "خطای نامشخص")}</div>
@@ -2006,7 +1925,6 @@
         const list = data || [];
         ordersCount.textContent = String(list.length);
 
-        // Refresh maps
         lastKnownOrders.clear();
         list.forEach(o => {
           if(o && Number.isFinite(Number(o.id))){
@@ -2023,12 +1941,10 @@
           return;
         }
 
-        // Collect order_nos for batch queries
         const orderNos = list
           .map(o => (o && o.order_no != null) ? String(o.order_no).trim() : "")
           .filter(x => x.length > 0);
 
-        // (A) Fetch latest dashboard messages from order_updates (per order_no)
         try{
           if(orderNos.length > 0){
             const { data: updData, error: updErr } = await supabase
@@ -2037,9 +1953,7 @@
               .in("order_no", orderNos)
               .order("created_at", { ascending:false });
 
-            if(updErr){
-              console.error("Load order_updates error:", updErr);
-            }else{
+            if(!updErr){
               lastKnownUpdates.clear();
               const rows = updData || [];
               for(const r of rows){
@@ -2056,11 +1970,8 @@
               }
             }
           }
-        }catch(e){
-          console.error("Order updates fetch exception:", e);
-        }
+        }catch(_e){}
 
-        // (B) Fetch chat messages from chat_messages (batch)
         try{
           if(orderNos.length > 0){
             const { data: chatData, error: chatErr } = await supabase
@@ -2069,9 +1980,7 @@
               .in("order_no", orderNos)
               .order("created_at", { ascending:true });
 
-            if(chatErr){
-              console.error("Load chat_messages error:", chatErr);
-            }else{
+            if(!chatErr){
               lastKnownChats.clear();
               const rows = chatData || [];
               for(const r of rows){
@@ -2082,14 +1991,10 @@
               }
             }
           }
-        }catch(e){
-          console.error("Chat fetch exception:", e);
-        }
+        }catch(_e){}
 
-        // (C) Keep realtime for updates/chat aligned with current orders
         startRealtimeForUpdatesAndChat(orderNos);
 
-        // Render
         ordersWrap.innerHTML = list.map(o => {
           const id = o.order_no ?? o.id ?? "";
           const created = o.created_at ? fmtDate(o.created_at) : "";
@@ -2359,9 +2264,6 @@
         ordersWrap.__mobixDelegationAttached = true;
       }
 
-      // =========================
-      // Init
-      // =========================
       try{
         const raw = localStorage.getItem(LS_LOGIN);
         loginState = raw ? JSON.parse(raw) : null;
@@ -2390,9 +2292,6 @@
         stopPolling();
       }
 
-      // =========================
-      // Events
-      // =========================
       sendOtpBtn.addEventListener("click", sendOtp);
       verifyOtpBtn.addEventListener("click", verifyOtp);
       resendBtn.addEventListener("click", resend);
