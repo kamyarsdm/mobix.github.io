@@ -9,27 +9,32 @@
   <meta name="theme-color" content="#1F6AFF" />
   <link rel="icon" href="../assets/logo.png" />
 
+  <link rel="preconnect" href="https://cdn.jsdelivr.net" crossorigin>
+  <link rel="preconnect" href="https://fastly.jsdelivr.net" crossorigin>
+  <link rel="dns-prefetch" href="https://cdn.jsdelivr.net">
+  <link rel="dns-prefetch" href="https://fastly.jsdelivr.net">
+
   <style>
-    @font-face{
-      font-family:"Peyda";
-      src:url("../assets/fonts/PeydaWeb-Regular.woff2") format("woff2");
-      font-weight:400;
-      font-style:normal;
-      font-display:swap;
+    @font-face {
+      font-family: 'Peyda';
+      src: url('https://cdn.jsdelivr.net/gh/MHgh0st/Assets@main/fonts/Peyda/PeydaWeb-Regular.woff2') format('woff2');
+      font-weight: 400;
+      font-style: normal;
+      font-display: swap;
     }
-    @font-face{
-      font-family:"Peyda";
-      src:url("../assets/fonts/PeydaWeb-Bold.woff2") format("woff2");
-      font-weight:700;
-      font-style:normal;
-      font-display:swap;
+    @font-face {
+      font-family: 'Peyda';
+      src: url('https://cdn.jsdelivr.net/gh/MHgh0st/Assets@main/fonts/Peyda/PeydaWeb-Bold.woff2') format('woff2');
+      font-weight: 700;
+      font-style: normal;
+      font-display: swap;
     }
-    @font-face{
-      font-family:"Peyda";
-      src:url("../assets/fonts/PeydaWeb-Black.woff2") format("woff2");
-      font-weight:900;
-      font-style:normal;
-      font-display:swap;
+    @font-face {
+      font-family: 'Peyda';
+      src: url('https://cdn.jsdelivr.net/gh/MHgh0st/Assets@main/fonts/Peyda/PeydaWeb-Black.woff2') format('woff2');
+      font-weight: 900;
+      font-style: normal;
+      font-display: swap;
     }
   </style>
 
@@ -41,42 +46,28 @@
       --muted:#5B6B84;
       --line:rgba(15,23,42,.08);
 
-      --shadow: 0 14px 36px rgba(15,23,42,.10);
-      --shadow2: 0 8px 18px rgba(15,23,42,.08);
-      --shadow3:0 10px 24px rgba(15,23,42,.07);
+      --shadow:0 14px 36px rgba(15,23,42,.10);
+      --shadow2:0 8px 18px rgba(15,23,42,.08);
 
       --radius:20px;
-
       --primary:#1F6AFF;
       --primary2:#3B82F6;
-      --success:#10B981;
-      --danger:#EF4444;
-      --warn:#F59E0B;
 
       --max:960px;
     }
 
     *{box-sizing:border-box}
-    html{scroll-behavior:smooth}
     body{
       margin:0;
-      font-family:"Peyda", system-ui, -apple-system, Segoe UI, Roboto, sans-serif;
+      font-family:"Peyda", system-ui, sans-serif;
       background:
-        radial-gradient(1000px 500px at 80% -10%, rgba(31,106,255,.16), transparent 55%),
-        radial-gradient(900px 600px at 20% 10%, rgba(59,130,246,.08), transparent 55%),
+        radial-gradient(1000px 500px at 80% -10%, rgba(31,106,255,.12), transparent 55%),
+        radial-gradient(900px 600px at 20% 10%, rgba(59,130,246,.06), transparent 55%),
         var(--bg);
       color:var(--text);
-      overflow-x:hidden;
       line-height:2;
-      font-weight:400;
     }
     a{text-decoration:none;color:inherit}
-    img{max-width:100%;display:block}
-
-    h1, h2, h3, h4, h5, h6{
-      font-family:"Peyda", system-ui, -apple-system, Segoe UI, Roboto, sans-serif;
-      font-weight:900;
-    }
 
     .container{
       max-width:var(--max);
@@ -84,7 +75,6 @@
       padding:14px 16px 56px;
     }
 
-    /* TOP BAR */
     .topbar{
       position:sticky;top:0;z-index:50;
       padding:10px 0;
@@ -99,27 +89,16 @@
       box-shadow:var(--shadow2);
       gap:10px;
     }
-    .brand{display:flex;align-items:center;gap:12px;min-width:0}
-    .brand img{width:72px;height:auto}
-    .brand-title{display:flex;flex-direction:column;gap:2px;min-width:0}
-    .brand-title b{
-      font-weight:900;font-size:14px;
-      white-space:nowrap;overflow:hidden;text-overflow:ellipsis
-    }
-    .brand-title span{
-      font-weight:700;font-size:12.5px;color:var(--muted);
-      white-space:nowrap;overflow:hidden;text-overflow:ellipsis
-    }
+    .brand{display:flex;align-items:center;gap:12px}
+    .brand img{width:64px}
+    .brand-title b{font-weight:900;font-size:14px}
+    .brand-title span{font-weight:700;font-size:12.5px;color:var(--muted)}
 
-    .nav{
-      display:flex;align-items:center;gap:8px;flex-wrap:wrap;
-      justify-content:flex-end;
-    }
-
+    .nav{display:flex;gap:8px;flex-wrap:wrap}
     .btn{
       padding:10px 16px;
       border-radius:14px;
-      font-weight:900;
+      font-weight:700;
       border:1px solid var(--line);
       background:#fff;
       box-shadow:var(--shadow2);
@@ -133,12 +112,10 @@
     }
     .btn.primary{
       background:linear-gradient(135deg,var(--primary),var(--primary2));
-      color:#fff;
-      border:none;
+      color:#fff;border:none;
+      font-weight:700;
     }
-    .btn.ghost{background:rgba(255,255,255,.72)}
 
-    /* CARDS */
     .card{
       background:var(--card);
       border:1px solid var(--line);
@@ -147,57 +124,36 @@
       box-shadow:var(--shadow);
       margin-top:12px;
     }
-
-    .hero{
-      margin-top:14px;
-      display:grid;
-      grid-template-columns: 1.05fr .95fr;
-      gap:12px;
-      align-items:start;
-    }
-    @media(max-width:980px){.hero{grid-template-columns:1fr}}
-
     h1{
-      margin:0 0 6px;
-      font-size:28px;
+      font-size:26px;
       font-weight:900;
-      letter-spacing:-.2px;
+      margin:0 0 6px;
+      letter-spacing:-.3px;
       line-height:1.35;
     }
     .sub{
       color:var(--muted);
       font-size:14.5px;
-      line-height:1.9;
       margin:0;
-      font-weight:700;
+      line-height:1.9;
     }
-
     .divider{height:1px;background:var(--line);margin:12px 0}
 
     .info{
-      margin-top:12px;
-      line-height:2;
-      font-size:14.5px;
+      margin-top:10px;
       font-weight:700;
+      font-size:14.5px;
+      line-height:2;
     }
-    .info b{font-weight:900}
-
+    .info b{
+      display:block;
+      font-weight:900;
+      margin-bottom:4px;
+    }
     .info a{
-      font-weight:900;
       color:var(--primary);
+      font-weight:700;
       word-break:break-word;
-    }
-
-    .pill{
-      display:inline-flex;align-items:center;gap:8px;
-      padding:7px 10px;
-      border-radius:999px;
-      background:rgba(31,106,255,.10);
-      border:1px solid rgba(31,106,255,.18);
-      color:#0B2A6A;
-      font-weight:900;
-      font-size:12.5px;
-      white-space:nowrap;
     }
 
     .map{
@@ -241,9 +197,6 @@
       line-height:1.9;
     }
 
-    /* =========================
-       FOOTER (Unified)
-       ========================= */
     footer{margin-top:22px}
 
     .footer-card{
@@ -280,26 +233,27 @@
       margin:0;
       font-size:15px;
     }
-    .f-muted{color:var(--muted);font-size:13.4px;line-height:1.9;margin-top:8px;font-weight:700}
+    .f-muted{color:var(--muted);font-size:13.4px;line-height:1.9;margin-top:8px}
 
     .f-links{
-      display:grid;
-      grid-template-columns: 1fr;
+      display:flex;
+      flex-direction:column;
       gap:8px;
       margin-top:10px;
-      align-items:start;
-      justify-items:start;
     }
     .f-links a{
       color:var(--text);
-      font-weight:900;
+      font-weight:700;
       font-size:13.6px;
-      padding:10px 12px;
+      padding:8px 10px;
       border-radius:14px;
       border:1px solid rgba(15,23,42,.08);
       background:rgba(246,248,252,.55);
       box-shadow:0 10px 18px rgba(15,23,42,.04);
-      width:170px;
+      width:100%;
+      display:flex;
+      align-items:center;
+      justify-content:center;
       text-align:center;
       transition:transform .12s ease, box-shadow .12s ease;
     }
@@ -322,9 +276,9 @@
       padding:12px;
     }
     .fk b{display:block;font-weight:900;font-size:13px}
-    .fk span{display:block;color:var(--muted);font-size:12.8px;line-height:1.7;margin-top:6px;font-weight:700}
+    .fk span{display:block;color:var(--muted);font-size:12.8px;line-height:1.7;margin-top:6px}
 
-    .trust-row{
+    .enamad-wrap{
       margin-top:10px;
       display:flex;
       align-items:flex-end;
@@ -332,20 +286,21 @@
       gap:12px;
       flex-wrap:wrap;
     }
-    .trust-row img{
-      height:48px;
-      width:auto;
-      border-radius:10px;
-      border:1px solid rgba(15,23,42,.08);
-      background:#fff;
-      box-shadow:0 10px 18px rgba(15,23,42,.05);
-      padding:6px;
+    .enamad img{
+      width:96px;
+      height:auto;
       cursor:pointer;
-      opacity:.96;
+      display:block;
+      opacity:.95;
+      filter:saturate(.96);
     }
-    .trust-row img.enamad{
-      height:52px;
-      padding:4px 6px;
+    .bitpay img{
+      width:96px;
+      height:auto;
+      cursor:pointer;
+      display:block;
+      opacity:.95;
+      filter:saturate(.96);
     }
 
     .footer-bottom{
@@ -359,19 +314,15 @@
       color:var(--muted);
       font-size:12.8px;
       position:relative;
-      font-weight:700;
     }
 
-    @media (max-width: 520px){
-      .topbar-inner{border-radius:22px;padding:10px 10px}
-      .brand img{width:60px}
-      .card{padding:14px}
-      .container{padding-bottom:40px}
+    @media(max-width:520px){
       h1{font-size:24px}
+      .container{padding-bottom:40px}
+      .card{padding:14px}
       .footer-card{padding:14px}
-      .f-links a{width:100%}
-      .trust-row img{height:46px}
-      .trust-row img.enamad{height:50px}
+      .enamad img{width:92px}
+      .bitpay img{width:92px}
     }
   </style>
 </head>
@@ -390,52 +341,42 @@
         </a>
 
         <div class="nav">
-          <a class="btn ghost" href="../">خانه</a>
+          <a class="btn" href="../support/">پشتیبانی</a>
           <a class="btn primary" href="../order/">ثبت سفارش</a>
         </div>
       </div>
     </div>
 
-    <section class="hero">
-      <div class="card">
-        <h1>تماس با ما</h1>
-        <p class="sub">راه‌های ارتباط با موبیکس</p>
-        <div class="divider"></div>
-        <div class="pill">پاسخگویی سریع در ساعات کاری</div>
-      </div>
-
-      <div class="card">
-        <h1 style="font-size:22px;margin:0 0 6px;font-weight:900">اطلاعات تماس</h1>
-        <p class="sub" style="margin-top:6px">
-          برای ثبت سفارش تعمیر موبایل، بهتر است از صفحه «ثبت سفارش» استفاده کنید.
-        </p>
-        <div class="divider"></div>
-
-        <div class="info">
-          <b>آدرس:</b><br>
-          تهران، کریم‌خان، خیابان سنایی، کوچه چهارم غربی، پلاک ۶، واحد ۴
-        </div>
-
-        <div class="info">
-          <b>شماره تماس:</b><br>
-          <a href="tel:09386303012">۰۹۳۸۶۳۰۳۰۱۲</a>
-        </div>
-
-        <div class="info">
-          <b>اینستاگرام:</b><br>
-          <a href="https://instagram.com/mobix.fix" target="_blank" rel="noopener">@mobix.fix</a>
-        </div>
-
-        <div class="info">
-          <b>ساعات کاری:</b><br>
-          شنبه تا پنج‌شنبه، ساعت ۹ تا ۲۰
-        </div>
-      </div>
-    </section>
-
     <div class="card">
-      <h1 style="font-size:22px">موقعیت روی نقشه</h1>
-      <p class="sub">برای مسیریابی، روی نقشه زوم کنید.</p>
+      <h1>تماس با ما</h1>
+      <p class="sub">راه‌های ارتباط با موبیکس</p>
+
+      <div class="divider"></div>
+
+      <div class="info">
+        <b>آدرس</b>
+        <div>تهران، کریم‌خان، خیابان سنایی، کوچه چهارم غربی، پلاک ۶، واحد ۴</div>
+      </div>
+
+      <div class="info">
+        <b>شماره تماس</b>
+        <a href="tel:09386303012">۰۹۳۸۶۳۰۳۰۱۲</a>
+      </div>
+
+      <div class="info">
+        <b>اینستاگرام</b>
+        <a href="https://instagram.com/mobix.fix" target="_blank" rel="noopener">@mobix.fix</a>
+      </div>
+
+      <div class="info">
+        <b>ساعات کاری</b>
+        <div>شنبه تا پنج‌شنبه، ساعت ۹ تا ۲۰</div>
+      </div>
+
+      <div class="divider"></div>
+
+      <h1 style="font-size:22px;margin:0 0 6px">موقعیت روی نقشه</h1>
+      <p class="sub" style="margin-top:0">برای مسیریابی، روی نقشه زوم کنید.</p>
       <div class="map">
         <iframe
           src="https://maps.google.com/maps?q=خیابان%20سنایی%20تهران&t=&z=15&ie=UTF8&iwloc=&output=embed"
@@ -443,11 +384,11 @@
           referrerpolicy="no-referrer-when-downgrade">
         </iframe>
       </div>
-    </div>
 
-    <div class="card">
-      <h1 style="font-size:22px">ارسال پیام</h1>
-      <p class="sub">پیام شما مستقیماً بررسی می‌شود.</p>
+      <div class="divider"></div>
+
+      <h1 style="font-size:22px;margin:0 0 6px">ارسال پیام</h1>
+      <p class="sub" style="margin-top:0">پیام شما مستقیماً بررسی می‌شود.</p>
 
       <form class="form" onsubmit="event.preventDefault(); alert('ارسال پیام در نسخه بعدی فعال می‌شود');">
         <div class="label">نام شما</div>
@@ -506,17 +447,19 @@
           </div>
 
           <div>
-            <div class="f-title">اعتماد و پرداخت</div>
-            <div class="f-muted">نماد اعتماد و درگاه پرداخت.</div>
+            <div class="f-title">اعتماد و مجوزها</div>
+            <div class="f-muted">اطلاعات و مجوزها برای اطمینان شما.</div>
 
-            <div class="trust-row" aria-label="Trust badges">
-              <a referrerpolicy="origin" target="_blank" href="https://trustseal.enamad.ir/?id=5414923&Code=DiznrIm0BJGpnPrtdWijxsgtOlPs8Aqf">
-                <img referrerpolicy="origin" src="https://trustseal.enamad.ir/logo.aspx?id=5414923&Code=DiznrIm0BJGpnPrtdWijxsgtOlPs8Aqf" alt="" style="cursor:pointer" code="DiznrIm0BJGpnPrtdWijxsgtOlPs8Aqf">
-              </a>
+            <div class="enamad-wrap" aria-label="اینماد و بیت‌پی">
+              <div class="enamad">
+                <a referrerpolicy='origin' target='_blank' href='https://trustseal.enamad.ir/?id=5414923&Code=DiznrIm0BJGpnPrtdWijxsgtOlPs8Aqf'>
+                  <img referrerpolicy='origin' src='https://trustseal.enamad.ir/logo.aspx?id=5414923&Code=DiznrIm0BJGpnPrtdWijxsgtOlPs8Aqf' alt='' style='cursor:pointer' code='DiznrIm0BJGpnPrtdWijxsgtOlPs8Aqf'>
+                </a>
+              </div>
 
-              <a href="https://bitpay.ir/certificate-579080-mobixfix.ir" target="_blank">
-                <img src="https://bitpay.ir/theme/public/images/trusted-logo.svg" alt="BitPay">
-              </a>
+              <div class="bitpay">
+                <a href="https://bitpay.ir/certificate-579080-mobixfix.ir" target="_blank"><img src="https://bitpay.ir/theme/public/images/trusted-logo.svg"/></a>
+              </div>
             </div>
           </div>
 
