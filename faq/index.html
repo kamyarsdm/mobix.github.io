@@ -1,12 +1,11 @@
-
 <!doctype html>
 <html lang="fa" dir="rtl">
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <title>Mobix | پشتیبانی</title>
+  <title>Mobix | سوالات متداول</title>
 
-  <meta name="description" content="پشتیبانی موبیکس؛ راه‌های ارتباط، سوالات پرتکرار و پیگیری سفارش." />
+  <meta name="description" content="سوالات متداول موبیکس؛ قیمت‌گذاری، پیک، زمان تعمیر، پیگیری سفارش و ضمانت." />
   <meta name="theme-color" content="#1F6AFF" />
   <link rel="icon" href="../assets/logo.png" />
 
@@ -34,6 +33,7 @@
     }
 
     *{box-sizing:border-box}
+    html{scroll-behavior:smooth}
     body{
       margin:0;
       font-family:"Vazirmatn", system-ui, sans-serif;
@@ -45,6 +45,7 @@
       line-height:2;
     }
     a{text-decoration:none;color:inherit}
+    img{max-width:100%;display:block}
 
     .container{
       max-width:var(--max);
@@ -68,11 +69,12 @@
       gap:10px;
     }
     .brand{display:flex;align-items:center;gap:12px}
-    .brand img{width:64px}
+    .brand img{width:64px;height:auto}
+    .brand-title{display:flex;flex-direction:column;gap:2px}
     .brand-title b{font-weight:900;font-size:14px}
     .brand-title span{font-weight:800;font-size:12.5px;color:var(--muted)}
 
-    .nav{display:flex;gap:8px}
+    .nav{display:flex;gap:8px;flex-wrap:wrap}
     .btn{
       padding:10px 16px;
       border-radius:14px;
@@ -81,6 +83,7 @@
       background:#fff;
       box-shadow:var(--shadow2);
       cursor:pointer;
+      white-space:nowrap;
     }
     .btn.primary{
       background:linear-gradient(135deg,var(--primary),var(--primary2));
@@ -106,25 +109,109 @@
       color:var(--muted);
       font-size:14.5px;
       margin:0;
+      line-height:1.9;
     }
     .divider{height:1px;background:var(--line);margin:12px 0}
 
-    .option{
+    .search{
+      margin-top:10px;
+      display:grid;
+      grid-template-columns:1fr auto;
+      gap:10px;
+      align-items:center;
+    }
+    @media(max-width:520px){.search{grid-template-columns:1fr}}
+    .input{
+      width:100%;
+      padding:12px 14px;
+      border-radius:16px;
       border:1px solid var(--line);
-      border-radius:18px;
-      padding:14px;
       background:#fff;
       box-shadow:var(--shadow2);
+      font-family:inherit;
+      font-weight:800;
+      outline:none;
+    }
+
+    .faq{
       margin-top:10px;
+      display:flex;
+      flex-direction:column;
+      gap:10px;
     }
-    .option b{
-      display:block;
+
+    details.item{
+      border:1px solid var(--line);
+      border-radius:18px;
+      padding:12px 14px;
+      background:#fff;
+      box-shadow:var(--shadow2);
+    }
+    details.item[open]{box-shadow:0 16px 34px rgba(15,23,42,.10)}
+    details.item > summary{
+      cursor:pointer;
+      list-style:none;
+      display:flex;
+      align-items:center;
+      justify-content:space-between;
+      gap:10px;
       font-weight:900;
-      margin-bottom:4px;
     }
-    .option span{
+    details.item > summary::-webkit-details-marker{display:none}
+    .q{
+      display:flex;
+      align-items:center;
+      gap:10px;
+      font-weight:900;
+      font-size:14.5px;
+    }
+    .q .badge{
+      width:28px;height:28px;
+      border-radius:12px;
+      display:flex;align-items:center;justify-content:center;
+      border:1px solid rgba(31,106,255,.18);
+      background:rgba(31,106,255,.10);
+      color:#0B2A6A;
+      font-weight:900;
+      flex:0 0 auto;
+    }
+    .chev{
+      font-weight:900;
+      color:var(--muted);
+      font-size:18px;
+      flex:0 0 auto;
+    }
+    details.item[open] .chev{transform:rotate(180deg)}
+    .a{
       color:var(--muted);
       font-size:13.8px;
+      line-height:2;
+      margin-top:10px;
+      white-space:pre-line;
+    }
+
+    .chips{
+      margin-top:12px;
+      display:flex;
+      flex-wrap:wrap;
+      gap:8px;
+    }
+    .chip{
+      padding:8px 10px;
+      border-radius:999px;
+      border:1px solid var(--line);
+      background:rgba(246,248,252,.72);
+      font-weight:900;
+      font-size:12.8px;
+      cursor:pointer;
+      box-shadow:var(--shadow2);
+      user-select:none;
+      white-space:nowrap;
+    }
+    .chip.active{
+      border-color:rgba(31,106,255,.26);
+      background:rgba(31,106,255,.10);
+      color:#0B2A6A;
     }
 
     /* FOOTER */
@@ -140,11 +227,13 @@
       flex-wrap:wrap;
       align-items:center;
     }
-    .enamad img{width:100px}
+    .enamad img{width:100px;height:auto}
 
     @media(max-width:520px){
       h1{font-size:24px}
       .container{padding-bottom:40px}
+      details.item{padding:12px}
+      .q{font-size:14px}
     }
   </style>
 </head>
@@ -164,51 +253,35 @@
         </a>
 
         <div class="nav">
-          <a class="btn" href="../contact/">تماس با ما</a>
+          <a class="btn" href="../support/">پشتیبانی</a>
           <a class="btn primary" href="../order/">ثبت سفارش</a>
         </div>
       </div>
     </div>
 
-    <!-- SUPPORT -->
+    <!-- FAQ -->
     <div class="card">
-      <h1>پشتیبانی موبیکس</h1>
-      <p class="sub">اگر سوال یا مشکلی دارید، از راه‌های زیر با ما در ارتباط باشید.</p>
+      <h1>سوالات متداول</h1>
+      <p class="sub">پاسخ سوال‌های رایج درباره پیک، قیمت، زمان تعمیر و پیگیری سفارش.</p>
+
+      <div class="search">
+        <input id="q" class="input" placeholder="جستجو در سوالات… (مثلاً قیمت، پیک، زمان، ضمانت)" />
+        <button id="clearBtn" class="btn" type="button">پاک کردن</button>
+      </div>
+
+      <div class="chips" aria-label="دسته‌بندی">
+        <div class="chip active" data-tag="all">همه</div>
+        <div class="chip" data-tag="pricing">قیمت و پرداخت</div>
+        <div class="chip" data-tag="courier">پیک و دریافت/تحویل</div>
+        <div class="chip" data-tag="time">زمان تعمیر</div>
+        <div class="chip" data-tag="tracking">پیگیری و وضعیت</div>
+        <div class="chip" data-tag="warranty">ضمانت</div>
+        <div class="chip" data-tag="privacy">حریم خصوصی</div>
+      </div>
 
       <div class="divider"></div>
 
-      <div class="option">
-        <b>📦 پیگیری سفارش</b>
-        <span>
-          اگر قبلاً سفارش ثبت کرده‌اید، وارد صفحه ثبت سفارش شوید و وضعیت را مرحله‌به‌مرحله ببینید
-          و از همان‌جا پیام بفرستید.
-        </span><br>
-        <a href="../order/" style="color:var(--primary);font-weight:900">رفتن به صفحه سفارش</a>
-      </div>
-
-      <div class="option">
-        <b>❓ سوالات پرتکرار</b>
-        <span>
-          پاسخ سوال‌های رایج درباره قیمت، پیک، زمان تعمیر و مراحل کار را ببینید.
-        </span><br>
-        <a href="../faq/" style="color:var(--primary);font-weight:900">مشاهده سوالات متداول</a>
-      </div>
-
-      <div class="option">
-        <b>☎️ تماس مستقیم</b>
-        <span>
-          در ساعات کاری می‌توانید مستقیماً با پشتیبانی موبیکس تماس بگیرید.
-        </span><br>
-        <a href="tel:09386303012" style="color:var(--primary);font-weight:900">۰۹۳۸۶۳۰۳۰۱۲</a>
-      </div>
-
-      <div class="option">
-        <b>📍 مراجعه حضوری</b>
-        <span>
-          تهران، کریم‌خان، خیابان سنایی، کوچه چهارم غربی، پلاک ۶، واحد ۴
-        </span><br>
-        <a href="../contact/" style="color:var(--primary);font-weight:900">صفحه تماس با ما</a>
-      </div>
+      <div id="faqList" class="faq" aria-label="لیست سوالات متداول"></div>
     </div>
 
     <!-- FOOTER -->
@@ -224,5 +297,152 @@
     </div>
 
   </div>
+
+  <script>
+    (function(){
+      const DATA = [
+        {
+          tag: "courier",
+          q: "پیک موبیکس چطور کار می‌کند؟",
+          a: "بعد از ثبت سفارش، هماهنگی انجام می‌شود و پیک موبیکس در زمان و آدرس انتخابی شما دستگاه را دریافت می‌کند.\nپس از پایان تعمیر نیز دستگاه با پیک به شما تحویل داده می‌شود."
+        },
+        {
+          tag: "courier",
+          q: "محدوده سرویس‌دهی کجاست؟",
+          a: "در حال حاضر سرویس پیک در تهران فعال است. اگر خارج از محدوده باشید، پشتیبانی راهنمایی می‌کند."
+        },
+        {
+          tag: "pricing",
+          q: "هزینه تعمیر چطور مشخص می‌شود؟",
+          a: "ابتدا دستگاه بررسی می‌شود، سپس هزینه اعلام می‌گردد.\nقبل از شروع تعمیر، قیمت به شما اعلام می‌شود و فقط با تایید شما تعمیر انجام می‌شود."
+        },
+        {
+          tag: "pricing",
+          q: "تایید قیمت یعنی چه؟",
+          a: "وقتی هزینه اعلام شود، در صفحه سفارش، قیمت نمایش داده می‌شود.\nشما می‌توانید قیمت را تایید یا رد کنید. تایید قیمت دو مرحله‌ای است تا اشتباه رخ ندهد."
+        },
+        {
+          tag: "pricing",
+          q: "پرداخت آنلاین دارید؟",
+          a: "درگاه پرداخت آنلاین به زودی اضافه می‌شود.\nفعلاً بعد از تایید قیمت، هماهنگی برای پرداخت انجام می‌شود."
+        },
+        {
+          tag: "time",
+          q: "تعمیر چقدر زمان می‌برد؟",
+          a: "زمان تعمیر به نوع مشکل و مدل دستگاه بستگی دارد.\nدر بسیاری از موارد، تعمیر در همان روز یا حداکثر تا ۲۴–۴۸ ساعت انجام می‌شود."
+        },
+        {
+          tag: "tracking",
+          q: "چطور سفارش را پیگیری کنم؟",
+          a: "از صفحه «ثبت سفارش»، با شماره موبایل وارد شوید.\nسفارش‌های شما نمایش داده می‌شود و وضعیت را مرحله‌به‌مرحله می‌بینید."
+        },
+        {
+          tag: "tracking",
+          q: "اگر سوالی درباره سفارش داشتم چه کنم؟",
+          a: "در همان صفحه سفارش، برای هر سفارش یک بخش «چت» وجود دارد.\nپیام بفرستید تا پشتیبانی پاسخ دهد."
+        },
+        {
+          tag: "warranty",
+          q: "آیا تعمیرات ضمانت دارد؟",
+          a: "بله. بسته به نوع تعمیر و قطعه، ضمانت ارائه می‌شود.\nجزئیات ضمانت بعد از انجام تعمیر و هنگام تحویل اعلام می‌گردد."
+        },
+        {
+          tag: "privacy",
+          q: "اطلاعات من امن است؟",
+          a: "اطلاعات شما فقط برای انجام سرویس (هماهنگی پیک، تعمیر و پیگیری سفارش) استفاده می‌شود.\nجزئیات بیشتر در صفحه «حریم خصوصی» قابل مشاهده است."
+        },
+        {
+          tag: "courier",
+          q: "اگر نیاز به گوشی جایگزین داشته باشم چه می‌شود؟",
+          a: "در فرم سفارش گزینه «نیاز به گوشی جایگزین دارم» را فعال کنید.\nپشتیبانی شرایط و موجودی را به شما اعلام می‌کند."
+        }
+      ];
+
+      const faqList = document.getElementById("faqList");
+      const qInput = document.getElementById("q");
+      const clearBtn = document.getElementById("clearBtn");
+      const chips = Array.from(document.querySelectorAll(".chip"));
+
+      let activeTag = "all";
+      let query = "";
+
+      function esc(s){
+        return (s ?? "").toString()
+          .replaceAll("&","&amp;")
+          .replaceAll("<","&lt;")
+          .replaceAll(">","&gt;")
+          .replaceAll('"',"&quot;")
+          .replaceAll("'","&#039;");
+      }
+
+      function matches(item){
+        const tagOk = activeTag === "all" ? true : item.tag === activeTag;
+        if(!tagOk) return false;
+
+        const q = (query || "").trim().toLowerCase();
+        if(!q) return true;
+
+        const hay = (item.q + " " + item.a).toLowerCase();
+        return hay.includes(q);
+      }
+
+      function render(){
+        const list = DATA.filter(matches);
+
+        if(list.length === 0){
+          faqList.innerHTML = `
+            <div class="sub" style="margin-top:4px">
+              موردی پیدا نشد. کلمه دیگری را امتحان کنید.
+            </div>
+          `;
+          return;
+        }
+
+        faqList.innerHTML = list.map((it, idx) => {
+          return `
+            <details class="item">
+              <summary>
+                <div class="q">
+                  <span class="badge">${idx+1}</span>
+                  <span>${esc(it.q)}</span>
+                </div>
+                <span class="chev">⌄</span>
+              </summary>
+              <div class="a">${esc(it.a)}</div>
+            </details>
+          `;
+        }).join("");
+      }
+
+      function setActiveChip(tag){
+        activeTag = tag;
+        chips.forEach(c => {
+          c.classList.toggle("active", c.getAttribute("data-tag") === tag);
+        });
+        render();
+      }
+
+      chips.forEach(c => {
+        c.addEventListener("click", () => {
+          const t = c.getAttribute("data-tag") || "all";
+          setActiveChip(t);
+        });
+      });
+
+      qInput.addEventListener("input", () => {
+        query = qInput.value || "";
+        render();
+      });
+
+      clearBtn.addEventListener("click", () => {
+        qInput.value = "";
+        query = "";
+        setActiveChip("all");
+        qInput.focus();
+      });
+
+      render();
+    })();
+  </script>
 </body>
 </html>
