@@ -1,4 +1,3 @@
-
 <!doctype html>
 <html lang="fa" dir="rtl">
 <head>
@@ -22,48 +21,70 @@
       --text:#0B1220;
       --muted:#5B6B84;
       --line:rgba(15,23,42,.08);
+
       --shadow:0 14px 36px rgba(15,23,42,.10);
+      --shadow2:0 8px 18px rgba(15,23,42,.08);
+
       --radius:20px;
       --primary:#1F6AFF;
-      --max:900px;
+      --primary2:#3B82F6;
+
+      --max:960px;
     }
 
     *{box-sizing:border-box}
+    html{scroll-behavior:smooth}
     body{
       margin:0;
       font-family:"Vazirmatn", system-ui, sans-serif;
-      background:var(--bg);
+      background:
+        radial-gradient(1000px 500px at 80% -10%, rgba(31,106,255,.12), transparent 55%),
+        radial-gradient(900px 600px at 20% 10%, rgba(59,130,246,.06), transparent 55%),
+        var(--bg);
       color:var(--text);
+      overflow-x:hidden;
       line-height:2;
     }
     a{text-decoration:none;color:inherit}
+    img{max-width:100%;display:block}
 
     .container{
       max-width:var(--max);
       margin:auto;
-      padding:16px 16px 48px;
+      padding:14px 16px 56px;
     }
 
+    /* TOP BAR (same vibe) */
     .topbar{
-      margin-bottom:16px;
+      position:sticky;top:0;z-index:50;
+      padding:10px 0;
+      backdrop-filter: blur(12px);
     }
     .topbar-inner{
-      display:flex;
-      align-items:center;
-      justify-content:space-between;
-      background:#fff;
+      display:flex;align-items:center;justify-content:space-between;
+      background:rgba(246,248,252,.86);
       border:1px solid var(--line);
       border-radius:999px;
-      padding:10px 14px;
-      box-shadow:var(--shadow);
-    }
-    .brand{
-      display:flex;
-      align-items:center;
+      padding:10px 12px;
+      box-shadow:var(--shadow2);
       gap:10px;
-      font-weight:900;
     }
-    .brand img{width:56px}
+    .brand{display:flex;align-items:center;gap:12px;min-width:0}
+    .brand img{width:64px;height:auto}
+    .brand-title{
+      display:flex;flex-direction:column;gap:2px;min-width:0
+    }
+    .brand-title b{
+      font-weight:900;font-size:14px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis
+    }
+    .brand-title span{
+      font-weight:800;font-size:12.5px;color:var(--muted);white-space:nowrap;overflow:hidden;text-overflow:ellipsis
+    }
+
+    .nav{
+      display:flex;align-items:center;gap:8px;flex-wrap:wrap;
+      justify-content:flex-end;
+    }
 
     .btn{
       padding:10px 16px;
@@ -71,45 +92,180 @@
       font-weight:900;
       border:1px solid var(--line);
       background:#fff;
+      box-shadow:var(--shadow2);
       cursor:pointer;
+      font-family:inherit;
+      white-space:nowrap;
+      display:inline-flex;
+      align-items:center;
+      justify-content:center;
+      gap:8px;
+    }
+    .btn.primary{
+      background:linear-gradient(135deg,var(--primary),var(--primary2));
+      color:#fff;
+      border:none;
     }
 
+    /* CONTENT CARD */
     .card{
       background:var(--card);
       border:1px solid var(--line);
       border-radius:var(--radius);
       padding:18px;
       box-shadow:var(--shadow);
-      margin-top:12px;
     }
-
     h1{
-      margin:0 0 10px;
       font-size:26px;
       font-weight:900;
+      margin:0 0 6px;
+      letter-spacing:-.3px;
+      line-height:1.35;
     }
-    h2{
-      margin:18px 0 6px;
-      font-size:18px;
-      font-weight:900;
-    }
-    p{
-      margin:6px 0;
-      color:var(--text);
+    .sub{
+      color:var(--muted);
       font-size:14.5px;
+      line-height:1.9;
+      margin:0;
+    }
+    .divider{height:1px;background:var(--line);margin:12px 0}
+
+    h2{
+      font-size:17px;
+      font-weight:900;
+      margin:16px 0 6px;
+      line-height:1.8;
+    }
+    p, li{
+      font-size:14.5px;
+      color:var(--text);
+      line-height:2;
+      margin:6px 0;
+    }
+    ul{
+      margin:8px 0 0;
+      padding:0 18px 0 0;
     }
     .muted{
       color:var(--muted);
       font-size:13.5px;
+      line-height:1.9;
     }
 
-    .footer{
-      margin-top:24px;
-      padding-top:14px;
-      border-top:1px solid var(--line);
-      font-size:13px;
+    /* =========================
+       FOOTER (Same as Home)
+       ========================= */
+    footer{margin-top:22px}
+
+    .footer-card{
+      background:rgba(255,255,255,.92);
+      border:1px solid rgba(15,23,42,.08);
+      border-radius:26px;
+      box-shadow:var(--shadow);
+      padding:18px;
+      overflow:hidden;
+      position:relative;
+    }
+    .footer-card:before{
+      content:"";
+      position:absolute;
+      inset:-140px -140px auto auto;
+      width:280px;height:280px;border-radius:999px;
+      background:rgba(31,106,255,.06);
+      transform:rotate(12deg);
+      pointer-events:none;
+    }
+
+    .footer-grid{
+      display:grid;
+      grid-template-columns: 1.25fr .9fr 1.25fr;
+      gap:16px;
+      align-items:start;
+      position:relative;
+    }
+    @media(max-width:980px){.footer-grid{grid-template-columns:1fr}}
+
+    .f-title{
+      font-weight:980;
+      letter-spacing:-.2px;
+      margin:0;
+      font-size:15px;
+    }
+    .f-muted{color:var(--muted);font-size:13.4px;line-height:1.9;margin-top:8px}
+
+    .f-links{
+      display:flex;
+      flex-direction:column;
+      gap:8px;
+      margin-top:10px;
+    }
+    .f-links a{
+      color:var(--text);
+      font-weight:900;
+      font-size:13.6px;
+      padding:8px 10px;
+      border-radius:14px;
+      border:1px solid rgba(15,23,42,.08);
+      background:rgba(246,248,252,.55);
+      box-shadow:0 10px 18px rgba(15,23,42,.04);
+      width:fit-content;
+      transition:transform .12s ease, box-shadow .12s ease;
+    }
+    .f-links a:hover{
+      transform:translateY(-1px);
+      box-shadow:0 16px 30px rgba(15,23,42,.08);
+    }
+
+    .f-stack{
+      display:flex;
+      flex-direction:column;
+      gap:10px;
+      margin-top:10px;
+    }
+    .fk{
+      border:1px solid rgba(15,23,42,.08);
+      border-radius:18px;
+      background:#fff;
+      box-shadow:0 10px 18px rgba(15,23,42,.05);
+      padding:12px;
+    }
+    .fk b{display:block;font-weight:980;font-size:13px}
+    .fk span{display:block;color:var(--muted);font-size:12.8px;line-height:1.7;margin-top:6px}
+
+    .enamad-wrap{
+      margin-top:10px;
+      display:flex;
+      align-items:flex-end;
+      justify-content:flex-start;
+      gap:12px;
+      flex-wrap:wrap;
+    }
+    .enamad-wrap img{
+      width:96px;
+      height:auto;
+      cursor:pointer;
+      display:block;
+      opacity:.95;
+      filter:saturate(.96);
+    }
+
+    .footer-bottom{
+      margin-top:14px;
+      padding-top:12px;
+      border-top:1px solid rgba(15,23,42,.08);
+      display:flex;
+      justify-content:space-between;
+      gap:10px;
+      flex-wrap:wrap;
       color:var(--muted);
-      text-align:center;
+      font-size:12.8px;
+      position:relative;
+    }
+
+    @media (max-width: 520px){
+      .card{padding:14px}
+      .footer-card{padding:14px}
+      .enamad-wrap img{width:92px}
     }
   </style>
 </head>
@@ -117,59 +273,104 @@
 <body>
   <div class="container">
 
-    <!-- Header -->
+    <!-- HEADER -->
     <div class="topbar">
       <div class="topbar-inner">
         <a class="brand" href="../">
           <img src="../assets/logo.png" alt="Mobix">
-          موبیکس
+          <div class="brand-title">
+            <b>موبیکس</b>
+            <span>سرویس تخصصی تعمیر موبایل</span>
+          </div>
         </a>
-        <a class="btn" href="../contact/">تماس با ما</a>
+
+        <div class="nav">
+          <a class="btn" href="../contact/">تماس با ما</a>
+          <a class="btn primary" href="../order/">ثبت سفارش</a>
+        </div>
       </div>
     </div>
 
     <div class="card">
-      <h1>قوانین و شرایط استفاده از خدمات موبیکس</h1>
-      <p class="muted">
+      <h1>قوانین و شرایط استفاده</h1>
+      <p class="sub">
         استفاده از خدمات موبیکس به معنی پذیرش کامل قوانین و شرایط زیر است.
       </p>
 
-      <h2>۱. معرفی کوتاه سرویس</h2>
+      <div class="divider"></div>
+
+      <h2>۱) معرفی کوتاه سرویس</h2>
       <p>
-        موبیکس یک سرویس تخصصی تعمیر تلفن همراه است که کلیه مراحل شامل دریافت دستگاه،
-        عیب‌یابی، تعمیر و تحویل نهایی را به‌صورت یکپارچه و درون‌سازمانی انجام می‌دهد.
+        موبیکس یک سرویس تخصصی تعمیر تلفن همراه است که کلیه مراحل شامل دریافت دستگاه، عیب‌یابی، تعمیر و تحویل نهایی را
+        به‌صورت یکپارچه و درون‌سازمانی انجام می‌دهد.
       </p>
 
-      <h2>۲. نحوه ثبت سفارش</h2>
+      <h2>۲) نحوه ثبت سفارش</h2>
       <p>
-        ثبت سفارش از طریق وب‌سایت موبیکس انجام می‌شود. کاربر موظف است اطلاعات مربوط به
-        دستگاه، مشکل، آدرس و زمان دریافت را به‌درستی وارد کند. مسئولیت هرگونه مغایرت
-        ناشی از اطلاعات نادرست بر عهده مشتری است.
+        ثبت سفارش از طریق وب‌سایت موبیکس انجام می‌شود. کاربر موظف است اطلاعات مربوط به دستگاه، مشکل، آدرس و زمان دریافت را
+        به‌درستی وارد کند. مسئولیت هرگونه مغایرت ناشی از اطلاعات نادرست بر عهده مشتری است.
       </p>
 
-      <h2>۳. مسئولیت‌های مشتری</h2>
+      <h2>۳) مسئولیت‌های مشتری</h2>
+      <ul>
+        <li>ارائه اطلاعات صحیح و کامل.</li>
+        <li>تهیه نسخه پشتیبان از اطلاعات شخصی قبل از تحویل دستگاه.</li>
+        <li>خارج کردن سیم‌کارت و لوازم جانبی غیرضروری قبل از تحویل (در صورت امکان).</li>
+      </ul>
+
+      <h2>۴) مسئولیت‌های موبیکس</h2>
+      <ul>
+        <li>بررسی و تعمیر دستگاه با رعایت اصول فنی و ایمنی.</li>
+        <li>اطلاع‌رسانی شفاف درباره وضعیت سفارش و مراحل انجام کار.</li>
+        <li>اعلام هزینه پیش از اقدام به تعمیر و اخذ تایید از مشتری.</li>
+      </ul>
+
+      <h2>۵) قیمت‌گذاری و تأیید هزینه</h2>
       <p>
-        مشتری موظف است:
-        <br>• اطلاعات صحیح و کامل ارائه دهد.
-        <br>• قبل از تحویل دستگاه، از اطلاعات شخصی خود نسخه پشتیبان تهیه کند.
-        <br>• از خارج کردن سیم‌کارت و لوازم جانبی غیرضروری اطمینان حاصل کند.
+        هزینه تعمیر پس از بررسی اولیه (و در صورت نیاز، پس از باز شدن دستگاه) اعلام می‌شود. اجرای تعمیر منوط به تأیید شماست.
+        در برخی موارد، تأیید ممکن است در دو مرحله انجام شود (نمایش قیمت و تأیید نهایی).
       </p>
 
-      <h2>۴. مسئولیت‌های موبیکس</h2>
+      <h2>۶) زمان‌بندی و تحویل</h2>
       <p>
-        موبیکس متعهد است:
-        <br>• دستگاه را با رعایت اصول فنی و ایمنی بررسی و تعمیر کند.
-        <br>• وضعیت سفارش را به‌صورت شفاف
+        زمان تقریبی انجام تعمیر با توجه به نوع ایراد، موجودی قطعات و شرایط کاری اعلام می‌شود. تحویل دستگاه پس از اتمام تعمیر
+        و هماهنگی با مشتری انجام خواهد شد.
+      </p>
 
-        <!-- FOOTER -->
+      <h2>۷) لغو سفارش</h2>
+      <p>
+        مشتری می‌تواند قبل از شروع تعمیر، درخواست لغو سفارش را اعلام کند. در صورتی که دستگاه دریافت شده باشد، هزینه رفت‌وآمد
+        پیک و عیب‌یابی (در صورت انجام) ممکن است محاسبه شود.
+      </p>
+
+      <h2>۸) حریم خصوصی</h2>
+      <p>
+        موبیکس اطلاعات کاربران را مطابق صفحه
+        <a href="../privacy/" style="color:var(--primary);font-weight:900">حریم خصوصی</a>
+        مدیریت می‌کند.
+      </p>
+
+      <h2>۹) پشتیبانی و ارتباط</h2>
+      <p>
+        برای سوالات، پیگیری یا ثبت درخواست، از طریق صفحه
+        <a href="../contact/" style="color:var(--primary);font-weight:900">تماس با ما</a>
+        با موبیکس در ارتباط باشید.
+      </p>
+
+      <p class="muted" style="margin-top:14px">
+        آخرین بروزرسانی: ۱۴۰۴/۱۰/۱۴
+      </p>
+    </div>
+
+    <!-- FOOTER -->
     <footer aria-label="Footer">
       <div class="footer-card">
         <div class="footer-grid">
 
-          <!-- Brand + KPIs + Courier (stacked, as you wanted) -->
+          <!-- Brand + KPIs + Courier -->
           <div>
             <div style="display:flex;align-items:center;gap:10px">
-              <img src="assets/logo.png" alt="موبیکس" style="width:58px;height:auto">
+              <img src="../assets/logo.png" alt="موبیکس" style="width:58px;height:auto">
               <div>
                 <div class="f-title">موبیکس</div>
                 <div class="f-muted" style="margin-top:4px">سرویس تخصصی تعمیر موبایل</div>
@@ -198,16 +399,14 @@
           <div>
             <div class="f-title">دسترسی سریع</div>
             <div class="f-links" aria-label="Footer links">
-              <a href="contact/">تماس با ما</a>
-              <a href="order/">ثبت سفارش</a>
-          
-              <!-- ✅ Added: legal pages (no style change) -->
-              <a href="terms/">قوانین و شرایط</a>
-              <a href="privacy/">حریم خصوصی</a>
+              <a href="../contact/">تماس با ما</a>
+              <a href="../order/">ثبت سفارش</a>
+              <a href="../terms/">قوانین و شرایط</a>
+              <a href="../privacy/">حریم خصوصی</a>
             </div>
           </div>
 
-          <!-- Trust (Enamad only, direct link for Cloudflare/GitHub) -->
+          <!-- Trust -->
           <div>
             <div class="f-title">اعتماد و مجوزها</div>
             <div class="f-muted">اطلاعات و مجوزها برای اطمینان شما.</div>
@@ -235,27 +434,5 @@
     </footer>
 
   </div>
-
-  <script>
-    (function(){
-      const topbar = document.getElementById("topbar");
-      if(!topbar) return;
-
-      let ticking = false;
-      function onScroll(){
-        if(ticking) return;
-        ticking = true;
-        requestAnimationFrame(() => {
-          const y = window.scrollY || document.documentElement.scrollTop || 0;
-          if(y > 14) topbar.classList.add("scrolled");
-          else topbar.classList.remove("scrolled");
-          ticking = false;
-        });
-      }
-
-      onScroll();
-      window.addEventListener("scroll", onScroll, { passive: true });
-    })();
-  </script>
 </body>
 </html>
