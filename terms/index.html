@@ -160,3 +160,102 @@
         موبیکس متعهد است:
         <br>• دستگاه را با رعایت اصول فنی و ایمنی بررسی و تعمیر کند.
         <br>• وضعیت سفارش را به‌صورت شفاف
+
+        <!-- FOOTER -->
+    <footer aria-label="Footer">
+      <div class="footer-card">
+        <div class="footer-grid">
+
+          <!-- Brand + KPIs + Courier (stacked, as you wanted) -->
+          <div>
+            <div style="display:flex;align-items:center;gap:10px">
+              <img src="assets/logo.png" alt="موبیکس" style="width:58px;height:auto">
+              <div>
+                <div class="f-title">موبیکس</div>
+                <div class="f-muted" style="margin-top:4px">سرویس تخصصی تعمیر موبایل</div>
+              </div>
+            </div>
+
+            <div class="f-stack" aria-label="Footer highlights">
+              <div class="fk">
+                <b>قیمت قبل از اقدام</b>
+                <span>قبل از هر تعمیر، هزینه با شما هماهنگ می‌شود.</span>
+              </div>
+
+              <div class="fk">
+                <b>پیگیری مرحله‌ای</b>
+                <span>وضعیت سفارش همیشه شفاف و قابل پیگیری است.</span>
+              </div>
+
+              <div class="fk">
+                <b>پیک موبیکس</b>
+                <span>زمان و مکان دریافت/تحویل را شما تعیین می‌کنید.</span>
+              </div>
+            </div>
+          </div>
+
+          <!-- Links -->
+          <div>
+            <div class="f-title">دسترسی سریع</div>
+            <div class="f-links" aria-label="Footer links">
+              <a href="contact/">تماس با ما</a>
+              <a href="order/">ثبت سفارش</a>
+          
+              <!-- ✅ Added: legal pages (no style change) -->
+              <a href="terms/">قوانین و شرایط</a>
+              <a href="privacy/">حریم خصوصی</a>
+            </div>
+          </div>
+
+          <!-- Trust (Enamad only, direct link for Cloudflare/GitHub) -->
+          <div>
+            <div class="f-title">اعتماد و مجوزها</div>
+            <div class="f-muted">اطلاعات و مجوزها برای اطمینان شما.</div>
+
+            <div class="enamad-wrap" aria-label="اینماد">
+              <a href="https://trustseal.enamad.ir/?id=5414923" target="_blank" rel="noopener noreferrer" referrerpolicy="origin">
+                <img
+                  src="https://trustseal.enamad.ir/logo.aspx?id=5414923&Code=DiznrIm0BJGpnPrtdWijxsgtOlPs8Aqf"
+                  alt="اینماد موبیکس"
+                  referrerpolicy="origin"
+                  style="cursor:pointer"
+                  code="DiznrIm0BJGpnPrtdWijxsgtOlPs8Aqf"
+                >
+              </a>
+            </div>
+          </div>
+
+        </div>
+
+        <div class="footer-bottom">
+          <span>© Mobix — همه حقوق محفوظ است</span>
+          <span>سریع • شفاف • قابل پیگیری</span>
+        </div>
+      </div>
+    </footer>
+
+  </div>
+
+  <script>
+    (function(){
+      const topbar = document.getElementById("topbar");
+      if(!topbar) return;
+
+      let ticking = false;
+      function onScroll(){
+        if(ticking) return;
+        ticking = true;
+        requestAnimationFrame(() => {
+          const y = window.scrollY || document.documentElement.scrollTop || 0;
+          if(y > 14) topbar.classList.add("scrolled");
+          else topbar.classList.remove("scrolled");
+          ticking = false;
+        });
+      }
+
+      onScroll();
+      window.addEventListener("scroll", onScroll, { passive: true });
+    })();
+  </script>
+</body>
+</html>
