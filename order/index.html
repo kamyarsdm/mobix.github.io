@@ -416,6 +416,124 @@
       margin-top:10px;
     }
 
+    /* Dashboard message (order update) */
+    .dash-note{
+      margin-top:10px;
+      padding:10px 12px;
+      border-radius:16px;
+      border:1px solid rgba(31,106,255,.18);
+      background:rgba(31,106,255,.06);
+      color:#0B2A6A;
+      box-shadow:var(--shadow2);
+      line-height:1.9;
+      font-weight:800;
+      font-size:13px;
+      white-space:pre-line;
+    }
+    .dash-note .dash-title{
+      display:flex;
+      align-items:center;
+      justify-content:space-between;
+      gap:10px;
+      flex-wrap:wrap;
+      margin-bottom:6px;
+    }
+    .dash-note .dash-title b{
+      font-weight:900;
+      font-size:13.2px;
+    }
+    .dash-note .dash-time{
+      font-weight:900;
+      font-size:12px;
+      color:rgba(11,42,106,.78);
+      background:rgba(255,255,255,.7);
+      border:1px solid rgba(31,106,255,.18);
+      padding:6px 8px;
+      border-radius:999px;
+    }
+
+    /* Chat */
+    details.chat-details{
+      margin-top:10px;
+      border:1px solid var(--line);
+      background:rgba(246,248,252,.55);
+      border-radius:18px;
+      padding:10px 12px;
+      box-shadow:var(--shadow2);
+    }
+    details.chat-details > summary{
+      cursor:pointer;
+      font-weight:900;
+      list-style:none;
+      display:flex;
+      align-items:center;
+      justify-content:space-between;
+      gap:10px;
+    }
+    details.chat-details > summary::-webkit-details-marker{display:none}
+    .chat-wrap{
+      margin-top:10px;
+      display:flex;
+      flex-direction:column;
+      gap:10px;
+    }
+    .chat-messages{
+      max-height:260px;
+      overflow:auto;
+      padding:10px;
+      border-radius:16px;
+      border:1px solid var(--line);
+      background:#fff;
+      box-shadow:var(--shadow2);
+      display:flex;
+      flex-direction:column;
+      gap:8px;
+    }
+    .chat-msg{
+      display:flex;
+      flex-direction:column;
+      gap:4px;
+      max-width:90%;
+    }
+    .chat-msg .bubble{
+      padding:10px 12px;
+      border-radius:16px;
+      border:1px solid var(--line);
+      background:rgba(246,248,252,.72);
+      line-height:1.85;
+      font-weight:800;
+      font-size:13.2px;
+      white-space:pre-line;
+      word-break:break-word;
+    }
+    .chat-msg .meta{
+      font-size:11.5px;
+      color:var(--muted);
+      font-weight:800;
+    }
+    .chat-msg.me{
+      align-self:flex-end;
+      text-align:right;
+    }
+    .chat-msg.me .bubble{
+      background:rgba(31,106,255,.10);
+      border-color:rgba(31,106,255,.20);
+      color:#0B2A6A;
+    }
+    .chat-msg.other{
+      align-self:flex-start;
+      text-align:right;
+    }
+    .chat-input-row{
+      display:grid;
+      grid-template-columns: 1fr auto;
+      gap:10px;
+      align-items:center;
+    }
+    @media(max-width:520px){
+      .chat-input-row{grid-template-columns:1fr}
+    }
+
     /* Modal */
     .modal-backdrop{
       position:fixed;
@@ -551,7 +669,9 @@
         <div class="muted">
           • بعد از ورود، نام شما یک‌بار ثبت می‌شود و برای سفارش‌های بعدی نیاز نیست دوباره وارد کنید.<br>
           • هر زمان قیمت اعلام شود، داخل همین صفحه در سفارش‌های شما نمایش داده می‌شود.<br>
-          • بعد از اعلام قیمت، تایید/رد قیمت همینجا انجام می‌شود (دو مرحله‌ای).
+          • بعد از اعلام قیمت، تایید/رد قیمت همینجا انجام می‌شود (دو مرحله‌ای).<br>
+          • پیام/توضیحی که اپراتور در داشبورد ثبت می‌کند، کنار وضعیت نمایش داده می‌شود.<br>
+          • امکان چت درباره هر سفارش فعال است.
         </div>
       </div>
     </section>
@@ -897,8 +1017,17 @@
       let realtimeChannel = null;
       let pollTimer = null;
 
+      // Extra realtime channels (updates + chat)
+      let updatesRealtimeChannel = null;
+      let chatRealtimeChannel = null;
+
       // Modal order state
       let modalOrder = null; // current order object for approval
+
+      // Latest maps
+      const lastKnownOrders = new Map();   // id -> order
+      const lastKnownUpdates = new Map();  // order_no -> { message, stage, created_at }
+      const lastKnownChats = new Map();    // order_no -> [messages]
 
       // =========================
       // UI Helpers
@@ -1115,14 +1244,12 @@
       // Price approval helpers
       // =========================
       function approvalStateFromOrder(o){
-        // price_approval is text in your table (pending / approved / rejected / not_needed)
         const pa = (o && o.price_approval != null) ? String(o.price_approval).trim().toLowerCase() : "";
         if(pa === "approved") return "approved";
         if(pa === "rejected") return "rejected";
         if(pa === "not_needed") return "not_needed";
         if(pa === "pending") return "pending";
 
-        // fallback to boolean if needed
         if(o && o.price_approved === true) return "approved";
         return pa || "pending";
       }
@@ -1144,13 +1271,9 @@
       }
 
       function shouldShowPriceActions(o){
-        // only when stage is price quoted and approval is pending
         const stageNorm = normalizeStatus(o?.stage ?? o?.status ?? "");
         const appr = approvalStateFromOrder(o);
-
-        // If price is not set, no actions
         const hasPrice = Number(o?.quoted_price_toman || 0) > 0;
-
         return hasPrice && stageNorm === "quoted" && appr === "pending";
       }
 
@@ -1195,7 +1318,6 @@
           if(navLogoutBtn) navLogoutBtn.style.display = "";
           setStatus(orderGate, "ok", "می‌توانید سفارش را ارسال کنید");
 
-          // guide only before login
           if(guideCard){
             guideCard.style.display = "none";
           }
@@ -1239,6 +1361,24 @@
         }catch(_e){}
       }
 
+      function stopRealtimeUpdates(){
+        try{
+          if(updatesRealtimeChannel){
+            supabase.removeChannel(updatesRealtimeChannel);
+            updatesRealtimeChannel = null;
+          }
+        }catch(_e){}
+      }
+
+      function stopRealtimeChat(){
+        try{
+          if(chatRealtimeChannel){
+            supabase.removeChannel(chatRealtimeChannel);
+            chatRealtimeChannel = null;
+          }
+        }catch(_e){}
+      }
+
       function stopPolling(){
         if(pollTimer) clearInterval(pollTimer);
         pollTimer = null;
@@ -1246,7 +1386,6 @@
 
       function startPolling(){
         stopPolling();
-        // هر 20 ثانیه یکبار برای اینکه حتی اگر Realtime اجازه نداد، مرحله‌ها آپدیت شود
         pollTimer = setInterval(() => {
           if(loggedIn()) loadOrders();
         }, 20000);
@@ -1257,9 +1396,6 @@
 
         if(!loggedIn()) return;
 
-        // NOTE:
-        // اگر Realtime/RLS اجازه فیلتر ندهد، همچنان polling فعال است و دکمه «به‌روزرسانی» هم هست.
-        // این کانال فقط برای اینکه "پس از تغییر داشبورد" خودکار آپدیت شود.
         try{
           realtimeChannel = supabase.channel("mobix-orders-realtime")
             .on(
@@ -1274,13 +1410,42 @@
                 loadOrders();
               }
             )
-            .subscribe((status) => {
-              // اگر وصل شد یا نشد، مهم نیست چون polling هم داریم.
-              // status می‌تواند SUBSCRIBED/CHANNEL_ERROR/TIMED_OUT باشد.
-            });
-        }catch(_e){
-          // ignore and rely on polling
-        }
+            .subscribe((_status) => {});
+        }catch(_e){}
+      }
+
+      function startRealtimeForUpdatesAndChat(orderNos){
+        stopRealtimeUpdates();
+        stopRealtimeChat();
+
+        if(!loggedIn()) return;
+
+        const list = (orderNos || []).filter(Boolean);
+        if(list.length === 0) return;
+
+        // Realtime filter for text: in.("A","B")
+        const quoted = list.map(x => '"' + String(x).replaceAll('"','') + '"').join(",");
+        const filterIn = "order_no=in.(" + quoted + ")";
+
+        try{
+          updatesRealtimeChannel = supabase.channel("mobix-order-updates-rt")
+            .on(
+              "postgres_changes",
+              { event:"*", schema:"public", table:"order_updates", filter: filterIn },
+              (_payload) => { loadOrders(); }
+            )
+            .subscribe((_status) => {});
+        }catch(_e){}
+
+        try{
+          chatRealtimeChannel = supabase.channel("mobix-chat-rt")
+            .on(
+              "postgres_changes",
+              { event:"*", schema:"public", table:"chat_messages", filter: filterIn },
+              (_payload) => { loadOrders(); }
+            )
+            .subscribe((_status) => {});
+        }catch(_e){}
       }
 
       // =========================
@@ -1388,6 +1553,8 @@
         stopTimer();
 
         stopRealtime();
+        stopRealtimeUpdates();
+        stopRealtimeChat();
         stopPolling();
 
         setMsg(authMsg, "ok", "خارج شدید.");
@@ -1527,11 +1694,9 @@
       // Price approval actions (two-step)
       // =========================
       async function updatePriceApproval(order, action){
-        // action: "approve" | "reject"
         if(!order) return;
 
         const id = order.id;
-        const orderNo = order.order_no || id;
 
         if(!id){
           setMsg(priceModalMsg, "err", "شناسه سفارش پیدا نشد.");
@@ -1544,7 +1709,6 @@
 
         try{
           if(action === "approve"){
-            // stage stays quoted; approval becomes approved; price_approved true
             const { error } = await supabase
               .from("orders")
               .update({
@@ -1560,7 +1724,6 @@
             }
 
             setMsg(priceModalMsg, "ok", "قیمت تایید شد ✅ (درگاه پرداخت: به زودی)");
-            // close after short delay
             setTimeout(() => {
               closePriceModal();
               loadOrders();
@@ -1592,7 +1755,6 @@
           console.error("Price approval exception:", e);
           setMsg(priceModalMsg, "err", "خطا: " + (e?.message || "خطای نامشخص"));
         }finally{
-          // if still open, re-enable buttons based on checkbox
           if(priceModalBackdrop.style.display === "flex"){
             priceFinalRejectBtn.disabled = false;
             priceFinalApproveBtn.disabled = !priceFinalCheck.checked;
@@ -1601,7 +1763,68 @@
       }
 
       // =========================
-      // Load orders (Fix: Persian status + stage updates + show approve/reject)
+      // Dashboard updates (message next to status)
+      // =========================
+      function pickLatestUpdateForOrder(orderNo){
+        if(!orderNo) return null;
+        return lastKnownUpdates.get(String(orderNo)) || null;
+      }
+
+      function normalizeSender(s){
+        const x = (s || "").toString().trim().toLowerCase();
+        if(["customer","client","user","me","you","مشتری"].includes(x)) return "customer";
+        if(["mobix","admin","operator","support","staff","team","پشتیبانی","اپراتور"].includes(x)) return "mobix";
+        return x || "mobix";
+      }
+
+      function senderLabelFa(s){
+        const x = normalizeSender(s);
+        if(x === "customer") return "شما";
+        if(x === "mobix") return "موبیکس";
+        return "موبیکس";
+      }
+
+      // =========================
+      // Chat actions
+      // =========================
+      async function sendChatMessage(orderNo, text){
+        const t = (text || "").trim();
+        const on = (orderNo || "").trim();
+        if(!on){
+          alert("شماره سفارش پیدا نشد.");
+          return false;
+        }
+        if(t.length < 1){
+          return false;
+        }
+
+        try{
+          const payload = {
+            order_no: on,
+            sender: "customer",
+            text: t
+          };
+
+          const { error } = await supabase
+            .from("chat_messages")
+            .insert(payload);
+
+          if(error){
+            console.error("Chat insert error:", error);
+            alert("ارسال پیام ناموفق بود: " + (error.message || "خطای نامشخص"));
+            return false;
+          }
+
+          return true;
+        }catch(e){
+          console.error("Chat send exception:", e);
+          alert("ارسال پیام ناموفق بود: " + (e?.message || "خطای نامشخص"));
+          return false;
+        }
+      }
+
+      // =========================
+      // Load orders + updates + chat
       // =========================
       async function loadOrders(){
         if(!loggedIn()){
@@ -1630,16 +1853,100 @@
         const list = data || [];
         ordersCount.textContent = String(list.length);
 
+        // Refresh maps
+        lastKnownOrders.clear();
+        list.forEach(o => {
+          if(o && Number.isFinite(Number(o.id))){
+            lastKnownOrders.set(Number(o.id), o);
+          }
+        });
+
         if(list.length === 0){
           ordersWrap.innerHTML = '<div class="muted">هنوز سفارشی ثبت نکرده‌اید.</div>';
+          lastKnownUpdates.clear();
+          lastKnownChats.clear();
+          stopRealtimeUpdates();
+          stopRealtimeChat();
           return;
         }
 
+        // Collect order_nos for batch queries
+        const orderNos = list
+          .map(o => (o && o.order_no != null) ? String(o.order_no).trim() : "")
+          .filter(x => x.length > 0);
+
+        // (A) Fetch latest dashboard messages from order_updates (per order_no)
+        // Assumption: order_updates columns include: order_no, stage, message, created_at
+        // If your column name is different, tell me and I change it.
+        try{
+          if(orderNos.length > 0){
+            const { data: updData, error: updErr } = await supabase
+              .from("order_updates")
+              .select("order_no, stage, message, created_at")
+              .in("order_no", orderNos)
+              .order("created_at", { ascending:false });
+
+            if(updErr){
+              console.error("Load order_updates error:", updErr);
+              // keep old map (do not clear)
+            }else{
+              lastKnownUpdates.clear();
+              const rows = updData || [];
+              for(const r of rows){
+                const on = (r && r.order_no != null) ? String(r.order_no).trim() : "";
+                if(!on) continue;
+                if(!lastKnownUpdates.has(on)){
+                  lastKnownUpdates.set(on, {
+                    order_no: on,
+                    stage: r.stage ?? null,
+                    message: r.message ?? null,
+                    created_at: r.created_at ?? null
+                  });
+                }
+              }
+            }
+          }
+        }catch(e){
+          console.error("Order updates fetch exception:", e);
+        }
+
+        // (B) Fetch chat messages from chat_messages (batch)
+        // Assumption: chat_messages columns include: order_no, sender, text, created_at
+        try{
+          if(orderNos.length > 0){
+            const { data: chatData, error: chatErr } = await supabase
+              .from("chat_messages")
+              .select("id, order_no, sender, text, created_at")
+              .in("order_no", orderNos)
+              .order("created_at", { ascending:true });
+
+            if(chatErr){
+              console.error("Load chat_messages error:", chatErr);
+              // keep old map (do not clear)
+            }else{
+              lastKnownChats.clear();
+              const rows = chatData || [];
+              for(const r of rows){
+                const on = (r && r.order_no != null) ? String(r.order_no).trim() : "";
+                if(!on) continue;
+                if(!lastKnownChats.has(on)) lastKnownChats.set(on, []);
+                lastKnownChats.get(on).push(r);
+              }
+            }
+          }
+        }catch(e){
+          console.error("Chat fetch exception:", e);
+        }
+
+        // (C) Keep realtime for updates/chat aligned with current orders
+        startRealtimeForUpdatesAndChat(orderNos);
+
+        // Render
         ordersWrap.innerHTML = list.map(o => {
           const id = o.order_no ?? o.id ?? "";
           const created = o.created_at ? fmtDate(o.created_at) : "";
 
-          // IMPORTANT: Always prefer stage for tracking (dashboard edits stage)
+          // Always prefer stage for tracking
           const rawStage = (o.stage != null && String(o.stage).trim() !== "") ? o.stage : (o.status ?? o.state ?? "requested");
           const stNorm = normalizeStatus(rawStage);
 
@@ -1687,12 +1994,78 @@
             ? `<span class="${approvalPillClass(appr)}">وضعیت قیمت: ${esc(apprLabel)}</span>`
             : "";
 
+          // Dashboard message (latest)
+          const on = (o.order_no != null) ? String(o.order_no).trim() : "";
+          const upd = pickLatestUpdateForOrder(on);
+          const updMsg = (upd && upd.message != null) ? String(upd.message).trim() : "";
+          const updTime = (upd && upd.created_at) ? fmtDate(upd.created_at) : "";
+          const dashHtml = updMsg ? `
+            <div class="dash-note">
+              <div class="dash-title">
+                <b>پیام موبیکس</b>
+                ${updTime ? `<span class="dash-time">${esc(updTime)}</span>` : `<span class="dash-time">—</span>`}
+              </div>
+              ${esc(updMsg)}
+            </div>
+          ` : "";
+
+          // Chat render
+          const chatRows = lastKnownChats.get(on) || [];
+          const chatHtml = `
+            <details class="chat-details">
+              <summary>
+                <span>چت درباره این سفارش</span>
+                <span class="status">${chatRows.length ? (chatRows.length.toLocaleString("fa-IR") + " پیام") : "بدون پیام"}</span>
+              </summary>
+
+              <div class="chat-wrap">
+                <div class="chat-messages" data-chat-box="1" data-order-no="${esc(on)}">
+                  ${chatRows.length ? chatRows.slice(-50).map(m => {
+                    const who = senderLabelFa(m.sender);
+                    const isMe = normalizeSender(m.sender) === "customer";
+                    const cls = isMe ? "chat-msg me" : "chat-msg other";
+                    const when = m.created_at ? fmtDate(m.created_at) : "";
+                    const txt = (m.text != null) ? String(m.text) : "";
+                    return `
+                      <div class="${cls}">
+                        <div class="bubble">${esc(txt)}</div>
+                        <div class="meta">${esc(who)}${when ? (" • " + esc(when)) : ""}</div>
+                      </div>
+                    `;
+                  }).join("") : `<div class="muted">هنوز پیامی برای این سفارش ثبت نشده است.</div>`}
+                </div>
+
+                <div class="chat-input-row">
+                  <input class="input" type="text"
+                         placeholder="پیام خود را بنویسید…"
+                         data-chat-input="1"
+                         data-order-no="${esc(on)}" />
+                  <button class="btn primary"
+                          type="button"
+                          data-act="send-chat"
+                          data-order-no="${esc(on)}">
+                    ارسال پیام
+                  </button>
+                </div>
+
+                <div class="hint" data-chat-msg="1" data-order-no="${esc(on)}"></div>
+              </div>
+            </details>
+          `;
+
           return `
-            <div class="order-item" data-order-row="1" data-order-id="${esc(String(o.id ?? ""))}">
+            <div class="order-item" data-order-row="1" data-order-id="${esc(String(o.id ?? ""))}" data-order-no="${esc(on)}">
               <div class="order-top">
                 <b>سفارش #${esc(id)}</b>
                 <span class="pill">وضعیت: ${esc(statusLabelFa(stNorm))}</span>
               </div>
+
+              ${updMsg ? `
+                <div class="order-top">
+                  <span class="pill warn">توضیح داشبورد</span>
+                  <span class="pill warn" style="max-width:100%;white-space:normal;border-radius:16px">${esc(updMsg)}</span>
+                </div>
+              ` : ""}
 
               <div class="muted">
                 <b>مدل:</b> ${esc(dm)}<br>
@@ -1703,6 +2076,8 @@
               </div>
 
               ${needsLoaner ? `<div class="replacement-note">نیاز به گوشی جایگزین: بله</div>` : ""}
+
+              ${dashHtml}
 
               <div class="divider"></div>
 
@@ -1716,54 +2091,53 @@
               ${actionsHtml}
 
               ${renderTrack(stNorm)}
+
+              ${chatHtml}
             </div>
           `;
         }).join("");
 
-        // bind buttons after render
-        bindOrderActionButtons(list);
+        // Auto-scroll chat boxes to bottom
+        try{
+          document.querySelectorAll('[data-chat-box="1"]').forEach(box => {
+            box.scrollTop = box.scrollHeight;
+          });
+        }catch(_e){}
+
+        // Bind actions (delegation)
+        bindOrdersDelegationOnce();
       }
 
-      function bindOrderActionButtons(orderList){
-        // remove previous handlers by using event delegation on ordersWrap
-        // but to keep it very deterministic, we'll attach once with a flag.
-        // We'll use delegation anyway because re-render happens often.
+      function bindOrdersDelegationOnce(){
+        if(ordersWrap.__mobixDelegationAttached) return;
 
-        // Ensure only one delegation is attached
-        if(!ordersWrap.__mobixDelegationAttached){
-          ordersWrap.addEventListener("click", async (e) => {
-            const target = e.target;
-            if(!target) return;
+        ordersWrap.addEventListener("click", async (e) => {
+          const target = e.target;
+          if(!target) return;
 
-            const btn = target.closest("button[data-act]");
-            if(!btn) return;
+          const btn = target.closest("button[data-act]");
+          if(!btn) return;
 
-            const act = btn.getAttribute("data-act");
+          const act = btn.getAttribute("data-act");
+
+          // (1) Price approval actions
+          if(act === "open-approve" || act === "reject-direct"){
             const idStr = btn.getAttribute("data-order-id");
             const orderId = Number(idStr);
 
             if(!Number.isFinite(orderId)) return;
-
-            // find order in current DOM set by reading from latest orderList in closure not possible
-            // so we fetch minimal by scanning DOM and then using lastKnownOrders map.
             const order = lastKnownOrders.get(orderId);
             if(!order) return;
 
             if(act === "open-approve"){
-              // First step: open modal (second step inside modal)
               openPriceModal(order);
               return;
             }
 
             if(act === "reject-direct"){
-              // For reject, we still do two-step? You requested two-step for تایید قیمت.
-              // Reject can be single-step (fast), but we do a confirm to prevent mistake.
               const ok = confirm("قیمت را رد می‌کنید؟ این کار قابل بازگشت نیست.");
               if(!ok) return;
 
-              // Do reject without modal (quick)
-              // But still keep UI consistent: we can reuse modal with reject path if you want.
-              // Here: direct update.
               try{
                 btn.disabled = true;
                 const { error } = await supabase
@@ -1787,22 +2161,76 @@
               }
               return;
             }
-          });
+          }
 
-          ordersWrap.__mobixDelegationAttached = true;
-        }
+          // (2) Chat send
+          if(act === "send-chat"){
+            const orderNo = (btn.getAttribute("data-order-no") || "").trim();
+            if(!orderNo) return;
 
-        // Refresh map
-        lastKnownOrders.clear();
-        (orderList || []).forEach(o => {
-          if(o && Number.isFinite(Number(o.id))){
-            lastKnownOrders.set(Number(o.id), o);
+            const input = ordersWrap.querySelector(`input[data-chat-input="1"][data-order-no="${CSS.escape(orderNo)}"]`);
+            const msgEl = ordersWrap.querySelector(`div[data-chat-msg="1"][data-order-no="${CSS.escape(orderNo)}"]`);
+            const text = input ? input.value : "";
+
+            if(msgEl){
+              msgEl.textContent = "";
+              msgEl.style.color = "var(--muted)";
+            }
+
+            if(!text || !text.trim()){
+              return;
+            }
+
+            btn.disabled = true;
+            if(msgEl){
+              msgEl.style.color = "var(--warn)";
+              msgEl.textContent = "در حال ارسال پیام…";
+            }
+
+            const ok = await sendChatMessage(orderNo, text);
+
+            if(ok){
+              if(input) input.value = "";
+              if(msgEl){
+                msgEl.style.color = "var(--success)";
+                msgEl.textContent = "ارسال شد ✅";
+              }
+              // refresh orders to show new chat line
+              await loadOrders();
+            }else{
+              if(msgEl){
+                msgEl.style.color = "var(--danger)";
+                msgEl.textContent = "ارسال ناموفق بود.";
+              }
+            }
+
+            btn.disabled = false;
+            return;
           }
         });
-      }
 
-      // Keep latest orders for action handlers
-      const lastKnownOrders = new Map();
+        // Enter key to send chat
+        ordersWrap.addEventListener("keydown", async (e) => {
+          const target = e.target;
+          if(!target) return;
+
+          const inp = target.closest('input[data-chat-input="1"]');
+          if(!inp) return;
+
+          if(e.key === "Enter"){
+            e.preventDefault();
+            const orderNo = (inp.getAttribute("data-order-no") || "").trim();
+            if(!orderNo) return;
+
+            const sendBtn = ordersWrap.querySelector(`button[data-act="send-chat"][data-order-no="${CSS.escape(orderNo)}"]`);
+            if(sendBtn && !sendBtn.disabled){
+              sendBtn.click();
+            }
+          }
+        });
+
+        ordersWrap.__mobixDelegationAttached = true;
+      }
 
       // =========================
       // Init
@@ -1816,7 +2244,6 @@
 
       loadProfile();
 
-      // Ensure name input is never prefilled with any fixed name
       if(fullName){
         fullName.value = hasProfileName() ? String(profileState.full_name) : "";
         fullName.setAttribute("placeholder", "نام و نام خانوادگی");
@@ -1831,6 +2258,8 @@
         loadOrders();
       }else{
         stopRealtime();
+        stopRealtimeUpdates();
+        stopRealtimeChat();
         stopPolling();
       }
 
