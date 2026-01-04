@@ -1,3 +1,4 @@
+```html
 <!doctype html>
 <html lang="fa" dir="rtl">
 <head>
@@ -24,6 +25,7 @@
 
       --shadow: 0 14px 36px rgba(15,23,42,.10);
       --shadow2: 0 8px 18px rgba(15,23,42,.08);
+      --shadow3:0 10px 24px rgba(15,23,42,.07);
 
       --radius:20px;
 
@@ -215,26 +217,115 @@
       line-height:1.9;
     }
 
-    /* Footer (same style as order page) */
-    .footer{
-      margin-top:18px;
-      padding-top:14px;
-      border-top:1px solid var(--line);
-      font-size:13px;
-      color:var(--muted);
+    /* =========================
+       FOOTER (same as home)
+       ========================= */
+    footer{margin-top:22px}
+
+    .footer-card{
+      background:rgba(255,255,255,.92);
+      border:1px solid rgba(15,23,42,.08);
+      border-radius:26px;
+      box-shadow:var(--shadow);
+      padding:18px;
+      overflow:hidden;
+      position:relative;
+    }
+    .footer-card:before{
+      content:"";
+      position:absolute;
+      inset:-140px -140px auto auto;
+      width:280px;height:280px;border-radius:999px;
+      background:rgba(31,106,255,.06);
+      transform:rotate(12deg);
+      pointer-events:none;
+    }
+
+    .footer-grid{
+      display:grid;
+      grid-template-columns: 1.25fr .9fr 1.25fr;
+      gap:16px;
+      align-items:start;
+      position:relative;
+    }
+    @media(max-width:980px){.footer-grid{grid-template-columns:1fr}}
+
+    .f-title{
+      font-weight:980;
+      letter-spacing:-.2px;
+      margin:0;
+      font-size:15px;
+    }
+    .f-muted{color:var(--muted);font-size:13.4px;line-height:1.9;margin-top:8px}
+
+    .f-links{
+      display:flex;
+      flex-direction:column;
+      gap:8px;
+      margin-top:10px;
+    }
+    .f-links a{
+      color:var(--text);
+      font-weight:900;
+      font-size:13.6px;
+      padding:8px 10px;
+      border-radius:14px;
+      border:1px solid rgba(15,23,42,.08);
+      background:rgba(246,248,252,.55);
+      box-shadow:0 10px 18px rgba(15,23,42,.04);
+      width:fit-content;
+      transition:transform .12s ease, box-shadow .12s ease;
+    }
+    .f-links a:hover{
+      transform:translateY(-1px);
+      box-shadow:0 16px 30px rgba(15,23,42,.08);
+    }
+
+    .f-stack{
+      display:flex;
+      flex-direction:column;
+      gap:10px;
+      margin-top:10px;
+    }
+    .fk{
+      border:1px solid rgba(15,23,42,.08);
+      border-radius:18px;
+      background:#fff;
+      box-shadow:0 10px 18px rgba(15,23,42,.05);
+      padding:12px;
+    }
+    .fk b{display:block;font-weight:980;font-size:13px}
+    .fk span{display:block;color:var(--muted);font-size:12.8px;line-height:1.7;margin-top:6px}
+
+    .enamad-wrap{
+      margin-top:10px;
+      display:flex;
+      align-items:flex-end;
+      justify-content:flex-start;
+      gap:12px;
+      flex-wrap:wrap;
+    }
+    .enamad img{
+      width:96px;
+      height:auto;
+      cursor:pointer;
+      display:block;
+      opacity:.95;
+      filter:saturate(.96);
+    }
+
+    .footer-bottom{
+      margin-top:14px;
+      padding-top:12px;
+      border-top:1px solid rgba(15,23,42,.08);
       display:flex;
       justify-content:space-between;
       gap:10px;
       flex-wrap:wrap;
-      align-items:center;
+      color:var(--muted);
+      font-size:12.8px;
+      position:relative;
     }
-    .enamad{
-      display:flex;
-      align-items:center;
-      justify-content:center;
-      gap:10px;
-    }
-    .enamad img{width:110px;height:auto}
 
     @media (max-width: 520px){
       .topbar-inner{border-radius:22px;padding:10px 10px}
@@ -242,6 +333,8 @@
       .card{padding:14px}
       .container{padding-bottom:40px}
       h1{font-size:24px}
+      .footer-card{padding:14px}
+      .enamad img{width:92px}
     }
   </style>
 </head>
@@ -337,24 +430,81 @@
       </form>
     </div>
 
-    <!-- FOOTER -->
-    <div class="footer">
-      <span>© Mobix</span>
+    <!-- FOOTER (same as home, fixed relative links) -->
+    <footer aria-label="Footer">
+      <div class="footer-card">
+        <div class="footer-grid">
 
-      <div class="enamad">
-        <a referrerpolicy="origin" target="_blank" rel="noopener"
-           href="https://trustseal.enamad.ir/?id=5414923&Code=DiznrIm0BJGpnPrtdWijxsgtOlPs8Aqf">
-          <img referrerpolicy="origin"
-               src="https://trustseal.enamad.ir/logo.aspx?id=5414923&Code=DiznrIm0BJGpnPrtdWijxsgtOlPs8Aqf"
-               alt="اینماد"
-               style="cursor:pointer"
-               code="DiznrIm0BJGpnPrtdWijxsgtOlPs8Aqf">
-        </a>
+          <!-- Brand + KPIs + Courier -->
+          <div>
+            <div style="display:flex;align-items:center;gap:10px">
+              <img src="../assets/logo.png" alt="موبیکس" style="width:58px;height:auto">
+              <div>
+                <div class="f-title">موبیکس</div>
+                <div class="f-muted" style="margin-top:4px">سرویس تخصصی تعمیر موبایل</div>
+              </div>
+            </div>
+
+            <div class="f-stack" aria-label="Footer highlights">
+              <div class="fk">
+                <b>قیمت قبل از اقدام</b>
+                <span>قبل از هر تعمیر، هزینه با شما هماهنگ می‌شود.</span>
+              </div>
+
+              <div class="fk">
+                <b>پیگیری مرحله‌ای</b>
+                <span>وضعیت سفارش همیشه شفاف و قابل پیگیری است.</span>
+              </div>
+
+              <div class="fk">
+                <b>پیک موبیکس</b>
+                <span>زمان و مکان دریافت/تحویل را شما تعیین می‌کنید.</span>
+              </div>
+            </div>
+          </div>
+
+          <!-- Links -->
+          <div>
+            <div class="f-title">دسترسی سریع</div>
+            <div class="f-links" aria-label="Footer links">
+              <a href="../about/">درباره ما</a>
+              <a href="../contact/">تماس با ما</a>
+              <a href="../order/">ثبت سفارش</a>
+              <a href="../#order-start">ثبت سفارش سریع</a>
+
+              <a href="../terms/">قوانین و شرایط</a>
+              <a href="../privacy/">حریم خصوصی</a>
+            </div>
+          </div>
+
+          <!-- Enamad -->
+          <div>
+            <div class="f-title">اعتماد و مجوزها</div>
+            <div class="f-muted">اطلاعات و مجوزها برای اطمینان شما.</div>
+
+            <div class="enamad-wrap" aria-label="اینماد">
+              <a href="https://trustseal.enamad.ir/?id=5414923" target="_blank" rel="noopener noreferrer" referrerpolicy="origin">
+                <img
+                  src="https://trustseal.enamad.ir/logo.aspx?id=5414923&Code=DiznrIm0BJGpnPrtdWijxsgtOlPs8Aqf"
+                  alt="اینماد موبیکس"
+                  referrerpolicy="origin"
+                  style="cursor:pointer"
+                  code="DiznrIm0BJGpnPrtdWijxsgtOlPs8Aqf"
+                >
+              </a>
+            </div>
+          </div>
+
+        </div>
+
+        <div class="footer-bottom">
+          <span>© Mobix — همه حقوق محفوظ است</span>
+          <span>سریع • شفاف • قابل پیگیری</span>
+        </div>
       </div>
-
-      <span></span>
-    </div>
+    </footer>
 
   </div>
 </body>
 </html>
+```
