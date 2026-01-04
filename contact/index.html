@@ -22,53 +22,72 @@
       --muted:#5B6B84;
       --line:rgba(15,23,42,.08);
 
-      --shadow:0 14px 36px rgba(15,23,42,.10);
-      --shadow2:0 8px 18px rgba(15,23,42,.08);
+      --shadow: 0 14px 36px rgba(15,23,42,.10);
+      --shadow2: 0 8px 18px rgba(15,23,42,.08);
 
       --radius:20px;
 
       --primary:#1F6AFF;
       --primary2:#3B82F6;
       --success:#10B981;
+      --danger:#EF4444;
+      --warn:#F59E0B;
 
       --max:960px;
     }
 
     *{box-sizing:border-box}
+    html{scroll-behavior:smooth}
     body{
       margin:0;
       font-family:"Vazirmatn", system-ui, sans-serif;
-      background:var(--bg);
+      background:
+        radial-gradient(1000px 500px at 80% -10%, rgba(31,106,255,.16), transparent 55%),
+        radial-gradient(900px 600px at 20% 10%, rgba(59,130,246,.08), transparent 55%),
+        var(--bg);
       color:var(--text);
+      overflow-x:hidden;
     }
     a{text-decoration:none;color:inherit}
+    img{max-width:100%;display:block}
 
     .container{
       max-width:var(--max);
       margin:auto;
-      padding:16px 16px 48px;
+      padding:14px 16px 56px;
     }
 
+    /* TOP BAR (same style as order page) */
     .topbar{
-      margin-bottom:16px;
+      position:sticky;top:0;z-index:50;
+      padding:10px 0;
+      backdrop-filter: blur(12px);
     }
     .topbar-inner{
-      display:flex;
-      align-items:center;
-      justify-content:space-between;
-      background:#fff;
+      display:flex;align-items:center;justify-content:space-between;
+      background:rgba(246,248,252,.86);
       border:1px solid var(--line);
       border-radius:999px;
-      padding:10px 14px;
+      padding:10px 12px;
       box-shadow:var(--shadow2);
+      gap:10px;
     }
-    .brand{
-      display:flex;
-      align-items:center;
-      gap:12px;
-      font-weight:900;
+    .brand{display:flex;align-items:center;gap:12px;min-width:0}
+    .brand img{width:72px;height:auto}
+    .brand-title{
+      display:flex;flex-direction:column;gap:2px;min-width:0
     }
-    .brand img{width:60px}
+    .brand-title b{
+      font-weight:900;font-size:14px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis
+    }
+    .brand-title span{
+      font-weight:800;font-size:12.5px;color:var(--muted);white-space:nowrap;overflow:hidden;text-overflow:ellipsis
+    }
+
+    .nav{
+      display:flex;align-items:center;gap:8px;flex-wrap:wrap;
+      justify-content:flex-end;
+    }
 
     .btn{
       padding:10px 16px;
@@ -78,13 +97,23 @@
       background:#fff;
       box-shadow:var(--shadow2);
       cursor:pointer;
+      font-family:inherit;
+      white-space:nowrap;
+      display:inline-flex;
+      align-items:center;
+      justify-content:center;
+      gap:8px;
     }
     .btn.primary{
       background:linear-gradient(135deg,var(--primary),var(--primary2));
       color:#fff;
       border:none;
     }
+    .btn.ghost{
+      background:rgba(255,255,255,.72);
+    }
 
+    /* CARDS */
     .card{
       background:var(--card);
       border:1px solid var(--line);
@@ -94,10 +123,21 @@
       margin-top:12px;
     }
 
+    .hero{
+      margin-top:14px;
+      display:grid;
+      grid-template-columns: 1.05fr .95fr;
+      gap:12px;
+      align-items:start;
+    }
+    @media(max-width:980px){.hero{grid-template-columns:1fr}}
+
     h1{
       margin:0 0 6px;
       font-size:28px;
       font-weight:900;
+      letter-spacing:-.2px;
+      line-height:1.35;
     }
     .sub{
       color:var(--muted);
@@ -106,35 +146,45 @@
       margin:0;
     }
 
+    .divider{height:1px;background:var(--line);margin:12px 0}
+
     .info{
       margin-top:12px;
       line-height:2;
       font-size:14.5px;
+      font-weight:800;
     }
-    .info b{
-      font-weight:900;
-    }
+    .info b{font-weight:900}
 
-    .social a{
-      display:inline-block;
-      margin-top:6px;
+    .info a{
       font-weight:900;
       color:var(--primary);
+      word-break:break-word;
     }
 
-    .hours{
-      margin-top:8px;
+    .pill{
+      display:inline-flex;align-items:center;gap:8px;
+      padding:7px 10px;
+      border-radius:999px;
+      background:rgba(31,106,255,.10);
+      border:1px solid rgba(31,106,255,.18);
+      color:#0B2A6A;
       font-weight:900;
+      font-size:12.5px;
+      white-space:nowrap;
     }
 
     .map{
       margin-top:12px;
       width:100%;
-      height:260px;
+      height:280px;
       border-radius:18px;
       border:1px solid var(--line);
       overflow:hidden;
+      box-shadow:var(--shadow2);
+      background:#fff;
     }
+    .map iframe{width:100%;height:100%;border:0}
 
     .form{
       display:flex;
@@ -142,26 +192,56 @@
       gap:10px;
       margin-top:10px;
     }
+    .label{
+      font-size:13px;
+      font-weight:900;
+      color:var(--muted);
+      margin-top:6px;
+    }
     .input, .textarea{
       width:100%;
       padding:12px 14px;
       border-radius:16px;
       border:1px solid var(--line);
+      background:#fff;
+      box-shadow:var(--shadow2);
       font-family:inherit;
       font-weight:800;
+      outline:none;
     }
     .textarea{
       min-height:120px;
       resize:vertical;
+      line-height:1.9;
     }
 
+    /* Footer (same style as order page) */
     .footer{
       margin-top:18px;
       padding-top:14px;
       border-top:1px solid var(--line);
       font-size:13px;
       color:var(--muted);
-      text-align:center;
+      display:flex;
+      justify-content:space-between;
+      gap:10px;
+      flex-wrap:wrap;
+      align-items:center;
+    }
+    .enamad{
+      display:flex;
+      align-items:center;
+      justify-content:center;
+      gap:10px;
+    }
+    .enamad img{width:110px;height:auto}
+
+    @media (max-width: 520px){
+      .topbar-inner{border-radius:22px;padding:10px 10px}
+      .brand img{width:60px}
+      .card{padding:14px}
+      .container{padding-bottom:40px}
+      h1{font-size:24px}
     }
   </style>
 </head>
@@ -169,76 +249,112 @@
 <body>
   <div class="container">
 
-    <!-- Header -->
+    <!-- HEADER -->
     <div class="topbar">
       <div class="topbar-inner">
         <a class="brand" href="../">
           <img src="../assets/logo.png" alt="Mobix">
-          موبیکس
+          <div class="brand-title">
+            <b>موبیکس</b>
+            <span>سرویس تخصصی تعمیر موبایل</span>
+          </div>
         </a>
-        <a class="btn primary" href="../order/">ثبت سفارش</a>
+
+        <div class="nav">
+          <a class="btn ghost" href="../">خانه</a>
+          <a class="btn primary" href="../order/">ثبت سفارش</a>
+        </div>
       </div>
     </div>
 
-    <!-- Contact Info -->
-    <div class="card">
-      <h1>تماس با ما</h1>
-      <p class="sub">راه‌های ارتباط با موبیکس</p>
-
-      <div class="info">
-        <b>آدرس:</b><br>
-        تهران، کریم‌خان، خیابان سنایی، کوچه چهارم غربی، پلاک ۶، واحد ۴
+    <!-- HERO -->
+    <section class="hero">
+      <div class="card">
+        <h1>تماس با ما</h1>
+        <p class="sub">راه‌های ارتباط با موبیکس</p>
+        <div class="divider"></div>
+        <div class="pill">پاسخگویی سریع در ساعات کاری</div>
       </div>
 
-      <div class="info">
-        <b>شماره تماس:</b><br>
-        <a href="tel:09386303012">۰۹۳۸۶۳۰۳۰۱۲</a>
-      </div>
+      <div class="card">
+        <h1 style="font-size:22px;margin:0 0 6px;font-weight:900">اطلاعات تماس</h1>
+        <p class="sub" style="margin-top:6px">
+          برای ثبت سفارش تعمیر موبایل، بهتر است از صفحه «ثبت سفارش» استفاده کنید.
+        </p>
+        <div class="divider"></div>
 
-      <div class="info social">
-        <b>اینستاگرام:</b><br>
-        <a href="https://instagram.com/mobix.fix" target="_blank">@mobix.fix</a>
-      </div>
+        <div class="info">
+          <b>آدرس:</b><br>
+          تهران، کریم‌خان، خیابان سنایی، کوچه چهارم غربی، پلاک ۶، واحد ۴
+        </div>
 
-      <div class="info hours">
-        <b>ساعات کاری:</b><br>
-        شنبه تا پنج‌شنبه، ساعت ۹ تا ۲۰
-      </div>
-    </div>
+        <div class="info">
+          <b>شماره تماس:</b><br>
+          <a href="tel:09386303012">۰۹۳۸۶۳۰۳۰۱۲</a>
+        </div>
 
-    <!-- Map -->
+        <div class="info">
+          <b>اینستاگرام:</b><br>
+          <a href="https://instagram.com/mobix.fix" target="_blank" rel="noopener">@mobix.fix</a>
+        </div>
+
+        <div class="info">
+          <b>ساعات کاری:</b><br>
+          شنبه تا پنج‌شنبه، ساعت ۹ تا ۲۰
+        </div>
+      </div>
+    </section>
+
+    <!-- MAP -->
     <div class="card">
       <h1 style="font-size:22px">موقعیت روی نقشه</h1>
+      <p class="sub">برای مسیریابی، روی نقشه زوم کنید.</p>
       <div class="map">
         <iframe
           src="https://maps.google.com/maps?q=خیابان%20سنایی%20تهران&t=&z=15&ie=UTF8&iwloc=&output=embed"
-          width="100%"
-          height="100%"
-          frameborder="0"
           loading="lazy"
           referrerpolicy="no-referrer-when-downgrade">
         </iframe>
       </div>
     </div>
 
-    <!-- Contact Form -->
+    <!-- CONTACT FORM -->
     <div class="card">
       <h1 style="font-size:22px">ارسال پیام</h1>
       <p class="sub">پیام شما مستقیماً بررسی می‌شود.</p>
 
       <form class="form" onsubmit="event.preventDefault(); alert('ارسال پیام در نسخه بعدی فعال می‌شود');">
+        <div class="label">نام شما</div>
         <input class="input" placeholder="نام شما" required />
+
+        <div class="label">شماره تماس</div>
         <input class="input" placeholder="شماره تماس" required />
+
+        <div class="label">متن پیام</div>
         <textarea class="textarea" placeholder="متن پیام" required></textarea>
+
         <button class="btn primary" type="submit">ارسال پیام</button>
       </form>
     </div>
 
+    <!-- FOOTER -->
     <div class="footer">
-      © Mobix
+      <span>© Mobix</span>
+
+      <div class="enamad">
+        <a referrerpolicy="origin" target="_blank" rel="noopener"
+           href="https://trustseal.enamad.ir/?id=5414923&Code=DiznrIm0BJGpnPrtdWijxsgtOlPs8Aqf">
+          <img referrerpolicy="origin"
+               src="https://trustseal.enamad.ir/logo.aspx?id=5414923&Code=DiznrIm0BJGpnPrtdWijxsgtOlPs8Aqf"
+               alt="اینماد"
+               style="cursor:pointer"
+               code="DiznrIm0BJGpnPrtdWijxsgtOlPs8Aqf">
+        </a>
+      </div>
+
+      <span></span>
     </div>
 
   </div>
 </body>
 </html>
-
