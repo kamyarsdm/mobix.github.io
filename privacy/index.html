@@ -1,4 +1,3 @@
-
 <!doctype html>
 <html lang="fa" dir="rtl">
 <head>
@@ -34,6 +33,7 @@
     }
 
     *{box-sizing:border-box}
+    html{scroll-behavior:smooth}
     body{
       margin:0;
       font-family:"Vazirmatn", system-ui, sans-serif;
@@ -46,6 +46,7 @@
       line-height:2;
     }
     a{text-decoration:none;color:inherit}
+    img{max-width:100%;display:block}
 
     .container{
       max-width:var(--max);
@@ -53,7 +54,7 @@
       padding:14px 16px 56px;
     }
 
-    /* TOP BAR (same vibe) */
+    /* TOP BAR */
     .topbar{
       position:sticky;top:0;z-index:50;
       padding:10px 0;
@@ -150,6 +151,122 @@
       font-size:13.5px;
       line-height:1.9;
     }
+
+    /* =========================
+       FOOTER (Same as Home)
+       ========================= */
+    footer{margin-top:22px}
+
+    .footer-card{
+      background:rgba(255,255,255,.92);
+      border:1px solid rgba(15,23,42,.08);
+      border-radius:26px;
+      box-shadow:var(--shadow);
+      padding:18px;
+      overflow:hidden;
+      position:relative;
+    }
+    .footer-card:before{
+      content:"";
+      position:absolute;
+      inset:-140px -140px auto auto;
+      width:280px;height:280px;border-radius:999px;
+      background:rgba(31,106,255,.06);
+      transform:rotate(12deg);
+      pointer-events:none;
+    }
+
+    .footer-grid{
+      display:grid;
+      grid-template-columns: 1.25fr .9fr 1.25fr;
+      gap:16px;
+      align-items:start;
+      position:relative;
+    }
+    @media(max-width:980px){.footer-grid{grid-template-columns:1fr}}
+
+    .f-title{
+      font-weight:980;
+      letter-spacing:-.2px;
+      margin:0;
+      font-size:15px;
+    }
+    .f-muted{color:var(--muted);font-size:13.4px;line-height:1.9;margin-top:8px}
+
+    .f-links{
+      display:flex;
+      flex-direction:column;
+      gap:8px;
+      margin-top:10px;
+    }
+    .f-links a{
+      color:var(--text);
+      font-weight:900;
+      font-size:13.6px;
+      padding:8px 10px;
+      border-radius:14px;
+      border:1px solid rgba(15,23,42,.08);
+      background:rgba(246,248,252,.55);
+      box-shadow:0 10px 18px rgba(15,23,42,.04);
+      width:fit-content;
+      transition:transform .12s ease, box-shadow .12s ease;
+    }
+    .f-links a:hover{
+      transform:translateY(-1px);
+      box-shadow:0 16px 30px rgba(15,23,42,.08);
+    }
+
+    .f-stack{
+      display:flex;
+      flex-direction:column;
+      gap:10px;
+      margin-top:10px;
+    }
+    .fk{
+      border:1px solid rgba(15,23,42,.08);
+      border-radius:18px;
+      background:#fff;
+      box-shadow:0 10px 18px rgba(15,23,42,.05);
+      padding:12px;
+    }
+    .fk b{display:block;font-weight:980;font-size:13px}
+    .fk span{display:block;color:var(--muted);font-size:12.8px;line-height:1.7;margin-top:6px}
+
+    .enamad-wrap{
+      margin-top:10px;
+      display:flex;
+      align-items:flex-end;
+      justify-content:flex-start;
+      gap:12px;
+      flex-wrap:wrap;
+    }
+    .enamad-wrap img{
+      width:96px;
+      height:auto;
+      cursor:pointer;
+      display:block;
+      opacity:.95;
+      filter:saturate(.96);
+    }
+
+    .footer-bottom{
+      margin-top:14px;
+      padding-top:12px;
+      border-top:1px solid rgba(15,23,42,.08);
+      display:flex;
+      justify-content:space-between;
+      gap:10px;
+      flex-wrap:wrap;
+      color:var(--muted);
+      font-size:12.8px;
+      position:relative;
+    }
+
+    @media (max-width: 520px){
+      .card{padding:14px}
+      .footer-card{padding:14px}
+      .enamad-wrap img{width:92px}
+    }
   </style>
 </head>
 
@@ -228,7 +345,8 @@
 
       <h2>۸) ارتباط با ما</h2>
       <p>
-        برای سوالات مربوط به حریم خصوصی، از طریق صفحه <a href="../contact/" style="color:var(--primary);font-weight:900">تماس با ما</a>
+        برای سوالات مربوط به حریم خصوصی، از طریق صفحه
+        <a href="../contact/" style="color:var(--primary);font-weight:900">تماس با ما</a>
         با موبیکس در ارتباط باشید.
       </p>
 
@@ -237,15 +355,15 @@
       </p>
     </div>
 
-  <!-- FOOTER -->
+    <!-- FOOTER -->
     <footer aria-label="Footer">
       <div class="footer-card">
         <div class="footer-grid">
 
-          <!-- Brand + KPIs + Courier (stacked, as you wanted) -->
+          <!-- Brand + KPIs + Courier -->
           <div>
             <div style="display:flex;align-items:center;gap:10px">
-              <img src="assets/logo.png" alt="موبیکس" style="width:58px;height:auto">
+              <img src="../assets/logo.png" alt="موبیکس" style="width:58px;height:auto">
               <div>
                 <div class="f-title">موبیکس</div>
                 <div class="f-muted" style="margin-top:4px">سرویس تخصصی تعمیر موبایل</div>
@@ -274,16 +392,14 @@
           <div>
             <div class="f-title">دسترسی سریع</div>
             <div class="f-links" aria-label="Footer links">
-              <a href="contact/">تماس با ما</a>
-              <a href="order/">ثبت سفارش</a>
-          
-              <!-- ✅ Added: legal pages (no style change) -->
-              <a href="terms/">قوانین و شرایط</a>
-              <a href="privacy/">حریم خصوصی</a>
+              <a href="../contact/">تماس با ما</a>
+              <a href="../order/">ثبت سفارش</a>
+              <a href="../terms/">قوانین و شرایط</a>
+              <a href="../privacy/">حریم خصوصی</a>
             </div>
           </div>
 
-          <!-- Trust (Enamad only, direct link for Cloudflare/GitHub) -->
+          <!-- Trust -->
           <div>
             <div class="f-title">اعتماد و مجوزها</div>
             <div class="f-muted">اطلاعات و مجوزها برای اطمینان شما.</div>
@@ -311,27 +427,5 @@
     </footer>
 
   </div>
-
-  <script>
-    (function(){
-      const topbar = document.getElementById("topbar");
-      if(!topbar) return;
-
-      let ticking = false;
-      function onScroll(){
-        if(ticking) return;
-        ticking = true;
-        requestAnimationFrame(() => {
-          const y = window.scrollY || document.documentElement.scrollTop || 0;
-          if(y > 14) topbar.classList.add("scrolled");
-          else topbar.classList.remove("scrolled");
-          ticking = false;
-        });
-      }
-
-      onScroll();
-      window.addEventListener("scroll", onScroll, { passive: true });
-    })();
-  </script>
 </body>
 </html>
