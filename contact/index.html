@@ -1,1 +1,244 @@
+<!doctype html>
+<html lang="fa" dir="rtl">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Mobix | تماس با ما</title>
+
+  <meta name="description" content="تماس با موبیکس؛ آدرس، شماره تماس، اینستاگرام، ساعات کاری و ارسال پیام." />
+  <meta name="theme-color" content="#1F6AFF" />
+  <link rel="icon" href="../assets/logo.png" />
+
+  <!-- Vazirmatn -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Vazirmatn:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet">
+
+  <style>
+    :root{
+      --bg:#F6F8FC;
+      --card:#FFFFFF;
+      --text:#0B1220;
+      --muted:#5B6B84;
+      --line:rgba(15,23,42,.08);
+
+      --shadow:0 14px 36px rgba(15,23,42,.10);
+      --shadow2:0 8px 18px rgba(15,23,42,.08);
+
+      --radius:20px;
+
+      --primary:#1F6AFF;
+      --primary2:#3B82F6;
+      --success:#10B981;
+
+      --max:960px;
+    }
+
+    *{box-sizing:border-box}
+    body{
+      margin:0;
+      font-family:"Vazirmatn", system-ui, sans-serif;
+      background:var(--bg);
+      color:var(--text);
+    }
+    a{text-decoration:none;color:inherit}
+
+    .container{
+      max-width:var(--max);
+      margin:auto;
+      padding:16px 16px 48px;
+    }
+
+    .topbar{
+      margin-bottom:16px;
+    }
+    .topbar-inner{
+      display:flex;
+      align-items:center;
+      justify-content:space-between;
+      background:#fff;
+      border:1px solid var(--line);
+      border-radius:999px;
+      padding:10px 14px;
+      box-shadow:var(--shadow2);
+    }
+    .brand{
+      display:flex;
+      align-items:center;
+      gap:12px;
+      font-weight:900;
+    }
+    .brand img{width:60px}
+
+    .btn{
+      padding:10px 16px;
+      border-radius:14px;
+      font-weight:900;
+      border:1px solid var(--line);
+      background:#fff;
+      box-shadow:var(--shadow2);
+      cursor:pointer;
+    }
+    .btn.primary{
+      background:linear-gradient(135deg,var(--primary),var(--primary2));
+      color:#fff;
+      border:none;
+    }
+
+    .card{
+      background:var(--card);
+      border:1px solid var(--line);
+      border-radius:var(--radius);
+      padding:18px;
+      box-shadow:var(--shadow);
+      margin-top:12px;
+    }
+
+    h1{
+      margin:0 0 6px;
+      font-size:28px;
+      font-weight:900;
+    }
+    .sub{
+      color:var(--muted);
+      font-size:14.5px;
+      line-height:1.9;
+      margin:0;
+    }
+
+    .info{
+      margin-top:12px;
+      line-height:2;
+      font-size:14.5px;
+    }
+    .info b{
+      font-weight:900;
+    }
+
+    .social a{
+      display:inline-block;
+      margin-top:6px;
+      font-weight:900;
+      color:var(--primary);
+    }
+
+    .hours{
+      margin-top:8px;
+      font-weight:900;
+    }
+
+    .map{
+      margin-top:12px;
+      width:100%;
+      height:260px;
+      border-radius:18px;
+      border:1px solid var(--line);
+      overflow:hidden;
+    }
+
+    .form{
+      display:flex;
+      flex-direction:column;
+      gap:10px;
+      margin-top:10px;
+    }
+    .input, .textarea{
+      width:100%;
+      padding:12px 14px;
+      border-radius:16px;
+      border:1px solid var(--line);
+      font-family:inherit;
+      font-weight:800;
+    }
+    .textarea{
+      min-height:120px;
+      resize:vertical;
+    }
+
+    .footer{
+      margin-top:18px;
+      padding-top:14px;
+      border-top:1px solid var(--line);
+      font-size:13px;
+      color:var(--muted);
+      text-align:center;
+    }
+  </style>
+</head>
+
+<body>
+  <div class="container">
+
+    <!-- Header -->
+    <div class="topbar">
+      <div class="topbar-inner">
+        <a class="brand" href="../">
+          <img src="../assets/logo.png" alt="Mobix">
+          موبیکس
+        </a>
+        <a class="btn primary" href="../order/">ثبت سفارش</a>
+      </div>
+    </div>
+
+    <!-- Contact Info -->
+    <div class="card">
+      <h1>تماس با ما</h1>
+      <p class="sub">راه‌های ارتباط با موبیکس</p>
+
+      <div class="info">
+        <b>آدرس:</b><br>
+        تهران، کریم‌خان، خیابان سنایی، کوچه چهارم غربی، پلاک ۶، واحد ۴
+      </div>
+
+      <div class="info">
+        <b>شماره تماس:</b><br>
+        <a href="tel:09386303012">۰۹۳۸۶۳۰۳۰۱۲</a>
+      </div>
+
+      <div class="info social">
+        <b>اینستاگرام:</b><br>
+        <a href="https://instagram.com/mobix.fix" target="_blank">@mobix.fix</a>
+      </div>
+
+      <div class="info hours">
+        <b>ساعات کاری:</b><br>
+        شنبه تا پنج‌شنبه، ساعت ۹ تا ۲۰
+      </div>
+    </div>
+
+    <!-- Map -->
+    <div class="card">
+      <h1 style="font-size:22px">موقعیت روی نقشه</h1>
+      <div class="map">
+        <iframe
+          src="https://maps.google.com/maps?q=خیابان%20سنایی%20تهران&t=&z=15&ie=UTF8&iwloc=&output=embed"
+          width="100%"
+          height="100%"
+          frameborder="0"
+          loading="lazy"
+          referrerpolicy="no-referrer-when-downgrade">
+        </iframe>
+      </div>
+    </div>
+
+    <!-- Contact Form -->
+    <div class="card">
+      <h1 style="font-size:22px">ارسال پیام</h1>
+      <p class="sub">پیام شما مستقیماً بررسی می‌شود.</p>
+
+      <form class="form" onsubmit="event.preventDefault(); alert('ارسال پیام در نسخه بعدی فعال می‌شود');">
+        <input class="input" placeholder="نام شما" required />
+        <input class="input" placeholder="شماره تماس" required />
+        <textarea class="textarea" placeholder="متن پیام" required></textarea>
+        <button class="btn primary" type="submit">ارسال پیام</button>
+      </form>
+    </div>
+
+    <div class="footer">
+      © Mobix
+    </div>
+
+  </div>
+</body>
+</html>
 
