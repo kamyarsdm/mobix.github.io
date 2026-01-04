@@ -24,6 +24,7 @@
 
       --shadow: 0 14px 36px rgba(15,23,42,.10);
       --shadow2: 0 8px 18px rgba(15,23,42,.08);
+      --shadow3: 0 10px 24px rgba(15,23,42,.07);
 
       --radius:20px;
 
@@ -599,26 +600,115 @@
       box-shadow:var(--shadow2);
     }
 
-    /* Footer */
-    .footer{
-      margin-top:18px;
-      padding-top:14px;
-      border-top:1px solid var(--line);
-      font-size:13px;
-      color:var(--muted);
+    /* =========================
+       FOOTER (Same as Home)
+       ========================= */
+    footer{margin-top:22px}
+
+    .footer-card{
+      background:rgba(255,255,255,.92);
+      border:1px solid rgba(15,23,42,.08);
+      border-radius:26px;
+      box-shadow:var(--shadow);
+      padding:18px;
+      overflow:hidden;
+      position:relative;
+    }
+    .footer-card:before{
+      content:"";
+      position:absolute;
+      inset:-140px -140px auto auto;
+      width:280px;height:280px;border-radius:999px;
+      background:rgba(31,106,255,.06);
+      transform:rotate(12deg);
+      pointer-events:none;
+    }
+
+    .footer-grid{
+      display:grid;
+      grid-template-columns: 1.25fr .9fr 1.25fr;
+      gap:16px;
+      align-items:start;
+      position:relative;
+    }
+    @media(max-width:980px){.footer-grid{grid-template-columns:1fr}}
+
+    .f-title{
+      font-weight:980;
+      letter-spacing:-.2px;
+      margin:0;
+      font-size:15px;
+    }
+    .f-muted{color:var(--muted);font-size:13.4px;line-height:1.9;margin-top:8px}
+
+    .f-links{
+      display:flex;
+      flex-direction:column;
+      gap:8px;
+      margin-top:10px;
+    }
+    .f-links a{
+      color:var(--text);
+      font-weight:900;
+      font-size:13.6px;
+      padding:8px 10px;
+      border-radius:14px;
+      border:1px solid rgba(15,23,42,.08);
+      background:rgba(246,248,252,.55);
+      box-shadow:0 10px 18px rgba(15,23,42,.04);
+      width:fit-content;
+      transition:transform .12s ease, box-shadow .12s ease;
+    }
+    .f-links a:hover{
+      transform:translateY(-1px);
+      box-shadow:0 16px 30px rgba(15,23,42,.08);
+    }
+
+    .f-stack{
+      display:flex;
+      flex-direction:column;
+      gap:10px;
+      margin-top:10px;
+    }
+    .fk{
+      border:1px solid rgba(15,23,42,.08);
+      border-radius:18px;
+      background:#fff;
+      box-shadow:0 10px 18px rgba(15,23,42,.05);
+      padding:12px;
+    }
+    .fk b{display:block;font-weight:980;font-size:13px}
+    .fk span{display:block;color:var(--muted);font-size:12.8px;line-height:1.7;margin-top:6px}
+
+    .enamad-wrap{
+      margin-top:10px;
+      display:flex;
+      align-items:flex-end;
+      justify-content:flex-start;
+      gap:12px;
+      flex-wrap:wrap;
+    }
+    .enamad-wrap img{
+      width:96px;
+      height:auto;
+      cursor:pointer;
+      display:block;
+      opacity:.95;
+      filter:saturate(.96);
+    }
+
+    .footer-bottom{
+      margin-top:14px;
+      padding-top:12px;
+      border-top:1px solid rgba(15,23,42,.08);
       display:flex;
       justify-content:space-between;
       gap:10px;
       flex-wrap:wrap;
-      align-items:center;
+      color:var(--muted);
+      font-size:12.8px;
+      position:relative;
     }
-    .enamad{
-      display:flex;
-      align-items:center;
-      justify-content:center;
-      gap:10px;
-    }
-    .enamad img{width:110px;height:auto}
 
     @media (max-width: 520px){
       .topbar-inner{border-radius:22px;padding:10px 10px}
@@ -626,6 +716,8 @@
       h1{font-size:28px}
       .card{padding:14px}
       .container{padding-bottom:40px}
+      .footer-card{padding:14px}
+      .enamad-wrap img{width:92px}
     }
   </style>
 </head>
@@ -819,16 +911,77 @@
       </div>
     </div>
 
-    <!-- FOOTER -->
-    <div class="footer">
-      <span>© Mobix</span>
-      <div class="enamad">
-        <a referrerpolicy="origin" target="_blank" href="https://trustseal.enamad.ir/?id=5414923&Code=DiznrIm0BJGpnPrtdWijxsgtOlPs8Aqf">
-          <img referrerpolicy="origin" src="https://trustseal.enamad.ir/logo.aspx?id=5414923&Code=DiznrIm0BJGpnPrtdWijxsgtOlPs8Aqf" alt="اینماد" style="cursor:pointer" code="DiznrIm0BJGpnPrtdWijxsgtOlPs8Aqf">
-        </a>
+    <!-- FOOTER (Same as Home) -->
+    <footer aria-label="Footer">
+      <div class="footer-card">
+        <div class="footer-grid">
+
+          <!-- Brand + KPIs + Courier -->
+          <div>
+            <div style="display:flex;align-items:center;gap:10px">
+              <img src="../assets/logo.png" alt="موبیکس" style="width:58px;height:auto">
+              <div>
+                <div class="f-title">موبیکس</div>
+                <div class="f-muted" style="margin-top:4px">سرویس تخصصی تعمیر موبایل</div>
+              </div>
+            </div>
+
+            <div class="f-stack" aria-label="Footer highlights">
+              <div class="fk">
+                <b>قیمت قبل از اقدام</b>
+                <span>قبل از هر تعمیر، هزینه با شما هماهنگ می‌شود.</span>
+              </div>
+
+              <div class="fk">
+                <b>پیگیری مرحله‌ای</b>
+                <span>وضعیت سفارش همیشه شفاف و قابل پیگیری است.</span>
+              </div>
+
+              <div class="fk">
+                <b>پیک موبیکس</b>
+                <span>زمان و مکان دریافت/تحویل را شما تعیین می‌کنید.</span>
+              </div>
+            </div>
+          </div>
+
+          <!-- Links -->
+          <div>
+            <div class="f-title">دسترسی سریع</div>
+            <div class="f-links" aria-label="Footer links">
+              <a href="../about/">درباره ما</a>
+              <a href="../contact/">تماس با ما</a>
+              <a href="../order/">ثبت سفارش</a>
+              <a href="../terms/">قوانین و شرایط</a>
+              <a href="../privacy/">حریم خصوصی</a>
+            </div>
+          </div>
+
+          <!-- Trust -->
+          <div>
+            <div class="f-title">اعتماد و مجوزها</div>
+            <div class="f-muted">اطلاعات و مجوزها برای اطمینان شما.</div>
+
+            <div class="enamad-wrap" aria-label="اینماد">
+              <a href="https://trustseal.enamad.ir/?id=5414923" target="_blank" rel="noopener noreferrer" referrerpolicy="origin">
+                <img
+                  src="https://trustseal.enamad.ir/logo.aspx?id=5414923&Code=DiznrIm0BJGpnPrtdWijxsgtOlPs8Aqf"
+                  alt="اینماد موبیکس"
+                  referrerpolicy="origin"
+                  style="cursor:pointer"
+                  code="DiznrIm0BJGpnPrtdWijxsgtOlPs8Aqf"
+                >
+              </a>
+            </div>
+          </div>
+
+        </div>
+
+        <div class="footer-bottom">
+          <span>© Mobix — همه حقوق محفوظ است</span>
+          <span>سریع • شفاف • قابل پیگیری</span>
+        </div>
       </div>
-      <span></span>
-    </div>
+    </footer>
 
   </div>
 
@@ -1120,7 +1273,7 @@
       // Edge calls
       // =========================
       async function requestOtpEdge(phone09){
-        const res = await fetch(OTP_REQUEST_URL, {
+        const res = await fetch("https://vrxfhfknmxmeatnfzpcg.supabase.co/functions/v1/request-otp", {
           method: "POST",
           headers: {
             "Content-Type": "application/json",
@@ -1141,7 +1294,7 @@
       }
 
       async function verifyOtpEdge(phone09, code){
-        const res = await fetch(OTP_VERIFY_URL, {
+        const res = await fetch("https://vrxfhfknmxmeatnfzpcg.supabase.co/functions/v1/verify-otp", {
           method: "POST",
           headers: {
             "Content-Type": "application/json",
@@ -1876,8 +2029,6 @@
           .filter(x => x.length > 0);
 
         // (A) Fetch latest dashboard messages from order_updates (per order_no)
-        // Assumption: order_updates columns include: order_no, stage, message, created_at
-        // If your column name is different, tell me and I change it.
         try{
           if(orderNos.length > 0){
             const { data: updData, error: updErr } = await supabase
@@ -1888,7 +2039,6 @@
 
             if(updErr){
               console.error("Load order_updates error:", updErr);
-              // keep old map (do not clear)
             }else{
               lastKnownUpdates.clear();
               const rows = updData || [];
@@ -1911,7 +2061,6 @@
         }
 
         // (B) Fetch chat messages from chat_messages (batch)
-        // Assumption: chat_messages columns include: order_no, sender, text, created_at
         try{
           if(orderNos.length > 0){
             const { data: chatData, error: chatErr } = await supabase
@@ -1922,7 +2071,6 @@
 
             if(chatErr){
               console.error("Load chat_messages error:", chatErr);
-              // keep old map (do not clear)
             }else{
               lastKnownChats.clear();
               const rows = chatData || [];
@@ -1946,7 +2094,6 @@
           const id = o.order_no ?? o.id ?? "";
           const created = o.created_at ? fmtDate(o.created_at) : "";
 
-          // Always prefer stage for tracking
           const rawStage = (o.stage != null && String(o.stage).trim() !== "") ? o.stage : (o.status ?? o.state ?? "requested");
           const stNorm = normalizeStatus(rawStage);
 
@@ -1955,21 +2102,16 @@
           const ad = o.pickup_address ?? o.address ?? "";
           const pt = o.pickup_time_text ?? o.pickup_time ?? "";
 
-          // price info
           const priceText = formatToman(o.quoted_price_toman);
           const hasPrice = !!priceText;
 
-          // approval info
           const appr = approvalStateFromOrder(o);
           const apprLabel = approvalLabelFa(appr);
 
-          // loaner
           const needsLoaner = !!(o.needs_loaner_phone);
 
-          // show action buttons only when price quoted & pending
           const showActions = shouldShowPriceActions(o);
 
-          // action UI
           const actionsHtml = showActions ? `
             <div class="price-actions">
               <button class="btn warn" type="button"
@@ -1994,7 +2136,6 @@
             ? `<span class="${approvalPillClass(appr)}">وضعیت قیمت: ${esc(apprLabel)}</span>`
             : "";
 
-          // Dashboard message (latest)
           const on = (o.order_no != null) ? String(o.order_no).trim() : "";
           const upd = pickLatestUpdateForOrder(on);
           const updMsg = (upd && upd.message != null) ? String(upd.message).trim() : "";
@@ -2009,7 +2150,6 @@
             </div>
           ` : "";
 
-          // Chat render
           const chatRows = lastKnownChats.get(on) || [];
           const chatHtml = `
             <details class="chat-details">
@@ -2060,12 +2200,7 @@
                 <span class="pill">وضعیت: ${esc(statusLabelFa(stNorm))}</span>
               </div>
 
-              ${updMsg ? `
-                <div class="order-top">
-                  <span class="pill warn">توضیح داشبورد</span>
-                  <span class="pill warn" style="max-width:100%;white-space:normal;border-radius:16px">${esc(updMsg)}</span>
-                </div>
-              ` : ""}
+              ${needsLoaner ? `<div class="replacement-note">نیاز به گوشی جایگزین: بله</div>` : ""}
 
               <div class="muted">
                 <b>مدل:</b> ${esc(dm)}<br>
@@ -2074,8 +2209,6 @@
                 ${pt ? `<br><b>زمان دریافت:</b> ${esc(pt)}` : ""}
                 ${created ? `<br><b>ثبت:</b> ${esc(created)}` : ""}
               </div>
-
-              ${needsLoaner ? `<div class="replacement-note">نیاز به گوشی جایگزین: بله</div>` : ""}
 
               ${dashHtml}
 
@@ -2097,14 +2230,12 @@
           `;
         }).join("");
 
-        // Auto-scroll chat boxes to bottom
         try{
           document.querySelectorAll('[data-chat-box="1"]').forEach(box => {
             box.scrollTop = box.scrollHeight;
           });
         }catch(_e){}
 
-        // Bind actions (delegation)
         bindOrdersDelegationOnce();
       }
 
@@ -2120,7 +2251,6 @@
 
           const act = btn.getAttribute("data-act");
 
-          // (1) Price approval actions
           if(act === "open-approve" || act === "reject-direct"){
             const idStr = btn.getAttribute("data-order-id");
             const orderId = Number(idStr);
@@ -2163,7 +2293,6 @@
             }
           }
 
-          // (2) Chat send
           if(act === "send-chat"){
             const orderNo = (btn.getAttribute("data-order-no") || "").trim();
             if(!orderNo) return;
@@ -2195,7 +2324,6 @@
                 msgEl.style.color = "var(--success)";
                 msgEl.textContent = "ارسال شد ✅";
               }
-              // refresh orders to show new chat line
               await loadOrders();
             }else{
               if(msgEl){
@@ -2209,7 +2337,6 @@
           }
         });
 
-        // Enter key to send chat
         ordersWrap.addEventListener("keydown", async (e) => {
           const target = e.target;
           if(!target) return;
@@ -2283,14 +2410,12 @@
       createOrderBtn.addEventListener("click", createOrder);
       refreshOrdersBtn.addEventListener("click", loadOrders);
 
-      // Save draft on input changes
       [deviceModel, problemDesc, address, pickupTime, replacementPhone].forEach(el => {
         if(!el) return;
         el.addEventListener("input", () => saveDraft());
         el.addEventListener("change", () => saveDraft());
       });
 
-      // Quick issue chips
       document.querySelectorAll(".qchip").forEach(btn => {
         btn.addEventListener("click", () => {
           const val = (btn.getAttribute("data-issue") || "").trim();
@@ -2303,11 +2428,11 @@
         });
       });
 
-      // Modal events
       function closeByBackdrop(e){
         if(e.target === priceModalBackdrop) closePriceModal();
       }
       priceModalBackdrop.addEventListener("click", closeByBackdrop);
+
       priceModalClose.addEventListener("click", closePriceModal);
       priceModalCancel.addEventListener("click", closePriceModal);
 
