@@ -416,115 +416,122 @@
       margin-top:10px;
     }
 
-    /* Dashboard message box */
-    .dash-box{
+    /* Dashboard message (order update) */
+    .dash-note{
       margin-top:10px;
-      padding:12px;
-      border-radius:18px;
+      padding:10px 12px;
+      border-radius:16px;
       border:1px solid rgba(31,106,255,.18);
       background:rgba(31,106,255,.06);
+      color:#0B2A6A;
       box-shadow:var(--shadow2);
-    }
-    .dash-box b{
-      display:block;
-      font-weight:900;
-      margin-bottom:6px;
-    }
-    .dash-box .dash-text{
-      color:var(--text);
-      font-weight:800;
       line-height:1.9;
+      font-weight:800;
+      font-size:13px;
       white-space:pre-line;
-      font-size:13.4px;
     }
-
-    /* Chat */
-    .chat-box{
-      margin-top:10px;
-      padding:12px;
-      border-radius:18px;
-      border:1px solid var(--line);
-      background:rgba(246,248,252,.55);
-      box-shadow:var(--shadow2);
-    }
-    .chat-head{
+    .dash-note .dash-title{
       display:flex;
       align-items:center;
       justify-content:space-between;
       gap:10px;
       flex-wrap:wrap;
-      margin-bottom:8px;
+      margin-bottom:6px;
     }
-    .chat-head b{
+    .dash-note .dash-title b{
       font-weight:900;
+      font-size:13.2px;
     }
-    .chat-thread{
-      display:flex;
-      flex-direction:column;
-      gap:8px;
-      max-height:240px;
-      overflow:auto;
-      padding:6px 2px;
+    .dash-note .dash-time{
+      font-weight:900;
+      font-size:12px;
+      color:rgba(11,42,106,.78);
+      background:rgba(255,255,255,.7);
+      border:1px solid rgba(31,106,255,.18);
+      padding:6px 8px;
+      border-radius:999px;
     }
-    .chat-msg{
-      display:flex;
-      flex-direction:column;
-      gap:2px;
+
+    /* Chat */
+    details.chat-details{
+      margin-top:10px;
+      border:1px solid var(--line);
+      background:rgba(246,248,252,.55);
+      border-radius:18px;
       padding:10px 12px;
+      box-shadow:var(--shadow2);
+    }
+    details.chat-details > summary{
+      cursor:pointer;
+      font-weight:900;
+      list-style:none;
+      display:flex;
+      align-items:center;
+      justify-content:space-between;
+      gap:10px;
+    }
+    details.chat-details > summary::-webkit-details-marker{display:none}
+    .chat-wrap{
+      margin-top:10px;
+      display:flex;
+      flex-direction:column;
+      gap:10px;
+    }
+    .chat-messages{
+      max-height:260px;
+      overflow:auto;
+      padding:10px;
       border-radius:16px;
       border:1px solid var(--line);
       background:#fff;
       box-shadow:var(--shadow2);
-      width:fit-content;
-      max-width: 92%;
+      display:flex;
+      flex-direction:column;
+      gap:8px;
+    }
+    .chat-msg{
+      display:flex;
+      flex-direction:column;
+      gap:4px;
+      max-width:90%;
+    }
+    .chat-msg .bubble{
+      padding:10px 12px;
+      border-radius:16px;
+      border:1px solid var(--line);
+      background:rgba(246,248,252,.72);
+      line-height:1.85;
+      font-weight:800;
+      font-size:13.2px;
+      white-space:pre-line;
+      word-break:break-word;
+    }
+    .chat-msg .meta{
+      font-size:11.5px;
+      color:var(--muted);
+      font-weight:800;
     }
     .chat-msg.me{
-      margin-right:auto;
-      background:rgba(31,106,255,.08);
-      border-color:rgba(31,106,255,.18);
+      align-self:flex-end;
+      text-align:right;
     }
-    .chat-msg.support{
-      margin-left:auto;
-      background:rgba(16,185,129,.08);
-      border-color:rgba(16,185,129,.18);
+    .chat-msg.me .bubble{
+      background:rgba(31,106,255,.10);
+      border-color:rgba(31,106,255,.20);
+      color:#0B2A6A;
     }
-    .chat-meta{
-      font-size:12px;
-      color:var(--muted);
-      font-weight:900;
-      display:flex;
-      align-items:center;
-      gap:8px;
-      flex-wrap:wrap;
+    .chat-msg.other{
+      align-self:flex-start;
+      text-align:right;
     }
-    .chat-body{
-      font-size:13.4px;
-      line-height:1.9;
-      font-weight:800;
-      white-space:pre-line;
-      color:var(--text);
-    }
-    .chat-send{
-      margin-top:10px;
+    .chat-input-row{
       display:grid;
       grid-template-columns: 1fr auto;
       gap:10px;
       align-items:center;
     }
-    @media(max-width:520px){.chat-send{grid-template-columns:1fr}}
-    .chat-input{
-      width:100%;
-      min-height:46px;
-      padding:12px 14px;
-      border-radius:16px;
-      border:1px solid var(--line);
-      background:#fff;
-      box-shadow:var(--shadow2);
-      font-family:inherit;
-      font-weight:800;
-      outline:none;
-      resize:vertical;
-      line-height:1.9;
+    @media(max-width:520px){
+      .chat-input-row{grid-template-columns:1fr}
     }
 
     /* Modal */
@@ -663,7 +670,8 @@
           • بعد از ورود، نام شما یک‌بار ثبت می‌شود و برای سفارش‌های بعدی نیاز نیست دوباره وارد کنید.<br>
           • هر زمان قیمت اعلام شود، داخل همین صفحه در سفارش‌های شما نمایش داده می‌شود.<br>
           • بعد از اعلام قیمت، تایید/رد قیمت همینجا انجام می‌شود (دو مرحله‌ای).<br>
-          • پیام‌های داشبورد و چت پشتیبانی هم داخل هر سفارش نمایش داده می‌شود.
+          • پیام/توضیحی که اپراتور در داشبورد ثبت می‌کند، کنار وضعیت نمایش داده می‌شود.<br>
+          • امکان چت درباره هر سفارش فعال است.
         </div>
       </div>
     </section>
@@ -879,10 +887,6 @@
       const OTP_REQUEST_URL = "https://vrxfhfknmxmeatnfzpcg.supabase.co/functions/v1/request-otp";
       const OTP_VERIFY_URL  = "https://vrxfhfknmxmeatnfzpcg.supabase.co/functions/v1/verify-otp";
 
-      // Chat (supports either table mode OR JSON column mode)
-      const CHAT_TABLE = "order_messages"; // اگر وجود داشته باشد استفاده می‌شود
-      const CHAT_COLUMN_CANDIDATES = ["chat", "messages"]; // اگر جدول نبود، این ستون‌ها را در orders چک می‌کنیم
-
       const supabase = window.supabase.createClient(SUPABASE_URL, SUPABASE_ANON_KEY);
 
       // =========================
@@ -944,31 +948,11 @@
         return `MCC-${yy}${mm}${dd}-${rand}`;
       }
 
-      function pickDashboardMessage(o){
-        // پیام‌هایی که معمولاً از داشبورد میاد (با اسم‌های مختلف)
-        const candidates = [
-          o?.dashboard_message,
-          o?.admin_message,
-          o?.operator_message,
-          o?.status_message,
-          o?.message,
-          o?.note,
-          o?.notes,
-          o?.customer_visible_note,
-          o?.public_note,
-          o?.internal_to_customer_note
-        ];
-        for(const x of candidates){
-          const t = (x ?? "").toString().trim();
-          if(t) return t;
-        }
-        return "";
-      }
-
       // =========================
       // UI Elements
       // =========================
       const sessionBadge = document.getElementById("sessionBadge");
+
       const guideCard = document.getElementById("guideCard");
 
       const authCard = document.getElementById("authCard");
@@ -1020,7 +1004,7 @@
       // =========================
       const LS_LOGIN = "mobix_site_login";
       const LS_PROFILE = "mobix_site_profile";
-      const DRAFT_KEY_BASE = "mobix_site_order_draft"; // (fix) per user below
+      const DRAFT_KEY = "mobix_site_order_draft";
 
       let loginState = null;   // { phone09 }
       let profileState = null; // { full_name }
@@ -1033,22 +1017,17 @@
       let realtimeChannel = null;
       let pollTimer = null;
 
+      // Extra realtime channels (updates + chat)
+      let updatesRealtimeChannel = null;
+      let chatRealtimeChannel = null;
+
       // Modal order state
       let modalOrder = null; // current order object for approval
 
-      // Chat mode
-      // "table" => order_messages table exists
-      // "column" => orders has json array column (chat/messages)
-      // "none" => no available
-      let chatMode = "unknown";
-      let chatColumn = null;
-
-      // orderId -> messages array
-      // message: { id?, created_at?, role: "customer"|"support", text, sender_name?, ... }
-      const chatsByOrderId = new Map();
-
-      // Keep latest orders for action handlers
-      const lastKnownOrders = new Map();
+      // Latest maps
+      const lastKnownOrders = new Map();   // id -> order
+      const lastKnownUpdates = new Map();  // order_no -> { message, stage, created_at }
+      const lastKnownChats = new Map();    // order_no -> [messages]
 
       // =========================
       // UI Helpers
@@ -1079,12 +1058,6 @@
         return n.length >= 2;
       }
 
-      function draftKey(){
-        // (fix) draft per user
-        const phone = (loginState && loginState.phone09) ? String(loginState.phone09) : "guest";
-        return DRAFT_KEY_BASE + ":" + phone;
-      }
-
       // =========================
       // Draft
       // =========================
@@ -1096,11 +1069,11 @@
           pickup_address: (address.value || "").trim(),
           pickup_time_text: (pickupTime.value || "").trim()
         };
-        localStorage.setItem(draftKey(), JSON.stringify(draft));
+        localStorage.setItem(DRAFT_KEY, JSON.stringify(draft));
       }
       function loadDraft(){
         try{
-          const raw = localStorage.getItem(draftKey());
+          const raw = localStorage.getItem(DRAFT_KEY);
           if(!raw) return;
           const d = JSON.parse(raw);
           if(d && typeof d === "object"){
@@ -1189,7 +1162,7 @@
       }
 
       // =========================
-      // Status mapping
+      // Status mapping (Fix: price_quoted)
       // =========================
       const STATUS_FA = {
         requested: "ثبت شده",
@@ -1216,6 +1189,7 @@
       function normalizeStatus(raw){
         const s = (raw || "").toString().trim().toLowerCase();
 
+        // --- important: map your dashboard values ---
         if(["price_quoted","pricequoted","price-quoted"].includes(s)) return "quoted";
         if(["quoted","quote","price","awaiting_approval","approved_pending"].includes(s)) return "quoted";
 
@@ -1387,6 +1361,24 @@
         }catch(_e){}
       }
 
+      function stopRealtimeUpdates(){
+        try{
+          if(updatesRealtimeChannel){
+            supabase.removeChannel(updatesRealtimeChannel);
+            updatesRealtimeChannel = null;
+          }
+        }catch(_e){}
+      }
+
+      function stopRealtimeChat(){
+        try{
+          if(chatRealtimeChannel){
+            supabase.removeChannel(chatRealtimeChannel);
+            chatRealtimeChannel = null;
+          }
+        }catch(_e){}
+      }
+
       function stopPolling(){
         if(pollTimer) clearInterval(pollTimer);
         pollTimer = null;
@@ -1401,6 +1393,7 @@
 
       function startRealtime(){
         stopRealtime();
+
         if(!loggedIn()) return;
 
         try{
@@ -1418,241 +1411,41 @@
               }
             )
             .subscribe((_status) => {});
-        }catch(_e){
-          // ignore and rely on polling
-        }
+        }catch(_e){}
       }
 
-      // =========================
-      // Chat: detect mode + load + send
-      // =========================
-      async function ensureChatMode(){
-        if(chatMode !== "unknown") return;
-
-        // 1) try table
-        try{
-          const { error } = await supabase
-            .from(CHAT_TABLE)
-            .select("id")
-            .limit(1);
-
-          if(!error){
-            chatMode = "table";
-            return;
-          }
-        }catch(_e){
-          // ignore
-        }
-
-        // 2) fallback column mode (we detect from fetched orders later)
-        chatMode = "column";
-        chatColumn = null;
-      }
-
-      function detectChatColumnFromOrders(orders){
-        if(chatMode !== "column") return;
-        if(chatColumn) return;
-
-        for(const col of CHAT_COLUMN_CANDIDATES){
-          for(const o of (orders || [])){
-            if(o && o[col] != null){
-              // accept only if it looks like array or json string array
-              if(Array.isArray(o[col])){ chatColumn = col; return; }
-              if(typeof o[col] === "string"){
-                try{
-                  const parsed = JSON.parse(o[col]);
-                  if(Array.isArray(parsed)){ chatColumn = col; return; }
-                }catch(_e){}
-              }
-            }
-          }
-        }
-      }
-
-      function normalizeChatArray(raw){
-        if(!raw) return [];
-        if(Array.isArray(raw)) return raw.slice();
-        if(typeof raw === "string"){
-          try{
-            const j = JSON.parse(raw);
-            if(Array.isArray(j)) return j.slice();
-          }catch(_e){}
-        }
-        return [];
-      }
-
-      function mapTableRowToMessage(row){
-        // تلاش می‌کنیم با اسم‌های رایج کار کنیم
-        const roleRaw = (row?.role ?? row?.sender_role ?? row?.from ?? row?.direction ?? "").toString().toLowerCase().trim();
-        const role =
-          (roleRaw === "support" || roleRaw === "admin" || roleRaw === "operator" || roleRaw === "technician")
-            ? "support"
-            : "customer";
-
-        const text = (row?.text ?? row?.message ?? row?.body ?? row?.content ?? "").toString();
-        const created_at = row?.created_at ?? row?.sent_at ?? row?.created ?? null;
-
-        return {
-          id: row?.id ?? null,
-          role,
-          text,
-          created_at
-        };
-      }
-
-      function renderChatThread(orderId){
-        const msgs = chatsByOrderId.get(Number(orderId)) || [];
-        if(!msgs.length){
-          return `<div class="muted">هنوز پیامی برای این سفارش ثبت نشده.</div>`;
-        }
-
-        return msgs.map(m => {
-          const role = (m?.role || "customer") === "support" ? "support" : "me";
-          const title = role === "support" ? "پشتیبانی" : "شما";
-          const when = m?.created_at ? fmtDate(m.created_at) : "";
-          const body = (m?.text ?? "").toString();
-
-          return `
-            <div class="chat-msg ${role}">
-              <div class="chat-meta">
-                <span>${esc(title)}</span>
-                ${when ? `<span>•</span><span>${esc(when)}</span>` : ``}
-              </div>
-              <div class="chat-body">${esc(body)}</div>
-            </div>
-          `;
-        }).join("");
-      }
-
-      async function loadChatsForOrders(orderIds){
-        chatsByOrderId.clear();
+      function startRealtimeForUpdatesAndChat(orderNos){
+        stopRealtimeUpdates();
+        stopRealtimeChat();
 
         if(!loggedIn()) return;
-        await ensureChatMode();
 
-        const ids = (orderIds || []).map(x => Number(x)).filter(x => Number.isFinite(x));
-        if(!ids.length){
-          return;
-        }
+        const list = (orderNos || []).filter(Boolean);
+        if(list.length === 0) return;
 
-        if(chatMode === "table"){
-          try{
-            // تلاش می‌کنیم پیام‌ها را از جدول order_messages بگیریم
-            // فیلدهای رایج: order_id, customer_phone, created_at, role, text/message
-            const { data, error } = await supabase
-              .from(CHAT_TABLE)
-              .select("*")
-              .in("order_id", ids)
-              .order("created_at", { ascending: true });
-
-            if(error){
-              // اگر RLS/ستون‌ها مشکل داشت، هیچ‌چیز نشون می‌دیم ولی صفحه نمی‌ریزه
-              console.warn("Chat table load error:", error);
-              return;
-            }
-
-            const rows = data || [];
-            for(const r of rows){
-              const oid = Number(r?.order_id);
-              if(!Number.isFinite(oid)) continue;
-              const arr = chatsByOrderId.get(oid) || [];
-              arr.push(mapTableRowToMessage(r));
-              chatsByOrderId.set(oid, arr);
-            }
-          }catch(ex){
-            console.warn("Chat table exception:", ex);
-          }
-          return;
-        }
-
-        // column mode: pull from lastKnownOrders (after loadOrders)
-        // this function will be called after orders fetched, and detectChatColumnFromOrders runs.
-        // We fill chatsByOrderId later in loadOrders render path.
-      }
-
-      async function sendChatMessage(order, text){
-        const t = (text ?? "").toString().trim();
-        if(!t){
-          alert("متن پیام را وارد کنید.");
-          return;
-        }
-        if(!loggedIn()){
-          alert("برای ارسال پیام باید وارد شوید.");
-          return;
-        }
-
-        await ensureChatMode();
-
-        const orderId = Number(order?.id);
-        if(!Number.isFinite(orderId)){
-          alert("شناسه سفارش معتبر نیست.");
-          return;
-        }
-
-        if(chatMode === "table"){
-          try{
-            const payload = {
-              order_id: orderId,
-              customer_phone: loginState.phone09,
-              role: "customer",
-              text: t
-            };
-
-            const { error } = await supabase
-              .from(CHAT_TABLE)
-              .insert(payload);
-
-            if(error){
-              console.error("Send chat (table) error:", error);
-              alert("ارسال پیام ناموفق بود: " + (error.message || "خطای نامشخص"));
-              return;
-            }
-
-            await loadOrders(); // refresh orders + chats
-            return;
-          }catch(ex){
-            console.error("Send chat (table) exception:", ex);
-            alert("ارسال پیام ناموفق بود: " + (ex?.message || "خطای نامشخص"));
-            return;
-          }
-        }
-
-        // column mode
-        // We append to orders.chat or orders.messages (if exists). If none exist, show a clear error.
-        const col = chatColumn;
-        if(!col){
-          alert("چت پشتیبانی هنوز روی دیتابیس فعال نشده (ستون chat/messages یا جدول order_messages پیدا نشد).");
-          return;
-        }
+        // Realtime filter for text: in.("A","B")
+        const quoted = list.map(x => '"' + String(x).replaceAll('"','') + '"').join(",");
+        const filterIn = "order_no=in.(" + quoted + ")";
 
         try{
-          const currentOrder = lastKnownOrders.get(orderId) || order;
-          const currentArr = normalizeChatArray(currentOrder?.[col]);
-          const nowIso = new Date().toISOString();
+          updatesRealtimeChannel = supabase.channel("mobix-order-updates-rt")
+            .on(
+              "postgres_changes",
+              { event:"*", schema:"public", table:"order_updates", filter: filterIn },
+              (_payload) => { loadOrders(); }
+            )
+            .subscribe((_status) => {});
+        }catch(_e){}
 
-          const newMsg = {
-            role: "customer",
-            text: t,
-            created_at: nowIso
-          };
-          const nextArr = currentArr.concat([newMsg]);
-
-          const { error } = await supabase
-            .from("orders")
-            .update({ [col]: nextArr })
-            .eq("id", orderId);
-
-          if(error){
-            console.error("Send chat (column) update error:", error);
-            alert("ارسال پیام ناموفق بود: " + (error.message || "خطای نامشخص"));
-            return;
-          }
-
-          await loadOrders();
-        }catch(ex){
-          console.error("Send chat (column) exception:", ex);
-          alert("ارسال پیام ناموفق بود: " + (ex?.message || "خطای نامشخص"));
-        }
+        try{
+          chatRealtimeChannel = supabase.channel("mobix-chat-rt")
+            .on(
+              "postgres_changes",
+              { event:"*", schema:"public", table:"chat_messages", filter: filterIn },
+              (_payload) => { loadOrders(); }
+            )
+            .subscribe((_status) => {});
+        }catch(_e){}
       }
 
       // =========================
@@ -1729,8 +1522,6 @@
           applyLoginUI();
           loadDraft();
 
-          await ensureChatMode();
-
           startRealtime();
           startPolling();
 
@@ -1762,13 +1553,9 @@
         stopTimer();
 
         stopRealtime();
+        stopRealtimeUpdates();
+        stopRealtimeChat();
         stopPolling();
-
-        // reset chat state
-        chatsByOrderId.clear();
-        lastKnownOrders.clear();
-        chatMode = "unknown";
-        chatColumn = null;
 
         setMsg(authMsg, "ok", "خارج شدید.");
         applyLoginUI();
@@ -1892,7 +1679,7 @@
           problemDesc.value = "";
           address.value = "";
           pickupTime.value = "";
-          localStorage.removeItem(draftKey());
+          localStorage.removeItem(DRAFT_KEY);
 
           await loadOrders();
         }catch(e){
@@ -1910,6 +1697,7 @@
         if(!order) return;
 
         const id = order.id;
+
         if(!id){
           setMsg(priceModalMsg, "err", "شناسه سفارش پیدا نشد.");
           return;
@@ -1975,7 +1763,68 @@
       }
 
       // =========================
-      // Load orders + FIX: show dashboard message + chat
+      // Dashboard updates (message next to status)
+      // =========================
+      function pickLatestUpdateForOrder(orderNo){
+        if(!orderNo) return null;
+        return lastKnownUpdates.get(String(orderNo)) || null;
+      }
+
+      function normalizeSender(s){
+        const x = (s || "").toString().trim().toLowerCase();
+        if(["customer","client","user","me","you","مشتری"].includes(x)) return "customer";
+        if(["mobix","admin","operator","support","staff","team","پشتیبانی","اپراتور"].includes(x)) return "mobix";
+        return x || "mobix";
+      }
+
+      function senderLabelFa(s){
+        const x = normalizeSender(s);
+        if(x === "customer") return "شما";
+        if(x === "mobix") return "موبیکس";
+        return "موبیکس";
+      }
+
+      // =========================
+      // Chat actions
+      // =========================
+      async function sendChatMessage(orderNo, text){
+        const t = (text || "").trim();
+        const on = (orderNo || "").trim();
+        if(!on){
+          alert("شماره سفارش پیدا نشد.");
+          return false;
+        }
+        if(t.length < 1){
+          return false;
+        }
+
+        try{
+          const payload = {
+            order_no: on,
+            sender: "customer",
+            text: t
+          };
+
+          const { error } = await supabase
+            .from("chat_messages")
+            .insert(payload);
+
+          if(error){
+            console.error("Chat insert error:", error);
+            alert("ارسال پیام ناموفق بود: " + (error.message || "خطای نامشخص"));
+            return false;
+          }
+
+          return true;
+        }catch(e){
+          console.error("Chat send exception:", e);
+          alert("ارسال پیام ناموفق بود: " + (e?.message || "خطای نامشخص"));
+          return false;
+        }
+      }
+
+      // =========================
+      // Load orders + updates + chat
       // =========================
       async function loadOrders(){
         if(!loggedIn()){
@@ -1984,8 +1833,6 @@
         }
 
         ordersWrap.innerHTML = '<div class="muted">در حال دریافت سفارش‌ها…</div>';
-
-        await ensureChatMode();
 
         const { data, error } = await supabase
           .from("orders")
@@ -2006,52 +1853,100 @@
         const list = data || [];
         ordersCount.textContent = String(list.length);
 
-        // refresh map
+        // Refresh maps
         lastKnownOrders.clear();
-        for(const o of list){
+        list.forEach(o => {
           if(o && Number.isFinite(Number(o.id))){
             lastKnownOrders.set(Number(o.id), o);
           }
-        }
+        });
 
         if(list.length === 0){
           ordersWrap.innerHTML = '<div class="muted">هنوز سفارشی ثبت نکرده‌اید.</div>';
+          lastKnownUpdates.clear();
+          lastKnownChats.clear();
+          stopRealtimeUpdates();
+          stopRealtimeChat();
           return;
         }
 
-        // chat: table mode -> load messages for visible orders
-        const ids = list.map(o => Number(o?.id)).filter(x => Number.isFinite(x));
-        if(chatMode === "table"){
-          await loadChatsForOrders(ids);
-        }else{
-          // column mode: detect column and fill chats map from orders
-          detectChatColumnFromOrders(list);
-          chatsByOrderId.clear();
-          if(chatColumn){
-            for(const o of list){
-              const oid = Number(o?.id);
-              if(!Number.isFinite(oid)) continue;
-              const arr = normalizeChatArray(o?.[chatColumn]);
-              const norm = arr.map(x => {
-                // normalize message shape
-                const roleRaw = (x?.role ?? x?.sender_role ?? x?.from ?? "").toString().toLowerCase().trim();
-                const role = (roleRaw === "support" || roleRaw === "admin" || roleRaw === "operator" || roleRaw === "technician") ? "support" : "customer";
-                const text = (x?.text ?? x?.message ?? x?.body ?? x?.content ?? "").toString();
-                const created_at = x?.created_at ?? x?.sent_at ?? x?.created ?? null;
-                return { role, text, created_at };
-              }).filter(m => (m.text || "").toString().trim().length > 0);
+        // Collect order_nos for batch queries
+        const orderNos = list
+          .map(o => (o && o.order_no != null) ? String(o.order_no).trim() : "")
+          .filter(x => x.length > 0);
 
-              chatsByOrderId.set(oid, norm);
+        // (A) Fetch latest dashboard messages from order_updates (per order_no)
+        // Assumption: order_updates columns include: order_no, stage, message, created_at
+        // If your column name is different, tell me and I change it.
+        try{
+          if(orderNos.length > 0){
+            const { data: updData, error: updErr } = await supabase
+              .from("order_updates")
+              .select("order_no, stage, message, created_at")
+              .in("order_no", orderNos)
+              .order("created_at", { ascending:false });
+
+            if(updErr){
+              console.error("Load order_updates error:", updErr);
+              // keep old map (do not clear)
+            }else{
+              lastKnownUpdates.clear();
+              const rows = updData || [];
+              for(const r of rows){
+                const on = (r && r.order_no != null) ? String(r.order_no).trim() : "";
+                if(!on) continue;
+                if(!lastKnownUpdates.has(on)){
+                  lastKnownUpdates.set(on, {
+                    order_no: on,
+                    stage: r.stage ?? null,
+                    message: r.message ?? null,
+                    created_at: r.created_at ?? null
+                  });
+                }
+              }
             }
           }
+        }catch(e){
+          console.error("Order updates fetch exception:", e);
         }
 
+        // (B) Fetch chat messages from chat_messages (batch)
+        // Assumption: chat_messages columns include: order_no, sender, text, created_at
+        try{
+          if(orderNos.length > 0){
+            const { data: chatData, error: chatErr } = await supabase
+              .from("chat_messages")
+              .select("id, order_no, sender, text, created_at")
+              .in("order_no", orderNos)
+              .order("created_at", { ascending:true });
+
+            if(chatErr){
+              console.error("Load chat_messages error:", chatErr);
+              // keep old map (do not clear)
+            }else{
+              lastKnownChats.clear();
+              const rows = chatData || [];
+              for(const r of rows){
+                const on = (r && r.order_no != null) ? String(r.order_no).trim() : "";
+                if(!on) continue;
+                if(!lastKnownChats.has(on)) lastKnownChats.set(on, []);
+                lastKnownChats.get(on).push(r);
+              }
+            }
+          }
+        }catch(e){
+          console.error("Chat fetch exception:", e);
+        }
+
+        // (C) Keep realtime for updates/chat aligned with current orders
+        startRealtimeForUpdatesAndChat(orderNos);
+
+        // Render
         ordersWrap.innerHTML = list.map(o => {
-          const oid = Number(o?.id);
           const id = o.order_no ?? o.id ?? "";
           const created = o.created_at ? fmtDate(o.created_at) : "";
 
-          // prefer stage
+          // Always prefer stage for tracking
           const rawStage = (o.stage != null && String(o.stage).trim() !== "") ? o.stage : (o.status ?? o.state ?? "requested");
           const stNorm = normalizeStatus(rawStage);
 
@@ -2059,9 +1954,6 @@
           const pr = o.issue ?? o.problem ?? "";
           const ad = o.pickup_address ?? o.address ?? "";
           const pt = o.pickup_time_text ?? o.pickup_time ?? "";
-
-          // dashboard message
-          const dashMsg = pickDashboardMessage(o);
 
           // price info
           const priceText = formatToman(o.quoted_price_toman);
@@ -2077,6 +1969,7 @@
           // show action buttons only when price quoted & pending
           const showActions = shouldShowPriceActions(o);
 
+          // action UI
           const actionsHtml = showActions ? `
             <div class="price-actions">
               <button class="btn warn" type="button"
@@ -2101,47 +1994,78 @@
             ? `<span class="${approvalPillClass(appr)}">وضعیت قیمت: ${esc(apprLabel)}</span>`
             : "";
 
-          // chat UI
-          const threadHtml = Number.isFinite(oid) ? renderChatThread(oid) : `<div class="muted">چت قابل نمایش نیست.</div>`;
-          const chatAvailabilityPill = (chatMode === "table")
-            ? `<span class="status ok">چت فعال است</span>`
-            : (chatMode === "column" && chatColumn)
-              ? `<span class="status ok">چت فعال است</span>`
-              : `<span class="status warn">چت هنوز فعال نشده</span>`;
-
-          const chatBox = `
-            <div class="chat-box" data-chat-box="1" data-order-id="${esc(String(o.id ?? ""))}">
-              <div class="chat-head">
-                <b>چت پشتیبانی</b>
-                ${chatAvailabilityPill}
+          // Dashboard message (latest)
+          const on = (o.order_no != null) ? String(o.order_no).trim() : "";
+          const upd = pickLatestUpdateForOrder(on);
+          const updMsg = (upd && upd.message != null) ? String(upd.message).trim() : "";
+          const updTime = (upd && upd.created_at) ? fmtDate(upd.created_at) : "";
+          const dashHtml = updMsg ? `
+            <div class="dash-note">
+              <div class="dash-title">
+                <b>پیام موبیکس</b>
+                ${updTime ? `<span class="dash-time">${esc(updTime)}</span>` : `<span class="dash-time">—</span>`}
               </div>
-              <div class="chat-thread" id="chatThread_${esc(String(o.id ?? ""))}">
-                ${threadHtml}
-              </div>
-              <div class="chat-send">
-                <textarea class="chat-input" id="chatInput_${esc(String(o.id ?? ""))}" placeholder="پیام خود را بنویسید…"></textarea>
-                <button class="btn primary" type="button"
-                  data-act="send-chat"
-                  data-order-id="${esc(String(o.id ?? ""))}">
-                  ارسال پیام
-                </button>
-              </div>
-            </div>
-          `;
-
-          const dashBox = dashMsg ? `
-            <div class="dash-box">
-              <b>پیام پشتیبانی/داشبورد</b>
-              <div class="dash-text">${esc(dashMsg)}</div>
+              ${esc(updMsg)}
             </div>
           ` : "";
 
+          // Chat render
+          const chatRows = lastKnownChats.get(on) || [];
+          const chatHtml = `
+            <details class="chat-details">
+              <summary>
+                <span>چت درباره این سفارش</span>
+                <span class="status">${chatRows.length ? (chatRows.length.toLocaleString("fa-IR") + " پیام") : "بدون پیام"}</span>
+              </summary>
+
+              <div class="chat-wrap">
+                <div class="chat-messages" data-chat-box="1" data-order-no="${esc(on)}">
+                  ${chatRows.length ? chatRows.slice(-50).map(m => {
+                    const who = senderLabelFa(m.sender);
+                    const isMe = normalizeSender(m.sender) === "customer";
+                    const cls = isMe ? "chat-msg me" : "chat-msg other";
+                    const when = m.created_at ? fmtDate(m.created_at) : "";
+                    const txt = (m.text != null) ? String(m.text) : "";
+                    return `
+                      <div class="${cls}">
+                        <div class="bubble">${esc(txt)}</div>
+                        <div class="meta">${esc(who)}${when ? (" • " + esc(when)) : ""}</div>
+                      </div>
+                    `;
+                  }).join("") : `<div class="muted">هنوز پیامی برای این سفارش ثبت نشده است.</div>`}
+                </div>
+
+                <div class="chat-input-row">
+                  <input class="input" type="text"
+                         placeholder="پیام خود را بنویسید…"
+                         data-chat-input="1"
+                         data-order-no="${esc(on)}" />
+                  <button class="btn primary"
+                          type="button"
+                          data-act="send-chat"
+                          data-order-no="${esc(on)}">
+                    ارسال پیام
+                  </button>
+                </div>
+
+                <div class="hint" data-chat-msg="1" data-order-no="${esc(on)}"></div>
+              </div>
+            </details>
+          `;
+
           return `
-            <div class="order-item" data-order-row="1" data-order-id="${esc(String(o.id ?? ""))}">
+            <div class="order-item" data-order-row="1" data-order-id="${esc(String(o.id ?? ""))}" data-order-no="${esc(on)}">
               <div class="order-top">
                 <b>سفارش #${esc(id)}</b>
                 <span class="pill">وضعیت: ${esc(statusLabelFa(stNorm))}</span>
               </div>
+
+              ${updMsg ? `
+                <div class="order-top">
+                  <span class="pill warn">توضیح داشبورد</span>
+                  <span class="pill warn" style="max-width:100%;white-space:normal;border-radius:16px">${esc(updMsg)}</span>
+                </div>
+              ` : ""}
 
               <div class="muted">
                 <b>مدل:</b> ${esc(dm)}<br>
@@ -2153,7 +2077,7 @@
 
               ${needsLoaner ? `<div class="replacement-note">نیاز به گوشی جایگزین: بله</div>` : ""}
 
-              ${dashBox}
+              ${dashHtml}
 
               <div class="divider"></div>
 
@@ -2168,29 +2092,40 @@
 
               ${renderTrack(stNorm)}
 
-              ${chatBox}
+              ${chatHtml}
             </div>
           `;
         }).join("");
 
-        bindOrderActionButtons(list);
+        // Auto-scroll chat boxes to bottom
+        try{
+          document.querySelectorAll('[data-chat-box="1"]').forEach(box => {
+            box.scrollTop = box.scrollHeight;
+          });
+        }catch(_e){}
+
+        // Bind actions (delegation)
+        bindOrdersDelegationOnce();
       }
 
-      function bindOrderActionButtons(orderList){
-        if(!ordersWrap.__mobixDelegationAttached){
-          ordersWrap.addEventListener("click", async (e) => {
-            const target = e.target;
-            if(!target) return;
+      function bindOrdersDelegationOnce(){
+        if(ordersWrap.__mobixDelegationAttached) return;
 
-            const btn = target.closest("button[data-act]");
-            if(!btn) return;
+        ordersWrap.addEventListener("click", async (e) => {
+          const target = e.target;
+          if(!target) return;
 
-            const act = btn.getAttribute("data-act");
+          const btn = target.closest("button[data-act]");
+          if(!btn) return;
+
+          const act = btn.getAttribute("data-act");
+
+          // (1) Price approval actions
+          if(act === "open-approve" || act === "reject-direct"){
             const idStr = btn.getAttribute("data-order-id");
             const orderId = Number(idStr);
 
             if(!Number.isFinite(orderId)) return;
-
             const order = lastKnownOrders.get(orderId);
             if(!order) return;
 
@@ -2226,33 +2161,75 @@
               }
               return;
             }
+          }
 
-            if(act === "send-chat"){
-              const ta = document.getElementById("chatInput_" + String(orderId));
-              if(!ta) return;
+          // (2) Chat send
+          if(act === "send-chat"){
+            const orderNo = (btn.getAttribute("data-order-no") || "").trim();
+            if(!orderNo) return;
 
-              const text = ta.value;
-              btn.disabled = true;
-              try{
-                await sendChatMessage(order, text);
-                ta.value = "";
-              }finally{
-                btn.disabled = false;
-              }
+            const input = ordersWrap.querySelector(`input[data-chat-input="1"][data-order-no="${CSS.escape(orderNo)}"]`);
+            const msgEl = ordersWrap.querySelector(`div[data-chat-msg="1"][data-order-no="${CSS.escape(orderNo)}"]`);
+            const text = input ? input.value : "";
+
+            if(msgEl){
+              msgEl.textContent = "";
+              msgEl.style.color = "var(--muted)";
+            }
+
+            if(!text || !text.trim()){
               return;
             }
-          });
 
-          ordersWrap.__mobixDelegationAttached = true;
-        }
+            btn.disabled = true;
+            if(msgEl){
+              msgEl.style.color = "var(--warn)";
+              msgEl.textContent = "در حال ارسال پیام…";
+            }
 
-        // refresh lastKnownOrders already done in loadOrders
-        // keep for any external usage
-        (orderList || []).forEach(o => {
-          if(o && Number.isFinite(Number(o.id))){
-            lastKnownOrders.set(Number(o.id), o);
+            const ok = await sendChatMessage(orderNo, text);
+
+            if(ok){
+              if(input) input.value = "";
+              if(msgEl){
+                msgEl.style.color = "var(--success)";
+                msgEl.textContent = "ارسال شد ✅";
+              }
+              // refresh orders to show new chat line
+              await loadOrders();
+            }else{
+              if(msgEl){
+                msgEl.style.color = "var(--danger)";
+                msgEl.textContent = "ارسال ناموفق بود.";
+              }
+            }
+
+            btn.disabled = false;
+            return;
           }
         });
+
+        // Enter key to send chat
+        ordersWrap.addEventListener("keydown", async (e) => {
+          const target = e.target;
+          if(!target) return;
+
+          const inp = target.closest('input[data-chat-input="1"]');
+          if(!inp) return;
+
+          if(e.key === "Enter"){
+            e.preventDefault();
+            const orderNo = (inp.getAttribute("data-order-no") || "").trim();
+            if(!orderNo) return;
+
+            const sendBtn = ordersWrap.querySelector(`button[data-act="send-chat"][data-order-no="${CSS.escape(orderNo)}"]`);
+            if(sendBtn && !sendBtn.disabled){
+              sendBtn.click();
+            }
+          }
+        });
+
+        ordersWrap.__mobixDelegationAttached = true;
       }
 
       // =========================
@@ -2276,13 +2253,13 @@
       loadDraft();
 
       if(loggedIn()){
-        ensureChatMode().then(() => {
-          startRealtime();
-          startPolling();
-          loadOrders();
-        });
+        startRealtime();
+        startPolling();
+        loadOrders();
       }else{
         stopRealtime();
+        stopRealtimeUpdates();
+        stopRealtimeChat();
         stopPolling();
       }
 
@@ -2349,13 +2326,6 @@
         const ok = confirm("قیمت را رد می‌کنید؟");
         if(!ok) return;
         await updatePriceApproval(modalOrder, "reject");
-      });
-
-      // ESC closes modal
-      document.addEventListener("keydown", (e) => {
-        if(e.key === "Escape" && priceModalBackdrop.style.display === "flex"){
-          closePriceModal();
-        }
       });
 
     })();
