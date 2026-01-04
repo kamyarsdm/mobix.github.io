@@ -14,24 +14,29 @@
   <meta name="theme-color" content="#1F6AFF" />
   <link rel="icon" href="assets/logo.png" />
 
+  <link rel="preconnect" href="https://cdn.jsdelivr.net" crossorigin>
+  <link rel="preconnect" href="https://fastly.jsdelivr.net" crossorigin>
+  <link rel="dns-prefetch" href="https://cdn.jsdelivr.net">
+  <link rel="dns-prefetch" href="https://fastly.jsdelivr.net">
+
   <style>
     @font-face {
       font-family: 'Peyda';
-      src: url('https://cdn.jsdelivr.net/gh/fontstore/Peyda@main/Peyda-Regular.woff2') format('woff2');
+      src: url('https://cdn.jsdelivr.net/gh/MHgh0st/Assets@main/fonts/Peyda/PeydaWeb-Regular.woff2') format('woff2');
       font-weight: 400;
       font-style: normal;
       font-display: swap;
     }
     @font-face {
       font-family: 'Peyda';
-      src: url('https://cdn.jsdelivr.net/gh/fontstore/Peyda@main/Peyda-Bold.woff2') format('woff2');
+      src: url('https://cdn.jsdelivr.net/gh/MHgh0st/Assets@main/fonts/Peyda/PeydaWeb-Bold.woff2') format('woff2');
       font-weight: 700;
       font-style: normal;
       font-display: swap;
     }
     @font-face {
       font-family: 'Peyda';
-      src: url('https://cdn.jsdelivr.net/gh/fontstore/Peyda@main/Peyda-Black.woff2') format('woff2');
+      src: url('https://cdn.jsdelivr.net/gh/MHgh0st/Assets@main/fonts/Peyda/PeydaWeb-Black.woff2') format('woff2');
       font-weight: 900;
       font-style: normal;
       font-display: swap;
@@ -76,9 +81,6 @@
     .container{max-width:var(--max);margin:auto;padding:14px 16px 56px}
     .section{margin-top:24px}
 
-    /* =========================
-       HEADER (Premium + Shrink)
-       ========================= */
     .topbar{
       position:sticky;top:0;z-index:50;
       padding:14px 0;
@@ -121,7 +123,7 @@
 
     .brand-meta{display:flex;flex-direction:column;gap:3px;min-width:0}
     .brand-title{
-      font-weight:900;
+      font-weight:980;
       font-size:15.8px;
       letter-spacing:-.18px;
       white-space:nowrap;overflow:hidden;text-overflow:ellipsis;
@@ -130,7 +132,7 @@
     .brand-sub{
       color:var(--muted);
       font-size:12.7px;
-      font-weight:700;
+      font-weight:800;
       white-space:nowrap;overflow:hidden;text-overflow:ellipsis;
       line-height:1.2;
     }
@@ -140,7 +142,7 @@
     .btn{
       padding:11px 18px;
       border-radius:16px;
-      font-weight:700;
+      font-weight:950;
       border:1px solid rgba(15,23,42,.10);
       background:#fff;
       box-shadow:0 10px 20px rgba(15,23,42,.06);
@@ -158,16 +160,12 @@
       background:linear-gradient(135deg,var(--primary),var(--primary2));
       color:#fff;border:none;
       box-shadow:0 18px 34px rgba(31,106,255,.18);
-      font-weight:700;
     }
     .topbar.scrolled .btn{
       padding:10px 16px;
       border-radius:14px;
     }
 
-    /* =========================
-       HERO
-       ========================= */
     .hero{
       margin-top:18px;
       display:grid;
@@ -222,7 +220,6 @@
       .hero-art img{height:220px}
     }
 
-    /* CONTROL CARDS */
     .grid-3{
       display:grid;
       grid-template-columns:repeat(3,1fr);
@@ -243,17 +240,16 @@
       justify-content:flex-start;
     }
     .focus-k{display:flex;align-items:center;justify-content:space-between;gap:10px}
-    .focus-k b{font-weight:700;font-size:14.5px;letter-spacing:-.15px}
+    .focus-k b{font-weight:950;font-size:14.5px;letter-spacing:-.15px}
     .tag{
       display:inline-flex;align-items:center;gap:8px;
       padding:7px 10px;border-radius:999px;
       background:rgba(31,106,255,.09);
       border:1px solid rgba(31,106,255,.18);
-      color:#0B2A6A;font-weight:700;font-size:12.2px;white-space:nowrap;
+      color:#0B2A6A;font-weight:900;font-size:12.2px;white-space:nowrap;
     }
     .focus-desc{margin-top:10px;color:var(--muted);font-size:13.6px;line-height:1.9}
 
-    /* Mini progress */
     .mini-progress{
       margin-top:14px;
       padding:12px 12px;
@@ -266,7 +262,7 @@
       display:flex;align-items:center;justify-content:space-between;gap:10px;flex-wrap:wrap;
       margin-bottom:10px;
     }
-    .mp-top b{font-weight:700;font-size:13.5px;letter-spacing:-.15px}
+    .mp-top b{font-weight:950;font-size:13.5px;letter-spacing:-.15px}
     .mp-top span{color:var(--muted);font-size:12.8px}
     .mp-steps{display:flex;gap:8px;justify-content:space-between;flex-wrap:wrap}
     .mp-steps .s{
@@ -277,7 +273,7 @@
       border:1px solid rgba(15,23,42,.08);
       background:#fff;
       box-shadow:0 10px 18px rgba(15,23,42,.05);
-      font-weight:700;
+      font-weight:900;
       font-size:12.8px;
       color:var(--muted);
       text-align:center;
@@ -288,10 +284,9 @@
       color:#0B2A6A;
     }
 
-    /* ORDER (was Quick Start) */
     .qs-wrap{display:flex;flex-direction:column;gap:10px}
     .qs-head{display:flex;align-items:center;justify-content:space-between;gap:10px;flex-wrap:wrap}
-    .qs-head b{font-weight:900;font-size:18px;letter-spacing:-.2px}
+    .qs-head b{font-weight:980;font-size:18px;letter-spacing:-.2px}
     .qs-head p{margin:0;color:var(--muted);font-size:13.6px;line-height:1.9}
 
     .chips{display:flex;flex-wrap:wrap;gap:8px}
@@ -299,7 +294,7 @@
       padding:9px 12px;border-radius:999px;
       border:1px solid rgba(15,23,42,.10);
       background:rgba(255,255,255,.92);
-      font-weight:700;font-size:13px;
+      font-weight:950;font-size:13px;
       box-shadow:0 10px 18px rgba(15,23,42,.05);
       user-select:none;cursor:pointer;
       display:inline-flex;align-items:center;gap:8px;
@@ -307,7 +302,6 @@
     }
     .chip:hover{transform:translateY(-1px);box-shadow:0 16px 30px rgba(15,23,42,.10)}
 
-    /* COURIER */
     .callout{
       display:flex;align-items:flex-start;justify-content:space-between;
       gap:12px;flex-wrap:wrap;
@@ -316,10 +310,9 @@
       background:rgba(255,255,255,.92);
       box-shadow:var(--shadow);
     }
-    .callout b{font-weight:900;font-size:15px;letter-spacing:-.15px}
+    .callout b{font-weight:980;font-size:15px;letter-spacing:-.15px}
     .callout span{display:block;color:var(--muted);font-size:13.6px;line-height:1.9;margin-top:6px}
 
-    /* CONTACT */
     .contact-strip{
       display:flex;align-items:center;justify-content:space-between;
       gap:12px;flex-wrap:wrap;
@@ -328,12 +321,9 @@
       background:rgba(255,255,255,.92);
       box-shadow:var(--shadow);
     }
-    .contact-strip b{font-weight:900}
+    .contact-strip b{font-weight:980}
     .contact-strip span{color:var(--muted);font-size:13.6px;line-height:1.9}
 
-    /* =========================
-       FOOTER (Ordered)
-       ========================= */
     footer{margin-top:22px}
 
     .footer-card{
@@ -365,7 +355,7 @@
     @media(max-width:980px){.footer-grid{grid-template-columns:1fr}}
 
     .f-title{
-      font-weight:900;
+      font-weight:980;
       letter-spacing:-.2px;
       margin:0;
       font-size:15px;
@@ -380,7 +370,7 @@
     }
     .f-links a{
       color:var(--text);
-      font-weight:700;
+      font-weight:900;
       font-size:13.6px;
       padding:8px 10px;
       border-radius:14px;
@@ -412,7 +402,7 @@
       box-shadow:0 10px 18px rgba(15,23,42,.05);
       padding:12px;
     }
-    .fk b{display:block;font-weight:900;font-size:13px}
+    .fk b{display:block;font-weight:980;font-size:13px}
     .fk span{display:block;color:var(--muted);font-size:12.8px;line-height:1.7;margin-top:6px}
 
     .enamad-wrap{
@@ -471,7 +461,6 @@
 <body>
   <div class="container">
 
-    <!-- HEADER -->
     <div class="topbar" id="topbar">
       <div class="topbar-inner">
         <a class="brand" href="./" aria-label="Mobix">
@@ -488,12 +477,10 @@
       </div>
     </div>
 
-    <!-- HERO -->
     <section class="hero" id="top">
       <div class="card">
         <h1 class="hero-title">تعمیر موبایل؛ سریع، شفاف، قابل پیگیری</h1>
 
-        <!-- 3 cards -->
         <div class="grid-3" aria-label="Control points">
           <div class="focus-card">
             <div class="focus-k">
@@ -520,7 +507,6 @@
           </div>
         </div>
 
-        <!-- mini progress -->
         <div class="mini-progress" aria-label="Order flow preview">
           <div class="mp-top">
             <b>فرآیند ثبت سفارش</b>
@@ -540,7 +526,6 @@
       </div>
     </section>
 
-    <!-- ORDER (was Quick Start) -->
     <section class="section" id="order-start">
       <div class="card">
         <div class="qs-wrap">
@@ -561,7 +546,6 @@
       </div>
     </section>
 
-    <!-- COURIER -->
     <section class="section" aria-label="Courier benefit">
       <div class="callout">
         <div style="min-width:0">
@@ -571,7 +555,6 @@
       </div>
     </section>
 
-    <!-- CONTACT (no chat button) -->
     <section class="section" id="contact" aria-label="Contact">
       <div class="contact-strip">
         <div style="display:flex;flex-direction:column;gap:4px;min-width:0">
@@ -584,12 +567,10 @@
       </div>
     </section>
 
-    <!-- FOOTER -->
     <footer aria-label="Footer">
       <div class="footer-card">
         <div class="footer-grid">
 
-          <!-- Brand + KPIs + Courier (stacked, as you wanted) -->
           <div>
             <div style="display:flex;align-items:center;gap:10px">
               <img src="assets/logo.png" alt="موبیکس" style="width:58px;height:auto">
@@ -617,7 +598,6 @@
             </div>
           </div>
 
-          <!-- Links -->
           <div>
             <div class="f-title">دسترسی سریع</div>
             <div class="f-links" aria-label="Footer links">
@@ -629,7 +609,6 @@
             </div>
           </div>
 
-          <!-- Trust -->
           <div>
             <div class="f-title">اعتماد و مجوزها</div>
             <div class="f-muted">اطلاعات و مجوزها برای اطمینان شما.</div>
