@@ -237,173 +237,101 @@
       </p>
     </div>
 
-    <!-- FOOTER -->
-<footer class="footer" aria-label="Footer">
-  <div class="footer-card">
-    <div class="footer-grid">
+  <!-- FOOTER -->
+    <footer aria-label="Footer">
+      <div class="footer-card">
+        <div class="footer-grid">
 
-      <!-- Brand -->
-      <div>
-        <div class="footer-brand">
-          <img src="../assets/logo.png" alt="موبیکس">
+          <!-- Brand + KPIs + Courier (stacked, as you wanted) -->
           <div>
-            <div class="f-title">موبیکس</div>
-            <div class="f-muted">سرویس تخصصی تعمیر موبایل</div>
+            <div style="display:flex;align-items:center;gap:10px">
+              <img src="assets/logo.png" alt="موبیکس" style="width:58px;height:auto">
+              <div>
+                <div class="f-title">موبیکس</div>
+                <div class="f-muted" style="margin-top:4px">سرویس تخصصی تعمیر موبایل</div>
+              </div>
+            </div>
+
+            <div class="f-stack" aria-label="Footer highlights">
+              <div class="fk">
+                <b>قیمت قبل از اقدام</b>
+                <span>قبل از هر تعمیر، هزینه با شما هماهنگ می‌شود.</span>
+              </div>
+
+              <div class="fk">
+                <b>پیگیری مرحله‌ای</b>
+                <span>وضعیت سفارش همیشه شفاف و قابل پیگیری است.</span>
+              </div>
+
+              <div class="fk">
+                <b>پیک موبیکس</b>
+                <span>زمان و مکان دریافت/تحویل را شما تعیین می‌کنید.</span>
+              </div>
+            </div>
           </div>
+
+          <!-- Links -->
+          <div>
+            <div class="f-title">دسترسی سریع</div>
+            <div class="f-links" aria-label="Footer links">
+              <a href="contact/">تماس با ما</a>
+              <a href="order/">ثبت سفارش</a>
+          
+              <!-- ✅ Added: legal pages (no style change) -->
+              <a href="terms/">قوانین و شرایط</a>
+              <a href="privacy/">حریم خصوصی</a>
+            </div>
+          </div>
+
+          <!-- Trust (Enamad only, direct link for Cloudflare/GitHub) -->
+          <div>
+            <div class="f-title">اعتماد و مجوزها</div>
+            <div class="f-muted">اطلاعات و مجوزها برای اطمینان شما.</div>
+
+            <div class="enamad-wrap" aria-label="اینماد">
+              <a href="https://trustseal.enamad.ir/?id=5414923" target="_blank" rel="noopener noreferrer" referrerpolicy="origin">
+                <img
+                  src="https://trustseal.enamad.ir/logo.aspx?id=5414923&Code=DiznrIm0BJGpnPrtdWijxsgtOlPs8Aqf"
+                  alt="اینماد موبیکس"
+                  referrerpolicy="origin"
+                  style="cursor:pointer"
+                  code="DiznrIm0BJGpnPrtdWijxsgtOlPs8Aqf"
+                >
+              </a>
+            </div>
+          </div>
+
         </div>
 
-        <div class="f-stack">
-          <div class="fk">
-            <b>قیمت قبل از اقدام</b>
-            <span>قبل از هر تعمیر، هزینه با شما هماهنگ می‌شود.</span>
-          </div>
-
-          <div class="fk">
-            <b>پیگیری مرحله‌ای</b>
-            <span>وضعیت سفارش همیشه شفاف و قابل پیگیری است.</span>
-          </div>
-
-          <div class="fk">
-            <b>پیک موبیکس</b>
-            <span>زمان و مکان دریافت و تحویل را شما تعیین می‌کنید.</span>
-          </div>
+        <div class="footer-bottom">
+          <span>© Mobix — همه حقوق محفوظ است</span>
+          <span>سریع • شفاف • قابل پیگیری</span>
         </div>
       </div>
+    </footer>
 
-      <!-- Links -->
-      <div>
-        <div class="f-title">دسترسی سریع</div>
-        <div class="f-links">
-          <a href="../order/">ثبت سفارش</a>
-          <a href="../contact/">تماس با ما</a>
-          <a href="../terms/">قوانین و شرایط</a>
-          <a href="../privacy/">حریم خصوصی</a>
-        </div>
-      </div>
-
-      <!-- Trust -->
-      <div>
-        <div class="f-title">اعتماد و مجوزها</div>
-        <div class="f-muted">برای اطمینان شما</div>
-
-        <div class="enamad-wrap">
-          <a referrerpolicy="origin" target="_blank"
-             href="https://trustseal.enamad.ir/?id=5414923&Code=DiznrIm0BJGpnPrtdWijxsgtOlPs8Aqf">
-            <img
-              src="https://trustseal.enamad.ir/logo.aspx?id=5414923&Code=DiznrIm0BJGpnPrtdWijxsgtOlPs8Aqf"
-              alt="اینماد موبیکس"
-              referrerpolicy="origin"
-              style="cursor:pointer"
-              code="DiznrIm0BJGpnPrtdWijxsgtOlPs8Aqf">
-          </a>
-        </div>
-      </div>
-
-    </div>
-
-    <div class="footer-bottom">
-      <span>© Mobix — تمامی حقوق محفوظ است</span>
-      <span>سریع • شفاف • قابل پیگیری</span>
-    </div>
   </div>
-</footer>
 
-<style>
-.footer{
-  margin-top:24px;
-}
-.footer-card{
-  max-width:1160px;
-  margin:0 auto;
-  padding:18px;
-  border-radius:22px;
-  background:#fff;
-  border:1px solid rgba(15,23,42,.08);
-  box-shadow:0 14px 36px rgba(15,23,42,.10);
-}
-.footer-grid{
-  display:grid;
-  grid-template-columns:2fr 1fr 1fr;
-  gap:18px;
-}
-@media(max-width:900px){
-  .footer-grid{grid-template-columns:1fr}
-}
+  <script>
+    (function(){
+      const topbar = document.getElementById("topbar");
+      if(!topbar) return;
 
-.footer-brand{
-  display:flex;
-  align-items:center;
-  gap:12px;
-}
-.footer-brand img{
-  width:58px;
-  height:auto;
-}
+      let ticking = false;
+      function onScroll(){
+        if(ticking) return;
+        ticking = true;
+        requestAnimationFrame(() => {
+          const y = window.scrollY || document.documentElement.scrollTop || 0;
+          if(y > 14) topbar.classList.add("scrolled");
+          else topbar.classList.remove("scrolled");
+          ticking = false;
+        });
+      }
 
-.f-title{
-  font-weight:900;
-  font-size:14px;
-}
-.f-muted{
-  color:#5B6B84;
-  font-size:13px;
-  margin-top:4px;
-}
-
-.f-stack{
-  margin-top:14px;
-  display:flex;
-  flex-direction:column;
-  gap:10px;
-}
-.fk b{
-  font-weight:900;
-  font-size:13.5px;
-}
-.fk span{
-  display:block;
-  color:#5B6B84;
-  font-size:13px;
-  line-height:1.8;
-}
-
-.f-links{
-  display:flex;
-  flex-direction:column;
-  gap:8px;
-  margin-top:10px;
-}
-.f-links a{
-  font-weight:900;
-  font-size:13.5px;
-  color:#0B1220;
-  text-decoration:none;
-}
-.f-links a:hover{
-  color:#1F6AFF;
-}
-
-.enamad-wrap{
-  margin-top:10px;
-}
-.enamad-wrap img{
-  width:110px;
-  height:auto;
-}
-
-.footer-bottom{
-  margin-top:16px;
-  padding-top:12px;
-  border-top:1px solid rgba(15,23,42,.08);
-  display:flex;
-  justify-content:space-between;
-  gap:10px;
-  flex-wrap:wrap;
-  color:#5B6B84;
-  font-size:12.8px;
-  font-weight:800;
-}
-@media(max-width:520px){
-  .footer-bottom{justify-content:center;text-align:center}
-}
-</style>
+      onScroll();
+      window.addEventListener("scroll", onScroll, { passive: true });
+    })();
+  </script>
+</body>
+</html>
