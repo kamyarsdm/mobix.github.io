@@ -157,6 +157,63 @@
       box-shadow:var(--shadow);
     }
 
+    /* ✅ پیام نتیجه پرداخت (بنر) */
+    .pay-banner{
+      margin:10px 0 12px;
+      border-radius:18px;
+      border:1px solid var(--line);
+      background:rgba(255,255,255,.92);
+      box-shadow:var(--shadow2);
+      padding:12px;
+      display:none;
+      align-items:flex-start;
+      justify-content:space-between;
+      gap:10px;
+    }
+    .pay-banner .txt{
+      display:flex;
+      flex-direction:column;
+      gap:4px;
+      min-width:0;
+    }
+    .pay-banner .txt b{
+      font-weight:900;
+      font-size:13.8px;
+      line-height:1.8;
+    }
+    .pay-banner .txt span{
+      color:var(--muted);
+      font-size:12.8px;
+      line-height:1.85;
+      white-space:pre-line;
+      word-break:break-word;
+    }
+    .pay-banner.ok{
+      border-color:rgba(16,185,129,.22);
+      background:rgba(16,185,129,.06);
+    }
+    .pay-banner.ok .txt b{color:#0B3A2C}
+    .pay-banner.err{
+      border-color:rgba(239,68,68,.22);
+      background:rgba(239,68,68,.06);
+    }
+    .pay-banner.err .txt b{color:#7F1D1D}
+    .pay-banner.warn{
+      border-color:rgba(245,158,11,.28);
+      background:rgba(245,158,11,.08);
+    }
+    .pay-banner.warn .txt b{color:#78350F}
+    .pay-banner .close{
+      flex:0 0 auto;
+      border:1px solid var(--line);
+      background:#fff;
+      border-radius:12px;
+      padding:8px 10px;
+      font-weight:900;
+      cursor:pointer;
+      box-shadow:var(--shadow2);
+    }
+
     .hero{
       margin-top:14px;
       display:grid;
@@ -882,6 +939,7 @@
       .footer-card{padding:14px}
       .enamad img{width:92px}
       .bitpay img{width:92px}
+      .pay-banner{border-radius:18px}
     }
   </style>
 </head>
@@ -904,6 +962,15 @@
           <button class="btn danger" type="button" id="navLogoutBtn" style="display:none">خروج</button>
         </div>
       </div>
+    </div>
+
+    <!-- ✅ بنر نتیجه پرداخت در همین صفحه /order/ -->
+    <div id="payResultBanner" class="pay-banner" role="status" aria-live="polite">
+      <div class="txt">
+        <b id="payResultTitle">—</b>
+        <span id="payResultDesc">—</span>
+      </div>
+      <button type="button" class="close" id="payResultClose">بستن</button>
     </div>
 
     <section class="hero">
@@ -1282,6 +1349,11 @@
       const sessionBadge = document.getElementById("sessionBadge");
       const guideCard = document.getElementById("guideCard");
 
+      const payResultBanner = document.getElementById("payResultBanner");
+      const payResultTitle = document.getElementById("payResultTitle");
+      const payResultDesc  = document.getElementById("payResultDesc");
+      const payResultClose = document.getElementById("payResultClose");
+
       const authCard = document.getElementById("authCard");
       const authPhone = document.getElementById("authPhone");
       const authCode = document.getElementById("authCode");
@@ -1380,6 +1452,122 @@
       function hasProfileName(){
         const n = (profileState && profileState.full_name) ? String(profileState.full_name).trim() : "";
         return n.length >= 2;
+      }
+
+      /* ✅ نمایش پیام نتیجه پرداخت در /order/ */
+      function qp(name){
+        try{
+          return new URLSearchParams(window.location.search).get(name);
+        }catch(_e){
+          return null;
+        }
+      }
+      function truthy(v){
+        const x = (v ?? "").toString().trim().toLowerCase();
+        return ["1","true","yes","ok","success","succeeded","paid","done"].includes(x);
+      }
+      function falsy(v){
+        const x = (v ?? "").toString().trim().toLowerCase();
+        return ["0","false","no","fail","failed","error","cancel","canceled","cancelled"].includes(x);
+      }
+      function showPayBanner(type, title, desc){
+        if(!payResultBanner) return;
+        payResultBanner.classList.remove("ok","err","warn");
+        if(type) payResultBanner.classList.add(type);
+        payResultTitle.textContent = title || "—";
+        payResultDesc.textContent  = desc  || "";
+        payResultBanner.style.display = "flex";
+        try{ window.scrollTo({ top: 0, behavior: "smooth" }); }catch(_e){ window.scrollTo(0,0); }
+      }
+      function hidePayBanner(){
+        if(!payResultBanner) return;
+        payResultBanner.style.display = "none";
+      }
+      function clearPayParams(){
+        try{
+          const u = new URL(window.location.href);
+          const keys = [
+            "payment","paid","pay","success","status","payment_status","result",
+            "order_no","order","invoice","invoice_id","ref","ref_id","authority","token","message","msg","error","err"
+          ];
+          keys.forEach(k => u.searchParams.delete(k));
+          window.history.replaceState({}, document.title, u.pathname + (u.searchParams.toString() ? ("?" + u.searchParams.toString()) : "") + u.hash);
+        }catch(_e){}
+      }
+      function handlePayReturnBanner(){
+        const orderNo = (qp("order_no") || qp("order") || "").trim();
+        const status  = (qp("payment_status") || qp("status") || qp("result") || "").trim();
+        const msg     = (qp("message") || qp("msg") || qp("error") || qp("err") || "").trim();
+        const paid1   = qp("paid");
+        const pay1    = qp("pay");
+        const success = qp("success");
+        const payment = qp("payment");
+
+        const hasAny =
+          !!orderNo ||
+          !!status ||
+          !!msg ||
+          paid1 != null ||
+          pay1 != null ||
+          success != null ||
+          payment != null;
+
+        if(!hasAny) return;
+
+        let type = "warn";
+        let title = "نتیجه پرداخت";
+        let desc = "";
+
+        const normalized = status.toString().trim().toLowerCase();
+        const isOk =
+          truthy(status) || truthy(paid1) || truthy(pay1) || truthy(success) || truthy(payment) ||
+          ["success","succeeded","paid","done","ok"].includes(normalized);
+
+        const isBad =
+          falsy(status) || falsy(paid1) || falsy(pay1) || falsy(success) || falsy(payment) ||
+          ["failed","fail","error","canceled","cancelled","cancel"].includes(normalized);
+
+        if(isOk){
+          type = "ok";
+          title = "پرداخت موفق ✅";
+          desc = "پرداخت شما با موفقیت انجام شد.";
+          if(orderNo) desc += "\nشماره سفارش: " + orderNo;
+          if(msg) desc += "\n" + msg;
+        }else if(isBad){
+          type = "err";
+          title = "پرداخت ناموفق ❌";
+          desc = "پرداخت انجام نشد یا لغو شد.";
+          if(orderNo) desc += "\nشماره سفارش: " + orderNo;
+          if(msg) desc += "\n" + msg;
+        }else{
+          type = "warn";
+          title = "وضعیت پرداخت در حال بررسی";
+          desc = "اگر پرداخت انجام شده باشد، تا چند لحظه دیگر در سفارش‌های شما نمایش داده می‌شود.";
+          if(orderNo) desc += "\nشماره سفارش: " + orderNo;
+          if(msg) desc += "\n" + msg;
+        }
+
+        showPayBanner(type, title, desc);
+
+        try{
+          if(payResultClose) payResultClose.addEventListener("click", () => {
+            hidePayBanner();
+            clearPayParams();
+          }, { once: true });
+        }catch(_e){}
+
+        // بعد از چند ثانیه، اتوماتیک جمع شود و URL هم تمیز شود
+        setTimeout(() => {
+          hidePayBanner();
+          clearPayParams();
+        }, 9000);
+
+        // تلاش برای تازه‌سازی لیست سفارش‌ها (اگر کاربر وارد باشد)
+        setTimeout(() => {
+          try{
+            if(loggedIn()) loadOrders();
+          }catch(_e){}
+        }, 900);
       }
 
       function faDayLabel(day){
@@ -1810,12 +1998,10 @@
         const hasPrice = Number(o?.quoted_price_toman || 0) > 0;
         const payState = paymentStateFromOrder(o);
 
-        // پرداخت را بعد از تایید قیمت نشان بده (ترجیحاً در مرحله اعلام قیمت)
         if(!hasPrice) return false;
         if(appr !== "approved") return false;
         if(payState === "paid") return false;
 
-        // اگر هنوز تو مرحله quoted هست بهترین حالت است، ولی اگر اپراتور مرحله را تغییر داد هم اجازه بده
         if(stageNorm === "quoted" || stageNorm === "repairing" || stageNorm === "picked_up" || stageNorm === "requested"){
           return true;
         }
@@ -2053,6 +2239,9 @@
           startPolling();
 
           await loadOrders();
+
+          // ✅ بعد از ورود هم اگر پارامتر پرداخت داشتیم، سفارش‌ها را تازه کنیم
+          try{ handlePayReturnBanner(); }catch(_e){}
         }catch(err){
           setMsg(authMsg, "err", "ورود ناموفق بود: " + (err?.message || "خطای نامشخص"));
         }finally{
@@ -3109,6 +3298,11 @@
         if(!ok) return;
         await updatePriceApproval(modalOrder, "reject");
       });
+
+      // ✅ نمایش پیام پرداخت (اگر با query برگشته باشیم)
+      try{
+        handlePayReturnBanner();
+      }catch(_e){}
 
     })();
   </script>
