@@ -1918,7 +1918,7 @@
 
           authCode.focus();
         }catch(err){
-          setMsg(authMsg, "err", "ارسال کد ناموفق بود: " + (err?.message || "خطای نامشخص");
+          setMsg(authMsg, "err", "ارسال کد ناموفق بود: " + (err?.message || "خطای نامشخص"));
           otpWrap.style.display = "none";
           stopTimer();
         }finally{
@@ -2700,7 +2700,7 @@
           }
           if(msgEl){
             msgEl.style.color = "var(--danger)";
-            msgEl.textContent = "خطا: " + (e?.message || "خطای نامشخص"));
+            msgEl.textContent = "خطا: " + (e?.message || "خطای نامشخص");
           }
         }
       }
