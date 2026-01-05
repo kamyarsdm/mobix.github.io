@@ -547,6 +547,106 @@
       .chat-input-row{grid-template-columns:1fr}
     }
 
+    .review-box{
+      margin-top:10px;
+      border:1px solid rgba(16,185,129,.22);
+      background:rgba(16,185,129,.06);
+      border-radius:18px;
+      padding:12px;
+      box-shadow:var(--shadow2);
+    }
+    .review-top{
+      display:flex;
+      align-items:center;
+      justify-content:space-between;
+      gap:10px;
+      flex-wrap:wrap;
+      margin-bottom:8px;
+    }
+    .review-top b{
+      font-weight:900;
+      font-size:13.6px;
+      color:#0B3A2C;
+    }
+    .stars{
+      display:flex;
+      gap:6px;
+      align-items:center;
+      justify-content:flex-start;
+      flex-wrap:wrap;
+    }
+    .star-btn{
+      width:36px;
+      height:36px;
+      border-radius:14px;
+      border:1px solid var(--line);
+      background:rgba(255,255,255,.9);
+      box-shadow:0 10px 18px rgba(15,23,42,.04);
+      cursor:pointer;
+      font-weight:900;
+      font-size:18px;
+      line-height:1;
+      display:flex;
+      align-items:center;
+      justify-content:center;
+      color:rgba(11,18,32,.45);
+      user-select:none;
+    }
+    .star-btn.on{
+      color:var(--primary);
+      border-color:rgba(31,106,255,.25);
+      background:rgba(31,106,255,.06);
+    }
+    .review-options{
+      display:grid;
+      grid-template-columns: 1fr 1fr;
+      gap:8px;
+      margin-top:10px;
+    }
+    @media(max-width:520px){
+      .review-options{grid-template-columns:1fr}
+    }
+    .review-options .checkrow{
+      margin-top:0;
+      background:rgba(255,255,255,.78);
+    }
+    .review-actions{
+      display:flex;
+      gap:10px;
+      flex-wrap:wrap;
+      margin-top:10px;
+      align-items:center;
+    }
+    .review-msg{
+      margin-top:8px;
+      font-size:12.8px;
+      font-weight:700;
+      color:var(--muted);
+      white-space:pre-line;
+    }
+    .review-done{
+      margin-top:10px;
+      padding:10px 12px;
+      border-radius:16px;
+      border:1px solid rgba(16,185,129,.22);
+      background:rgba(16,185,129,.06);
+      color:#0B3A2C;
+      font-weight:900;
+      line-height:1.9;
+      box-shadow:var(--shadow2);
+    }
+    .review-stars-static{
+      display:inline-flex;
+      gap:4px;
+      align-items:center;
+      font-size:15px;
+      color:var(--primary);
+      margin-right:6px;
+    }
+    .review-stars-static span.off{
+      color:rgba(11,18,32,.28);
+    }
+
     .modal-backdrop{
       position:fixed;
       inset:0;
@@ -1169,6 +1269,7 @@
       const lastKnownOrders = new Map();
       const lastKnownUpdates = new Map();
       const lastKnownChats = new Map();
+      const lastKnownReviews = new Map();
 
       function setStatus(el, type, text){
         el.classList.remove("ok","err","warn");
@@ -1313,7 +1414,17 @@
       ];
 
       function normalizeStatus(raw){
-        const s = (raw || "").toString().trim().toLowerCase();
+        const s0 = (raw || "").toString().trim();
+        const s = s0.toLowerCase();
+
+        if(s0.includes("تحویل")) return "delivered";
+        if(s0.includes("در مسیر تحویل")) return "delivering";
+        if(s0.includes("در حال تعمیر")) return "repairing";
+        if(s0.includes("اعلام قیمت") || s0.includes("اعلام/تأیید") || s0.includes("اعلام/تایید")) return "quoted";
+        if(s0.includes("دریافت") || s0.includes("پیک")) return "picked_up";
+        if(s0.includes("ثبت")) return "requested";
+        if(s0.includes("لغو")) return "canceled";
+        if(s0.includes("رد")) return "rejected";
 
         if(["price_quoted","pricequoted","price-quoted"].includes(s)) return "quoted";
         if(["quoted","quote","price","awaiting_approval","approved_pending"].includes(s)) return "quoted";
@@ -1899,6 +2010,15 @@
         }
       }
 
+      function starsStaticHtml(rating){
+        const r = Math.max(0, Math.min(5, Number(rating || 0)));
+        return `
+          <span class="review-stars-static" aria-label="امتیاز">
+            ${[1,2,3,4,5].map(i => i <= r ? `<span>★</span>` : `<span class="off">★</span>`).join("")}
+          </span>
+        `;
+      }
+
       async function loadOrders(){
         if(!loggedIn()){
           ordersCount.textContent = "0";
@@ -1931,6 +2051,29 @@
             lastKnownOrders.set(Number(o.id), o);
           }
         });
+
+        const orderIds = list
+          .map(o => Number(o?.id))
+          .filter(x => Number.isFinite(x));
+
+        try{
+          lastKnownReviews.clear();
+          if(orderIds.length > 0){
+            const { data: revData, error: revErr } = await supabase
+              .from("order_reviews")
+              .select("order_id, rating, comment, courier_behavior, repair_quality, service_speed, price_transparency, created_at")
+              .in("order_id", orderIds);
+
+            if(!revErr){
+              (revData || []).forEach(r => {
+                const oid = Number(r?.order_id);
+                if(Number.isFinite(oid) && !lastKnownReviews.has(oid)){
+                  lastKnownReviews.set(oid, r);
+                }
+              });
+            }
+          }
+        }catch(_e){}
 
         if(list.length === 0){
           ordersWrap.innerHTML = '<div class="muted">هنوز سفارشی ثبت نکرده‌اید.</div>';
@@ -2055,6 +2198,87 @@
             </div>
           ` : "";
 
+          const orderIdNum = Number(o.id);
+          const hasReview = Number.isFinite(orderIdNum) && lastKnownReviews.has(orderIdNum);
+          const reviewObj = hasReview ? lastKnownReviews.get(orderIdNum) : null;
+
+          const reviewHtml = (stNorm === "delivered")
+            ? (hasReview
+              ? `
+                <div class="review-done">
+                  ${starsStaticHtml(reviewObj?.rating)}
+                  نظر شما ثبت شد ✅
+                </div>
+              `
+              : `
+                <div class="review-box" data-review-box="1" data-order-id="${esc(String(o.id ?? ""))}">
+                  <div class="review-top">
+                    <b>امتیازدهی و ثبت نظر</b>
+                    <span class="status ok">سفارش تحویل شد</span>
+                  </div>
+
+                  <div class="muted" style="margin-top:2px">لطفاً تجربه خود را ثبت کنید.</div>
+
+                  <div class="divider"></div>
+
+                  <div class="label" style="margin-top:0">امتیاز</div>
+                  <div class="stars" data-stars="1" data-order-id="${esc(String(o.id ?? ""))}">
+                    ${[1,2,3,4,5].map(i => `
+                      <button class="star-btn" type="button" data-act="set-star" data-order-id="${esc(String(o.id ?? ""))}" data-star="${i}">★</button>
+                    `).join("")}
+                  </div>
+                  <input type="hidden" data-review-rating="1" data-order-id="${esc(String(o.id ?? ""))}" value="0" />
+
+                  <div class="review-options" aria-label="گزینه‌های نظر">
+                    <label class="checkrow">
+                      <input type="checkbox" data-review-flag="courier_behavior" data-order-id="${esc(String(o.id ?? ""))}" />
+                      <div>
+                        <b>رفتار پیک</b>
+                        <span>برخورد و هماهنگی مناسب</span>
+                      </div>
+                    </label>
+
+                    <label class="checkrow">
+                      <input type="checkbox" data-review-flag="repair_quality" data-order-id="${esc(String(o.id ?? ""))}" />
+                      <div>
+                        <b>کیفیت تعمیر</b>
+                        <span>نتیجه تعمیر رضایت‌بخش</span>
+                      </div>
+                    </label>
+
+                    <label class="checkrow">
+                      <input type="checkbox" data-review-flag="service_speed" data-order-id="${esc(String(o.id ?? ""))}" />
+                      <div>
+                        <b>سرعت انجام</b>
+                        <span>زمان‌بندی مناسب</span>
+                      </div>
+                    </label>
+
+                    <label class="checkrow">
+                      <input type="checkbox" data-review-flag="price_transparency" data-order-id="${esc(String(o.id ?? ""))}" />
+                      <div>
+                        <b>شفافیت قیمت</b>
+                        <span>هزینه واضح و قابل درک</span>
+                      </div>
+                    </label>
+                  </div>
+
+                  <div class="field">
+                    <div class="label">نظر شما (اختیاری)</div>
+                    <textarea class="textarea" data-review-comment="1" data-order-id="${esc(String(o.id ?? ""))}" placeholder="اگر نکته‌ای هست بنویسید…"></textarea>
+                  </div>
+
+                  <div class="review-actions">
+                    <button class="btn primary" type="button" data-act="submit-review" data-order-id="${esc(String(o.id ?? ""))}">ثبت نظر</button>
+                    <span class="status" data-review-pill="1" data-order-id="${esc(String(o.id ?? ""))}">آماده ثبت</span>
+                  </div>
+
+                  <div class="review-msg" data-review-msg="1" data-order-id="${esc(String(o.id ?? ""))}"></div>
+                </div>
+              `
+            )
+            : "";
+
           const chatRows = lastKnownChats.get(on) || [];
           const chatHtml = `
             <details class="chat-details">
@@ -2130,6 +2354,8 @@
 
               ${renderTrack(stNorm)}
 
+              ${reviewHtml}
+
               ${chatHtml}
             </div>
           `;
@@ -2144,12 +2370,137 @@
         bindOrdersDelegationOnce();
       }
 
+      function setStarUI(orderId, rating){
+        const oid = String(orderId || "");
+        const r = Math.max(0, Math.min(5, Number(rating || 0)));
+
+        const hidden = ordersWrap.querySelector(`input[data-review-rating="1"][data-order-id="${CSS.escape(oid)}"]`);
+        if(hidden) hidden.value = String(r);
+
+        const stars = ordersWrap.querySelectorAll(`button[data-act="set-star"][data-order-id="${CSS.escape(oid)}"]`);
+        stars.forEach(btn => {
+          const v = Number(btn.getAttribute("data-star") || "0");
+          if(v <= r) btn.classList.add("on");
+          else btn.classList.remove("on");
+        });
+
+        const pill = ordersWrap.querySelector(`span[data-review-pill="1"][data-order-id="${CSS.escape(oid)}"]`);
+        if(pill){
+          if(r >= 1){
+            pill.className = "status ok";
+            pill.textContent = "امتیاز انتخاب شد";
+          }else{
+            pill.className = "status";
+            pill.textContent = "آماده ثبت";
+          }
+        }
+      }
+
+      async function submitReview(orderId){
+        const oidNum = Number(orderId);
+        if(!Number.isFinite(oidNum)) return;
+
+        const oid = String(orderId);
+
+        const msgEl = ordersWrap.querySelector(`div[data-review-msg="1"][data-order-id="${CSS.escape(oid)}"]`);
+        const pill = ordersWrap.querySelector(`span[data-review-pill="1"][data-order-id="${CSS.escape(oid)}"]`);
+        const hidden = ordersWrap.querySelector(`input[data-review-rating="1"][data-order-id="${CSS.escape(oid)}"]`);
+        const commentEl = ordersWrap.querySelector(`textarea[data-review-comment="1"][data-order-id="${CSS.escape(oid)}"]`);
+
+        const rating = Math.max(0, Math.min(5, Number(hidden ? hidden.value : 0)));
+        const comment = (commentEl ? commentEl.value : "").trim();
+
+        const courier_behavior = !!ordersWrap.querySelector(`input[data-review-flag="courier_behavior"][data-order-id="${CSS.escape(oid)}"]`)?.checked;
+        const repair_quality = !!ordersWrap.querySelector(`input[data-review-flag="repair_quality"][data-order-id="${CSS.escape(oid)}"]`)?.checked;
+        const service_speed = !!ordersWrap.querySelector(`input[data-review-flag="service_speed"][data-order-id="${CSS.escape(oid)}"]`)?.checked;
+        const price_transparency = !!ordersWrap.querySelector(`input[data-review-flag="price_transparency"][data-order-id="${CSS.escape(oid)}"]`)?.checked;
+
+        if(msgEl){
+          msgEl.textContent = "";
+          msgEl.style.color = "var(--muted)";
+        }
+
+        if(rating < 1){
+          if(pill){
+            pill.className = "status warn";
+            pill.textContent = "امتیاز را انتخاب کنید";
+          }
+          if(msgEl){
+            msgEl.style.color = "var(--danger)";
+            msgEl.textContent = "برای ثبت نظر، ابتدا امتیاز را انتخاب کنید.";
+          }
+          return;
+        }
+
+        if(pill){
+          pill.className = "status warn";
+          pill.textContent = "در حال ثبت…";
+        }
+
+        try{
+          const payload = {
+            order_id: oidNum,
+            rating: rating,
+            comment: comment || null,
+            courier_behavior: courier_behavior,
+            repair_quality: repair_quality,
+            service_speed: service_speed,
+            price_transparency: price_transparency
+          };
+
+          const { error } = await supabase
+            .from("order_reviews")
+            .insert(payload);
+
+          if(error){
+            if(pill){
+              pill.className = "status err";
+              pill.textContent = "ناموفق";
+            }
+            if(msgEl){
+              msgEl.style.color = "var(--danger)";
+              msgEl.textContent = "ثبت نظر ناموفق بود: " + (error.message || "خطای نامشخص");
+            }
+            return;
+          }
+
+          if(pill){
+            pill.className = "status ok";
+            pill.textContent = "ثبت شد ✅";
+          }
+          if(msgEl){
+            msgEl.style.color = "var(--success)";
+            msgEl.textContent = "نظر شما ثبت شد ✅";
+          }
+
+          setTimeout(() => loadOrders(), 600);
+        }catch(e){
+          if(pill){
+            pill.className = "status err";
+            pill.textContent = "ناموفق";
+          }
+          if(msgEl){
+            msgEl.style.color = "var(--danger)";
+            msgEl.textContent = "خطا: " + (e?.message || "خطای نامشخص");
+          }
+        }
+      }
+
       function bindOrdersDelegationOnce(){
         if(ordersWrap.__mobixDelegationAttached) return;
 
         ordersWrap.addEventListener("click", async (e) => {
           const target = e.target;
           if(!target) return;
+
+          const btnStar = target.closest("button[data-act='set-star']");
+          if(btnStar){
+            const oid = btnStar.getAttribute("data-order-id");
+            const v = Number(btnStar.getAttribute("data-star") || "0");
+            if(!oid) return;
+            setStarUI(oid, v);
+            return;
+          }
 
           const btn = target.closest("button[data-act]");
           if(!btn) return;
@@ -2237,6 +2588,15 @@
               }
             }
 
+            btn.disabled = false;
+            return;
+          }
+
+          if(act === "submit-review"){
+            const oid = btn.getAttribute("data-order-id");
+            if(!oid) return;
+            btn.disabled = true;
+            await submitReview(oid);
             btn.disabled = false;
             return;
           }
