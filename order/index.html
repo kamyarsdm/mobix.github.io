@@ -323,6 +323,7 @@
       user-select:none;
     }
 
+    /* NEW: pickup time selector chips */
     .pick-wrap{
       margin-top:8px;
       border:1px solid var(--line);
@@ -1039,6 +1040,7 @@
             <textarea id="address" class="textarea" placeholder="آدرس دقیق + پلاک + واحد"></textarea>
           </div>
 
+          <!-- UPDATED: pickup time selector -->
           <div class="field">
             <div class="label">زمان پیشنهادی برای دریافت</div>
 
@@ -1065,10 +1067,12 @@
                 <input id="pickupTimeOther" class="input" placeholder="مثلاً پس‌فردا ساعت ۱۱" />
               </div>
 
+              <!-- hidden actual value persisted & sent to DB -->
               <input id="pickupTime" class="input" style="display:none" />
               <div class="hint" id="pickupTimePreview" style="margin-top:0"></div>
             </div>
           </div>
+          <!-- END UPDATED: pickup time selector -->
 
           <div class="formrow">
             <button id="createOrderBtn" class="btn primary" type="button">ثبت سفارش</button>
@@ -1179,7 +1183,7 @@
         </div>
         <div class="divider"></div>
         <div class="muted" id="priceModalHint">
-          • با تایید نهایی، می‌توانید وارد پرداخت آنلاین شوید.<br>
+          • با تایید نهایی، سفارش وارد مرحله پرداخت می‌شود (درگاه پرداخت: به زودی).<br>
           • اگر قیمت را نمی‌پذیرید، «رد قیمت» را بزنید.
         </div>
 
@@ -1202,7 +1206,7 @@
     </div>
   </div>
 
-  <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+  <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2.49.1/dist/umd/supabase.min.js"></script>
 
   <script>
     (function(){
@@ -1211,9 +1215,6 @@
 
       const OTP_REQUEST_URL = "https://vrxfhfknmxmeatnfzpcg.supabase.co/functions/v1/request-otp";
       const OTP_VERIFY_URL  = "https://vrxfhfknmxmeatnfzpcg.supabase.co/functions/v1/verify-otp";
-
-      const BITPAY_SEND_URL = "https://vrxfhfknmxmeatnfzpcg.supabase.co/functions/v1/bitpay-send";
-      const BITPAY_RETURN_URL = "https://mobixfix.ir/order/pay-result";
 
       const supabase = window.supabase.createClient(SUPABASE_URL, SUPABASE_ANON_KEY);
 
@@ -1273,6 +1274,7 @@
       }
 
       const sessionBadge = document.getElementById("sessionBadge");
+
       const guideCard = document.getElementById("guideCard");
 
       const authCard = document.getElementById("authCard");
@@ -1300,7 +1302,7 @@
       const replacementPhone = document.getElementById("replacementPhone");
       const problemDesc = document.getElementById("problemDesc");
       const address = document.getElementById("address");
-      const pickupTime = document.getElementById("pickupTime");
+      const pickupTime = document.getElementById("pickupTime"); // hidden actual value
       const pickupTimePreview = document.getElementById("pickupTimePreview");
       const pickSlotsWrap = document.getElementById("pickSlotsWrap");
       const pickOtherWrap = document.getElementById("pickOtherWrap");
@@ -1346,8 +1348,9 @@
       const lastKnownChats = new Map();
       const lastKnownReviews = new Map();
 
-      let pickupDay = null;
-      let pickupSlot = null;
+      // NEW: pickup time state
+      let pickupDay = null;   // "today" | "tomorrow" | "other" | null
+      let pickupSlot = null;  // "9-12" | "12-15" | "15-18" | "18-21" | null
 
       function setStatus(el, type, text){
         el.classList.remove("ok","err","warn");
@@ -1375,6 +1378,7 @@
         return n.length >= 2;
       }
 
+      // NEW: pickup time helpers
       function faDayLabel(day){
         if(day === "today") return "امروز";
         if(day === "tomorrow") return "فردا";
@@ -1429,7 +1433,7 @@
           if(dayFa && slotFa){
             out = dayFa + " - " + slotFa;
           }else if(dayFa){
-            out = "";
+            out = ""; // تا زمانی که بازه انتخاب نشده، چیزی ذخیره نکنیم
           }
         }
 
@@ -1487,10 +1491,14 @@
             if(d.issue != null) problemDesc.value = d.issue;
             if(d.pickup_address != null) address.value = d.pickup_address;
 
+            // UPDATED: parse stored pickup_time_text back into UI
             if(d.pickup_time_text != null){
               const txt = String(d.pickup_time_text || "").trim();
               if(pickupTime) pickupTime.value = txt;
 
+              // patterns:
+              // "امروز - ۱۸ تا ۲۱" / "فردا - ۹ تا ۱۲"
+              // "زمان دیگر: ..."
               if(txt.startsWith("زمان دیگر:")){
                 setDay("other");
                 const rest = txt.replace(/^زمان دیگر:\s*/,"");
@@ -1511,6 +1519,7 @@
                 else if(txt.includes("۱۸") && txt.includes("۲۱")) setSlot("18-21");
                 else syncPickupTimeText();
               }else{
+                // اگر چیزی خارج از استاندارد قبلاً ذخیره شده باشد
                 resetPickupUI();
                 if(txt){
                   setDay("other");
@@ -1610,9 +1619,7 @@
         delivering: "در مسیر تحویل",
         delivered: "تحویل شده",
         rejected: "رد شده",
-        canceled: "لغو شده",
-        paid: "پرداخت شده",
-        payment_pending: "در انتظار پرداخت"
+        canceled: "لغو شده"
       };
 
       const TRACK_STEPS = [
@@ -1713,105 +1720,11 @@
         return "pill warn";
       }
 
-      function paymentStateFromOrder(o){
-        const ps = (o && o.payment_status != null) ? String(o.payment_status).trim().toLowerCase() : "";
-        if(["paid","success","done","completed"].includes(ps)) return "paid";
-        if(["unpaid","pending","payment_pending","waiting","created"].includes(ps)) return "unpaid";
-        return ps || "unpaid";
-      }
-
-      function paymentLabelFa(state){
-        const s = (state || "").toLowerCase();
-        if(s === "paid") return "پرداخت شده ✅";
-        return "پرداخت نشده";
-      }
-
-      function paymentPillClass(state){
-        const s = (state || "").toLowerCase();
-        if(s === "paid") return "status ok";
-        return "status warn";
-      }
-
       function shouldShowPriceActions(o){
         const stageNorm = normalizeStatus(o?.stage ?? o?.status ?? "");
         const appr = approvalStateFromOrder(o);
         const hasPrice = Number(o?.quoted_price_toman || 0) > 0;
         return hasPrice && stageNorm === "quoted" && appr === "pending";
-      }
-
-      function shouldShowPayButton(o){
-        const appr = approvalStateFromOrder(o);
-        const hasPrice = Number(o?.quoted_price_toman || 0) > 0;
-        const payState = paymentStateFromOrder(o);
-        return hasPrice && appr === "approved" && payState !== "paid";
-      }
-
-      async function startPayment(order){
-        if(!order) return;
-        const orderId = order.id;
-        const orderNo = order.order_no;
-        const amount = Number(order.quoted_price_toman || 0);
-
-        if(!Number.isFinite(amount) || amount <= 0){
-          alert("مبلغ معتبر نیست.");
-          return;
-        }
-
-        const btn = ordersWrap.querySelector(`button[data-act="pay-online"][data-order-id="${CSS.escape(String(orderId))}"]`);
-        const msgEl = ordersWrap.querySelector(`div[data-pay-msg="1"][data-order-id="${CSS.escape(String(orderId))}"]`);
-
-        if(btn) btn.disabled = true;
-        if(msgEl){
-          msgEl.textContent = "در حال اتصال به درگاه…";
-          msgEl.style.color = "var(--warn)";
-        }
-
-        try{
-          const res = await fetch(BITPAY_SEND_URL, {
-            method: "POST",
-            headers: {
-              "Content-Type": "application/json",
-              "apikey": SUPABASE_ANON_KEY,
-              "Authorization": "Bearer " + SUPABASE_ANON_KEY
-            },
-            body: JSON.stringify({
-              order_id: orderId,
-              order_no: orderNo,
-              amount: amount,
-              customer_phone: loginState?.phone09 || null,
-              customer_name: profileState?.full_name || null,
-              redirect: BITPAY_RETURN_URL
-            })
-          });
-
-          const json = await safeJson(res);
-          if(!res.ok){
-            const msg = extractErrorMessage(json) || ("HTTP " + res.status);
-            throw new Error(msg);
-          }
-
-          const redirectUrl =
-            (json && (json.redirect_url || json.url || json.payment_url)) ? (json.redirect_url || json.url || json.payment_url) : null;
-
-          if(!redirectUrl){
-            throw new Error("آدرس انتقال به درگاه دریافت نشد.");
-          }
-
-          if(msgEl){
-            msgEl.textContent = "در حال انتقال به درگاه…";
-            msgEl.style.color = "var(--success)";
-          }
-
-          window.location.href = redirectUrl;
-        }catch(e){
-          if(msgEl){
-            msgEl.textContent = "شروع پرداخت ناموفق بود: " + (e?.message || "خطای نامشخص");
-            msgEl.style.color = "var(--danger)";
-          }else{
-            alert("شروع پرداخت ناموفق بود: " + (e?.message || "خطای نامشخص"));
-          }
-          if(btn) btn.disabled = false;
-        }
       }
 
       function openPriceModal(order){
@@ -2143,6 +2056,7 @@
           return;
         }
 
+        // UPDATED: pickup time optional; no longer required
         if(!dm || !issue || !addr){
           setMsg(orderMsg, "err", "مدل گوشی، مشکل و آدرس را کامل وارد کنید.");
           return;
@@ -2230,7 +2144,7 @@
               return;
             }
 
-            setMsg(priceModalMsg, "ok", "قیمت تایید شد ✅");
+            setMsg(priceModalMsg, "ok", "قیمت تایید شد ✅ (درگاه پرداخت: به زودی)");
             setTimeout(() => {
               closePriceModal();
               loadOrders();
@@ -2464,7 +2378,6 @@
           const needsLoaner = !!(o.needs_loaner_phone);
 
           const showActions = shouldShowPriceActions(o);
-          const showPay = shouldShowPayButton(o);
 
           const actionsHtml = showActions ? `
             <div class="price-actions">
@@ -2481,22 +2394,6 @@
               <span class="status warn">تایید دو مرحله‌ای است</span>
             </div>
           ` : "";
-
-          const payHtml = showPay ? `
-            <div class="price-actions">
-              <button class="btn primary" type="button"
-                data-act="pay-online"
-                data-order-id="${esc(String(o.id ?? ""))}">
-                پرداخت آنلاین
-              </button>
-              <span class="${paymentPillClass(paymentStateFromOrder(o))}">${esc(paymentLabelFa(paymentStateFromOrder(o)))}</span>
-            </div>
-            <div class="hint" data-pay-msg="1" data-order-id="${esc(String(o.id ?? ""))}"></div>
-          ` : (hasPrice && approvalStateFromOrder(o) === "approved" ? `
-            <div class="price-actions">
-              <span class="${paymentPillClass(paymentStateFromOrder(o))}">${esc(paymentLabelFa(paymentStateFromOrder(o)))}</span>
-            </div>
-          ` : "");
 
           const priceHeaderRight = hasPrice
             ? `<span class="status ok">${esc(priceText)}</span>`
@@ -2673,8 +2570,6 @@
               ${apprPill ? `<div class="order-top">${apprPill}</div>` : ""}
 
               ${actionsHtml}
-
-              ${payHtml}
 
               ${renderTrack(stNorm)}
 
@@ -2873,16 +2768,6 @@
             }
           }
 
-          if(act === "pay-online"){
-            const idStr = btn.getAttribute("data-order-id");
-            const orderId = Number(idStr);
-            if(!Number.isFinite(orderId)) return;
-            const order = lastKnownOrders.get(orderId);
-            if(!order) return;
-            await startPayment(order);
-            return;
-          }
-
           if(act === "send-chat"){
             const orderNo = (btn.getAttribute("data-order-no") || "").trim();
             if(!orderNo) return;
@@ -2986,6 +2871,7 @@
         stopPolling();
       }
 
+      // NEW: bind pickup chips
       document.querySelectorAll("[data-pick-day]").forEach(btn => {
         btn.addEventListener("click", () => {
           const day = btn.getAttribute("data-pick-day");
@@ -2998,6 +2884,7 @@
           const slot = btn.getAttribute("data-pick-slot");
           if(!slot) return;
           if(pickupDay !== "today" && pickupDay !== "tomorrow"){
+            // اگر کاربر قبل از انتخاب روز بازه زد، پیش‌فرض امروز
             setDay("today");
           }
           setSlot(slot);
@@ -3007,6 +2894,7 @@
         pickupTimeOther.addEventListener("input", () => syncPickupTimeText());
         pickupTimeOther.addEventListener("change", () => syncPickupTimeText());
       }
+      // init preview
       if(pickupTimePreview && !pickupTimePreview.textContent){
         pickupTimePreview.textContent = "برای سرعت بیشتر، روز و بازه را انتخاب کنید (یا «زمان دیگر»).";
       }
