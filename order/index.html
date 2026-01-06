@@ -157,63 +157,6 @@
       box-shadow:var(--shadow);
     }
 
-    /* ✅ پیام نتیجه پرداخت (بنر) */
-    .pay-banner{
-      margin:10px 0 12px;
-      border-radius:18px;
-      border:1px solid var(--line);
-      background:rgba(255,255,255,.92);
-      box-shadow:var(--shadow2);
-      padding:12px;
-      display:none;
-      align-items:flex-start;
-      justify-content:space-between;
-      gap:10px;
-    }
-    .pay-banner .txt{
-      display:flex;
-      flex-direction:column;
-      gap:4px;
-      min-width:0;
-    }
-    .pay-banner .txt b{
-      font-weight:900;
-      font-size:13.8px;
-      line-height:1.8;
-    }
-    .pay-banner .txt span{
-      color:var(--muted);
-      font-size:12.8px;
-      line-height:1.85;
-      white-space:pre-line;
-      word-break:break-word;
-    }
-    .pay-banner.ok{
-      border-color:rgba(16,185,129,.22);
-      background:rgba(16,185,129,.06);
-    }
-    .pay-banner.ok .txt b{color:#0B3A2C}
-    .pay-banner.err{
-      border-color:rgba(239,68,68,.22);
-      background:rgba(239,68,68,.06);
-    }
-    .pay-banner.err .txt b{color:#7F1D1D}
-    .pay-banner.warn{
-      border-color:rgba(245,158,11,.28);
-      background:rgba(245,158,11,.08);
-    }
-    .pay-banner.warn .txt b{color:#78350F}
-    .pay-banner .close{
-      flex:0 0 auto;
-      border:1px solid var(--line);
-      background:#fff;
-      border-radius:12px;
-      padding:8px 10px;
-      font-weight:900;
-      cursor:pointer;
-      box-shadow:var(--shadow2);
-    }
-
     .hero{
       margin-top:14px;
       display:grid;
@@ -930,6 +873,55 @@
       position:relative;
     }
 
+    /* ✅ بنر وضعیت پرداخت */
+    .pay-banner{
+      margin-top:12px;
+      border-radius:22px;
+      border:1px solid rgba(16,185,129,.22);
+      background:rgba(16,185,129,.10);
+      box-shadow:var(--shadow2);
+      padding:14px 16px;
+      display:none;
+      align-items:flex-start;
+      justify-content:space-between;
+      gap:12px;
+    }
+    .pay-banner.err{
+      border-color:rgba(239,68,68,.22);
+      background:rgba(239,68,68,.10);
+    }
+    .pay-banner .bb{
+      display:flex;
+      flex-direction:column;
+      gap:4px;
+      min-width:0;
+    }
+    .pay-banner .bb b{
+      font-weight:900;
+      font-size:14px;
+      display:flex;
+      align-items:center;
+      gap:8px;
+      white-space:nowrap;
+    }
+    .pay-banner .bb span{
+      font-weight:700;
+      color:rgba(11,18,32,.72);
+      font-size:13px;
+      line-height:1.8;
+      white-space:pre-line;
+    }
+    .pay-banner .close-x2{
+      border:1px solid var(--line);
+      background:#fff;
+      border-radius:12px;
+      padding:8px 10px;
+      font-weight:900;
+      cursor:pointer;
+      box-shadow:var(--shadow2);
+      flex:0 0 auto;
+    }
+
     @media (max-width: 520px){
       .topbar-inner{border-radius:22px;padding:10px 10px}
       .brand img{width:60px}
@@ -939,7 +931,6 @@
       .footer-card{padding:14px}
       .enamad img{width:92px}
       .bitpay img{width:92px}
-      .pay-banner{border-radius:18px}
     }
   </style>
 </head>
@@ -964,13 +955,13 @@
       </div>
     </div>
 
-    <!-- ✅ بنر نتیجه پرداخت در همین صفحه /order/ -->
-    <div id="payResultBanner" class="pay-banner" role="status" aria-live="polite">
-      <div class="txt">
-        <b id="payResultTitle">—</b>
-        <span id="payResultDesc">—</span>
+    <!-- ✅ بنر پرداخت در همان صفحه /order/ -->
+    <div id="payBanner" class="pay-banner" role="status" aria-live="polite">
+      <div class="bb">
+        <b id="payBannerTitle">پرداخت</b>
+        <span id="payBannerText"></span>
       </div>
-      <button type="button" class="close" id="payResultClose">بستن</button>
+      <button id="payBannerClose" class="close-x2" type="button">بستن</button>
     </div>
 
     <section class="hero">
@@ -1349,11 +1340,6 @@
       const sessionBadge = document.getElementById("sessionBadge");
       const guideCard = document.getElementById("guideCard");
 
-      const payResultBanner = document.getElementById("payResultBanner");
-      const payResultTitle = document.getElementById("payResultTitle");
-      const payResultDesc  = document.getElementById("payResultDesc");
-      const payResultClose = document.getElementById("payResultClose");
-
       const authCard = document.getElementById("authCard");
       const authPhone = document.getElementById("authPhone");
       const authCode = document.getElementById("authCode");
@@ -1401,9 +1387,17 @@
       const priceModalPrice = document.getElementById("priceModalPrice");
       const priceModalMsg = document.getElementById("priceModalMsg");
 
+      // ✅ بنر پرداخت
+      const payBanner = document.getElementById("payBanner");
+      const payBannerTitle = document.getElementById("payBannerTitle");
+      const payBannerText = document.getElementById("payBannerText");
+      const payBannerClose = document.getElementById("payBannerClose");
+
       const LS_LOGIN = "mobix_site_login";
       const LS_PROFILE = "mobix_site_profile";
       const DRAFT_KEY = "mobix_site_order_draft";
+
+      const PENDING_PAY_KEY = "mobix_pending_payment_result"; // sessionStorage
 
       let loginState = null;
       let profileState = null;
@@ -1454,120 +1448,135 @@
         return n.length >= 2;
       }
 
-      /* ✅ نمایش پیام نتیجه پرداخت در /order/ */
-      function qp(name){
-        try{
-          return new URLSearchParams(window.location.search).get(name);
-        }catch(_e){
-          return null;
-        }
-      }
-      function truthy(v){
-        const x = (v ?? "").toString().trim().toLowerCase();
-        return ["1","true","yes","ok","success","succeeded","paid","done"].includes(x);
-      }
-      function falsy(v){
-        const x = (v ?? "").toString().trim().toLowerCase();
-        return ["0","false","no","fail","failed","error","cancel","canceled","cancelled"].includes(x);
-      }
-      function showPayBanner(type, title, desc){
-        if(!payResultBanner) return;
-        payResultBanner.classList.remove("ok","err","warn");
-        if(type) payResultBanner.classList.add(type);
-        payResultTitle.textContent = title || "—";
-        payResultDesc.textContent  = desc  || "";
-        payResultBanner.style.display = "flex";
-        try{ window.scrollTo({ top: 0, behavior: "smooth" }); }catch(_e){ window.scrollTo(0,0); }
+      function showPayBanner(type, title, text){
+        if(!payBanner) return;
+        payBanner.classList.remove("err");
+        if(type === "err") payBanner.classList.add("err");
+
+        if(payBannerTitle) payBannerTitle.textContent = title || "پرداخت";
+        if(payBannerText) payBannerText.textContent = text || "";
+        payBanner.style.display = "flex";
       }
       function hidePayBanner(){
-        if(!payResultBanner) return;
-        payResultBanner.style.display = "none";
+        if(!payBanner) return;
+        payBanner.style.display = "none";
+        if(payBannerText) payBannerText.textContent = "";
       }
-      function clearPayParams(){
+
+      function cleanPaymentQueryFromUrl(){
         try{
-          const u = new URL(window.location.href);
-          const keys = [
-            "payment","paid","pay","success","status","payment_status","result",
-            "order_no","order","invoice","invoice_id","ref","ref_id","authority","token","message","msg","error","err"
-          ];
-          keys.forEach(k => u.searchParams.delete(k));
-          window.history.replaceState({}, document.title, u.pathname + (u.searchParams.toString() ? ("?" + u.searchParams.toString()) : "") + u.hash);
+          const url = new URL(window.location.href);
+          let changed = false;
+          ["payment_status","order_no","invoice_id","invoice","status","msg","message"].forEach(k => {
+            if(url.searchParams.has(k)){
+              url.searchParams.delete(k);
+              changed = true;
+            }
+          });
+          if(changed){
+            const next = url.pathname + (url.search ? url.search : "") + (url.hash ? url.hash : "");
+            history.replaceState({}, "", next);
+          }
         }catch(_e){}
       }
-      function handlePayReturnBanner(){
-        const orderNo = (qp("order_no") || qp("order") || "").trim();
-        const status  = (qp("payment_status") || qp("status") || qp("result") || "").trim();
-        const msg     = (qp("message") || qp("msg") || qp("error") || qp("err") || "").trim();
-        const paid1   = qp("paid");
-        const pay1    = qp("pay");
-        const success = qp("success");
-        const payment = qp("payment");
 
-        const hasAny =
-          !!orderNo ||
-          !!status ||
-          !!msg ||
-          paid1 != null ||
-          pay1 != null ||
-          success != null ||
-          payment != null;
+      async function markOrderPaid(orderNo){
+        const on = (orderNo || "").trim();
+        if(!on) return { ok:false, error:"شماره سفارش نامعتبر است." };
 
-        if(!hasAny) return;
-
-        let type = "warn";
-        let title = "نتیجه پرداخت";
-        let desc = "";
-
-        const normalized = status.toString().trim().toLowerCase();
-        const isOk =
-          truthy(status) || truthy(paid1) || truthy(pay1) || truthy(success) || truthy(payment) ||
-          ["success","succeeded","paid","done","ok"].includes(normalized);
-
-        const isBad =
-          falsy(status) || falsy(paid1) || falsy(pay1) || falsy(success) || falsy(payment) ||
-          ["failed","fail","error","canceled","cancelled","cancel"].includes(normalized);
-
-        if(isOk){
-          type = "ok";
-          title = "پرداخت موفق ✅";
-          desc = "پرداخت شما با موفقیت انجام شد.";
-          if(orderNo) desc += "\nشماره سفارش: " + orderNo;
-          if(msg) desc += "\n" + msg;
-        }else if(isBad){
-          type = "err";
-          title = "پرداخت ناموفق ❌";
-          desc = "پرداخت انجام نشد یا لغو شد.";
-          if(orderNo) desc += "\nشماره سفارش: " + orderNo;
-          if(msg) desc += "\n" + msg;
-        }else{
-          type = "warn";
-          title = "وضعیت پرداخت در حال بررسی";
-          desc = "اگر پرداخت انجام شده باشد، تا چند لحظه دیگر در سفارش‌های شما نمایش داده می‌شود.";
-          if(orderNo) desc += "\nشماره سفارش: " + orderNo;
-          if(msg) desc += "\n" + msg;
+        if(!loggedIn()){
+          return { ok:false, error:"برای ثبت پرداخت باید وارد شوید." };
         }
 
-        showPayBanner(type, title, desc);
+        try{
+          const payload = {
+            payment_status: "paid"
+          };
+
+          const { error } = await supabase
+            .from("orders")
+            .update(payload)
+            .eq("order_no", on)
+            .eq("customer_phone", loginState.phone09);
+
+          if(error){
+            return { ok:false, error: error.message || "خطای نامشخص" };
+          }
+
+          return { ok:true };
+        }catch(e){
+          return { ok:false, error: (e?.message || "خطای نامشخص") };
+        }
+      }
+
+      async function handlePaymentReturnIfAny(){
+        let qsStatus = "";
+        let qsOrderNo = "";
 
         try{
-          if(payResultClose) payResultClose.addEventListener("click", () => {
-            hidePayBanner();
-            clearPayParams();
-          }, { once: true });
+          const url = new URL(window.location.href);
+          qsStatus = (url.searchParams.get("payment_status") || "").trim().toLowerCase();
+          qsOrderNo = (url.searchParams.get("order_no") || "").trim();
         }catch(_e){}
 
-        // بعد از چند ثانیه، اتوماتیک جمع شود و URL هم تمیز شود
-        setTimeout(() => {
-          hidePayBanner();
-          clearPayParams();
-        }, 9000);
+        if(qsStatus || qsOrderNo){
+          sessionStorage.setItem(PENDING_PAY_KEY, JSON.stringify({
+            payment_status: qsStatus || "",
+            order_no: qsOrderNo || ""
+          }));
+          cleanPaymentQueryFromUrl();
+        }
 
-        // تلاش برای تازه‌سازی لیست سفارش‌ها (اگر کاربر وارد باشد)
-        setTimeout(() => {
-          try{
-            if(loggedIn()) loadOrders();
-          }catch(_e){}
-        }, 900);
+        let pend = null;
+        try{
+          const raw = sessionStorage.getItem(PENDING_PAY_KEY);
+          pend = raw ? JSON.parse(raw) : null;
+        }catch(_e){ pend = null; }
+
+        const status = (pend?.payment_status || "").toString().trim().toLowerCase();
+        const orderNo = (pend?.order_no || "").toString().trim();
+
+        if(!status && !orderNo){
+          return;
+        }
+
+        if(status === "success"){
+          showPayBanner(
+            "ok",
+            "پرداخت موفق ✅",
+            (orderNo ? ("پرداخت شما با موفقیت انجام شد.\nشماره سفارش: " + orderNo) : "پرداخت شما با موفقیت انجام شد.")
+          );
+
+          if(loggedIn() && orderNo){
+            const out = await markOrderPaid(orderNo);
+            if(out.ok){
+              sessionStorage.removeItem(PENDING_PAY_KEY);
+              try{ await loadOrders(); }catch(_e){}
+            }else{
+              // اگر RLS یا هر چیزی مانع شد، فقط پیام را نشان بده و بعداً با رفرش/ورود مجدد دوباره تلاش می‌کند
+            }
+          }
+
+          return;
+        }
+
+        if(status === "failed" || status === "error" || status === "cancel" || status === "canceled"){
+          showPayBanner(
+            "err",
+            "پرداخت ناموفق ❌",
+            (orderNo ? ("پرداخت ناموفق بود یا لغو شد.\nشماره سفارش: " + orderNo) : "پرداخت ناموفق بود یا لغو شد.")
+          );
+          sessionStorage.removeItem(PENDING_PAY_KEY);
+          return;
+        }
+
+        // هر وضعیت ناشناخته: فقط نمایش
+        showPayBanner(
+          "warn",
+          "وضعیت پرداخت",
+          (orderNo ? ("وضعیت پرداخت دریافت شد.\nشماره سفارش: " + orderNo) : "وضعیت پرداخت دریافت شد.")
+        );
+        sessionStorage.removeItem(PENDING_PAY_KEY);
       }
 
       function faDayLabel(day){
@@ -2056,6 +2065,9 @@
           }
 
           profileCard.style.display = hasProfileName() ? "none" : "";
+
+          // ✅ اگر نتیجه پرداخت در صف باشد، بعد از ورود هم ثبت شود
+          handlePaymentReturnIfAny();
         }else{
           setStatus(sessionBadge, "warn", "وارد نشده‌اید");
           if(authCard) authCard.style.display = "";
@@ -2239,9 +2251,6 @@
           startPolling();
 
           await loadOrders();
-
-          // ✅ بعد از ورود هم اگر پارامتر پرداخت داشتیم، سفارش‌ها را تازه کنیم
-          try{ handlePayReturnBanner(); }catch(_e){}
         }catch(err){
           setMsg(authMsg, "err", "ورود ناموفق بود: " + (err?.message || "خطای نامشخص"));
         }finally{
@@ -2364,7 +2373,6 @@
           price_approval: "not_needed",
           needs_loaner_phone: !!(replacementPhone && replacementPhone.checked),
 
-          // ✅ پرداخت (اگر ستون‌ها موجود باشد)
           payment_status: null,
           payment_invoice_id: null
         };
@@ -3200,6 +3208,9 @@
         fullName.setAttribute("placeholder", "نام و نام خانوادگی");
       }
 
+      // ✅ اگر از pay-result برگشته باشد، بنر را همینجا نشان بده و Query را تمیز کن
+      handlePaymentReturnIfAny();
+
       applyLoginUI();
       loadDraft();
 
@@ -3299,10 +3310,9 @@
         await updatePriceApproval(modalOrder, "reject");
       });
 
-      // ✅ نمایش پیام پرداخت (اگر با query برگشته باشیم)
-      try{
-        handlePayReturnBanner();
-      }catch(_e){}
+      if(payBannerClose){
+        payBannerClose.addEventListener("click", () => hidePayBanner());
+      }
 
     })();
   </script>
