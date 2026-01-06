@@ -1,27 +1,36 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
+
   <url>
     <loc>https://mobixfix.ir/</loc>
   </url>
+
   <url>
     <loc>https://mobixfix.ir/order/</loc>
   </url>
+
   <url>
     <loc>https://mobixfix.ir/about/</loc>
   </url>
+
   <url>
     <loc>https://mobixfix.ir/contact/</loc>
   </url>
+
   <url>
     <loc>https://mobixfix.ir/faq/</loc>
   </url>
+
   <url>
     <loc>https://mobixfix.ir/support/</loc>
   </url>
+
   <url>
     <loc>https://mobixfix.ir/terms/</loc>
   </url>
+
   <url>
     <loc>https://mobixfix.ir/privacy/</loc>
   </url>
+
 </urlset>
