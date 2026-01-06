@@ -1422,6 +1422,13 @@
       let pickupDay = null;
       let pickupSlot = null;
 
+      // ✅ جلوگیری از رندر/رفرش زیاد (debounce + skip duplicate render)
+      const LOAD_MIN_GAP_MS = 2500;
+      let __loadInFlight = false;
+      let __loadPending = false;
+      let __lastLoadAt = 0;
+      let __lastRenderKey = "";
+
       function setStatus(el, type, text){
         el.classList.remove("ok","err","warn");
         if(type) el.classList.add(type);
@@ -1467,7 +1474,7 @@
         try{
           const url = new URL(window.location.href);
           let changed = false;
-          ["payment_status","order_no","invoice_id","invoice","status","msg","message"].forEach(k => {
+          ["payment_status","order_no","invoice_id","invoice","status","msg","message","trans_id","id_get"].forEach(k => {
             if(url.searchParams.has(k)){
               url.searchParams.delete(k);
               changed = true;
@@ -1551,9 +1558,9 @@
             const out = await markOrderPaid(orderNo);
             if(out.ok){
               sessionStorage.removeItem(PENDING_PAY_KEY);
-              try{ await loadOrders(); }catch(_e){}
+              try{ await scheduleLoadOrders({ silent:true, reason:"pay-success" }); }catch(_e){}
             }else{
-              // اگر RLS یا هر چیزی مانع شد، فقط پیام را نشان بده و بعداً با رفرش/ورود مجدد دوباره تلاش می‌کند
+              // فقط پیام را نشان می‌دهیم
             }
           }
 
@@ -1570,7 +1577,6 @@
           return;
         }
 
-        // هر وضعیت ناشناخته: فقط نمایش
         showPayBanner(
           "warn",
           "وضعیت پرداخت",
@@ -1993,7 +1999,6 @@
         return hasPrice && stageNorm === "quoted" && appr === "pending";
       }
 
-      // ✅ دکمه پرداخت وقتی قیمت تایید شده باشد
       function paymentStateFromOrder(o){
         const ps = (o && o.payment_status != null) ? String(o.payment_status).trim().toLowerCase() : "";
         if(ps === "paid" || ps === "success" || ps === "done") return "paid";
@@ -2043,6 +2048,43 @@
         setMsg(priceModalMsg, "", "");
       }
 
+      // ✅ loadOrders امن و کم‌پرش
+      async function scheduleLoadOrders(opts){
+        const silent = !!opts?.silent;
+        if(!loggedIn()) return;
+
+        if(__loadInFlight){
+          __loadPending = true;
+          return;
+        }
+
+        const now = Date.now();
+        const delta = now - __lastLoadAt;
+        const wait = Math.max(0, LOAD_MIN_GAP_MS - delta);
+
+        if(wait > 0){
+          if(__loadPending) return;
+          __loadPending = true;
+          setTimeout(() => {
+            __loadPending = false;
+            scheduleLoadOrders({ silent:true, reason:"debounced" });
+          }, wait);
+          return;
+        }
+
+        __loadInFlight = true;
+        __lastLoadAt = Date.now();
+        try{
+          await loadOrders({ silent: silent });
+        }finally{
+          __loadInFlight = false;
+          if(__loadPending){
+            __loadPending = false;
+            scheduleLoadOrders({ silent:true, reason:"pending" });
+          }
+        }
+      }
+
       function applyLoginUI(){
         const li = loggedIn();
 
@@ -2066,7 +2108,6 @@
 
           profileCard.style.display = hasProfileName() ? "none" : "";
 
-          // ✅ اگر نتیجه پرداخت در صف باشد، بعد از ورود هم ثبت شود
           handlePaymentReturnIfAny();
         }else{
           setStatus(sessionBadge, "warn", "وارد نشده‌اید");
@@ -2116,9 +2157,10 @@
       }
       function startPolling(){
         stopPolling();
+        // ✅ کندتر (fallback) برای جلوگیری از پرش
         pollTimer = setInterval(() => {
-          if(loggedIn()) loadOrders();
-        }, 20000);
+          if(loggedIn()) scheduleLoadOrders({ silent:true, reason:"poll" });
+        }, 60000);
       }
 
       function startRealtime(){
@@ -2136,7 +2178,7 @@
                 filter: "customer_phone=eq." + loginState.phone09
               },
               (_payload) => {
-                loadOrders();
+                scheduleLoadOrders({ silent:true, reason:"rt-orders" });
               }
             )
             .subscribe((_status) => {});
@@ -2160,7 +2202,7 @@
             .on(
               "postgres_changes",
               { event:"*", schema:"public", table:"order_updates", filter: filterIn },
-              (_payload) => { loadOrders(); }
+              (_payload) => { scheduleLoadOrders({ silent:true, reason:"rt-updates" }); }
             )
             .subscribe((_status) => {});
         }catch(_e){}
@@ -2170,7 +2212,7 @@
             .on(
               "postgres_changes",
               { event:"*", schema:"public", table:"chat_messages", filter: filterIn },
-              (_payload) => { loadOrders(); }
+              (_payload) => { scheduleLoadOrders({ silent:true, reason:"rt-chat" }); }
             )
             .subscribe((_status) => {});
         }catch(_e){}
@@ -2250,7 +2292,7 @@
           startRealtime();
           startPolling();
 
-          await loadOrders();
+          await scheduleLoadOrders({ silent:false, reason:"login" });
         }catch(err){
           setMsg(authMsg, "err", "ورود ناموفق بود: " + (err?.message || "خطای نامشخص"));
         }finally{
@@ -2402,7 +2444,7 @@
           resetPickupUI();
           localStorage.removeItem(DRAFT_KEY);
 
-          await loadOrders();
+          await scheduleLoadOrders({ silent:true, reason:"create-order" });
         }catch(e){
           setMsg(orderMsg, "err", "ثبت سفارش ناموفق بود: " + (e?.message || "خطای نامشخص"));
         }finally{
@@ -2442,7 +2484,7 @@
             setMsg(priceModalMsg, "ok", "قیمت تایید شد ✅ حالا دکمه «پرداخت» فعال است.");
             setTimeout(() => {
               closePriceModal();
-              loadOrders();
+              scheduleLoadOrders({ silent:true, reason:"approve-price" });
             }, 900);
           }else if(action === "reject"){
             const { error } = await supabase
@@ -2461,7 +2503,7 @@
             setMsg(priceModalMsg, "ok", "قیمت رد شد ✅");
             setTimeout(() => {
               closePriceModal();
-              loadOrders();
+              scheduleLoadOrders({ silent:true, reason:"reject-price" });
             }, 900);
           }else{
             setMsg(priceModalMsg, "err", "عملیات نامعتبر است.");
@@ -2533,13 +2575,57 @@
         `;
       }
 
-      async function loadOrders(){
+      function computeRenderKey(list){
+        try{
+          const ordersKey = (list || []).map(o => ({
+            id: o?.id ?? null,
+            order_no: o?.order_no ?? null,
+            stage: o?.stage ?? o?.status ?? null,
+            quoted: o?.quoted_price_toman ?? null,
+            appr: o?.price_approval ?? (o?.price_approved ? "approved" : null),
+            pay: o?.payment_status ?? null,
+            inv: o?.payment_invoice_id ?? null,
+            ua: o?.updated_at ?? null,
+            ca: o?.created_at ?? null
+          }));
+          const updKey = Array.from(lastKnownUpdates.values()).map(u => ({
+            order_no: u?.order_no ?? null,
+            message: u?.message ?? null,
+            created_at: u?.created_at ?? null,
+            stage: u?.stage ?? null
+          }));
+          const chatKey = Array.from(lastKnownChats.entries()).map(([on, rows]) => {
+            const last = (rows && rows.length) ? rows[rows.length-1] : null;
+            return {
+              order_no: on,
+              count: rows ? rows.length : 0,
+              last_id: last?.id ?? null,
+              last_at: last?.created_at ?? null
+            };
+          });
+          const revKey = Array.from(lastKnownReviews.entries()).map(([oid, r]) => ({
+            order_id: oid,
+            rating: r?.rating ?? null,
+            created_at: r?.created_at ?? null
+          }));
+          return JSON.stringify({ ordersKey, updKey, chatKey, revKey });
+        }catch(_e){
+          return String(Date.now());
+        }
+      }
+
+      async function loadOrders(opts){
+        const silent = !!opts?.silent;
+
         if(!loggedIn()){
           ordersCount.textContent = "0";
           return;
         }
 
-        ordersWrap.innerHTML = '<div class="muted">در حال دریافت سفارش‌ها…</div>';
+        // ✅ فقط در حالت غیرسایلنت پیام لودینگ بگذار (تا صفحه نپرد)
+        if(!silent){
+          ordersWrap.innerHTML = '<div class="muted">در حال دریافت سفارش‌ها…</div>';
+        }
 
         const { data, error } = await supabase
           .from("orders")
@@ -2548,10 +2634,12 @@
           .order("created_at", { ascending:false });
 
         if(error){
-          ordersWrap.innerHTML = `
-            <div class="status err">خواندن سفارش‌ها ناموفق بود</div>
-            <div class="hint" style="color:var(--danger)">${esc(error.message || "خطای نامشخص")}</div>
-          `;
+          if(!silent){
+            ordersWrap.innerHTML = `
+              <div class="status err">خواندن سفارش‌ها ناموفق بود</div>
+              <div class="hint" style="color:var(--danger)">${esc(error.message || "خطای نامشخص")}</div>
+            `;
+          }
           ordersCount.textContent = "0";
           return;
         }
@@ -2590,11 +2678,14 @@
         }catch(_e){}
 
         if(list.length === 0){
-          ordersWrap.innerHTML = '<div class="muted">هنوز سفارشی ثبت نکرده‌اید.</div>';
+          if(!silent){
+            ordersWrap.innerHTML = '<div class="muted">هنوز سفارشی ثبت نکرده‌اید.</div>';
+          }
           lastKnownUpdates.clear();
           lastKnownChats.clear();
           stopRealtimeUpdates();
           stopRealtimeChat();
+          __lastRenderKey = "";
           return;
         }
 
@@ -2651,6 +2742,13 @@
         }catch(_e){}
 
         startRealtimeForUpdatesAndChat(orderNos);
+
+        // ✅ اگر داده‌ها تغییر نکرده، رندر نکن (برای جلوگیری از پرش)
+        const rk = computeRenderKey(list);
+        if(rk === __lastRenderKey){
+          return;
+        }
+        __lastRenderKey = rk;
 
         ordersWrap.innerHTML = list.map(o => {
           const id = o.order_no ?? o.id ?? "";
@@ -3012,7 +3110,7 @@
             msgEl.textContent = "نظر شما ثبت شد ✅";
           }
 
-          setTimeout(() => loadOrders(), 600);
+          setTimeout(() => scheduleLoadOrders({ silent:true, reason:"review" }), 600);
         }catch(e){
           if(pill){
             pill.className = "status err";
@@ -3099,7 +3197,7 @@
                   return;
                 }
 
-                await loadOrders();
+                await scheduleLoadOrders({ silent:true, reason:"reject-direct" });
               }catch(ex){
                 alert("خطا: " + (ex?.message || "خطای نامشخص"));
               }finally{
@@ -3150,7 +3248,7 @@
                 msgEl.style.color = "var(--success)";
                 msgEl.textContent = "ارسال شد ✅";
               }
-              await loadOrders();
+              await scheduleLoadOrders({ silent:true, reason:"chat-send" });
             }else{
               if(msgEl){
                 msgEl.style.color = "var(--danger)";
@@ -3208,7 +3306,6 @@
         fullName.setAttribute("placeholder", "نام و نام خانوادگی");
       }
 
-      // ✅ اگر از pay-result برگشته باشد، بنر را همینجا نشان بده و Query را تمیز کن
       handlePaymentReturnIfAny();
 
       applyLoginUI();
@@ -3217,7 +3314,7 @@
       if(loggedIn()){
         startRealtime();
         startPolling();
-        loadOrders();
+        scheduleLoadOrders({ silent:false, reason:"init" });
       }else{
         stopRealtime();
         stopRealtimeUpdates();
@@ -3265,7 +3362,7 @@
       });
 
       createOrderBtn.addEventListener("click", createOrder);
-      refreshOrdersBtn.addEventListener("click", loadOrders);
+      refreshOrdersBtn.addEventListener("click", () => scheduleLoadOrders({ silent:false, reason:"manual-refresh" }));
 
       [deviceModel, problemDesc, address, replacementPhone].forEach(el => {
         if(!el) return;
