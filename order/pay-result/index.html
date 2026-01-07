@@ -38,6 +38,7 @@
     }
     .pill.ok{border-color:rgba(16,185,129,.25);background:rgba(16,185,129,.08);color:#0B3A2C}
     .pill.warn{border-color:rgba(245,158,11,.30);background:rgba(245,158,11,.10);color:#78350F}
+    .pill.err{border-color:rgba(239,68,68,.25);background:rgba(239,68,68,.08);color:#7F1D1D}
     .btn{
       margin-top:14px;
       padding:10px 14px;
@@ -55,8 +56,8 @@
 <body>
   <div class="wrap">
     <div class="card">
-      <h1>در حال انتقال به صفحه سفارش…</h1>
-      <p>چند لحظه صبر کنید. اگر منتقل نشدید، روی دکمه زیر بزنید.</p>
+      <h1 id="title">در حال انتقال به صفحه سفارش…</h1>
+      <p id="subtitle">چند لحظه صبر کنید. اگر منتقل نشدید، روی دکمه زیر بزنید.</p>
 
       <div class="row">
         <span id="pill" class="pill warn">در حال پردازش</span>
@@ -74,51 +75,155 @@
       const PENDING_PAY_KEY = "mobix_pending_payment_result";
 
       function qs(){
-        try{ return new URL(window.location.href).searchParams; }catch(e){ return new URLSearchParams(); }
+        try{ return new URL(window.location.href).searchParams; }
+        catch(e){ return new URLSearchParams(); }
+      }
+
+      function norm(s){
+        return (s || "").toString().trim().toLowerCase();
+      }
+
+      // ✅ تشخیص نتیجه از پارامترهای رایج (درگاه‌ها/فانکشن‌ها مختلف‌اند)
+      function detectStatus(sp){
+        const s1 = norm(sp.get("payment_status"));
+        const s2 = norm(sp.get("status"));
+        const s3 = norm(sp.get("result"));
+        const s4 = norm(sp.get("res"));
+        const s5 = norm(sp.get("ok"));
+        const msg = norm(sp.get("msg") || sp.get("message"));
+
+        const combined = [s1,s2,s3,s4,s5,msg].filter(Boolean).join("|");
+
+        // success-ish
+        if(
+          combined.includes("success") ||
+          combined.includes("succeed") ||
+          combined.includes("paid") ||
+          combined.includes("ok=true") ||
+          combined.includes("ok=1") ||
+          combined.includes("پرداخت موفق") ||
+          combined.includes("موفق")
+        ){
+          // اگر همزمان کلمه‌های منفی هم بود، منفی را اولویت بده
+          if(
+            combined.includes("cancel") ||
+            combined.includes("canceled") ||
+            combined.includes("cancelled") ||
+            combined.includes("fail") ||
+            combined.includes("failed") ||
+            combined.includes("error") ||
+            combined.includes("انصراف") ||
+            combined.includes("لغو") ||
+            combined.includes("ناموفق")
+          ){
+            return "failed";
+          }
+          return "success";
+        }
+
+        // failed/cancel-ish
+        if(
+          combined.includes("cancel") ||
+          combined.includes("canceled") ||
+          combined.includes("cancelled") ||
+          combined.includes("fail") ||
+          combined.includes("failed") ||
+          combined.includes("error") ||
+          combined.includes("decline") ||
+          combined.includes("انصراف") ||
+          combined.includes("لغو") ||
+          combined.includes("ناموفق")
+        ){
+          return "failed";
+        }
+
+        return "unknown";
       }
 
       const sp = qs();
       const orderNo = (sp.get("order_no") || "").trim();
+
+      // BitPay ممکن است اینها را بدهد/ندهـد
       const transId = (sp.get("trans_id") || "").trim();
-      const idGet = (sp.get("id_get") || "").trim();
+      const idGet   = (sp.get("id_get") || "").trim();
+      const invoice = (sp.get("invoice_id") || sp.get("invoice") || "").trim();
 
       const pill = document.getElementById("pill");
       const orderPill = document.getElementById("orderPill");
       const dbg = document.getElementById("dbg");
       const goBtn = document.getElementById("goBtn");
+      const title = document.getElementById("title");
+      const subtitle = document.getElementById("subtitle");
 
       if(orderPill){
         orderPill.textContent = orderNo ? ("سفارش: " + orderNo) : "سفارش: —";
       }
 
-      // IMPORTANT:
-      // این صفحه به عنوان return_url تنظیم شده و در عمل وقتی به اینجا می‌آید یعنی پرداخت انجام شده.
-      // پس ما payment_status=success را برای /order/ ذخیره می‌کنیم تا بنر نمایش داده شود و ثبت paid انجام شود.
+      const status = detectStatus(sp);
+
+      // ✅ مهم: فقط وقتی واقعاً مطمئن شدیم success است، success ذخیره می‌کنیم
+      // در حالت unknown هرگز success ثبت نمی‌کنیم.
+      let displayText = "";
+      if(status === "success"){
+        if(pill){
+          pill.className = "pill ok";
+          pill.textContent = "پرداخت موفق ✅";
+        }
+        if(title) title.textContent = "پرداخت با موفقیت انجام شد ✅";
+        if(subtitle) subtitle.textContent = "در حال بازگشت به صفحه سفارش…";
+        displayText = "success";
+      }else if(status === "failed"){
+        if(pill){
+          pill.className = "pill err";
+          pill.textContent = "پرداخت ناموفق / لغو شد ❌";
+        }
+        if(title) title.textContent = "پرداخت ناموفق یا لغو شد ❌";
+        if(subtitle) subtitle.textContent = "در حال بازگشت به صفحه سفارش…";
+        displayText = "failed";
+      }else{
+        if(pill){
+          pill.className = "pill warn";
+          pill.textContent = "وضعیت پرداخت نامشخص";
+        }
+        if(title) title.textContent = "وضعیت پرداخت نامشخص";
+        if(subtitle) subtitle.textContent = "ممکن است پرداخت لغو شده باشد یا هنوز تأیید نشده باشد. در صفحه سفارش وضعیت را بررسی کنید.";
+        displayText = "unknown";
+      }
+
+      // ✅ ذخیره برای نمایش بنر در /order/
       try{
         sessionStorage.setItem(PENDING_PAY_KEY, JSON.stringify({
-          payment_status: "success",
+          payment_status: displayText,
           order_no: orderNo || ""
         }));
       }catch(_e){}
 
       if(dbg){
         const lines = [];
+        lines.push("detected_status: " + displayText);
         if(orderNo) lines.push("order_no: " + orderNo);
         if(transId) lines.push("trans_id: " + transId);
         if(idGet) lines.push("id_get: " + idGet);
-        dbg.textContent = lines.length ? ("اطلاعات پرداخت دریافت شد:\n" + lines.join("\n")) : "";
-      }
+        if(invoice) lines.push("invoice: " + invoice);
 
-      if(pill){
-        pill.className = "pill ok";
-        pill.textContent = "پرداخت موفق ✅";
+        // برای دیباگ: چند پارامتر مهم
+        const ps = (sp.get("payment_status") || "");
+        const st = (sp.get("status") || "");
+        const rs = (sp.get("result") || "");
+        const mg = (sp.get("msg") || sp.get("message") || "");
+
+        if(ps) lines.push("payment_status(qs): " + ps);
+        if(st) lines.push("status(qs): " + st);
+        if(rs) lines.push("result(qs): " + rs);
+        if(mg) lines.push("msg(qs): " + mg);
+
+        dbg.textContent = lines.join("\n");
       }
 
       // مسیر صفحه سفارش
       const target = window.location.origin + "/order/";
 
       function go(){
-        // replace تا back/forward اذیت نکند
         window.location.replace(target);
       }
 
@@ -126,8 +231,8 @@
         goBtn.addEventListener("click", go);
       }
 
-      // انتقال خودکار
-      setTimeout(go, 350);
+      // انتقال خودکار (کمی بیشتر تا کاربر پیام را ببیند)
+      setTimeout(go, 900);
     })();
   </script>
 </body>
