@@ -1824,7 +1824,10 @@
         const payload = {
           order_id: orderId ?? null,
           order_no: orderNo,
-          amount_toman: amountToman,
+
+          // ✅ FIX: درگاه مبلغ را ریال می‌خواهد (تومان × ۱۰)
+          amount: Math.round(amountToman * 10),
+
           customer_phone: loginState?.phone09 ?? null,
           return_url: buildPayReturnUrl(orderNo)
         };
