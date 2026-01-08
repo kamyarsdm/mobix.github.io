@@ -873,6 +873,7 @@
       position:relative;
     }
 
+    /* ✅ بنر وضعیت پرداخت */
     .pay-banner{
       margin-top:12px;
       border-radius:22px;
@@ -954,6 +955,7 @@
       </div>
     </div>
 
+    <!-- ✅ بنر پرداخت در همان صفحه /order/ -->
     <div id="payBanner" class="pay-banner" role="status" aria-live="polite">
       <div class="bb">
         <b id="payBannerTitle">پرداخت</b>
@@ -1203,7 +1205,9 @@
               </div>
 
               <div class="bitpay">
-                <a href="https://bitpay.ir/certificate-579080-mobixfix.ir" target="_blank"><img src="https://bitpay.ir/theme/public/images/trusted-logo.svg"/></a>
+                <a href="https://bitpay.ir/certificate-579080-mobixfix.ir" target="_blank">
+                  <img src="https://bitpay.ir/theme/public/images/trusted-logo.svg" alt="BitPay Trusted" />
+                </a>
               </div>
             </div>
           </div>
@@ -1269,7 +1273,10 @@
       const OTP_REQUEST_URL = "https://vrxfhfknmxmeatnfzpcg.supabase.co/functions/v1/request-otp";
       const OTP_VERIFY_URL  = "https://vrxfhfknmxmeatnfzpcg.supabase.co/functions/v1/verify-otp";
 
-      const BITPAY_CREATE_URL  = "https://vrxfhfknmxmeatnfzpcg.supabase.co/functions/v1/bitpay-create-payment";
+      // ✅ بیت‌پی (Edge Function)
+      const BITPAY_CREATE_URL = "https://vrxfhfknmxmeatnfzpcg.supabase.co/functions/v1/bitpay-create-payment";
+
+      // ✅ زرین‌پال (Edge Function)
       const ZARINPAL_CREATE_URL = "https://vrxfhfknmxmeatnfzpcg.supabase.co/functions/v1/zarinpal-create-payment";
 
       const supabase = window.supabase.createClient(SUPABASE_URL, SUPABASE_ANON_KEY);
@@ -1300,14 +1307,17 @@
       }
       function esc(s){
         return (s ?? "").toString()
-          .replaceAll("&","&amp;")
-          .replaceAll("<","&lt;")
-          .replaceAll(">","&gt;")
-          .replaceAll('"',"&quot;")
-          .replaceAll("'","&#039;");
+          .replace(/&/g,"&amp;")
+          .replace(/</g,"&lt;")
+          .replace(/>/g,"&gt;")
+          .replace(/"/g,"&quot;")
+          .replace(/'/g,"&#039;");
       }
       async function safeJson(res){
         try{ return await res.json(); }catch(e){ return null; }
+      }
+      async function safeText(res){
+        try{ return await res.text(); }catch(e){ return ""; }
       }
       function extractErrorMessage(obj){
         if(!obj) return null;
@@ -1319,7 +1329,6 @@
         if(!Number.isFinite(x) || x <= 0) return null;
         return x.toLocaleString("fa-IR") + " تومان";
       }
-
       function genOrderNo(){
         const d = new Date();
         const yy = String(d.getFullYear()).slice(-2);
@@ -1329,9 +1338,39 @@
         return `MCC-${yy}${mm}${dd}-${rand}`;
       }
 
+      // ✅ آدرس بازگشت از درگاه
       function buildPayReturnUrl(orderNo){
         const base = window.location.origin;
-        return base + "/order/?order_no=" + encodeURIComponent(orderNo || "");
+        return base + "/order/pay-result/?order_no=" + encodeURIComponent(orderNo || "");
+      }
+
+      // ✅ درخواست Edge Function بدون Preflight (برای دور زدن OPTIONS/CORS مشکل‌دار)
+      // نکته: با Content-Type = text/plain و بدون هدرهای سفارشی، مرورگر معمولاً preflight نمی‌زند.
+      async function callEdgeNoPreflight(url, payload){
+        const res = await fetch(url, {
+          method: "POST",
+          mode: "cors",
+          credentials: "omit",
+          headers: {
+            "Content-Type": "text/plain;charset=UTF-8",
+            "Accept": "application/json, text/plain, */*"
+          },
+          body: JSON.stringify(payload || {})
+        });
+
+        const json = await safeJson(res);
+        const txt = json ? "" : await safeText(res);
+
+        if(!res.ok){
+          const msg = extractErrorMessage(json) || (txt ? txt.slice(0, 500) : "") || ("HTTP " + res.status);
+          throw new Error(msg);
+        }
+
+        if(json && json.ok === false){
+          throw new Error(extractErrorMessage(json) || "عملیات ناموفق بود");
+        }
+
+        return json || { ok:true, raw_text: txt };
       }
 
       const sessionBadge = document.getElementById("sessionBadge");
@@ -1384,6 +1423,7 @@
       const priceModalPrice = document.getElementById("priceModalPrice");
       const priceModalMsg = document.getElementById("priceModalMsg");
 
+      // ✅ بنر پرداخت
       const payBanner = document.getElementById("payBanner");
       const payBannerTitle = document.getElementById("payBannerTitle");
       const payBannerText = document.getElementById("payBannerText");
@@ -1393,7 +1433,7 @@
       const LS_PROFILE = "mobix_site_profile";
       const DRAFT_KEY = "mobix_site_order_draft";
 
-      const PENDING_PAY_KEY = "mobix_pending_payment_result";
+      const PENDING_PAY_KEY = "mobix_pending_payment_result"; // sessionStorage
 
       let loginState = null;
       let profileState = null;
@@ -1418,6 +1458,7 @@
       let pickupDay = null;
       let pickupSlot = null;
 
+      // ✅ جلوگیری از رندر/رفرش زیاد (debounce + skip duplicate render)
       const LOAD_MIN_GAP_MS = 2500;
       let __loadInFlight = false;
       let __loadPending = false;
@@ -1454,6 +1495,7 @@
         if(!payBanner) return;
         payBanner.classList.remove("err");
         if(type === "err") payBanner.classList.add("err");
+
         if(payBannerTitle) payBannerTitle.textContent = title || "پرداخت";
         if(payBannerText) payBannerText.textContent = text || "";
         payBanner.style.display = "flex";
@@ -1468,7 +1510,7 @@
         try{
           const url = new URL(window.location.href);
           let changed = false;
-          ["payment_status","order_no","invoice_id","invoice","status","msg","message","trans_id","id_get","Authority","authority","Status","status"].forEach(k => {
+          ["payment_status","order_no","invoice_id","invoice","status","msg","message","trans_id","id_get","authority","ref_id"].forEach(k => {
             if(url.searchParams.has(k)){
               url.searchParams.delete(k);
               changed = true;
@@ -1490,7 +1532,9 @@
         }
 
         try{
-          const payload = { payment_status: "paid" };
+          const payload = {
+            payment_status: "paid"
+          };
 
           const { error } = await supabase
             .from("orders")
@@ -1514,7 +1558,7 @@
 
         try{
           const url = new URL(window.location.href);
-          qsStatus = (url.searchParams.get("payment_status") || url.searchParams.get("Status") || url.searchParams.get("status") || "").trim().toLowerCase();
+          qsStatus = (url.searchParams.get("payment_status") || "").trim().toLowerCase();
           qsOrderNo = (url.searchParams.get("order_no") || "").trim();
         }catch(_e){}
 
@@ -1539,7 +1583,7 @@
           return;
         }
 
-        if(status === "success" || status === "ok" || status === "paid"){
+        if(status === "success"){
           showPayBanner(
             "ok",
             "پرداخت موفق ✅",
@@ -1557,7 +1601,7 @@
           return;
         }
 
-        if(status === "failed" || status === "error" || status === "cancel" || status === "canceled" || status === "cancelled" || status === "nok"){
+        if(status === "failed" || status === "error" || status === "cancel" || status === "canceled" || status === "cancelled"){
           showPayBanner(
             "err",
             "پرداخت ناموفق ❌",
@@ -1763,9 +1807,10 @@
           method: "POST",
           mode: "cors",
           credentials: "omit",
-          cache: "no-store",
           headers: {
-            "Content-Type": "text/plain;charset=UTF-8"
+            "Content-Type": "application/json",
+            "apikey": SUPABASE_ANON_KEY,
+            "Authorization": "Bearer " + SUPABASE_ANON_KEY
           },
           body: JSON.stringify({ phone: phone09 })
         });
@@ -1785,9 +1830,10 @@
           method: "POST",
           mode: "cors",
           credentials: "omit",
-          cache: "no-store",
           headers: {
-            "Content-Type": "text/plain;charset=UTF-8"
+            "Content-Type": "application/json",
+            "apikey": SUPABASE_ANON_KEY,
+            "Authorization": "Bearer " + SUPABASE_ANON_KEY
           },
           body: JSON.stringify({ phone: phone09, code })
         });
@@ -1802,6 +1848,7 @@
         return json || { ok: true };
       }
 
+      // ✅ ساخت پرداخت (BitPay) — با callEdgeNoPreflight (برای حل مشکل OPTIONS/CORS)
       async function createBitpayPayment(order){
         if(!order) throw new Error("سفارش نامعتبر است.");
 
@@ -1820,25 +1867,7 @@
           return_url: buildPayReturnUrl(orderNo)
         };
 
-        const res = await fetch(BITPAY_CREATE_URL, {
-          method: "POST",
-          mode: "cors",
-          credentials: "omit",
-          cache: "no-store",
-          headers: {
-            "Content-Type": "text/plain;charset=UTF-8"
-          },
-          body: JSON.stringify(payload)
-        });
-
-        const json = await safeJson(res);
-        if(!res.ok){
-          const msg = extractErrorMessage(json) || ("HTTP " + res.status);
-          throw new Error(msg);
-        }
-        if(json && json.ok === false){
-          throw new Error(extractErrorMessage(json) || "ساخت پرداخت ناموفق بود");
-        }
+        const json = await callEdgeNoPreflight(BITPAY_CREATE_URL, payload);
 
         const payUrl =
           json?.payment_url ||
@@ -1873,6 +1902,7 @@
         return { payUrl, invoiceId };
       }
 
+      // ✅ ساخت پرداخت (ZarinPal) — با callEdgeNoPreflight (برای حل مشکل OPTIONS/CORS)
       async function createZarinpalPayment(order){
         if(!order) throw new Error("سفارش نامعتبر است.");
 
@@ -1886,30 +1916,12 @@
         const payload = {
           order_id: orderId ?? null,
           order_no: orderNo,
-          amount_toman: Math.round(amountToman),
+          amount_toman: Math.round(amountToman), // تومان
           customer_phone: loginState?.phone09 ?? null,
           return_url: buildPayReturnUrl(orderNo)
         };
 
-        const res = await fetch(ZARINPAL_CREATE_URL, {
-          method: "POST",
-          mode: "cors",
-          credentials: "omit",
-          cache: "no-store",
-          headers: {
-            "Content-Type": "text/plain;charset=UTF-8"
-          },
-          body: JSON.stringify(payload)
-        });
-
-        const json = await safeJson(res);
-        if(!res.ok){
-          const msg = extractErrorMessage(json) || ("HTTP " + res.status);
-          throw new Error(msg);
-        }
-        if(json && json.ok === false){
-          throw new Error(extractErrorMessage(json) || "ساخت پرداخت زرین‌پال ناموفق بود");
-        }
+        const json = await callEdgeNoPreflight(ZARINPAL_CREATE_URL, payload);
 
         const payUrl =
           json?.payment_url ||
@@ -2103,6 +2115,7 @@
         setMsg(priceModalMsg, "", "");
       }
 
+      // ✅ loadOrders امن و کم‌پرش
       async function scheduleLoadOrders(opts){
         const silent = !!opts?.silent;
         if(!loggedIn()) return;
@@ -2247,7 +2260,7 @@
         const list = (orderNos || []).filter(Boolean);
         if(list.length === 0) return;
 
-        const quoted = list.map(x => '"' + String(x).replaceAll('"','') + '"').join(",");
+        const quoted = list.map(x => '"' + String(x).replace(/"/g,'') + '"').join(",");
         const filterIn = "order_no=in.(" + quoted + ")";
 
         try{
