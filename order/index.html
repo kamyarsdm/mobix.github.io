@@ -873,7 +873,6 @@
       position:relative;
     }
 
-    /* ✅ بنر وضعیت پرداخت */
     .pay-banner{
       margin-top:12px;
       border-radius:22px;
@@ -955,7 +954,6 @@
       </div>
     </div>
 
-    <!-- ✅ بنر پرداخت در همان صفحه /order/ -->
     <div id="payBanner" class="pay-banner" role="status" aria-live="polite">
       <div class="bb">
         <b id="payBannerTitle">پرداخت</b>
@@ -1271,12 +1269,9 @@
       const OTP_REQUEST_URL = "https://vrxfhfknmxmeatnfzpcg.supabase.co/functions/v1/request-otp";
       const OTP_VERIFY_URL  = "https://vrxfhfknmxmeatnfzpcg.supabase.co/functions/v1/verify-otp";
 
-      // ✅ بیت‌پی (Edge Function)
-const BITPAY_CREATE_URL = "https://vrxfhfknmxmeatnfzpcg.supabase.co/functions/v1/bitpay-create-payment";
+      const BITPAY_CREATE_URL  = "https://vrxfhfknmxmeatnfzpcg.supabase.co/functions/v1/bitpay-create-payment";
+      const ZARINPAL_CREATE_URL = "https://vrxfhfknmxmeatnfzpcg.supabase.co/functions/v1/zarinpal-create-payment";
 
-// ✅ زرین‌پال (Edge Function)
-const ZARINPAL_CREATE_URL = "https://vrxfhfknmxmeatnfzpcg.supabase.co/functions/v1/zarinpal-create-payment";
-      
       const supabase = window.supabase.createClient(SUPABASE_URL, SUPABASE_ANON_KEY);
 
       function normalizeDigits(s){
@@ -1334,10 +1329,9 @@ const ZARINPAL_CREATE_URL = "https://vrxfhfknmxmeatnfzpcg.supabase.co/functions/
         return `MCC-${yy}${mm}${dd}-${rand}`;
       }
 
-      // ✅ آدرس بازگشت از درگاه
       function buildPayReturnUrl(orderNo){
         const base = window.location.origin;
-        return base + "/order/pay-result/?order_no=" + encodeURIComponent(orderNo || "");
+        return base + "/order/?order_no=" + encodeURIComponent(orderNo || "");
       }
 
       const sessionBadge = document.getElementById("sessionBadge");
@@ -1390,7 +1384,6 @@ const ZARINPAL_CREATE_URL = "https://vrxfhfknmxmeatnfzpcg.supabase.co/functions/
       const priceModalPrice = document.getElementById("priceModalPrice");
       const priceModalMsg = document.getElementById("priceModalMsg");
 
-      // ✅ بنر پرداخت
       const payBanner = document.getElementById("payBanner");
       const payBannerTitle = document.getElementById("payBannerTitle");
       const payBannerText = document.getElementById("payBannerText");
@@ -1400,7 +1393,7 @@ const ZARINPAL_CREATE_URL = "https://vrxfhfknmxmeatnfzpcg.supabase.co/functions/
       const LS_PROFILE = "mobix_site_profile";
       const DRAFT_KEY = "mobix_site_order_draft";
 
-      const PENDING_PAY_KEY = "mobix_pending_payment_result"; // sessionStorage
+      const PENDING_PAY_KEY = "mobix_pending_payment_result";
 
       let loginState = null;
       let profileState = null;
@@ -1425,7 +1418,6 @@ const ZARINPAL_CREATE_URL = "https://vrxfhfknmxmeatnfzpcg.supabase.co/functions/
       let pickupDay = null;
       let pickupSlot = null;
 
-      // ✅ جلوگیری از رندر/رفرش زیاد (debounce + skip duplicate render)
       const LOAD_MIN_GAP_MS = 2500;
       let __loadInFlight = false;
       let __loadPending = false;
@@ -1462,7 +1454,6 @@ const ZARINPAL_CREATE_URL = "https://vrxfhfknmxmeatnfzpcg.supabase.co/functions/
         if(!payBanner) return;
         payBanner.classList.remove("err");
         if(type === "err") payBanner.classList.add("err");
-
         if(payBannerTitle) payBannerTitle.textContent = title || "پرداخت";
         if(payBannerText) payBannerText.textContent = text || "";
         payBanner.style.display = "flex";
@@ -1477,7 +1468,7 @@ const ZARINPAL_CREATE_URL = "https://vrxfhfknmxmeatnfzpcg.supabase.co/functions/
         try{
           const url = new URL(window.location.href);
           let changed = false;
-          ["payment_status","order_no","invoice_id","invoice","status","msg","message","trans_id","id_get"].forEach(k => {
+          ["payment_status","order_no","invoice_id","invoice","status","msg","message","trans_id","id_get","Authority","authority","Status","status"].forEach(k => {
             if(url.searchParams.has(k)){
               url.searchParams.delete(k);
               changed = true;
@@ -1499,9 +1490,7 @@ const ZARINPAL_CREATE_URL = "https://vrxfhfknmxmeatnfzpcg.supabase.co/functions/
         }
 
         try{
-          const payload = {
-            payment_status: "paid"
-          };
+          const payload = { payment_status: "paid" };
 
           const { error } = await supabase
             .from("orders")
@@ -1525,7 +1514,7 @@ const ZARINPAL_CREATE_URL = "https://vrxfhfknmxmeatnfzpcg.supabase.co/functions/
 
         try{
           const url = new URL(window.location.href);
-          qsStatus = (url.searchParams.get("payment_status") || "").trim().toLowerCase();
+          qsStatus = (url.searchParams.get("payment_status") || url.searchParams.get("Status") || url.searchParams.get("status") || "").trim().toLowerCase();
           qsOrderNo = (url.searchParams.get("order_no") || "").trim();
         }catch(_e){}
 
@@ -1550,7 +1539,7 @@ const ZARINPAL_CREATE_URL = "https://vrxfhfknmxmeatnfzpcg.supabase.co/functions/
           return;
         }
 
-        if(status === "success"){
+        if(status === "success" || status === "ok" || status === "paid"){
           showPayBanner(
             "ok",
             "پرداخت موفق ✅",
@@ -1562,15 +1551,13 @@ const ZARINPAL_CREATE_URL = "https://vrxfhfknmxmeatnfzpcg.supabase.co/functions/
             if(out.ok){
               sessionStorage.removeItem(PENDING_PAY_KEY);
               try{ await scheduleLoadOrders({ silent:true, reason:"pay-success" }); }catch(_e){}
-            }else{
-              // فقط پیام را نشان می‌دهیم
             }
           }
 
           return;
         }
 
-        if(status === "failed" || status === "error" || status === "cancel" || status === "canceled" || status === "cancelled"){
+        if(status === "failed" || status === "error" || status === "cancel" || status === "canceled" || status === "cancelled" || status === "nok"){
           showPayBanner(
             "err",
             "پرداخت ناموفق ❌",
@@ -1774,10 +1761,11 @@ const ZARINPAL_CREATE_URL = "https://vrxfhfknmxmeatnfzpcg.supabase.co/functions/
       async function requestOtpEdge(phone09){
         const res = await fetch(OTP_REQUEST_URL, {
           method: "POST",
+          mode: "cors",
+          credentials: "omit",
+          cache: "no-store",
           headers: {
-            "Content-Type": "application/json",
-            "apikey": SUPABASE_ANON_KEY,
-            "Authorization": "Bearer " + SUPABASE_ANON_KEY
+            "Content-Type": "text/plain;charset=UTF-8"
           },
           body: JSON.stringify({ phone: phone09 })
         });
@@ -1795,10 +1783,11 @@ const ZARINPAL_CREATE_URL = "https://vrxfhfknmxmeatnfzpcg.supabase.co/functions/
       async function verifyOtpEdge(phone09, code){
         const res = await fetch(OTP_VERIFY_URL, {
           method: "POST",
+          mode: "cors",
+          credentials: "omit",
+          cache: "no-store",
           headers: {
-            "Content-Type": "application/json",
-            "apikey": SUPABASE_ANON_KEY,
-            "Authorization": "Bearer " + SUPABASE_ANON_KEY
+            "Content-Type": "text/plain;charset=UTF-8"
           },
           body: JSON.stringify({ phone: phone09, code })
         });
@@ -1813,7 +1802,6 @@ const ZARINPAL_CREATE_URL = "https://vrxfhfknmxmeatnfzpcg.supabase.co/functions/
         return json || { ok: true };
       }
 
-      // ✅ ساخت پرداخت (BitPay)
       async function createBitpayPayment(order){
         if(!order) throw new Error("سفارش نامعتبر است.");
 
@@ -1834,10 +1822,11 @@ const ZARINPAL_CREATE_URL = "https://vrxfhfknmxmeatnfzpcg.supabase.co/functions/
 
         const res = await fetch(BITPAY_CREATE_URL, {
           method: "POST",
+          mode: "cors",
+          credentials: "omit",
+          cache: "no-store",
           headers: {
-            "Content-Type": "application/json",
-            "apikey": SUPABASE_ANON_KEY,
-            "Authorization": "Bearer " + SUPABASE_ANON_KEY
+            "Content-Type": "text/plain;charset=UTF-8"
           },
           body: JSON.stringify(payload)
         });
@@ -1871,7 +1860,6 @@ const ZARINPAL_CREATE_URL = "https://vrxfhfknmxmeatnfzpcg.supabase.co/functions/
           throw new Error("لینک پرداخت از سرور برنگشت.");
         }
 
-        // تلاش برای ذخیره وضعیت پرداخت داخل orders (اگر ستون‌ها وجود داشته باشند)
         try{
           await supabase
             .from("orders")
@@ -1885,7 +1873,6 @@ const ZARINPAL_CREATE_URL = "https://vrxfhfknmxmeatnfzpcg.supabase.co/functions/
         return { payUrl, invoiceId };
       }
 
-      // ✅ ساخت پرداخت (ZarinPal)
       async function createZarinpalPayment(order){
         if(!order) throw new Error("سفارش نامعتبر است.");
 
@@ -1899,17 +1886,18 @@ const ZARINPAL_CREATE_URL = "https://vrxfhfknmxmeatnfzpcg.supabase.co/functions/
         const payload = {
           order_id: orderId ?? null,
           order_no: orderNo,
-          amount_toman: Math.round(amountToman), // تومان
+          amount_toman: Math.round(amountToman),
           customer_phone: loginState?.phone09 ?? null,
           return_url: buildPayReturnUrl(orderNo)
         };
 
         const res = await fetch(ZARINPAL_CREATE_URL, {
           method: "POST",
+          mode: "cors",
+          credentials: "omit",
+          cache: "no-store",
           headers: {
-            "Content-Type": "application/json",
-            "apikey": SUPABASE_ANON_KEY,
-            "Authorization": "Bearer " + SUPABASE_ANON_KEY
+            "Content-Type": "text/plain;charset=UTF-8"
           },
           body: JSON.stringify(payload)
         });
@@ -1940,7 +1928,6 @@ const ZARINPAL_CREATE_URL = "https://vrxfhfknmxmeatnfzpcg.supabase.co/functions/
           throw new Error("لینک پرداخت زرین‌پال از سرور برنگشت.");
         }
 
-        // تلاش برای ذخیره وضعیت پرداخت داخل orders (اگر ستون‌ها وجود داشته باشند)
         try{
           await supabase
             .from("orders")
@@ -2080,7 +2067,6 @@ const ZARINPAL_CREATE_URL = "https://vrxfhfknmxmeatnfzpcg.supabase.co/functions/
         return ps || "";
       }
       function shouldShowPayButton(o){
-        const stageNorm = normalizeStatus(o?.stage ?? o?.status ?? "");
         const appr = approvalStateFromOrder(o);
         const hasPrice = Number(o?.quoted_price_toman || 0) > 0;
         const payState = paymentStateFromOrder(o);
@@ -2088,10 +2074,6 @@ const ZARINPAL_CREATE_URL = "https://vrxfhfknmxmeatnfzpcg.supabase.co/functions/
         if(!hasPrice) return false;
         if(appr !== "approved") return false;
         if(payState === "paid") return false;
-
-        if(stageNorm === "quoted" || stageNorm === "repairing" || stageNorm === "picked_up" || stageNorm === "requested"){
-          return true;
-        }
         return true;
       }
 
@@ -2121,7 +2103,6 @@ const ZARINPAL_CREATE_URL = "https://vrxfhfknmxmeatnfzpcg.supabase.co/functions/
         setMsg(priceModalMsg, "", "");
       }
 
-      // ✅ loadOrders امن و کم‌پرش
       async function scheduleLoadOrders(opts){
         const silent = !!opts?.silent;
         if(!loggedIn()) return;
@@ -2874,9 +2855,9 @@ const ZARINPAL_CREATE_URL = "https://vrxfhfknmxmeatnfzpcg.supabase.co/functions/
             ? `<span class="status ok">${esc(priceText)}</span>`
             : `<span class="status warn">در انتظار اعلام قیمت</span>`;
 
-          const apprPill = (stNorm === "quoted" && hasPrice)
+          const apprPill = (hasPrice)
             ? `<span class="${approvalPillClass(appr)}">وضعیت قیمت: ${esc(apprLabel)}</span>`
-            : (hasPrice ? `<span class="${approvalPillClass(appr)}">وضعیت قیمت: ${esc(apprLabel)}</span>` : "");
+            : "";
 
           const on = (o.order_no != null) ? String(o.order_no).trim() : "";
           const upd = pickLatestUpdateForOrder(on);
