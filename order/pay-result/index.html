@@ -83,7 +83,6 @@
         return (s || "").toString().trim().toLowerCase();
       }
 
-      // ✅ تشخیص نتیجه از پارامترهای رایج (درگاه‌ها/فانکشن‌ها مختلف‌اند)
       function detectStatus(sp){
         const s1 = norm(sp.get("payment_status"));
         const s2 = norm(sp.get("status"));
@@ -94,56 +93,35 @@
 
         const combined = [s1,s2,s3,s4,s5,msg].filter(Boolean).join("|");
 
-        // success-ish
-        if(
-          combined.includes("success") ||
-          combined.includes("succeed") ||
-          combined.includes("paid") ||
-          combined.includes("ok=true") ||
-          combined.includes("ok=1") ||
-          combined.includes("پرداخت موفق") ||
-          combined.includes("موفق")
-        ){
-          // اگر همزمان کلمه‌های منفی هم بود، منفی را اولویت بده
-          if(
-            combined.includes("cancel") ||
-            combined.includes("canceled") ||
-            combined.includes("cancelled") ||
-            combined.includes("fail") ||
-            combined.includes("failed") ||
-            combined.includes("error") ||
-            combined.includes("انصراف") ||
-            combined.includes("لغو") ||
-            combined.includes("ناموفق")
-          ){
-            return "failed";
-          }
-          return "success";
-        }
-
-        // failed/cancel-ish
-        if(
+        // اگر همزمان مثبت و منفی بود، منفی اولویت دارد
+        const hasNeg =
           combined.includes("cancel") ||
           combined.includes("canceled") ||
           combined.includes("cancelled") ||
           combined.includes("fail") ||
           combined.includes("failed") ||
           combined.includes("error") ||
-          combined.includes("decline") ||
           combined.includes("انصراف") ||
           combined.includes("لغو") ||
-          combined.includes("ناموفق")
-        ){
-          return "failed";
-        }
+          combined.includes("ناموفق");
 
+        const hasPos =
+          combined.includes("success") ||
+          combined.includes("succeed") ||
+          combined.includes("paid") ||
+          combined.includes("ok=true") ||
+          combined.includes("ok=1") ||
+          combined.includes("پرداخت موفق") ||
+          combined.includes("موفق");
+
+        if(hasNeg) return "failed";
+        if(hasPos) return "success";
         return "unknown";
       }
 
       const sp = qs();
       const orderNo = (sp.get("order_no") || "").trim();
 
-      // BitPay ممکن است اینها را بدهد/ندهـد
       const transId = (sp.get("trans_id") || "").trim();
       const idGet   = (sp.get("id_get") || "").trim();
       const invoice = (sp.get("invoice_id") || sp.get("invoice") || "").trim();
@@ -161,8 +139,6 @@
 
       const status = detectStatus(sp);
 
-      // ✅ مهم: فقط وقتی واقعاً مطمئن شدیم success است، success ذخیره می‌کنیم
-      // در حالت unknown هرگز success ثبت نمی‌کنیم.
       let displayText = "";
       if(status === "success"){
         if(pill){
@@ -190,7 +166,6 @@
         displayText = "unknown";
       }
 
-      // ✅ ذخیره برای نمایش بنر در /order/
       try{
         sessionStorage.setItem(PENDING_PAY_KEY, JSON.stringify({
           payment_status: displayText,
@@ -206,7 +181,6 @@
         if(idGet) lines.push("id_get: " + idGet);
         if(invoice) lines.push("invoice: " + invoice);
 
-        // برای دیباگ: چند پارامتر مهم
         const ps = (sp.get("payment_status") || "");
         const st = (sp.get("status") || "");
         const rs = (sp.get("result") || "");
@@ -220,7 +194,6 @@
         dbg.textContent = lines.join("\n");
       }
 
-      // مسیر صفحه سفارش
       const target = window.location.origin + "/order/";
 
       function go(){
@@ -231,7 +204,6 @@
         goBtn.addEventListener("click", go);
       }
 
-      // انتقال خودکار (کمی بیشتر تا کاربر پیام را ببیند)
       setTimeout(go, 900);
     })();
   </script>
