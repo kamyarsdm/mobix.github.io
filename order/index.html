@@ -1274,6 +1274,9 @@
       // ✅ بیت‌پی (Edge Function)
       const BITPAY_CREATE_URL = "https://vrxfhfknmxmeatnfzpcg.supabase.co/functions/v1/bitpay-create-payment";
 
+      // ✅ زرین‌پال (Edge Function)
+      const ZARINPAL_CREATE_URL = "https://vrxfhfknmxmeatnfzpcg.supabase.co/functions/v1/zarinpal-create-payment";
+
       const supabase = window.supabase.createClient(SUPABASE_URL, SUPABASE_ANON_KEY);
 
       function normalizeDigits(s){
@@ -1567,7 +1570,7 @@
           return;
         }
 
-        if(status === "failed" || status === "error" || status === "cancel" || status === "canceled"){
+        if(status === "failed" || status === "error" || status === "cancel" || status === "canceled" || status === "cancelled"){
           showPayBanner(
             "err",
             "پرداخت ناموفق ❌",
@@ -1824,7 +1827,7 @@
         const payload = {
           order_id: orderId ?? null,
           order_no: orderNo,
-          amount_toman: amountToman,
+          amount_toman: Math.round(amountToman),
           customer_phone: loginState?.phone09 ?? null,
           return_url: buildPayReturnUrl(orderNo)
         };
@@ -1860,6 +1863,7 @@
           json?.invoice_id ||
           json?.invoice ||
           json?.id ||
+          json?.transaction_id ||
           json?.data?.invoice_id ||
           null;
 
@@ -1879,6 +1883,75 @@
         }catch(_e){}
 
         return { payUrl, invoiceId };
+      }
+
+      // ✅ ساخت پرداخت (ZarinPal)
+      async function createZarinpalPayment(order){
+        if(!order) throw new Error("سفارش نامعتبر است.");
+
+        const orderNo = (order.order_no != null) ? String(order.order_no).trim() : "";
+        const orderId = order.id;
+        const amountToman = Number(order.quoted_price_toman || 0);
+
+        if(!orderNo) throw new Error("شماره سفارش پیدا نشد.");
+        if(!Number.isFinite(amountToman) || amountToman <= 0) throw new Error("مبلغ سفارش معتبر نیست.");
+
+        const payload = {
+          order_id: orderId ?? null,
+          order_no: orderNo,
+          amount_toman: Math.round(amountToman), // تومان
+          customer_phone: loginState?.phone09 ?? null,
+          return_url: buildPayReturnUrl(orderNo)
+        };
+
+        const res = await fetch(ZARINPAL_CREATE_URL, {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+            "apikey": SUPABASE_ANON_KEY,
+            "Authorization": "Bearer " + SUPABASE_ANON_KEY
+          },
+          body: JSON.stringify(payload)
+        });
+
+        const json = await safeJson(res);
+        if(!res.ok){
+          const msg = extractErrorMessage(json) || ("HTTP " + res.status);
+          throw new Error(msg);
+        }
+        if(json && json.ok === false){
+          throw new Error(extractErrorMessage(json) || "ساخت پرداخت زرین‌پال ناموفق بود");
+        }
+
+        const payUrl =
+          json?.payment_url ||
+          json?.pay_url ||
+          json?.url ||
+          json?.data?.payment_url ||
+          json?.data?.url ||
+          null;
+
+        const authority =
+          json?.authority ||
+          json?.data?.authority ||
+          null;
+
+        if(!payUrl || typeof payUrl !== "string"){
+          throw new Error("لینک پرداخت زرین‌پال از سرور برنگشت.");
+        }
+
+        // تلاش برای ذخیره وضعیت پرداخت داخل orders (اگر ستون‌ها وجود داشته باشند)
+        try{
+          await supabase
+            .from("orders")
+            .update({
+              payment_status: "pending",
+              payment_invoice_id: authority ?? null
+            })
+            .eq("id", orderId);
+        }catch(_e){}
+
+        return { payUrl, authority };
       }
 
       const STATUS_FA = {
@@ -2157,7 +2230,6 @@
       }
       function startPolling(){
         stopPolling();
-        // ✅ کندتر (fallback) برای جلوگیری از پرش
         pollTimer = setInterval(() => {
           if(loggedIn()) scheduleLoadOrders({ silent:true, reason:"poll" });
         }, 60000);
@@ -2622,7 +2694,6 @@
           return;
         }
 
-        // ✅ فقط در حالت غیرسایلنت پیام لودینگ بگذار (تا صفحه نپرد)
         if(!silent){
           ordersWrap.innerHTML = '<div class="muted">در حال دریافت سفارش‌ها…</div>';
         }
@@ -2743,7 +2814,6 @@
 
         startRealtimeForUpdatesAndChat(orderNos);
 
-        // ✅ اگر داده‌ها تغییر نکرده، رندر نکن (برای جلوگیری از پرش)
         const rk = computeRenderKey(list);
         if(rk === __lastRenderKey){
           return;
@@ -2796,7 +2866,7 @@
                 data-order-id="${esc(String(o.id ?? ""))}">
                 پرداخت
               </button>
-              <span class="status">درگاه بیت‌پی</span>
+              <span class="status">انتخاب درگاه: زرین‌پال / بیت‌پی</span>
             </div>
           ` : "";
 
@@ -3132,10 +3202,27 @@
           return;
         }
 
-        const ok = confirm("انتقال به درگاه پرداخت؟");
+        const choice = (prompt(
+          "درگاه پرداخت را انتخاب کنید:\n1) زرین‌پال\n2) بیت‌پی\n\nعدد 1 یا 2 را وارد کنید:",
+          "1"
+        ) || "").trim();
+
+        const gateway = (choice === "2") ? "bitpay" : "zarinpal";
+
+        const ok = confirm(
+          gateway === "zarinpal"
+            ? "انتقال به درگاه زرین‌پال؟"
+            : "انتقال به درگاه بیت‌پی؟"
+        );
         if(!ok) return;
 
         try{
+          if(gateway === "zarinpal"){
+            const { payUrl } = await createZarinpalPayment(order);
+            window.location.href = payUrl;
+            return;
+          }
+
           const { payUrl } = await createBitpayPayment(order);
           window.location.href = payUrl;
         }catch(e){
